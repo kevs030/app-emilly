@@ -4,7 +4,7 @@
 | Pieza | Tecnología | Por qué |
 |---|---|---|
 | Web y app (adaptada a móvil) | Next.js 16 + TypeScript + Tailwind | Una sola base de código. Se puede convertir en app instalable (PWA) |
-| Cuentas, base de datos y foro | Supabase (Postgres + Auth) | Seguridad a nivel de fila (RLS), acceso por código de un solo uso (OTP) por correo o SMS, región UE |
+| Cuentas, base de datos y foro | Supabase (Postgres + Auth) | Seguridad a nivel de fila (RLS), acceso sin contraseña con enlace por correo, región UE |
 | Asistente | Claude API (`claude-opus-5-5`) con *streaming* | Responde en cualquier idioma, sobre una base de conocimiento verificada |
 | Mapas | Leaflet + OpenStreetMap (Nominatim) | Gratis y sin clave. En producción, cambiar a un proveedor con SLA |
 | Videos | Reproductor oficial de YouTube (`youtube-nocookie`) | Respeta los derechos de autor y la privacidad |
@@ -24,7 +24,7 @@ scripts/check-freshness.ts     ← revisión semanal de contenido y enlaces
 
 ## Seguridad: lo que ya está hecho
 **Cuentas**
-- Sin contraseñas: código de 6 dígitos por correo o SMS. Así no hay contraseñas que robar ni reutilizar.
+- Sin contraseñas: enlace de un solo uso por correo (`/auth/confirm`, solo redirige a rutas internas). Así no hay contraseñas que robar ni reutilizar.
 - Las sesiones van en cookies seguras gestionadas por `@supabase/ssr` y se refrescan en `src/proxy.ts`.
 
 **Base de datos (la barrera principal)**
@@ -72,7 +72,7 @@ También se probó la API del asistente: rechaza peticiones mal formadas o enorm
 ## Pendiente antes del lanzamiento (lista de control)
 - [ ] Activar **CAPTCHA** (Cloudflare Turnstile) en Supabase Auth para frenar bots al registrarse.
 - [ ] Cambiar el limitador del asistente a uno **compartido** (Upstash Redis): en Vercel hay varias instancias y el limitador en memoria no basta.
-- [ ] Configurar el proveedor de SMS (Twilio, MessageBird…) y la plantilla de correo con `{{ .Token }}` para el código.
+- [ ] Configurar un SMTP propio (por ejemplo, Resend): el correo gratuito de Supabase solo envía a miembros del equipo y pocos correos por hora. Con SMTP propio se puede volver al código de 6 dígitos y personalizar el correo. Acceso por SMS: más adelante (Twilio u otro).
 - [ ] Región **UE** en Supabase y Vercel. Copias de seguridad diarias.
 - [ ] Panel de moderación, para revisar las denuncias y la función `moderate()`.
 - [ ] Revisión de dependencias semanal (`npm audit`, Dependabot) y prueba de penetración externa antes de crecer.

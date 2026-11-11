@@ -25,8 +25,8 @@ Sin claves, la app ya funciona en modo lectura: guías, ayudas, mapa, videos y c
 1. **Supabase** (gratis para empezar):
    - Crea un proyecto en supabase.com en **región UE**.
    - Ve a *SQL Editor*, pega el contenido de `supabase/migrations/0001_init.sql` y ejecútalo.
-   - En *Authentication → Providers*, activa Email (y Phone si quieres acceso por SMS, que necesita Twilio u otro proveedor).
-   - En *Authentication → Email Templates*, haz que el correo incluya `{{ .Token }}` para que llegue el código de 6 dígitos.
+   - En *Authentication → URL Configuration*, pon como *Site URL* la dirección de la web (`https://app-emilly.vercel.app`) y añade `https://app-emilly.vercel.app/**` en *Redirect URLs*.
+   - El acceso es con enlace por correo (el correo por defecto de Supabase ya sirve). El correo gratuito de Supabase solo envía a miembros del equipo y pocos correos por hora: para abrir la app al público hay que configurar un SMTP propio (por ejemplo, Resend) en *Authentication → Emails*.
    - En *Authentication → Attack Protection*, activa el CAPTCHA (Turnstile).
    - Copia `Project URL` y la clave `anon` en `.env.local`.
 2. **Claude API:** console.anthropic.com → API Keys → `ANTHROPIC_API_KEY`.
