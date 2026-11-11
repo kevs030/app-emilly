@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
@@ -12,6 +12,14 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Emilly — Guía para migrantes en Italia",
   description: "Trámites, ayudas, mapas, videos y comunidad para personas migrantes en Italia.",
+  applicationName: "Emilly",
+  appleWebApp: { capable: true, title: "Emilly", statusBarStyle: "default" },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0f766e",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
@@ -58,7 +66,10 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6">{children}</main>
         <footer className="border-t border-border px-4 py-6 text-center text-xs text-muted">
           <p>{t("disclaimer", lang)}</p>
-          <p className="mt-2">
+          <p className="mt-2 space-x-3">
+            <Link href="/instalar" className="underline">
+              📲 {lang === "en" ? "Install the app" : lang === "it" ? "Installa l'app" : "Instalar la app"}
+            </Link>
             <Link href="/privacidad" className="underline">
               Privacidad / Privacy
             </Link>

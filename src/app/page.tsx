@@ -10,6 +10,7 @@ const home = {
     en: "Describe your situation in your own words and it tells you the steps and where to go.",
     it: "Descrivi la tua situazione e ti indica i passi e dove andare.",
   },
+  install: { es: "Instala Emilly en tu celular", en: "Install Emilly on your phone", it: "Installa Emilly sul telefono" },
   popular: { es: "Trámites más buscados", en: "Most searched procedures", it: "Pratiche più cercate" },
   scam: {
     es: "Nunca pagues a intermediarios por un 'contrato' del Decreto Flussi o para 'acelerar' tu permiso. Es la estafa más común.",
@@ -29,6 +30,9 @@ export default async function Home() {
           💬 {tr(home.ask, lang)}
         </Link>
         <p className="mt-2 text-sm text-muted">{tr(home.askSub, lang)}</p>
+        <Link href="/instalar" className="mt-3 inline-block text-sm font-medium text-brand underline">
+          📲 {tr(home.install, lang)}
+        </Link>
       </section>
 
       <p className="rounded-lg bg-warn-bg p-3 text-sm text-warn-fg">⚠️ {tr(home.scam, lang)}</p>
