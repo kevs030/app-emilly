@@ -1,26 +1,55 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f7f7f4;
+  --foreground: #1c1c1a;
+  --card: #ffffff;
+  --muted: #5f5f58;
+  --border: #e3e2dc;
+  --brand: #0f766e;
+  --brand-soft: #e6f4f2;
+  --warn-bg: #fff6e5;
+  --warn-fg: #7a4b00;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #121412;
+    --foreground: #ececea;
+    --card: #1b1e1c;
+    --muted: #a3a39c;
+    --border: #2d312e;
+    --brand: #2dd4bf;
+    --brand-soft: #133330;
+    --warn-bg: #3a2c10;
+    --warn-fg: #ffd58a;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-brand: var(--brand);
+  --color-brand-soft: var(--brand-soft);
+  --color-warn-bg: var(--warn-bg);
+  --color-warn-fg: var(--warn-fg);
   --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+.card {
+  @apply rounded-xl border border-border bg-card p-4;
+}
+.btn {
+  @apply inline-flex items-center justify-center rounded-lg bg-brand px-4 py-2 font-medium text-white disabled:opacity-50 dark:text-black;
+}
+.input {
+  @apply w-full rounded-lg border border-border bg-card px-3 py-2;
 }

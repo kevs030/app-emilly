@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Emilly — Guía para migrantes en Italia
 
-## Getting Started
+App web (adaptada a móvil) con:
+- trámites paso a paso;
+- ayudas;
+- asistente con IA;
+- mapa de oficinas;
+- videos con subtítulos;
+- directorio de contactos;
+- foro con cuentas seguras.
 
-First, run the development server:
+Idiomas: español, inglés e italiano.
 
+📚 **Análisis completo en [`docs/`](docs/):** mercado, legal, seguridad, contenido y hoja de ruta.
+
+## Ponerla en marcha (local)
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # rellena las claves (ver abajo)
+npm run dev                  # http://localhost:3000
 ```
+Sin claves, la app ya funciona en modo lectura: guías, ayudas, mapa, videos y contactos. El asistente necesita `ANTHROPIC_API_KEY`. Las cuentas y el foro necesitan Supabase.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Claves que necesitas
+1. **Supabase** (gratis para empezar):
+   - Crea un proyecto en supabase.com en **región UE**.
+   - Ve a *SQL Editor*, pega el contenido de `supabase/migrations/0001_init.sql` y ejecútalo.
+   - En *Authentication → Providers*, activa Email (y Phone si quieres acceso por SMS, que necesita Twilio u otro proveedor).
+   - En *Authentication → Email Templates*, haz que el correo incluya `{{ .Token }}` para que llegue el código de 6 dígitos.
+   - En *Authentication → Attack Protection*, activa el CAPTCHA (Turnstile).
+   - Copia `Project URL` y la clave `anon` en `.env.local`.
+2. **Claude API:** console.anthropic.com → API Keys → `ANTHROPIC_API_KEY`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Publicarla (Vercel)
+1. Sube este proyecto a un repositorio de GitHub.
+2. En vercel.com, pulsa *Add New Project*, elige el repositorio y añade las mismas 3 variables de entorno.
+3. Cada `git push` publica la app automáticamente.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Comandos útiles
+| Comando | Para qué |
+|---|---|
+| `npm run dev` | Desarrollo local |
+| `npm run build` | Compilar para producción |
+| `npm run lint` / `npm run typecheck` | Revisar el código |
+| `npm run check:freshness` | Revisión semanal: contenido sin verificar y enlaces rotos |
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Dónde se edita el contenido
+Todo está en `src/content/`: `guides.ts`, `bonuses.ts`, `videos.ts` y `directory.ts`. Cada vez que verifiques algo, actualiza su `lastVerified`.
