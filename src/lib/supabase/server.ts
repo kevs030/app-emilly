@@ -1,9 +1,10 @@
 import "server-only";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { SUPABASE_PUBLIC_KEY, SUPABASE_URL } from "./config";
 
 export function supabaseConfigured(): boolean {
-  return Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+  return Boolean(SUPABASE_URL && SUPABASE_PUBLIC_KEY);
 }
 
 /**
@@ -13,7 +14,7 @@ export function supabaseConfigured(): boolean {
  */
 export async function createClient() {
   const cookieStore = await cookies();
-  return createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, {
+  return createServerClient(SUPABASE_URL, SUPABASE_PUBLIC_KEY, {
     cookies: {
       getAll() {
         return cookieStore.getAll();
