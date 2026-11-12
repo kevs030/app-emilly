@@ -5,20 +5,20 @@ export const maxDuration = 60;
 
 /**
  * Puntos de toda Italia por categoría, sacados de OpenStreetMap (licencia ODbL) con Overpass.
+ * El rectángulo incluye zonas fronterizas de países vecinos; el filtro por nombre italiano las descarta casi todas.
  * La respuesta se guarda 7 días en la caché de Vercel (CDN): Overpass recibe, como mucho,
  * una petición por categoría a la semana, y los usuarios reciben los datos al instante.
  */
-const AREA = 'area["ISO3166-1"="IT"][admin_level=2]->.it;';
+// Italia como rectángulo (sur, oeste, norte, este): mucho más rápido que buscar por área.
+const BBOX = "(35.4,6.6,47.1,18.6)";
+// Cada consulta empieza por una etiqueta exacta (indexada) y solo después filtra por nombre.
 const QUERIES: Record<string, string> = {
-  questura: 'nwr["name"~"^Questura",i](area.it);',
-  entrate: 'nwr["name"~"Agenzia delle Entrate",i]["name"!~"Riscossione",i](area.it);',
-  prefettura: 'nwr["name"~"^Prefettura",i](area.it);',
-  inps: 'nwr["office"]["name"~"^INPS",i](area.it);nwr["office"]["operator"~"^INPS$",i](area.it);',
-  patronato: 'nwr["office"]["name"~"Patronato|^CAF |^CAAF",i](area.it);',
-  ayuda:
-    'nwr["social_facility:for"~"migrant|refugee"](area.it);' +
-    'nwr["amenity"~"social_facility|community_centre"]["name"~"Sportello Immigra|Centro Immigra|Ufficio Immigra|Ufficio Stranieri|Caritas",i](area.it);' +
-    'nwr["office"]["name"~"Sportello Immigra|Ufficio Immigra|Ufficio Stranieri",i](area.it);',
+  questura: `nwr["amenity"="police"]["name"~"^Questura"]${BBOX};`,
+  entrate: `nwr["office"="government"]["name"~"Agenzia delle Entrate"]["name"!~"Riscossione"]${BBOX};nwr["office"="tax"]["name"~"Agenzia delle Entrate"]${BBOX};`,
+  prefettura: `nwr["office"="government"]["name"~"^Prefettura"]${BBOX};`,
+  inps: `nwr["office"="government"]["name"~"^INPS"]${BBOX};nwr["office"="government"]["operator"="INPS"]${BBOX};`,
+  patronato: `nwr["office"]["name"~"^Patronato|^CAF |^CAAF "]${BBOX};`,
+  ayuda: `nwr["social_facility:for"~"migrant|refugee"]${BBOX};nwr["amenity"="social_facility"]["name"~"Immigra|Stranieri|Caritas"]${BBOX};`,
 };
 
 const MIRRORS = ["https://overpass-api.de/api/interpreter", "https://overpass.private.coffee/api/interpreter", "https://overpass.kumi.systems/api/interpreter"];
@@ -53,27 +53,35 @@ export async function GET(req: Request) {
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   if (!rateLimit(`points:${ip}`, 30, 60_000)) return Response.json({ error: "rate_limited" }, { status: 429 });
 
-  const body = new URLSearchParams({ data: `[out:json][timeout:25];${AREA}(${query});out center tags;` });
+  const body = new URLSearchParams({ data: `[out:json][timeout:25];(${query});out center tags;` });
+  const tried: string[] = [];
   for (const mirror of MIRRORS) {
+    const host = new URL(mirror).host;
     try {
       const res = await fetch(mirror, {
         method: "POST",
         body,
         headers: { "User-Agent": "emilly-app (https://app-emilly.vercel.app)" },
-        signal: AbortSignal.timeout(18_000),
+        signal: AbortSignal.timeout(17_000),
         cache: "no-store",
       });
-      if (!res.ok) continue;
+      if (!res.ok) {
+        tried.push(`${host}:${res.status}`);
+        continue;
+      }
       const json = (await res.json()) as { elements?: OsmElement[] };
       const points = toPoints(json.elements ?? []);
-      if (points.length === 0) continue;
+      if (points.length === 0) {
+        tried.push(`${host}:empty`);
+        continue;
+      }
       return Response.json(
         { cat, updated: new Date().toISOString().slice(0, 10), points },
         { headers: { "Cache-Control": "public, max-age=3600, s-maxage=604800, stale-while-revalidate=2592000" } },
       );
-    } catch {
-      // probamos el siguiente servidor
+    } catch (e) {
+      tried.push(`${host}:${(e as Error).name}`);
     }
   }
-  return Response.json({ error: "unavailable" }, { status: 502, headers: { "Cache-Control": "no-store" } });
+  return Response.json({ error: "unavailable", tried }, { status: 502, headers: { "Cache-Control": "no-store" } });
 }
