@@ -160,3 +160,15 @@ Cada fase termina con: qué cambió, archivos tocados, pruebas ejecutadas y cóm
 - **Aplazado a la fase 3:** la API con token para el asistente, porque el asistente aún no está en la app.
 
 Pruebas: 16 comprobaciones automáticas en navegador con el servidor simulado (registro, contraseña débil, acceso erróneo, sesión que persiste, cierre de sesión, rutas privadas, recuperación, teléfono no válido, bloqueo tras 5 códigos). No se ha probado contra el servidor real ni en un teléfono.
+
+### Fase 2 (12/11/2026) — hecha en la app; falta ejecutar el SQL en Supabase
+- Migración `0003_experiencia_personal.sql`: trámites, pasos hechos, recordatorios, memoria (`user_facts`), historial (`activity`) y sesiones de uso. Todo con RLS y privilegios por columna.
+- **Progreso real:** una fila por cada paso o documento marcado. El porcentaje es filas hechas entre total de la guía. Terminar un trámite exige todos los pasos marcados y la confirmación de la persona.
+- **Panel personal:** saludo, «continuar donde lo dejaste» con el siguiente paso, trámites con barra de progreso, recordatorios, intereses elegidos por la persona, recomendaciones explicadas y actividad reciente.
+- **Memoria:** cada dato lleva su origen. Lo que sugiera la IA (fase 3) queda marcado como no confirmado hasta que la persona lo acepte; la base de datos impide que la app lo dé por confirmado.
+- **Analítica con consentimiento:** sesiones y tiempo activo. Un tramo solo cuenta si la app está visible y hubo interacción en los últimos 60 s. El servidor recorta valores mayores que el tiempo transcurrido. Retirar el consentimiento borra los datos.
+- **Mis datos y privacidad:** ver memoria e historial, borrar, descargar todo en un archivo, activar o desactivar estadísticas.
+- Si la migración no está ejecutada, la app muestra un aviso y las guías siguen funcionando.
+- **No incluido todavía:** registro de auditoría (irá con los documentos, fase 4) y panel de métricas agregadas para el administrador.
+
+Pruebas: 23 comprobaciones de base de datos en PostgreSQL local (acceso cruzado entre usuarios, falsear fechas, tiempos o datos «confirmados», límites, exportación) y 20 comprobaciones de la app en navegador con servidor simulado. Sin probar contra el servidor real ni en un teléfono.

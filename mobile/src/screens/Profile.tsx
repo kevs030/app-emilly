@@ -1,5 +1,6 @@
 import { Mail, Smartphone } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { LANG_LABEL, LANGS } from "@/lib/i18n";
 import type { Lang } from "@/content/types";
 import { useAuth } from "~/auth/AuthProvider";
@@ -157,6 +158,9 @@ export function Profile() {
           {error && <Alert kind="error">{error}</Alert>}
         </section>
 
+        <Link to="/data" className="btn btn-secondary">
+          {t("myData")}
+        </Link>
         <button type="button" className="btn btn-secondary" onClick={() => supabase.auth.signOut()}>
           {t("signOut")}
         </button>

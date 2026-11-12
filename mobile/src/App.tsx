@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Navigate, NavLink, Outlet, Route, Routes } from "react-router-dom";
 import { AuthProvider, useAuth } from "~/auth/AuthProvider";
 import { LangProvider, useLang } from "~/lib/lang";
+import { PersonalProvider } from "~/lib/personal";
+import { useSessionTracking } from "~/lib/useSessionTracking";
+import { MyData } from "~/screens/MyData";
 import { Auth } from "~/screens/Auth";
 import { GuideDetail, Guides } from "~/screens/Guides";
 import { Home } from "~/screens/Home";
@@ -33,9 +36,10 @@ function Splash() {
 
 /** Pantallas privadas: sin sesión se vuelve a la bienvenida. */
 function Private() {
-  const { ready, session } = useAuth();
+  const { ready, session, profile } = useAuth();
   const { t } = useLang();
   const online = useOnline();
+  useSessionTracking(Boolean(session && profile?.consent_analytics));
   if (!ready) return <Splash />;
   if (!session) return <Navigate to="/welcome" replace />;
   const tabs = [
@@ -52,7 +56,9 @@ function Private() {
         </p>
       )}
       <main className="flex-1 overflow-y-auto">
-        <Outlet />
+        <PersonalProvider>
+          <Outlet />
+        </PersonalProvider>
       </main>
       <nav className="safe-bottom border-t border-beige bg-white" aria-label="Principal">
         <ul className="mx-auto flex max-w-md">
@@ -105,6 +111,7 @@ export function App() {
               <Route path="/guides/:slug" element={<GuideDetail />} />
               <Route path="/assistant" element={<AssistantSoon />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/data" element={<MyData />} />
             </Route>
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
