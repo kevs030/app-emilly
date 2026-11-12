@@ -5,9 +5,8 @@ import L from "leaflet";
 import { LocateFixed, Search } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { MapContainer, TileLayer, useMap, useMapEvents } from "react-leaflet";
+import { MIRRORS, overpassBody, toPoints, type OsmElement, type Point } from "@/lib/overpass";
 
-/** [lat, lon, nombre, dirección] */
-type Point = [number, number, string, string];
 type Lang = "es" | "en" | "it";
 
 export const CATEGORIES = [
@@ -36,9 +35,25 @@ async function loadCategory(cat: CatId): Promise<Point[]> {
   } catch {
     // caché ilegible: se vuelve a pedir
   }
-  const res = await fetch(`/api/points?cat=${cat}`);
-  if (!res.ok) throw new Error(String(res.status));
-  const { points } = (await res.json()) as { points: Point[] };
+  let points: Point[] = [];
+  try {
+    const res = await fetch(`/api/points?cat=${cat}`);
+    if (res.ok) points = ((await res.json()) as { points: Point[] }).points;
+  } catch {
+    // seguimos con el plan B
+  }
+  // Plan B: el navegador consulta OpenStreetMap directamente (los servidores públicos lo permiten).
+  for (const mirror of points.length ? [] : MIRRORS) {
+    try {
+      const res = await fetch(mirror, { method: "POST", body: overpassBody(cat)!, signal: AbortSignal.timeout(30_000) });
+      if (!res.ok) continue;
+      points = toPoints(((await res.json()) as { elements?: OsmElement[] }).elements ?? []);
+      if (points.length) break;
+    } catch {
+      // probamos el siguiente servidor
+    }
+  }
+  if (!points.length) throw new Error("unavailable");
   try {
     localStorage.setItem(key, JSON.stringify({ at: Date.now(), points }));
   } catch {

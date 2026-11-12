@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import { SUPABASE_URL } from "./src/lib/supabase/config";
+import { MIRROR_ORIGINS } from "./src/lib/overpass";
 
 const supabase = SUPABASE_URL;
 const supabaseWs = supabase.replace(/^https:/, "wss:");
@@ -15,7 +16,7 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://tile.openstreetmap.org https://i.ytimg.com",
   "font-src 'self'",
-  `connect-src 'self' ${supabase} ${supabaseWs} https://nominatim.openstreetmap.org`.trim(),
+  `connect-src 'self' ${supabase} ${supabaseWs} https://nominatim.openstreetmap.org ${MIRROR_ORIGINS.join(" ")}`.trim(),
   "frame-src https://www.youtube-nocookie.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
