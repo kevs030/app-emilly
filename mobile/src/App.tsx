@@ -6,13 +6,13 @@ import { LangProvider, useLang } from "~/lib/lang";
 import { PersonalProvider } from "~/lib/personal";
 import { useSessionTracking } from "~/lib/useSessionTracking";
 import { MyData } from "~/screens/MyData";
+import { Assistant } from "~/screens/Assistant";
 import { Auth } from "~/screens/Auth";
 import { GuideDetail, Guides } from "~/screens/Guides";
 import { Home } from "~/screens/Home";
 import { NewPassword, ResetPassword } from "~/screens/Password";
 import { Profile } from "~/screens/Profile";
 import { Welcome } from "~/screens/Welcome";
-import { Screen } from "~/ui/kit";
 
 function useOnline() {
   const [online, setOnline] = useState(navigator.onLine);
@@ -84,15 +84,6 @@ function Public() {
   return <Outlet />;
 }
 
-function AssistantSoon() {
-  const { t } = useLang();
-  return (
-    <Screen title={t("tabAssistant")}>
-      <p className="card text-ink-soft">{t("assistantSoon")}</p>
-    </Screen>
-  );
-}
-
 export function App() {
   return (
     <LangProvider>
@@ -109,7 +100,7 @@ export function App() {
               <Route path="/" element={<Home />} />
               <Route path="/guides" element={<Guides />} />
               <Route path="/guides/:slug" element={<GuideDetail />} />
-              <Route path="/assistant" element={<AssistantSoon />} />
+              <Route path="/assistant" element={<Assistant />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/data" element={<MyData />} />
             </Route>

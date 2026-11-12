@@ -2,7 +2,8 @@
 
 Están ordenados por importancia. Cada uno desbloquea algo concreto.
 
-## 1. Ejecutar el SQL en Supabase — desbloquea el panel personal, el panel admin y los 9 idiomas
+## 1. Ejecutar el SQL en Supabase — desbloquea el panel personal, el panel admin, los 9 idiomas y los créditos del asistente
+Cada vez que el archivo cambie hay que volver a ejecutarlo entero. No pasa nada por repetirlo.
 1. Abre `supabase/ejecutar-en-supabase.sql` en GitHub y pulsa el botón de copiar (dos cuadraditos, arriba a la derecha).
 2. Abre Supabase → **SQL Editor** → **New query**. Pega y pulsa **Run**.
 3. Debe decir *Success*. Se puede ejecutar más de una vez sin problema.
@@ -16,6 +17,9 @@ Usa Chrome y no dejes que traduzca la página: el traductor rompe el panel de Su
 4. **Deployments** → **⋯** en el primero → **Redeploy**.
 
 La clave es secreta: no se envía por chat ni se guarda en GitHub.
+
+En la consola del proveedor, en **Billing → Limits**, fija un gasto máximo mensual desde el primer día.
+El asistente funciona con créditos: ver `docs/09-creditos-del-asistente.md`.
 
 ## 3. Direcciones permitidas en Supabase — desbloquea los enlaces de los correos en la app
 Supabase → **Authentication** → **URL Configuration** → **Redirect URLs** → añadir:

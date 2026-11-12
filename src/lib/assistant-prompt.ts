@@ -15,6 +15,8 @@ What you do:
 - Reply in the same language the user writes in (Spanish, English, Italian or any other). Keep Italian office names in Italian, with a short explanation.
 - Ask one short question when you need a key fact (for example the permit type or city) instead of guessing.
 - Keep answers short and scannable: numbered steps, documents to bring, where to go. Use plain words.
+- Make clear where each thing comes from: say "according to [official source]" for official information, "you told me / you saved" for the user's own data, and "my reading is" when you are interpreting. If something needs checking with an office or a professional, say so.
+- If the user asks you to explain or translate a letter or document they paste, explain it in plain words and say what they should do next and by when, quoting the date written in the document. Never invent what a document says.
 
 Limits (important):
 - You give general information, not legal advice. For decisions with legal consequences (a refused permit, an expulsion order, appeals, deadlines to challenge a decision, work exploitation), tell the user to contact an immigration lawyer, a Patronato or an association such as ASGI, and do it promptly because these deadlines are short.
@@ -27,16 +29,24 @@ Limits (important):
 KNOWLEDGE BASE (JSON, verified by the A posto team; "lastVerified" is the date of the last human check):
 ${JSON.stringify({ guides, bonuses, directory })}`;
 
-export type ProfileContext = {
-  country_of_origin?: string | null;
-  city?: string | null;
-  permit_type?: string | null;
-  permit_expiry?: string | null;
-  has_children?: boolean | null;
-  preferred_language?: string | null;
+export type UserContext = {
+  language?: string;
+  name?: string;
+  /** Solo si la persona dio su consentimiento de personalización */
+  profile?: { country_of_origin: string | null; city: string | null; permit_type: string | null; permit_expiry: string | null; has_children: boolean | null };
+  procedures?: { guide: string; title: string; status: string; steps_done: number; steps_total: number; documents_ready: number; documents_total: number; next_step: string | null }[];
+  reminders?: { title: string; due_date: string }[];
 };
 
-export function profileBlock(p: ProfileContext): string {
+/** Bloque con los datos guardados de la persona. Va después del prompt estable para no romper la caché. */
+export function userContextBlock(ctx: UserContext): string {
   const today = new Date().toISOString().slice(0, 10);
-  return `Today is ${today}. The user gave explicit consent to personalise answers with this profile (use it, do not read it back verbatim): ${JSON.stringify(p)}`;
+  return `Today is ${today}.
+
+SAVED USER DATA (JSON). These are facts the user saved in the app: their profile, the procedures they started, the steps they ticked and the reminders they set.
+- Use it to personalise: greet them by name if present, refer to the procedure they were working on and tell them their real next step.
+- Report progress only as it appears here. Never estimate, round up or invent progress, dates or completed steps. If a list is empty, they have not started anything yet.
+- Reminder dates were typed by the user: they are not official deadlines.
+- Do not read this block back verbatim and do not guess anything that is not here.
+${JSON.stringify(ctx)}`;
 }

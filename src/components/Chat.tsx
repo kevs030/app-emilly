@@ -12,7 +12,11 @@ const L = {
   es: {
     placeholder: "Escribe o dicta tu pregunta…",
     send: "Enviar",
-    limit: "Has hecho muchas preguntas seguidas. Espera unos minutos.",
+    limit: "Has hecho muchas preguntas seguidas. Espera un minuto.",
+    credits: "preguntas disponibles",
+    noCredits: "Has usado tus preguntas gratuitas. Muy pronto podrás conseguir más con un paquete o viendo un anuncio. Las guías y los formularios siguen siendo gratis.",
+    notReady: "El asistente todavía no está activo. Vuelve a intentarlo más tarde. No se ha gastado ninguna pregunta.",
+    login: "Inicia sesión para usar el asistente.",
     voiceOn: "Voz activada",
     voiceOff: "Voz desactivada",
     listen: "Escuchar",
@@ -27,7 +31,11 @@ const L = {
   en: {
     placeholder: "Type or dictate your question…",
     send: "Send",
-    limit: "Too many questions in a row. Please wait a few minutes.",
+    limit: "Too many questions in a row. Please wait a minute.",
+    credits: "questions available",
+    noCredits: "You've used your free questions. Very soon you'll be able to get more with a pack or by watching an ad. Guides and forms stay free.",
+    notReady: "The assistant isn't active yet. Please try again later. No question was used.",
+    login: "Sign in to use the assistant.",
     voiceOn: "Voice on",
     voiceOff: "Voice off",
     listen: "Listen",
@@ -42,7 +50,11 @@ const L = {
   it: {
     placeholder: "Scrivi o detta la tua domanda…",
     send: "Invia",
-    limit: "Troppe domande di seguito. Attendi qualche minuto.",
+    limit: "Troppe domande di seguito. Attendi un minuto.",
+    credits: "domande disponibili",
+    noCredits: "Hai usato le tue domande gratuite. Presto potrai ottenerne altre con un pacchetto o guardando un annuncio. Guide e moduli restano gratuiti.",
+    notReady: "L'assistente non è ancora attivo. Riprova più tardi. Non è stata usata nessuna domanda.",
+    login: "Accedi per usare l'assistente.",
     voiceOn: "Voce attiva",
     voiceOff: "Voce disattivata",
     listen: "Ascolta",
@@ -128,11 +140,12 @@ function Formatted({ text }: { text: string }) {
   );
 }
 
-export function Chat({ lang, notice }: { lang: Lang; notice: string }) {
+export function Chat({ lang, notice, initialCredits }: { lang: Lang; notice: string; initialCredits: number | null }) {
   const s = L[lang];
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
+  const [credits, setCredits] = useState<number | null>(initialCredits);
   const [autoSpeak, setAutoSpeak] = useState(false);
   const [speaking, setSpeaking] = useState<number | null>(null);
   const [listening, setListening] = useState(false);
@@ -222,7 +235,15 @@ export function Chat({ lang, notice }: { lang: Lang; notice: string }) {
         body: JSON.stringify({ messages: next.slice(-20) }),
       });
       if (res.status === 429) throw new Error(s.limit);
+      if (res.status === 401) throw new Error(s.login);
+      if (res.status === 402) {
+        setCredits(0);
+        throw new Error(s.noCredits);
+      }
+      if (res.status === 503) throw new Error(s.notReady);
       if (!res.ok || !res.body) throw new Error("Error");
+      const left = Number(res.headers.get("X-Credits-Remaining"));
+      if (Number.isFinite(left)) setCredits(left);
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
       for (;;) {
@@ -247,6 +268,11 @@ export function Chat({ lang, notice }: { lang: Lang; notice: string }) {
           <Bot size={20} className="mt-0.5 shrink-0 text-brand" aria-hidden />
           <span>{notice}</span>
         </p>
+        {credits !== null && (
+          <span className="chip shrink-0 self-start sm:self-auto" aria-live="polite">
+            <strong>{credits}</strong> {s.credits}
+          </span>
+        )}
         {canSpeak && (
           <button
             type="button"

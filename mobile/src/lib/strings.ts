@@ -197,6 +197,21 @@ const S = {
   exportData: { es: "Descargar mis datos", it: "Scarica i miei dati", en: "Download my data" },
   exportDone: { es: "Datos preparados.", it: "Dati pronti.", en: "Data ready." },
   exportCopied: { es: "Datos copiados al portapapeles.", it: "Dati copiati negli appunti.", en: "Data copied to the clipboard." },
+  // ── Asistente ──
+  asstNotice: { es: "Hablas con una inteligencia artificial. Puede equivocarse: comprueba siempre la fuente oficial.", it: "Stai parlando con un'intelligenza artificiale. Può sbagliare: verifica sempre la fonte ufficiale.", en: "You're talking to an artificial intelligence. It can make mistakes: always check the official source." },
+  asstHello: { es: "Cuéntame tu situación y te digo qué pasos seguir. Recuerdo los trámites que tienes en marcha.", it: "Raccontami la tua situazione e ti dico quali passi seguire. Ricordo le pratiche che hai in corso.", en: "Tell me your situation and I'll explain the steps. I remember the procedures you have in progress." },
+  asstPlaceholder: { es: "Escribe tu pregunta…", it: "Scrivi la tua domanda…", en: "Type your question…" },
+  send: { es: "Enviar", it: "Invia", en: "Send" },
+  creditsLeft: { es: "preguntas disponibles", it: "domande disponibili", en: "questions available" },
+  noCreditsTitle: { es: "Has usado tus preguntas", it: "Hai usato le tue domande", en: "You've used your questions" },
+  noCreditsBody: { es: "Las guías, los formularios y tu progreso siguen siendo gratis. Para seguir preguntando al asistente podrás elegir:", it: "Guide, moduli e i tuoi progressi restano gratuiti. Per continuare a chiedere all'assistente potrai scegliere:", en: "Guides, forms and your progress stay free. To keep asking the assistant you'll be able to choose:" },
+  packSoon: { es: "Paquete de 20 preguntas, sin suscripción", it: "Pacchetto da 20 domande, senza abbonamento", en: "Pack of 20 questions, no subscription" },
+  adSoon: { es: "Ver un anuncio y ganar 1 pregunta", it: "Guarda un annuncio e ottieni 1 domanda", en: "Watch an ad and earn 1 question" },
+  soon: { es: "Próximamente", it: "Prossimamente", en: "Coming soon" },
+  asstNotReady: { es: "El asistente todavía no está activo. No se ha gastado ninguna pregunta.", it: "L'assistente non è ancora attivo. Non è stata usata nessuna domanda.", en: "The assistant isn't active yet. No question was used." },
+  asstError: { es: "No se pudo obtener la respuesta. Inténtalo de nuevo.", it: "Impossibile ottenere la risposta. Riprova.", en: "Couldn't get the answer. Please try again." },
+  ex1: { es: "¿Qué me falta para terminar mi trámite?", it: "Cosa mi manca per completare la mia pratica?", en: "What do I still need to finish my procedure?" },
+  ex2: { es: "Explícame esta carta que he recibido", it: "Spiegami questa lettera che ho ricevuto", en: "Explain this letter I received" },
 } satisfies Record<string, { es: string; it?: string; en?: string }>;
 
 export type StringKey = keyof typeof S;
