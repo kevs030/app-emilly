@@ -201,6 +201,45 @@ export const documents: OfficialDocument[] = [
     issuer: "Ministero dell'Interno",
     lastVerified: "2026-11-12",
   },
+  // ── Art. 31 ──
+  {
+    id: "art31-modulo-trento",
+    guide: "articolo-31",
+    title: {
+      es: "Solicitud art. 31 (modelo del Tribunal de Menores de Trento)",
+      en: "Art. 31 application (Trento Juvenile Court template)",
+      it: "Istanza art. 31, comma 3 (modulo del Tribunale per i Minorenni di Trento)",
+    },
+    description: {
+      es: "Sirve como ejemplo de lo que hay que rellenar. Cada tribunal tiene su propio modelo: usa el del tribunal de la zona donde vive el menor.",
+      en: "Useful as an example of what you fill in. Each court has its own template: use the one for the court where the child lives.",
+      it: "Utile come esempio. Ogni tribunale ha il proprio modulo: usa quello competente per il minore.",
+    },
+    url: "https://www.corteappello.trento.it/minori/modulistica/Mod_1667_9201/Modulo%20art.%2031%20istanza%20singola.pdf",
+    kind: "pdf",
+    fillable: true,
+    issuer: "Tribunale per i Minorenni di Trento",
+    lastVerified: "2026-11-12",
+  },
+  {
+    id: "art31-campobasso",
+    guide: "articolo-31",
+    title: {
+      es: "Instrucciones oficiales de un Tribunal de Menores (Campobasso)",
+      en: "Official instructions from a Juvenile Court (Campobasso)",
+      it: "Istruzioni ufficiali di un Tribunale per i Minorenni (Campobasso)",
+    },
+    description: {
+      es: "Explica quién puede pedirlo, la tasa de 27 € y que se puede presentar sin abogado. Incluye su propio formulario.",
+      en: "Explains who can apply, the €27 fee and that it can be filed without a lawyer. Includes its own form.",
+      it: "Chi può chiederla, diritti di 27 € e presentazione senza legale.",
+    },
+    url: "https://tribmin-campobasso.giustizia.it/it/art_31_d_lgs_286_98.page",
+    kind: "web",
+    fillable: false,
+    issuer: "Ministero della Giustizia",
+    lastVerified: "2026-11-12",
+  },
 ];
 
 export function documentsFor(guide: string): OfficialDocument[] {

@@ -383,6 +383,126 @@ export const guides: Guide[] = [
     ],
     lastVerified: "2026-11-11",
   },
+  {
+    slug: "articolo-31",
+    icon: "👨‍👩‍👧",
+    category: "familia",
+    title: {
+      es: "Art. 31: permiso para quedarte en Italia por el bien de tu hijo menor",
+      en: "Art. 31: permit to stay in Italy for the sake of your minor child",
+      it: "Art. 31: autorizzazione a restare in Italia nell'interesse del figlio minore",
+    },
+    summary: {
+      es: "El Tribunal de Menores puede autorizar a un familiar de un niño que vive en Italia a entrar o quedarse durante un tiempo, aunque no tenga permiso, cuando hay motivos graves ligados al desarrollo físico y psicológico del menor. Con esa autorización, la Questura da el permiso «assistenza minori», que permite trabajar.",
+      en: "The Juvenile Court can authorise a family member of a child living in Italy to enter or stay for a set time, even without a permit, when there are serious reasons linked to the child's physical and psychological development. With that authorisation, the Questura issues the “assistenza minori” permit, which allows you to work.",
+      it: "Il Tribunale per i Minorenni può autorizzare un familiare del minore a entrare o restare in Italia per un tempo determinato, per gravi motivi legati allo sviluppo psicofisico del minore. Con il decreto, la Questura rilascia il permesso per assistenza minori, che consente di lavorare.",
+    },
+    steps: [
+      {
+        title: { es: "Busca orientación gratuita antes de empezar", en: "Get free guidance before you start", it: "Chiedi un orientamento gratuito" },
+        body: {
+          es: "El tribunal decide caso por caso y no siempre concede la autorización. Habla antes con un abogado de extranjería, un Patronato o una asociación (por ejemplo ASGI o Caritas). Si tienes pocos ingresos puedes pedir abogado gratuito (patrocinio a spese dello Stato).",
+          en: "The court decides case by case and does not always grant the authorisation. First talk to an immigration lawyer, a Patronato or an association (such as ASGI or Caritas). On a low income you can ask for free legal aid (patrocinio a spese dello Stato).",
+          it: "Il tribunale decide caso per caso. Rivolgiti prima a un avvocato, a un Patronato o a un'associazione. Con reddito basso puoi chiedere il patrocinio a spese dello Stato.",
+        },
+      },
+      {
+        title: { es: "Rellena la solicitud (istanza)", en: "Fill in the application (istanza)", it: "Compila l'istanza" },
+        body: {
+          es: "Cada Tribunal de Menores tiene su propio formulario: descárgalo de su web o pídelo en la secretaría (cancelleria). Se indican tus datos y los del menor, tu pasaporte, cómo y cuándo entraste en Italia, quién vive en casa y los motivos por los que el niño te necesita aquí. Algunos tribunales, como el de Campobasso, indican que puedes presentarla tú mismo sin abogado.",
+          en: "Each Juvenile Court has its own form: download it from its website or ask at the registry (cancelleria). You state your details and the child's, your passport, how and when you entered Italy, who lives in the household and why the child needs you here. Some courts, such as Campobasso, state that you can file it yourself without a lawyer.",
+          it: "Ogni Tribunale per i Minorenni ha il proprio modulo: scaricalo dal sito o chiedilo in cancelleria. Alcuni tribunali indicano che l'istanza può essere presentata personalmente.",
+        },
+      },
+      {
+        title: { es: "Preséntala en el Tribunal de Menores", en: "File it at the Juvenile Court", it: "Presentala al Tribunale per i Minorenni" },
+        body: {
+          es: "Se presenta en el Tribunale per i Minorenni que corresponde al lugar donde vive el niño (hay uno por cada distrito de Corte de Apelación, normalmente en la capital de la región). Pagas una tasa de 27 € por PagoPA. El procedimiento está exento del «contributo unificato».",
+          en: "File it at the Tribunale per i Minorenni for the place where the child lives (there is one per Court of Appeal district, usually in the regional capital). You pay a €27 fee via PagoPA. The procedure is exempt from the “contributo unificato”.",
+          it: "Si presenta al Tribunale per i Minorenni competente per il luogo in cui vive il minore. Si versano 27 € di diritti tramite PagoPA; il procedimento è esente da contributo unificato.",
+        },
+      },
+      {
+        title: { es: "El tribunal estudia el caso", en: "The court examines the case", it: "Il tribunale valuta" },
+        body: {
+          es: "El tribunal valora el interés del menor: su edad, su salud, su arraigo (escuela, vida en Italia) y el daño que le causaría separarse de ti o tener que irse. Puede pedir informes a los servicios sociales y citarte a una audiencia. Decide con un decreto que fija cuánto dura la autorización.",
+          en: "The court weighs the child's interests: age, health, roots (school, life in Italy) and the harm that separation from you or having to leave would cause. It may request social services reports and call you to a hearing. It decides by decree, which sets how long the authorisation lasts.",
+          it: "Il tribunale valuta età, salute e radicamento del minore e il pregiudizio derivante dalla separazione. Decide con decreto, che fissa la durata dell'autorizzazione.",
+        },
+      },
+      {
+        title: { es: "Con el decreto, ve a la Questura", en: "Take the decree to the Questura", it: "Con il decreto vai in Questura" },
+        body: {
+          es: "Con el decreto favorable pides en la oficina de inmigración de la Questura el permiso por «assistenza minori». Dura lo que indique el decreto y te permite trabajar. Antes de que venza, hay que pedir de nuevo la autorización al tribunal.",
+          en: "With a favourable decree you apply at the Questura immigration office for the “assistenza minori” permit. It lasts as long as the decree states and allows you to work. Before it expires, you must ask the court for a new authorisation.",
+          it: "Con il decreto favorevole si chiede in Questura il permesso per assistenza minori, della durata fissata dal decreto, che consente di lavorare.",
+        },
+      },
+    ],
+    documents: [
+      { es: "Tu pasaporte y el del menor", en: "Your passport and the child's", it: "Passaporto tuo e del minore" },
+      { es: "Certificado de nacimiento del menor (que demuestre el parentesco)", en: "The child's birth certificate (proving the relationship)", it: "Atto di nascita del minore" },
+      { es: "Pruebas de la situación del niño: matrícula y asistencia a la escuela, informes médicos o psicológicos, informes de servicios sociales", en: "Evidence of the child's situation: school enrolment and attendance, medical or psychological reports, social services reports", it: "Prove della situazione del minore: scuola, relazioni mediche o psicologiche, servizi sociali" },
+      { es: "Datos de la familia y de la vivienda (quién vive en casa, contrato de alquiler u hospitalidad)", en: "Family and housing details (who lives in the home, rental contract or hospitality)", it: "Composizione del nucleo familiare e alloggio" },
+      { es: "Justificante del pago de 27 € (PagoPA)", en: "Proof of the €27 payment (PagoPA)", it: "Ricevuta del versamento di 27 € (PagoPA)" },
+      { es: "Para la Questura, después: el decreto del tribunal y fotos de carnet", en: "For the Questura, afterwards: the court decree and passport photos", it: "Per la Questura: decreto del tribunale e fototessere" },
+    ],
+    costs: {
+      es: "27 € de tasas de secretaría (PagoPA). Sin «contributo unificato». La lista exacta de documentos cambia según el tribunal: confírmala en su web o en la secretaría.",
+      en: "€27 in registry fees (PagoPA). No “contributo unificato”. The exact document list varies by court: confirm it on its website or at the registry.",
+      it: "27 € di diritti (PagoPA), senza contributo unificato. L'elenco dei documenti varia da tribunale a tribunale.",
+    },
+    extra: {
+      title: { es: "Ayudas que puedes pedir con este permiso", en: "Benefits you can claim with this permit", it: "Prestazioni che puoi chiedere con questo permesso" },
+      items: [
+        {
+          es: "Assegno Unico: sí. El INPS admite el permiso por «assistenza minori» (mensaje INPS 2951 del 25/07/2022). En 2026 son como máximo 203,80 € al mes por cada hijo menor (con ISEE de hasta 17.468,51 €) y como mínimo 58,30 € al mes (con ISEE por encima de 46.582,71 € o sin ISEE).",
+          en: "Assegno Unico: yes. INPS accepts the “assistenza minori” permit (INPS message 2951 of 25/07/2022). In 2026 it is at most €203.80 a month per minor child (ISEE up to €17,468.51) and at least €58.30 a month (ISEE above €46,582.71 or no ISEE).",
+          it: "Assegno Unico: sì (messaggio INPS 2951/2022). Nel 2026 da 58,30 € a 203,80 € al mese per figlio minorenne, in base all'ISEE.",
+        },
+        {
+          es: "Bono por nacimiento (1.000 €): desde 2026 vale cualquier permiso de al menos 1 año, con ISEE de hasta 40.000 €. Si tu permiso dura menos de un año, pregunta en un Patronato.",
+          en: "New baby bonus (€1,000): since 2026 any permit of at least 1 year qualifies, with ISEE up to €40,000. If your permit is shorter than a year, ask a Patronato.",
+          it: "Bonus nuovi nati (1.000 €): dal 2026 con qualsiasi permesso di almeno un anno e ISEE fino a 40.000 €.",
+        },
+        {
+          es: "Para cobrar cualquier ayuda necesitas código fiscal, ISEE y una cuenta con IBAN a tu nombre. Los Patronatos y CAF hacen el ISEE y la solicitud gratis.",
+          en: "To receive any benefit you need a tax code, an ISEE and an account with an IBAN in your name. Patronati and CAF prepare the ISEE and the application for free.",
+          it: "Servono codice fiscale, ISEE e un conto con IBAN intestato a te. Patronati e CAF aiutano gratis.",
+        },
+      ],
+    },
+    warnings: [
+      {
+        es: "No está garantizado. Si el tribunal lo deniega, hay muy pocos días para recurrir: habla con un abogado enseguida.",
+        en: "It is not guaranteed. If the court refuses, there are very few days to appeal: talk to a lawyer straight away.",
+        it: "Non è garantito. In caso di rigetto i termini per il reclamo sono brevi: rivolgiti subito a un avvocato.",
+      },
+      {
+        es: "¿Se puede pasar después a un permiso de trabajo? Desde 2020 la ley lo incluye entre los permisos convertibles si cumples los requisitos (art. 6, apartado 1-bis, del Texto Único). Algunas webs de tribunales todavía dicen lo contrario. Confírmalo con un abogado o un Patronato antes de dar el paso.",
+        en: "Can you later switch to a work permit? Since 2020 the law lists it among convertible permits if you meet the requirements (art. 6, para. 1-bis, of the Consolidated Act). Some court websites still say otherwise. Confirm with a lawyer or a Patronato first.",
+        it: "Conversione in lavoro: dal 2020 la legge la prevede se ricorrono i requisiti (art. 6, c. 1-bis, TUI), ma alcuni siti di tribunali indicano ancora il contrario. Verifica con un avvocato.",
+      },
+      {
+        es: "La autorización se puede revocar si desaparecen los motivos graves o si tu conducta es incompatible con las necesidades del menor.",
+        en: "The authorisation can be revoked if the serious reasons cease or your conduct is incompatible with the child's needs.",
+        it: "L'autorizzazione è revocata se cessano i gravi motivi o per attività incompatibili con le esigenze del minore.",
+      },
+      {
+        es: "Desconfía de quien te «garantice» el art. 31 a cambio de dinero. Nadie puede prometer lo que decide un juez.",
+        en: "Be wary of anyone who “guarantees” art. 31 for money. Nobody can promise what a judge decides.",
+        it: "Diffida di chi «garantisce» l'art. 31 a pagamento.",
+      },
+    ],
+    sources: [
+      { title: "Normattiva: art. 31 del D.Lgs. 286/1998 (texto de la ley)", url: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:1998-07-25;286~art31", official: true },
+      { title: "Tribunale per i Minorenni di Campobasso: solicitudes ex art. 31", url: "https://tribmin-campobasso.giustizia.it/it/art_31_d_lgs_286_98.page", official: true },
+      { title: "Corte d'Appello di Trento: formularios art. 31", url: "https://www.corteappello.trento.it/minori/minori_cfp.aspx?cfp_id_scheda=3937", official: true },
+      { title: "ASGI: mensaje INPS 2951/2022 (Assegno Unico y permiso assistenza minori)", url: "https://www.asgi.it/antidiscriminazione/auu-importanti-novita-con-il-messaggio-inps-n-2951-del-25-luglio-2022/", official: false },
+      { title: "INPS: Assegno Unico 2026, importes actualizados", url: "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.02.assegno-unico-2026-presentazione-domanda-e-aggiornamento-importi.html", official: true },
+    ],
+    lastVerified: "2026-11-12",
+  },
 ];
 
 export function getGuide(slug: string): Guide | undefined {

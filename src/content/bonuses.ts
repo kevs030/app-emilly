@@ -5,9 +5,9 @@ export const bonuses: Bonus[] = [
     slug: "assegno-unico",
     name: { es: "Assegno Unico (ayuda por hijos)", en: "Assegno Unico (child benefit)", it: "Assegno Unico e Universale" },
     amount: {
-      es: "Pago mensual por cada hijo. El importe depende del ISEE (indicador de ingresos y patrimonio de la familia).",
-      en: "Monthly payment per child. The amount depends on your ISEE (family income and wealth indicator).",
-      it: "Importo mensile per figlio in base all'ISEE.",
+      es: "En 2026: de 58,30 € a 203,80 € al mes por cada hijo menor, según tu ISEE (indicador de ingresos y patrimonio de la familia). El máximo es con ISEE de hasta 17.468,51 €; el mínimo, con ISEE por encima de 46.582,71 € o sin ISEE. Hay suplementos por discapacidad y familias numerosas.",
+      en: "In 2026: from €58.30 to €203.80 a month per minor child, depending on your ISEE (family income and wealth indicator). The maximum applies with ISEE up to €17,468.51; the minimum with ISEE above €46,582.71 or no ISEE. There are supplements for disability and large families.",
+      it: "Nel 2026: da 58,30 € a 203,80 € al mese per figlio minorenne, in base all'ISEE, più maggiorazioni.",
     },
     who: {
       es: "Familias con hijos a cargo menores de 21 años (sin límite de edad si el hijo tiene discapacidad).",
@@ -16,8 +16,8 @@ export const bonuses: Bonus[] = [
     },
     requirements: [
       {
-        es: "Permisos admitidos, entre otros: permiso UE de larga duración, permiso de investigación de más de 6 meses y permiso por espera de empleo, en las condiciones que reconoce el INPS.",
-        en: "Accepted permits include: EU long-term residence permit, research permit over 6 months, and job-seeking permit, under the conditions recognised by INPS.",
+        es: "Permisos admitidos, entre otros: permiso UE de larga duración, permiso de trabajo de más de 6 meses, protección especial, «assistenza minori» (art. 31), investigación de más de 6 meses y espera de empleo, en las condiciones que reconoce el INPS.",
+        en: "Accepted permits include: EU long-term residence permit, work permit over 6 months, special protection, “assistenza minori” (art. 31), research permit over 6 months, and job-seeking permit, under the conditions recognised by INPS.",
         it: "Tra i permessi ammessi: lungo periodo UE, ricerca oltre 6 mesi, attesa occupazione secondo le condizioni INPS.",
       },
       { es: "ISEE vigente (si no lo tienes, recibes el importe mínimo)", en: "Valid ISEE (without it you get the minimum amount)", it: "ISEE in corso di validità (senza ISEE spetta il minimo)" },
@@ -28,9 +28,11 @@ export const bonuses: Bonus[] = [
       it: "Domanda sul sito INPS con SPID/CIE o tramite Patronato.",
     },
     sources: [
+      { title: "INPS: Assegno Unico 2026, importes actualizados", url: "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.02.assegno-unico-2026-presentazione-domanda-e-aggiornamento-importi.html", official: true },
+      { title: "ASGI: mensaje INPS 2951/2022 sobre los permisos admitidos", url: "https://www.asgi.it/antidiscriminazione/auu-importanti-novita-con-il-messaggio-inps-n-2951-del-25-luglio-2022/", official: false },
       { title: "INPS: Assegno Unico y Universal", url: "https://www.inps.it/it/it/dettaglio-scheda.it.schede-servizio-strumento.schede-servizi.assegno-unico-e-universale-per-i-figli-a-carico-55984.assegno-unico-e-universale-per-i-figli-a-carico.html", official: true },
     ],
-    lastVerified: "2026-11-11",
+    lastVerified: "2026-11-12",
   },
   {
     slug: "bonus-nuovi-nati",

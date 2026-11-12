@@ -25,6 +25,8 @@ export interface Guide {
   documents: L10n[];
   costs?: L10n;
   warnings?: L10n[];
+  /** Bloque adicional (por ejemplo, las ayudas económicas que puede pedir quien tiene este permiso) */
+  extra?: { title: L10n; items: L10n[] };
   /** IDs de videos de `videos.ts` relacionados con esta guía */
   videoIds?: string[];
   sources: Source[];

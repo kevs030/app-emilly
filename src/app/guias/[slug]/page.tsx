@@ -65,6 +65,17 @@ export default async function GuidePage(props: PageProps<"/guias/[slug]">) {
         )}
       </section>
 
+      {guide.extra && (
+        <section className="card border-brand">
+          <h2 className="text-lg font-semibold">{tr(guide.extra.title, lang)}</h2>
+          <ul className="mt-2 list-disc space-y-2 pl-5 text-sm">
+            {guide.extra.items.map((x, i) => (
+              <li key={i}>{tr(x, lang)}</li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       {docs.length > 0 && (
         <section className="card">
           <h2 className="mb-3 text-lg font-semibold">{docsTitle}</h2>
