@@ -4,6 +4,7 @@ import { t } from "@/lib/i18n";
 import { createClient, supabaseConfigured } from "@/lib/supabase/server";
 import { NotConfigured } from "@/components/NotConfigured";
 import { CATEGORY_LABEL, FORUM_RULES } from "./forum-i18n";
+import { AdSlot } from "@/components/AdSlot";
 
 export default async function ForumPage(props: PageProps<"/foro">) {
   const lang = await getLang();
@@ -44,7 +45,7 @@ export default async function ForumPage(props: PageProps<"/foro">) {
       <ul className="space-y-2">
         {(posts ?? []).map((p) => (
           <li key={p.id}>
-            <Link href={`/foro/${p.id}`} className="card block hover:border-brand">
+            <Link href={`/foro/${p.id}`} className="card card-link block">
               <span className="text-xs text-brand">{CATEGORY_LABEL[p.category]?.[l]}</span>
               <h2 className="font-medium">{p.title}</h2>
               <p className="text-xs text-muted">
@@ -55,6 +56,7 @@ export default async function ForumPage(props: PageProps<"/foro">) {
         ))}
         {posts?.length === 0 && <p className="text-sm text-muted">{l === "en" ? "No posts yet. Be the first!" : "Aún no hay preguntas. ¡Sé el primero!"}</p>}
       </ul>
+      <AdSlot placement="foro" lang={lang} />
     </div>
   );
 }

@@ -49,6 +49,19 @@ scripts/check-freshness.ts     ← revisión semanal de contenido y enlaces
 - La clave de la IA solo existe en el servidor.
 - Reglas contra usos indebidos: no ayuda a falsificar documentos y no pide datos sensibles.
 
+## Panel de administración (`/admin`)
+No es una «puerta trasera» oculta: una entrada secreta sin control sería un agujero de seguridad que cualquiera podría encontrar. Es un panel protegido por rol:
+- Solo entra una cuenta con `role = 'admin'`. Para cualquier otra persona, `/admin` devuelve 404.
+- El rol no se puede cambiar desde la app (privilegios por columna); solo desde el panel de Supabase.
+- Cada acción (ocultar, borrar, publicar anuncios) se vuelve a comprobar en la base de datos con RLS.
+- Pruebas hechas el 12/11/2026: un usuario normal no puede leer las cifras, crear anuncios ni inflar clics; un visitante sin cuenta solo ve los anuncios activos.
+
+## Otras funciones añadidas el 12/11/2026
+- **Voz del asistente:** lectura en voz alta y dictado con las API del navegador (gratis, sin claves). El micrófono solo se permite en nuestro propio sitio (`Permissions-Policy`).
+- **Mapa de Italia:** `/api/points` descarga los puntos de OpenStreetMap y los guarda 7 días en la caché de Vercel. Los nombres se pintan como texto, nunca como HTML.
+- **Anuncios:** `/r/[id]` cuenta el clic y redirige a la URL guardada en la base de datos (no hay redirección abierta).
+- **Acceso por teléfono (SMS):** el código está listo; se activa solo cuando se configure un proveedor de SMS en Supabase.
+
 ## Pruebas de seguridad hechas (11/11/2026)
 Se ejecutó la migración en PostgreSQL 16 simulando Supabase y se lanzaron estos ataques. **Todos se bloquearon:**
 

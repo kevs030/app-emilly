@@ -1,109 +1,270 @@
 "use client";
 
 import "leaflet/dist/leaflet.css";
-import { useEffect, useState } from "react";
-import { CircleMarker, MapContainer, Popup, TileLayer, useMap } from "react-leaflet";
+import L from "leaflet";
+import { LocateFixed, Search } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { MapContainer, TileLayer, useMap, useMapEvents } from "react-leaflet";
 
-type Place = { id: number; name: string; address: string; lat: number; lon: number };
+/** [lat, lon, nombre, dirección] */
+type Point = [number, number, string, string];
+type Lang = "es" | "en" | "it";
 
-export const OFFICE_TYPES = [
-  { q: "Questura", es: "Questura (permisos)", en: "Questura (permits)" },
-  { q: "Agenzia delle Entrate", es: "Agenzia delle Entrate", en: "Agenzia delle Entrate" },
-  { q: "Ufficio postale", es: "Correos (Poste)", en: "Post office" },
-  { q: "Patronato", es: "Patronato (ayuda gratis)", en: "Patronato (free help)" },
-  { q: "ASL", es: "ASL (sanidad)", en: "ASL (healthcare)" },
-  { q: "Comune anagrafe", es: "Comune / Anagrafe", en: "Town hall / Registry" },
-  { q: "Prefettura", es: "Prefectura", en: "Prefecture" },
+export const CATEGORIES = [
+  { id: "questura", color: "#1d4ed8", es: "Questura (permisos)", en: "Questura (permits)", it: "Questura" },
+  { id: "entrate", color: "#0f766e", es: "Agenzia delle Entrate", en: "Agenzia delle Entrate", it: "Agenzia delle Entrate" },
+  { id: "ayuda", color: "#be185d", es: "Ayuda a migrantes", en: "Migrant support", it: "Aiuto ai migranti" },
+  { id: "patronato", color: "#b45309", es: "Patronatos y CAF (gratis)", en: "Patronati & CAF (free)", it: "Patronati e CAF" },
+  { id: "inps", color: "#6d28d9", es: "INPS", en: "INPS", it: "INPS" },
+  { id: "prefettura", color: "#475569", es: "Prefectura", en: "Prefecture", it: "Prefettura" },
 ] as const;
+type CatId = (typeof CATEGORIES)[number]["id"];
 
-function FitTo({ places }: { places: Place[] }) {
+const T = {
+  es: { city: "Ciudad o dirección (ej. Milano)", search: "Buscar", near: "Cerca de mí", loading: "Cargando puntos…", failed: "No se pudieron cargar:", nearest: "Los más cercanos al centro del mapa", directions: "Cómo llegar", none: "Activa una categoría para ver puntos.", notFound: "No encontramos ese lugar.", geoErr: "No pudimos obtener tu ubicación.", points: "puntos" },
+  en: { city: "City or address (e.g. Milano)", search: "Search", near: "Near me", loading: "Loading points…", failed: "Could not load:", nearest: "Closest to the map centre", directions: "Directions", none: "Turn on a category to see points.", notFound: "We couldn't find that place.", geoErr: "We couldn't get your location.", points: "points" },
+  it: { city: "Città o indirizzo (es. Milano)", search: "Cerca", near: "Vicino a me", loading: "Caricamento…", failed: "Impossibile caricare:", nearest: "I più vicini al centro della mappa", directions: "Indicazioni", none: "Attiva una categoria per vedere i punti.", notFound: "Luogo non trovato.", geoErr: "Posizione non disponibile.", points: "punti" },
+};
+
+const CACHE_DAYS = 7;
+
+async function loadCategory(cat: CatId): Promise<Point[]> {
+  const key = `emilly:points:${cat}`;
+  try {
+    const cached = JSON.parse(localStorage.getItem(key) ?? "null") as { at: number; points: Point[] } | null;
+    if (cached && Date.now() - cached.at < CACHE_DAYS * 86_400_000 && cached.points.length) return cached.points;
+  } catch {
+    // caché ilegible: se vuelve a pedir
+  }
+  const res = await fetch(`/api/points?cat=${cat}`);
+  if (!res.ok) throw new Error(String(res.status));
+  const { points } = (await res.json()) as { points: Point[] };
+  try {
+    localStorage.setItem(key, JSON.stringify({ at: Date.now(), points }));
+  } catch {
+    // sin espacio: seguimos sin caché
+  }
+  return points;
+}
+
+function directionsUrl(lat: number, lon: number) {
+  return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`;
+}
+
+/** Popup construido con nodos DOM y textContent: los nombres de OpenStreetMap nunca se interpretan como HTML. */
+function popupNode(p: Point, label: string, directions: string) {
+  const box = document.createElement("div");
+  const name = document.createElement("strong");
+  name.textContent = p[2];
+  const cat = document.createElement("div");
+  cat.textContent = label;
+  cat.style.opacity = "0.7";
+  box.append(name, cat);
+  if (p[3]) {
+    const addr = document.createElement("div");
+    addr.textContent = p[3];
+    box.append(addr);
+  }
+  const a = document.createElement("a");
+  a.href = directionsUrl(p[0], p[1]);
+  a.target = "_blank";
+  a.rel = "noopener noreferrer";
+  a.textContent = directions;
+  box.append(a);
+  return box;
+}
+
+function PointsLayer({ data, active, lang }: { data: Partial<Record<CatId, Point[]>>; active: CatId[]; lang: Lang }) {
   const map = useMap();
+  const groups = useRef<Partial<Record<CatId, L.LayerGroup>>>({});
   useEffect(() => {
-    if (places.length > 0) {
-      map.fitBounds(places.map((p) => [p.lat, p.lon] as [number, number]), { padding: [30, 30], maxZoom: 15 });
+    const renderer = L.canvas({ padding: 0.5 });
+    for (const c of CATEGORIES) {
+      const points = data[c.id];
+      const on = active.includes(c.id);
+      if (on && points && !groups.current[c.id]) {
+        const group = L.layerGroup();
+        for (const p of points) {
+          L.circleMarker([p[0], p[1]], { renderer, radius: 7, color: "#ffffff", weight: 1.5, fillColor: c.color, fillOpacity: 0.9 })
+            .bindPopup(() => popupNode(p, c[lang], T[lang].directions))
+            .addTo(group);
+        }
+        groups.current[c.id] = group;
+      }
+      const group = groups.current[c.id];
+      if (group) {
+        if (on && !map.hasLayer(group)) group.addTo(map);
+        if (!on && map.hasLayer(group)) map.removeLayer(group);
+      }
     }
-  }, [map, places]);
+  }, [map, data, active, lang]);
   return null;
 }
 
-export default function OfficeMap({ lang }: { lang: "es" | "en" | "it" }) {
+function CenterWatcher({ onMove }: { onMove: (c: [number, number], zoom: number) => void }) {
+  const map = useMapEvents({
+    moveend: () => onMove([map.getCenter().lat, map.getCenter().lng], map.getZoom()),
+  });
+  return null;
+}
+
+function FlyTo({ target }: { target: { center: [number, number]; zoom: number } | null }) {
+  const map = useMap();
+  useEffect(() => {
+    if (target) map.flyTo(target.center, target.zoom, { duration: 0.8 });
+  }, [map, target]);
+  return null;
+}
+
+function km(a: [number, number], b: [number, number]) {
+  const rad = Math.PI / 180;
+  const dLat = (b[0] - a[0]) * rad;
+  const dLon = (b[1] - a[1]) * rad;
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(a[0] * rad) * Math.cos(b[0] * rad) * Math.sin(dLon / 2) ** 2;
+  return 12742 * Math.asin(Math.sqrt(h));
+}
+
+export default function OfficeMap({ lang }: { lang: Lang }) {
+  const s = T[lang];
+  const [active, setActive] = useState<CatId[]>(["questura", "entrate", "ayuda"]);
+  const [data, setData] = useState<Partial<Record<CatId, Point[]>>>({});
+  const [loading, setLoading] = useState<CatId[]>([]);
+  const [failed, setFailed] = useState<CatId[]>([]);
+  const [center, setCenter] = useState<[number, number]>([42.3, 12.6]);
+  const [zoom, setZoom] = useState(6);
+  const [target, setTarget] = useState<{ center: [number, number]; zoom: number } | null>(null);
   const [city, setCity] = useState("");
-  const [type, setType] = useState<string>(OFFICE_TYPES[0].q);
-  const [places, setPlaces] = useState<Place[]>([]);
-  const [status, setStatus] = useState<"idle" | "loading" | "empty" | "error">("idle");
-  const L = lang === "en" ? "en" : "es";
+  const [msg, setMsg] = useState("");
+  const requested = useRef(new Set<CatId>());
+
+  useEffect(() => {
+    for (const cat of active) {
+      if (requested.current.has(cat)) continue;
+      requested.current.add(cat);
+      setLoading((l) => [...l, cat]);
+      loadCategory(cat)
+        .then((points) => setData((d) => ({ ...d, [cat]: points })))
+        .catch(() => {
+          requested.current.delete(cat);
+          setFailed((f) => (f.includes(cat) ? f : [...f, cat]));
+        })
+        .finally(() => setLoading((l) => l.filter((x) => x !== cat)));
+    }
+  }, [active]);
+
+  const onMove = useCallback((c: [number, number], z: number) => {
+    setCenter(c);
+    setZoom(z);
+  }, []);
 
   async function search(e: React.FormEvent) {
     e.preventDefault();
     if (city.trim().length < 2) return;
-    setStatus("loading");
+    setMsg("");
     try {
-      // Nominatim (OpenStreetMap). Política de uso: máx. 1 petición/segundo; para producción usar un proveedor propio.
-      const params = new URLSearchParams({ q: `${type} ${city.trim()}`, format: "jsonv2", countrycodes: "it", limit: "15", addressdetails: "0" });
+      const params = new URLSearchParams({ q: city.trim(), format: "jsonv2", countrycodes: "it", limit: "1" });
       const res = await fetch(`https://nominatim.openstreetmap.org/search?${params}`, { headers: { "Accept-Language": "it" } });
-      if (!res.ok) throw new Error(String(res.status));
-      const data: { place_id: number; name: string; display_name: string; lat: string; lon: string }[] = await res.json();
-      const list = data.map((d) => ({ id: d.place_id, name: d.name || type, address: d.display_name, lat: Number(d.lat), lon: Number(d.lon) }));
-      setPlaces(list);
-      setStatus(list.length ? "idle" : "empty");
+      const hits = (await res.json()) as { lat: string; lon: string }[];
+      if (!hits.length) return setMsg(s.notFound);
+      setTarget({ center: [Number(hits[0].lat), Number(hits[0].lon)], zoom: 13 });
     } catch {
-      setStatus("error");
+      setMsg(s.notFound);
     }
   }
+
+  function nearMe() {
+    setMsg("");
+    if (!navigator.geolocation) return setMsg(s.geoErr);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => setTarget({ center: [pos.coords.latitude, pos.coords.longitude], zoom: 13 }),
+      () => setMsg(s.geoErr),
+      { timeout: 10_000 },
+    );
+  }
+
+  const nearest =
+    zoom >= 9
+      ? active
+          .flatMap((cat) => (data[cat] ?? []).map((p) => ({ p, cat, d: km(center, [p[0], p[1]]) })))
+          .sort((a, b) => a.d - b.d)
+          .slice(0, 8)
+      : [];
 
   return (
     <div className="space-y-3">
       <form onSubmit={search} className="flex flex-col gap-2 sm:flex-row">
-        <select className="input sm:w-64" value={type} onChange={(e) => setType(e.target.value)}>
-          {OFFICE_TYPES.map((o) => (
-            <option key={o.q} value={o.q}>
-              {o[L]}
-            </option>
-          ))}
-        </select>
-        <input
-          className="input"
-          placeholder={L === "en" ? "Your city (e.g. Milano)" : "Tu ciudad (ej. Milano)"}
-          value={city}
-          maxLength={60}
-          onChange={(e) => setCity(e.target.value)}
-        />
-        <button className="btn" disabled={status === "loading"}>
-          {status === "loading" ? "…" : L === "en" ? "Search" : "Buscar"}
+        <input className="input" placeholder={s.city} value={city} maxLength={80} onChange={(e) => setCity(e.target.value)} />
+        <button className="btn">
+          <Search size={18} aria-hidden /> {s.search}
+        </button>
+        <button type="button" className="btn-ghost" onClick={nearMe}>
+          <LocateFixed size={18} aria-hidden /> {s.near}
         </button>
       </form>
-      {status === "empty" && <p className="text-sm text-muted">{L === "en" ? "No results. Try another city." : "Sin resultados. Prueba otra ciudad."}</p>}
-      {status === "error" && <p className="text-sm text-warn-fg">{L === "en" ? "Map search unavailable, try again." : "La búsqueda no está disponible, inténtalo de nuevo."}</p>}
 
-      <div className="h-[420px] overflow-hidden rounded-xl border border-border">
-        <MapContainer center={[42.5, 12.5]} zoom={5} className="h-full w-full" scrollWheelZoom>
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {places.map((p) => (
-            <CircleMarker key={p.id} center={[p.lat, p.lon]} radius={9} pathOptions={{ color: "#0f766e", fillOpacity: 0.8 }}>
-              <Popup>
-                <strong>{p.name}</strong>
-                <br />
-                {p.address}
-                <br />
-                <a href={`https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}`} target="_blank" rel="noopener noreferrer">
-                  {L === "en" ? "Directions" : "Cómo llegar"}
-                </a>
-              </Popup>
-            </CircleMarker>
-          ))}
-          <FitTo places={places} />
+      <div className="flex flex-wrap gap-2">
+        {CATEGORIES.map((c) => {
+          const on = active.includes(c.id);
+          const count = data[c.id]?.length;
+          return (
+            <button
+              key={c.id}
+              type="button"
+              aria-pressed={on}
+              className="chip"
+              onClick={() => {
+                setFailed((f) => f.filter((x) => x !== c.id));
+                setActive((a) => (on ? a.filter((x) => x !== c.id) : [...a, c.id]));
+              }}
+            >
+              <span className="h-2.5 w-2.5 rounded-full" style={{ background: c.color }} />
+              {c[lang]}
+              {on && count !== undefined && <span className="text-xs opacity-70">({count})</span>}
+            </button>
+          );
+        })}
+      </div>
+
+      <p className="min-h-5 text-sm text-muted" aria-live="polite">
+        {loading.length > 0 && s.loading}
+        {failed.length > 0 && ` ${s.failed} ${failed.map((f) => CATEGORIES.find((c) => c.id === f)?.[lang]).join(", ")}.`}
+        {msg && ` ${msg}`}
+        {active.length === 0 && s.none}
+      </p>
+
+      <div className="h-[460px] overflow-hidden rounded-2xl border border-border">
+        <MapContainer center={[42.3, 12.6]} zoom={6} minZoom={5} className="h-full w-full" scrollWheelZoom preferCanvas>
+          <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' url="https://tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          <PointsLayer data={data} active={active} lang={lang} />
+          <CenterWatcher onMove={onMove} />
+          <FlyTo target={target} />
         </MapContainer>
       </div>
-      <ul className="space-y-2 text-sm">
-        {places.map((p) => (
-          <li key={p.id} className="card py-2">
-            <strong>{p.name}</strong> — <span className="text-muted">{p.address}</span>
-          </li>
-        ))}
-      </ul>
+
+      {nearest.length > 0 && (
+        <section>
+          <h2 className="font-semibold">{s.nearest}</h2>
+          <ul className="mt-2 grid gap-2 sm:grid-cols-2">
+            {nearest.map(({ p, cat, d }) => {
+              const c = CATEGORIES.find((x) => x.id === cat)!;
+              return (
+                <li key={`${cat}-${p[0]}-${p[1]}`} className="card py-3 text-sm">
+                  <p className="flex items-center gap-2 font-medium">
+                    <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: c.color }} />
+                    {p[2]}
+                  </p>
+                  <p className="text-muted">
+                    {c[lang]} · {d < 10 ? d.toFixed(1) : Math.round(d)} km{p[3] ? ` · ${p[3]}` : ""}
+                  </p>
+                  <a className="text-brand underline" href={directionsUrl(p[0], p[1])} target="_blank" rel="noopener noreferrer">
+                    {s.directions}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
     </div>
   );
 }

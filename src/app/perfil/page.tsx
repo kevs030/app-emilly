@@ -23,10 +23,11 @@ export default async function ProfilePage() {
   const profile = data as Profile;
   const steps = profile.consent_personalization ? nextSteps(profile) : [];
   const en = lang === "en";
+  const { data: isAdmin } = await supabase.rpc("is_admin");
 
   return (
     <div className="space-y-5">
-      <h1 className="text-2xl font-bold">{t("navProfile", lang)}</h1>
+      <h1 className="text-3xl font-bold tracking-tight">{t("navProfile", lang)}</h1>
 
       {steps.length > 0 && (
         <section className="card">
@@ -41,6 +42,12 @@ export default async function ProfilePage() {
             ))}
           </ul>
         </section>
+      )}
+
+      {isAdmin === true && (
+        <Link href="/admin" className="btn">
+          Panel de administración
+        </Link>
       )}
 
       <ProfileForm profile={profile} lang={lang} />

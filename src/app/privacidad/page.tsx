@@ -15,6 +15,14 @@ export default function PrivacyPage() {
           Solo si das tu consentimiento (art. 6.1.a): país de origen, ciudad, tipo de permiso, fecha de vencimiento e hijos a cargo. Los usamos
           únicamente para avisos y respuestas personalizadas. Si retiras el consentimiento, se borran.
         </li>
+        <li>
+          Voz del asistente: es opcional. Si pulsas el micrófono, tu navegador convierte tu voz en texto (en Chrome y Safari, el audio lo
+          procesa el servicio de voz de Google o Apple). Emilly no guarda grabaciones.
+        </li>
+        <li>
+          Publicidad: los anuncios de Emilly son propios, de texto y sin cookies ni rastreadores. Solo contamos cuántos clics recibe cada
+          anuncio, sin saber quién los hace.
+        </li>
         <li>Mensajes al asistente: se envían a nuestro proveedor de IA (Anthropic) para generar la respuesta. No los usamos para publicidad.</li>
       </ul>
       <h2 className="font-semibold">Lo que NO hacemos</h2>

@@ -1,28 +1,38 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f7f7f4;
-  --foreground: #1c1c1a;
+  --background: #f5f7f6;
+  --foreground: #12211f;
   --card: #ffffff;
-  --muted: #5f5f58;
-  --border: #e3e2dc;
+  --muted: #55625f;
+  --border: #dfe6e3;
   --brand: #0f766e;
-  --brand-soft: #e6f4f2;
-  --warn-bg: #fff6e5;
+  --brand-strong: #0a4f4a;
+  --brand-soft: #e4f3f0;
+  --on-brand: #ffffff;
+  --accent: #f59e0b;
+  --warn-bg: #fff5e0;
   --warn-fg: #7a4b00;
+  --danger: #b42318;
+  --shadow: 0 1px 2px rgb(16 32 29 / 0.05), 0 8px 24px -12px rgb(16 32 29 / 0.18);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #121412;
-    --foreground: #ececea;
-    --card: #1b1e1c;
-    --muted: #a3a39c;
-    --border: #2d312e;
+    --background: #0e1514;
+    --foreground: #e9efed;
+    --card: #162120;
+    --muted: #9fb0ac;
+    --border: #263634;
     --brand: #2dd4bf;
-    --brand-soft: #133330;
+    --brand-strong: #0f766e;
+    --brand-soft: #12302d;
+    --on-brand: #06201d;
+    --accent: #fbbf24;
     --warn-bg: #3a2c10;
     --warn-fg: #ffd58a;
+    --danger: #ff8a7a;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 10px 28px -14px rgb(0 0 0 / 0.6);
   }
 }
 
@@ -33,10 +43,18 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
   --color-brand-soft: var(--brand-soft);
+  --color-on-brand: var(--on-brand);
+  --color-accent: var(--accent);
   --color-warn-bg: var(--warn-bg);
   --color-warn-fg: var(--warn-fg);
+  --color-danger: var(--danger);
   --font-sans: var(--font-geist-sans);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -44,12 +62,206 @@ body {
   color: var(--foreground);
 }
 
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ── Componentes ── */
 .card {
-  @apply rounded-xl border border-border bg-card p-4;
+  @apply rounded-2xl border border-border bg-card p-4;
+  box-shadow: var(--shadow);
+}
+.card-link {
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.card-link:hover {
+  transform: translateY(-3px);
+  border-color: var(--brand);
 }
 .btn {
-  @apply inline-flex items-center justify-center rounded-lg bg-brand px-4 py-2 font-medium text-white disabled:opacity-50 dark:text-black;
+  @apply inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-4 py-2.5 font-semibold text-on-brand disabled:opacity-50;
+  transition:
+    transform 0.15s ease,
+    filter 0.15s ease;
+}
+.btn:hover:not(:disabled) {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+.btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+.btn-hero {
+  background: #ffffff;
+  color: #0a4f4a;
+}
+.btn-hero-outline {
+  background: rgb(255 255 255 / 0.12);
+  color: #ffffff;
+  border: 1px solid rgb(255 255 255 / 0.45);
+  backdrop-filter: blur(6px);
+}
+.btn-ghost {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5 font-medium;
+  transition: border-color 0.15s ease;
+}
+.btn-ghost:hover {
+  border-color: var(--brand);
 }
 .input {
-  @apply w-full rounded-lg border border-border bg-card px-3 py-2;
+  @apply w-full rounded-xl border border-border bg-card px-3 py-2.5;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.input:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 22%, transparent);
+}
+.chip {
+  @apply inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-sm;
+  transition: all 0.15s ease;
+}
+.chip[aria-pressed="true"],
+.chip-on {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--brand);
+  font-weight: 600;
+}
+.icon-tile {
+  @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-soft text-brand;
+}
+
+/* ── Portada ── */
+.hero {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  background:
+    radial-gradient(900px 380px at 100% -10%, rgb(45 212 191 / 0.35), transparent 60%),
+    radial-gradient(600px 300px at -10% 110%, rgb(245 158 11 / 0.22), transparent 60%),
+    linear-gradient(135deg, #083f3b 0%, #0f766e 100%);
+}
+.hero-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(40px);
+  opacity: 0.35;
+  animation: float 12s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ── Animaciones ── */
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -18px, 0) scale(1.06);
+  }
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes dot {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--danger) 55%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 14px transparent;
+  }
+}
+
+.fade-up {
+  animation: fade-up 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.pop {
+  animation: pop 0.28s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--delay, 0ms);
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+.typing span {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 4px;
+  border-radius: 9999px;
+  background: var(--brand);
+  animation: dot 1.2s infinite ease-in-out;
+}
+.typing span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.typing span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.listening {
+  animation: pulse-ring 1.2s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* El mapa no debe tapar la cabecera ni la barra inferior */
+.leaflet-container {
+  z-index: 0;
+  font-family: inherit;
 }

@@ -69,3 +69,18 @@ export interface DirectoryEntry {
   verified: boolean;
   lastVerified: string;
 }
+
+export interface OfficialDocument {
+  id: string;
+  /** Guía a la que pertenece (slug) */
+  guide: string;
+  title: L10n;
+  description: L10n;
+  url: string;
+  /** "pdf" = formulario o documento descargable; "web" = página o servicio oficial online */
+  kind: "pdf" | "web";
+  /** true = formulario que la persona debe rellenar */
+  fillable: boolean;
+  issuer: string;
+  lastVerified: string;
+}

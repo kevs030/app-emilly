@@ -5,6 +5,9 @@ import { t, tr } from "@/lib/i18n";
 import { getGuide, guides } from "@/content/guides";
 import { videos } from "@/content/videos";
 import { Sources, Verified, VideoEmbed } from "@/components/Common";
+import { documentsFor } from "@/content/documents";
+import { DocumentList } from "@/components/DocumentList";
+import { GuideIcon } from "@/components/Icons";
 
 export function generateStaticParams() {
   return guides.map((g) => ({ slug: g.slug }));
@@ -16,6 +19,8 @@ export default async function GuidePage(props: PageProps<"/guias/[slug]">) {
   if (!guide) notFound();
   const lang = await getLang();
   const related = videos.filter((v) => guide.videoIds?.includes(v.youtubeId));
+  const docs = documentsFor(guide.slug);
+  const docsTitle = lang === "en" ? "Official forms and documents" : lang === "it" ? "Moduli e documenti ufficiali" : "Formularios y documentos oficiales";
 
   return (
     <article className="space-y-5">
@@ -23,8 +28,8 @@ export default async function GuidePage(props: PageProps<"/guias/[slug]">) {
         ← {t("navGuides", lang)}
       </Link>
       <header>
-        <div className="text-4xl">{guide.icon}</div>
-        <h1 className="mt-1 text-2xl font-bold">{tr(guide.title, lang)}</h1>
+        <GuideIcon slug={guide.slug} size={24} />
+        <h1 className="mt-3 text-3xl font-bold tracking-tight">{tr(guide.title, lang)}</h1>
         <p className="mt-2 text-muted">{tr(guide.summary, lang)}</p>
       </header>
 
@@ -33,7 +38,7 @@ export default async function GuidePage(props: PageProps<"/guias/[slug]">) {
         <ol className="mt-3 space-y-4">
           {guide.steps.map((s, i) => (
             <li key={i} className="flex gap-3">
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white dark:text-black">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-on-brand">
                 {i + 1}
               </span>
               <div>
@@ -59,6 +64,13 @@ export default async function GuidePage(props: PageProps<"/guias/[slug]">) {
           </>
         )}
       </section>
+
+      {docs.length > 0 && (
+        <section className="card">
+          <h2 className="mb-3 text-lg font-semibold">{docsTitle}</h2>
+          <DocumentList docs={docs} lang={lang} />
+        </section>
+      )}
 
       {guide.warnings && (
         <section className="space-y-2">

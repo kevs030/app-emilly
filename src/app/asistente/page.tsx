@@ -6,8 +6,8 @@ export default async function AssistantPage() {
   const lang = await getLang();
   return (
     <div className="space-y-3">
-      <h1 className="text-2xl font-bold">{t("navAssistant", lang)}</h1>
-      <Chat lang={lang} notice={`${t("aiNotice", lang)} ${t("disclaimer", lang)}`} />
+      <h1 className="text-3xl font-bold tracking-tight">{t("navAssistant", lang)}</h1>
+      <Chat lang={lang} notice={t("aiNotice", lang)} />
     </div>
   );
 }
