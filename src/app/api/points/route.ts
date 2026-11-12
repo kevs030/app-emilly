@@ -25,7 +25,7 @@ export async function GET(req: Request) {
         method: "POST",
         body,
         headers: { "User-Agent": "emilly-app (https://app-emilly.vercel.app)" },
-        signal: AbortSignal.timeout(12_000),
+        signal: AbortSignal.timeout(8_000),
         cache: "no-store",
       });
       if (!res.ok) {

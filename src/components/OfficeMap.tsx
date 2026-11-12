@@ -20,10 +20,12 @@ export const CATEGORIES = [
 type CatId = (typeof CATEGORIES)[number]["id"];
 
 const T = {
-  es: { city: "Ciudad o dirección (ej. Milano)", search: "Buscar", near: "Cerca de mí", loading: "Cargando puntos…", failed: "No se pudieron cargar:", nearest: "Los más cercanos al centro del mapa", directions: "Cómo llegar", none: "Activa una categoría para ver puntos.", notFound: "No encontramos ese lugar.", geoErr: "No pudimos obtener tu ubicación.", points: "puntos" },
-  en: { city: "City or address (e.g. Milano)", search: "Search", near: "Near me", loading: "Loading points…", failed: "Could not load:", nearest: "Closest to the map centre", directions: "Directions", none: "Turn on a category to see points.", notFound: "We couldn't find that place.", geoErr: "We couldn't get your location.", points: "points" },
-  it: { city: "Città o indirizzo (es. Milano)", search: "Cerca", near: "Vicino a me", loading: "Caricamento…", failed: "Impossibile caricare:", nearest: "I più vicini al centro della mappa", directions: "Indicazioni", none: "Attiva una categoria per vedere i punti.", notFound: "Luogo non trovato.", geoErr: "Posizione non disponibile.", points: "punti" },
+  es: { city: "Ciudad o dirección (ej. Milano)", search: "Buscar", near: "Cerca de mí", loading: "Cargando puntos…", failed: "Para verlos, busca tu ciudad arriba. No se cargaron para toda Italia:", nearest: "Los más cercanos al centro del mapa", directions: "Cómo llegar", none: "Activa una categoría para ver puntos.", notFound: "No encontramos ese lugar.", geoErr: "No pudimos obtener tu ubicación.", points: "puntos" },
+  en: { city: "City or address (e.g. Milano)", search: "Search", near: "Near me", loading: "Loading points…", failed: "To see them, search your city above. Not loaded for all of Italy:", nearest: "Closest to the map centre", directions: "Directions", none: "Turn on a category to see points.", notFound: "We couldn't find that place.", geoErr: "We couldn't get your location.", points: "points" },
+  it: { city: "Città o indirizzo (es. Milano)", search: "Cerca", near: "Vicino a me", loading: "Caricamento…", failed: "Per vederli cerca la tua città. Non caricati per tutta Italia:", nearest: "I più vicini al centro della mappa", directions: "Indicazioni", none: "Attiva una categoria per vedere i punti.", notFound: "Luogo non trovato.", geoErr: "Posizione non disponibile.", points: "punti" },
 };
+
+const NOMINATIM_TERM: Record<CatId, string> = { questura: "Questura", entrate: "Agenzia delle Entrate", ayuda: "Caritas", patronato: "Patronato", inps: "INPS", prefettura: "Prefettura" };
 
 const CACHE_DAYS = 7;
 
@@ -37,7 +39,7 @@ async function loadCategory(cat: CatId): Promise<Point[]> {
   }
   let points: Point[] = [];
   try {
-    const res = await fetch(`/api/points?cat=${cat}`);
+    const res = await fetch(`/api/points?cat=${cat}`, { signal: AbortSignal.timeout(9_000) });
     if (res.ok) points = ((await res.json()) as { points: Point[] }).points;
   } catch {
     // seguimos con el plan B
@@ -92,11 +94,16 @@ function popupNode(p: Point, label: string, directions: string) {
 function PointsLayer({ data, active, lang }: { data: Partial<Record<CatId, Point[]>>; active: CatId[]; lang: Lang }) {
   const map = useMap();
   const groups = useRef<Partial<Record<CatId, L.LayerGroup>>>({});
+  const built = useRef<Partial<Record<CatId, Point[]>>>({});
   useEffect(() => {
     const renderer = L.canvas({ padding: 0.5 });
     for (const c of CATEGORIES) {
       const points = data[c.id];
       const on = active.includes(c.id);
+      if (points && built.current[c.id] !== points && groups.current[c.id]) {
+        map.removeLayer(groups.current[c.id]!);
+        delete groups.current[c.id];
+      }
       if (on && points && !groups.current[c.id]) {
         const group = L.layerGroup();
         for (const p of points) {
@@ -105,6 +112,7 @@ function PointsLayer({ data, active, lang }: { data: Partial<Record<CatId, Point
             .addTo(group);
         }
         groups.current[c.id] = group;
+        built.current[c.id] = points;
       }
       const group = groups.current[c.id];
       if (group) {
@@ -182,6 +190,18 @@ export default function OfficeMap({ lang }: { lang: Lang }) {
       const hits = (await res.json()) as { lat: string; lon: string }[];
       if (!hits.length) return setMsg(s.notFound);
       setTarget({ center: [Number(hits[0].lat), Number(hits[0].lon)], zoom: 13 });
+      // Plan C: si una categoría no se pudo cargar para toda Italia, buscamos sus oficinas en esta ciudad.
+      for (const cat of active.filter((c) => !data[c]?.length)) {
+        await new Promise((r) => setTimeout(r, 1100)); // Nominatim: máximo 1 petición por segundo
+        const q = new URLSearchParams({ q: `${NOMINATIM_TERM[cat]} ${city.trim()}`, format: "jsonv2", countrycodes: "it", limit: "20" });
+        const r = await fetch(`https://nominatim.openstreetmap.org/search?${q}`, { headers: { "Accept-Language": "it" } });
+        const found = (await r.json()) as { lat: string; lon: string; name?: string; display_name: string }[];
+        const points: Point[] = found.map((f) => [Number(f.lat), Number(f.lon), (f.name || NOMINATIM_TERM[cat]).slice(0, 120), f.display_name.slice(0, 160)]);
+        if (points.length) {
+          setData((d) => ({ ...d, [cat]: [...(d[cat] ?? []), ...points] }));
+          setFailed((f) => f.filter((x) => x !== cat));
+        }
+      }
     } catch {
       setMsg(s.notFound);
     }
