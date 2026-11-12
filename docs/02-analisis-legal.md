@@ -1,4 +1,4 @@
-# 2. Análisis legal — qué límites tiene Emilly en Italia
+# 2. Análisis legal — qué límites tiene A posto en Italia
 
 > ⚠️ Este análisis es una investigación previa, **no es asesoramiento legal**. Antes de lanzar la app hay que validarlo con un abogado experto en protección de datos y derecho digital en Italia. Calcula unos 1.000–3.000 € para una primera revisión: es la inversión más importante del proyecto.
 
@@ -30,14 +30,14 @@
 ## 2. Información vs. asesoramiento legal
 - En Italia, la **defensa en juicio** y ciertos actos están reservados a los abogados. Hacerlos sin serlo es *esercizio abusivo della professione* (art. 348 del Código Penal).
 - Además, la jurisprudencia considera que también puede ser abusivo dar consultas legales de forma **continua, organizada y retribuida** si se presenta como actividad profesional.
-- **Nuestra línea:** Emilly explica procedimientos públicos con fuentes oficiales. **No** estudia casos concretos ni redacta recursos, y **deriva** a abogados, Patronatos (gratis) o ASGI cuando hay consecuencias legales: denegación, expulsión, recursos o plazos.
+- **Nuestra línea:** A posto explica procedimientos públicos con fuentes oficiales. **No** estudia casos concretos ni redacta recursos, y **deriva** a abogados, Patronatos (gratis) o ASGI cuando hay consecuencias legales: denegación, expulsión, recursos o plazos.
 - Ya está en el código: aviso legal en cada página y reglas en las instrucciones del asistente (`src/lib/assistant-prompt.ts`).
-- **Gestión de trámites por terceros:** si algún día Emilly *tramita* expedientes en nombre de usuarios, podría hacer falta una licencia de agencia de gestiones (art. 115 TULPS). Hay que confirmarlo con el abogado antes de ofrecer algo así.
+- **Gestión de trámites por terceros:** si algún día A posto *tramita* expedientes en nombre de usuarios, podría hacer falta una licencia de agencia de gestiones (art. 115 TULPS). Hay que confirmarlo con el abogado antes de ofrecer algo así.
 
 ## 3. Inteligencia artificial
 - **AI Act, art. 50** (aplicable desde el 2/8/2026): hay que informar de que se habla con una IA. Ya está hecho, con un aviso visible en el chat.
 - **Alto riesgo (Anexo III, punto 7):** se refiere a la IA que usan las **autoridades** en migración y asilo. Una app privada de información **no** entra ahí. Aun así:
-  - Emilly no toma decisiones automatizadas con efectos jurídicos (art. 22 RGPD);
+  - A posto no toma decisiones automatizadas con efectos jurídicos (art. 22 RGPD);
   - todo es orientativo.
 - **Ley italiana 132/2025 sobre IA:** exige transparencia con información clara y sencilla, y limita la IA a tareas de apoyo en el ámbito profesional ([CFNews](https://www.cfnews.it/diritto/ai-act-e-avvocati-cosa-cambia-dal-2-agosto-2026/)).
 - **Errores de la IA:** el riesgo principal es que el asistente invente datos. Lo mitigamos así:

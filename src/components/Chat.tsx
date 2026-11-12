@@ -21,7 +21,7 @@ const L = {
     micStop: "Dejar de escuchar",
     listening: "Te escucho…",
     micErr: "No se pudo usar el micrófono. Revisa el permiso del navegador.",
-    hello: "Hola, soy Emilly. Cuéntame tu situación y te digo qué pasos seguir.",
+    hello: "Hola, soy el asistente de A posto. Cuéntame tu situación y te digo qué pasos seguir.",
     examples: ["Mi permiso vence en un mes, ¿qué hago?", "¿Cómo saco el código fiscal?", "Tengo un hijo, ¿qué ayudas puedo pedir?"],
   },
   en: {
@@ -36,7 +36,7 @@ const L = {
     micStop: "Stop listening",
     listening: "Listening…",
     micErr: "Couldn't use the microphone. Check your browser permission.",
-    hello: "Hi, I'm Emilly. Tell me your situation and I'll explain the steps.",
+    hello: "Hi, I'm the A posto assistant. Tell me your situation and I'll explain the steps.",
     examples: ["My permit expires next month, what do I do?", "How do I get a tax code?", "I have a child, which benefits can I get?"],
   },
   it: {
@@ -51,7 +51,7 @@ const L = {
     micStop: "Smetti di ascoltare",
     listening: "Ti ascolto…",
     micErr: "Impossibile usare il microfono. Controlla i permessi del browser.",
-    hello: "Ciao, sono Emilly. Raccontami la tua situazione e ti spiego i passaggi.",
+    hello: "Ciao, sono l'assistente di A posto. Raccontami la tua situazione e ti spiego i passaggi.",
     examples: ["Il mio permesso scade tra un mese, cosa faccio?", "Come ottengo il codice fiscale?", "Ho un figlio: quali bonus posso chiedere?"],
   },
 };

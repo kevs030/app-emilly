@@ -8,7 +8,7 @@ export const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "https://emuyxc
 export const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || "sb_publishable_NnRGtuKByH88O_Vnf9M-Dw_muktlw8F";
 
 export const isNative = Capacitor.isNativePlatform();
-export const APP_SCHEME = "com.emilly.app";
+export const APP_SCHEME = "com.aposto.app";
 export const API_URL = import.meta.env.VITE_API_URL || "https://app-emilly.vercel.app";
 
 /**

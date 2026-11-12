@@ -1,10 +1,9 @@
 import { Mail, Smartphone } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { LANG_LABEL, LANGS } from "@/lib/i18n";
-import type { Lang } from "@/content/types";
 import { useAuth } from "~/auth/AuthProvider";
 import { useLang } from "~/lib/lang";
+import { UI_LANGS, type UiLang } from "~/lib/strings";
 import { redirectUrl, supabase } from "~/lib/supabase";
 import { COUNTRIES, isEmail, toE164 } from "~/lib/validation";
 import { Alert, Field, Screen } from "~/ui/kit";
@@ -32,7 +31,7 @@ export function Profile() {
     else setError(t("generic"));
   }
 
-  async function changeLang(l: Lang) {
+  async function changeLang(l: UiLang) {
     setLang(l);
     await saveProfile({ preferred_language: l });
   }
@@ -98,10 +97,10 @@ export function Profile() {
             <label className="field-label" htmlFor="lang">
               {t("language")}
             </label>
-            <select id="lang" className="input" value={lang} onChange={(e) => changeLang(e.target.value as Lang)}>
-              {LANGS.map((l) => (
-                <option key={l} value={l}>
-                  {LANG_LABEL[l]}
+            <select id="lang" className="input" value={lang} onChange={(e) => changeLang(e.target.value as UiLang)}>
+              {UI_LANGS.map((l) => (
+                <option key={l.code} value={l.code}>
+                  {l.name}
                 </option>
               ))}
             </select>

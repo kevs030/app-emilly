@@ -1,4 +1,4 @@
--- Emilly — esquema inicial
+-- A posto — esquema inicial
 -- Principios: RLS en TODAS las tablas, privilegios por columna (nadie puede
 -- cambiarse el rol ni des-ocultar un post), límites de longitud en la base de datos
 -- y límites de velocidad contra spam. La app solo usa la clave pública (anon).

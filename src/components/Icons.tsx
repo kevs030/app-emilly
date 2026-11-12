@@ -19,13 +19,12 @@ export function GuideIcon({ slug, size = 22 }: { slug: string; size?: number }) 
   );
 }
 
-/** Logotipo: la misma "E" con punto del icono de la app. */
+/** Logotipo: una marca de verificación: "a posto" significa "todo en orden". */
 export function Logo({ size = 30 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 64 64" aria-hidden>
       <rect width="64" height="64" rx="14" fill="#0f766e" />
-      <path d="M22 16h22v7H30v6h12v7H30v6h14v7H22z" fill="#fff" />
-      <circle cx="47" cy="17" r="4.5" fill="#5eead4" />
+      <path d="M18 33.5l9.5 9.5L46 23" fill="none" stroke="#fff" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

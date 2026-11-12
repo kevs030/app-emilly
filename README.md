@@ -1,51 +1,43 @@
-# Emilly — Guía para migrantes en Italia
+# A posto
 
-App web (adaptada a móvil) con:
-- trámites paso a paso;
-- ayudas;
-- asistente con IA;
-- mapa de oficinas;
-- videos con subtítulos;
-- directorio de contactos;
-- foro con cuentas seguras.
+Ayuda a las personas migrantes en Italia a ponerse en regla: qué trámite hacer, qué documentos preparar, adónde ir y qué les falta.
 
-Idiomas: español, inglés e italiano.
+## Qué hay en este repositorio
 
-📚 **Análisis completo en [`docs/`](docs/):** mercado, legal, seguridad, contenido y hoja de ruta.
+| Carpeta | Qué es | Dónde funciona |
+|---|---|---|
+| `mobile/` | **La app** para iPhone y Android (React + Capacitor) | En el teléfono, descargada de las tiendas |
+| `src/` | **La web** pública y el panel de administración (Next.js) | En Vercel |
+| `src/content/` | **El contenido** verificado: guías, ayudas, formularios | Lo usan la app y la web |
+| `supabase/` | **La base de datos**: tablas y reglas de seguridad | En Supabase (UE) |
+| `docs/` | Análisis y plan del proyecto | — |
 
-## Ponerla en marcha (local)
-```bash
-npm install
-cp .env.example .env.local   # rellena las claves (ver abajo)
-npm run dev                  # http://localhost:3000
-```
-Sin claves, la app ya funciona en modo lectura: guías, ayudas, mapa, videos y contactos. El asistente necesita `ANTHROPIC_API_KEY`. Las cuentas y el foro necesitan Supabase.
+La app y la web comparten la misma base de datos y el mismo contenido. Lo que se corrige en una guía cambia en las dos.
 
-## Claves que necesitas
-1. **Supabase** (gratis para empezar):
-   - Crea un proyecto en supabase.com en **región UE**.
-   - Ve a *SQL Editor* y ejecuta, en orden, `supabase/migrations/0001_init.sql` y `0002_admin_y_patrocinios.sql`. La segunda convierte en administrador a la cuenta confirmada más antigua.
-   - En *Authentication → URL Configuration*, pon como *Site URL* la dirección de la web (`https://app-emilly.vercel.app`) y añade `https://app-emilly.vercel.app/**` en *Redirect URLs*.
-   - El acceso es con enlace por correo (el correo por defecto de Supabase ya sirve). El correo gratuito de Supabase solo envía a miembros del equipo y pocos correos por hora: para abrir la app al público hay que configurar un SMTP propio (por ejemplo, Resend) en *Authentication → Emails*.
-   - En *Authentication → Attack Protection*, activa el CAPTCHA (Turnstile).
-   - Copia `Project URL` y la clave `anon` en `.env.local`.
-2. **Claude API:** console.anthropic.com → API Keys → `ANTHROPIC_API_KEY`.
+## Por dónde empezar
 
-## Publicarla (Vercel)
-1. Sube este proyecto a un repositorio de GitHub.
-2. En vercel.com, pulsa *Add New Project*, elige el repositorio y añade las mismas 3 variables de entorno.
-3. Cada `git push` publica la app automáticamente.
+- **¿Qué me falta configurar?** → [`docs/08-pasos-pendientes.md`](docs/08-pasos-pendientes.md)
+- **¿Cómo veo la app en mi ordenador o en mi teléfono?** → [`mobile/README.md`](mobile/README.md)
+- **¿Cuál es el plan y qué está hecho?** → [`docs/07-plan-app-movil.md`](docs/07-plan-app-movil.md)
+- **¿Cómo cambio el texto de una guía?** → edita `src/content/guides.ts` y actualiza su fecha `lastVerified`.
 
-## Comandos útiles
-| Comando | Para qué |
+## Comandos
+
+| Para | Comando |
 |---|---|
-| `npm run dev` | Desarrollo local |
-| `npm run build` | Compilar para producción |
-| `npm run lint` / `npm run typecheck` | Revisar el código |
-| `npm run check:freshness` | Revisión semanal: contenido sin verificar y enlaces rotos |
+| Ver la web en el ordenador | `npm install` y luego `npm run dev` |
+| Ver la app en el ordenador | `cd mobile`, `npm install` y luego `npm run dev` |
+| Abrir la app en Xcode (iPhone) | `cd mobile` y luego `npm run ios` |
+| Abrir la app en Android Studio | `cd mobile` y luego `npm run android` |
+| Revisar que el contenido no esté caducado | `npm run check:freshness` |
 
-## Panel de administración
-`/admin` solo existe para cuentas con rol `admin` (el resto recibe un 404). Desde ahí se ven las cifras, se moderan las denuncias del foro y se gestionan los anuncios. Para dar el rol a otra cuenta: `update public.profiles set role = 'admin' where id = (select id from auth.users where email = 'correo@ejemplo.com');`
+## Idiomas
 
-## Dónde se edita el contenido
-Todo está en `src/content/`: `guides.ts`, `bonuses.ts`, `documents.ts` (formularios oficiales), `videos.ts` y `directory.ts`. Cada vez que verifiques algo, actualiza su `lastVerified`.
+- **App:** español, italiano, inglés, francés, árabe, rumano, albanés, ucraniano y bengalí. Los textos están en `mobile/src/lib/strings.ts` y `mobile/src/lib/locales/`.
+- **Guías (contenido legal):** español, italiano e inglés. En los demás idiomas la app muestra la versión más cercana y lo avisa, hasta tener traducciones revisadas por una persona.
+- **Web:** español, italiano e inglés.
+
+## Administración
+
+`/admin` en la web solo existe para cuentas con rol `admin`. Para dar ese rol a otra cuenta, en el editor SQL de Supabase:
+`update public.profiles set role = 'admin' where id = (select id from auth.users where email = 'correo@ejemplo.com');`

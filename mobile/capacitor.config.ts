@@ -5,8 +5,8 @@ import type { CapacitorConfig } from "@capacitor/cli";
  * appId: identificador único en las tiendas. Se puede cambiar hasta la primera subida; después, no.
  */
 const config: CapacitorConfig = {
-  appId: "com.emilly.app",
-  appName: "Emilly",
+  appId: "com.aposto.app",
+  appName: "A posto",
   webDir: "dist",
   backgroundColor: "#F7F2EA",
   ios: { contentInset: "always" },

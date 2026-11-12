@@ -153,7 +153,7 @@ Cada fase termina con: qué cambió, archivos tocados, pruebas ejecutadas y cóm
 - Registro y acceso por correo + contraseña, verificación por correo, recuperación y nueva contraseña.
 - Registro y acceso por teléfono con código SMS: selector de país, reenvío bloqueado 60 s, máximo 5 intentos por código. Queda apagado hasta activar un proveedor de SMS en Supabase.
 - Vincular correo y teléfono a la misma cuenta desde el perfil.
-- Sesión cifrada en el teléfono (Keychain / Keystore), enlaces profundos `com.emilly.app://auth/...`, botón atrás de Android, aviso sin conexión.
+- Sesión cifrada en el teléfono (Keychain / Keystore), enlaces profundos `com.aposto.app://auth/...`, botón atrás de Android, aviso sin conexión.
 - Perfil gradual: solo se pide el nombre, y solo si falta.
 - Guías y formularios oficiales, leídos del contenido compartido con la web.
 - **Decisión:** el contenido compartido se queda en `src/content/` y la app lo importa con un alias, en vez de moverlo a `shared/`. Así no se toca la web en producción.

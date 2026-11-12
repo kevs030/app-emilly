@@ -1,4 +1,4 @@
--- Emilly — panel de administración y espacios publicitarios propios
+-- A posto — panel de administración y espacios publicitarios propios
 -- Se puede ejecutar más de una vez sin romper nada.
 
 -- ───────────────────────── Administración ─────────────────────────

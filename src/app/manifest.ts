@@ -3,8 +3,8 @@ import type { MetadataRoute } from "next";
 /** Convierte la web en una app instalable (PWA) en Android, iPhone y ordenador. */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Emilly — Guía para migrantes en Italia",
-    short_name: "Emilly",
+    name: "A posto — Guía para migrantes en Italia",
+    short_name: "A posto",
     description: "Trámites, ayudas, mapas, videos y comunidad para personas migrantes en Italia.",
     id: "/",
     start_url: "/",

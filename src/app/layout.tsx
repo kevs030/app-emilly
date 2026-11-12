@@ -13,10 +13,10 @@ import { Logo } from "@/components/Icons";
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: { default: "Emilly — Guía para migrantes en Italia", template: "%s · Emilly" },
+  title: { default: "A posto — Guía para migrantes en Italia", template: "%s · A posto" },
   description: "Trámites, ayudas, mapas, videos y comunidad para personas migrantes en Italia. Información gratuita con fuentes oficiales.",
-  applicationName: "Emilly",
-  appleWebApp: { capable: true, title: "Emilly", statusBarStyle: "default" },
+  applicationName: "A posto",
+  appleWebApp: { capable: true, title: "A posto", statusBarStyle: "default" },
 };
 
 export const viewport: Viewport = {
@@ -27,7 +27,7 @@ export const viewport: Viewport = {
 
 const FOOT = {
   es: {
-    about: "Emilly es un proyecto independiente. No es una web del Gobierno ni de ninguna institución, y nunca te pedirá dinero por un trámite.",
+    about: "A posto es un proyecto independiente. No es una web del Gobierno ni de ninguna institución, y nunca te pedirá dinero por un trámite.",
     explore: "Explorar",
     trust: "Confianza",
     who: "Quiénes somos",
@@ -36,7 +36,7 @@ const FOOT = {
     privacy: "Privacidad",
   },
   en: {
-    about: "Emilly is an independent project. It is not a government or institutional website, and it will never ask you for money for a procedure.",
+    about: "A posto is an independent project. It is not a government or institutional website, and it will never ask you for money for a procedure.",
     explore: "Explore",
     trust: "Trust",
     who: "About us",
@@ -45,7 +45,7 @@ const FOOT = {
     privacy: "Privacy",
   },
   it: {
-    about: "Emilly è un progetto indipendente. Non è un sito del Governo né di un'istituzione e non ti chiederà mai denaro per una pratica.",
+    about: "A posto è un progetto indipendente. Non è un sito del Governo né di un'istituzione e non ti chiederà mai denaro per una pratica.",
     explore: "Esplora",
     trust: "Fiducia",
     who: "Chi siamo",
@@ -74,7 +74,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <header className="sticky top-0 z-[1000] border-b border-border bg-background/90 backdrop-blur">
           <div className="mx-auto flex max-w-5xl items-center gap-4 px-4 py-3">
             <Link href="/" className="flex items-center gap-2 text-lg font-bold tracking-tight">
-              <Logo /> Emilly
+              <Logo /> A posto
             </Link>
             <nav className="hidden gap-4 text-sm sm:flex" aria-label="Secciones">
               {nav.map((n) => (
@@ -109,7 +109,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           <div className="mx-auto grid max-w-5xl gap-6 px-4 py-8 text-sm sm:grid-cols-3">
             <div>
               <p className="flex items-center gap-2 font-bold">
-                <Logo size={24} /> Emilly
+                <Logo size={24} /> A posto
               </p>
               <p className="mt-2 text-muted">{f.about}</p>
             </div>

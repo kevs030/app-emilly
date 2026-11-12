@@ -23,8 +23,8 @@ const H = {
   how: { es: "Cómo funciona", en: "How it works", it: "Come funziona" },
   scamTitle: { es: "Protégete de las estafas", en: "Protect yourself from scams", it: "Proteggiti dalle truffe" },
   scam: {
-    es: "Nadie puede venderte un «contrato» del Decreto Flussi ni «acelerar» tu permiso por dinero. Los Patronatos ayudan gratis. Emilly nunca te pedirá dinero ni tus contraseñas.",
-    en: "Nobody can sell you a Decreto Flussi “contract” or “speed up” your permit for money. Patronati help for free. Emilly will never ask you for money or passwords.",
+    es: "Nadie puede venderte un «contrato» del Decreto Flussi ni «acelerar» tu permiso por dinero. Los Patronatos ayudan gratis. A posto nunca te pedirá dinero ni tus contraseñas.",
+    en: "Nobody can sell you a Decreto Flussi “contract” or “speed up” your permit for money. Patronati help for free. A posto will never ask you for money or passwords.",
     it: "Nessuno può venderti un «contratto» del Decreto Flussi né velocizzare il permesso a pagamento. I Patronati aiutano gratis.",
   },
 };

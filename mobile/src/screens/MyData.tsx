@@ -8,7 +8,7 @@ import type { StringKey } from "~/lib/strings";
 import { supabase } from "~/lib/supabase";
 import { Alert, Screen } from "~/ui/kit";
 
-/** Transparencia: todo lo que Emilly guarda de la persona, con opción de corregir, borrar y descargar. */
+/** Transparencia: todo lo que A posto guarda de la persona, con opción de corregir, borrar y descargar. */
 export function MyData() {
   const { t, c, lang } = useLang();
   const { profile, saveProfile } = useAuth();
@@ -35,10 +35,10 @@ export function MyData() {
     const { data, error } = await supabase.rpc("export_my_data");
     if (error || !data) return setError(true);
     const text = JSON.stringify(data, null, 2);
-    const file = new File([text], "emilly-mis-datos.json", { type: "application/json" });
+    const file = new File([text], "aposto-mis-datos.json", { type: "application/json" });
     try {
       if (navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ files: [file], title: "Emilly" });
+        await navigator.share({ files: [file], title: "A posto" });
         return setInfo(t("exportDone"));
       }
     } catch {

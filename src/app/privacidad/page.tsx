@@ -17,10 +17,10 @@ export default function PrivacyPage() {
         </li>
         <li>
           Voz del asistente: es opcional. Si pulsas el micrófono, tu navegador convierte tu voz en texto (en Chrome y Safari, el audio lo
-          procesa el servicio de voz de Google o Apple). Emilly no guarda grabaciones.
+          procesa el servicio de voz de Google o Apple). A posto no guarda grabaciones.
         </li>
         <li>
-          Publicidad: los anuncios de Emilly son propios, de texto y sin cookies ni rastreadores. Solo contamos cuántos clics recibe cada
+          Publicidad: los anuncios de A posto son propios, de texto y sin cookies ni rastreadores. Solo contamos cuántos clics recibe cada
           anuncio, sin saber quién los hace.
         </li>
         <li>Mensajes al asistente: se envían a nuestro proveedor de IA (Anthropic) para generar la respuesta. No los usamos para publicidad.</li>

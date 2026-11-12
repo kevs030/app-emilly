@@ -26,7 +26,7 @@ function ProcedureCard({ p }: { p: Procedure }) {
     <Link to={`/guides/${p.guide_slug}`} className="card block">
       <span className="flex items-start gap-3">
         <span className="min-w-0 flex-1 font-semibold">{c(pr.guide.title)}</span>
-        <ArrowRight size={20} className="mt-0.5 shrink-0 text-terracotta" aria-hidden />
+        <ArrowRight size={20} className="rtl:rotate-180 mt-0.5 shrink-0 text-terracotta" aria-hidden />
       </span>
       <span className="mt-3 block">
         <ProgressBar percent={pr.percent} label={c(pr.guide.title)} />
@@ -193,7 +193,7 @@ export function Home() {
                 <li key={slug}>
                   <Link to={`/guides/${slug}`} className="card flex items-center gap-3">
                     <span className="min-w-0 flex-1 font-semibold">{c(getGuide(slug)!.title)}</span>
-                    <ArrowRight size={20} className="shrink-0 text-terracotta" aria-hidden />
+                    <ArrowRight size={20} className="rtl:rotate-180 shrink-0 text-terracotta" aria-hidden />
                   </Link>
                 </li>
               ))}
@@ -231,7 +231,7 @@ export function Home() {
                 <li key={g.slug}>
                   <Link to={`/guides/${g.slug}`} className="card flex items-center gap-3">
                     <span className="min-w-0 flex-1 font-semibold">{c(g.title)}</span>
-                    <ArrowRight size={20} className="shrink-0 text-terracotta" aria-hidden />
+                    <ArrowRight size={20} className="rtl:rotate-180 shrink-0 text-terracotta" aria-hidden />
                   </Link>
                 </li>
               ))}

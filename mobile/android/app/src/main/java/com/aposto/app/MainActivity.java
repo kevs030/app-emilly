@@ -1,4 +1,4 @@
-package com.emilly.app;
+package com.aposto.app;
 
 import com.getcapacitor.BridgeActivity;
 

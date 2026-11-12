@@ -1,4 +1,4 @@
-# 1. Análisis de mercado — Emilly (11/11/2026)
+# 1. Análisis de mercado — A posto (11/11/2026)
 
 ## El problema
 Las personas migrantes en Italia tienen que hacer muchos trámites encadenados: permiso de residencia, código fiscal, sanidad, inscripción en el Comune, ayudas y ciudadanía. Cada trámite depende de otro. La información:
@@ -37,7 +37,7 @@ Analicé YouTube con búsquedas por tema, que es la red a la que tengo acceso co
 **Facebook, Instagram y TikTok:** no he extraído datos de esas redes. Hacer *scraping* de perfiles va contra sus condiciones de uso y el Garante de privacidad italiano ya ha multado por esto, por ejemplo con 2 millones a Lusha ([La Nazione](https://www.lanazione.it/ultimaora/il-garante-privacy-sanziona-lusha-a4e38576)). La forma legal de seguir esas redes se explica en `04-contenido-y-actualizacion.md`.
 
 ## Posicionamiento
-> **Emilly: tu guía para vivir en Italia, en tu idioma, con información oficial revisada cada semana.**
+> **A posto: tu guía para vivir en Italia, en tu idioma, con información oficial revisada cada semana.**
 
 Lo que nos diferencia:
 1. **Confianza:** cada dato tiene su fuente oficial y la fecha en que se revisó.

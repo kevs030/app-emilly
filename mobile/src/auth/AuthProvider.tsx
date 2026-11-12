@@ -6,7 +6,7 @@ import { isNative, supabase, SUPABASE_KEY, SUPABASE_URL } from "~/lib/supabase";
 
 export type Profile = {
   display_name: string | null;
-  preferred_language: "es" | "en" | "it";
+  preferred_language: string;
   country_of_origin: string | null;
   city: string | null;
   consent_personalization: boolean;

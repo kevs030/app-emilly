@@ -1,9 +1,38 @@
-import type { Lang } from "@/content/types";
+import { ar } from "./locales/ar";
+import { bn } from "./locales/bn";
+import { fr } from "./locales/fr";
+import { ro } from "./locales/ro";
+import { sq } from "./locales/sq";
+import { uk } from "./locales/uk";
 
 /**
- * Textos de la app. Para añadir un idioma: añade su código a `Lang` (contenido compartido)
- * y una columna aquí. Si falta una traducción, se muestra la española.
+ * Idiomas de la app. Para añadir uno: su código aquí, su nombre en UI_LANGS y un archivo en `locales/`.
+ * Español, italiano e inglés viven en la tabla de abajo; el resto, en `locales/`.
+ * Si falta un texto, se muestra en inglés.
  */
+export type UiLang = "es" | "it" | "en" | "fr" | "ar" | "ro" | "sq" | "uk" | "bn";
+
+export const UI_LANGS: { code: UiLang; name: string; rtl?: boolean }[] = [
+  { code: "es", name: "Español" },
+  { code: "it", name: "Italiano" },
+  { code: "en", name: "English" },
+  { code: "fr", name: "Français" },
+  { code: "ar", name: "العربية", rtl: true },
+  { code: "ro", name: "Română" },
+  { code: "sq", name: "Shqip" },
+  { code: "uk", name: "Українська" },
+  { code: "bn", name: "বাংলা" },
+];
+
+export function isUiLang(v: unknown): v is UiLang {
+  return UI_LANGS.some((l) => l.code === v);
+}
+
+/**
+ * Las guías (contenido legal verificado) existen en español, italiano e inglés.
+ * Para los demás idiomas se muestra la versión más cercana hasta tener una traducción revisada.
+ */
+export const CONTENT_LANG: Record<UiLang, "es" | "it" | "en"> = { es: "es", it: "it", en: "en", fr: "en", ar: "en", ro: "it", sq: "it", uk: "en", bn: "en" };
 const S = {
   tagline: { es: "Tu vida en Italia, paso a paso.", it: "La tua vita in Italia, passo dopo passo.", en: "Your life in Italy, step by step." },
   welcomeBody: {
@@ -11,6 +40,10 @@ const S = {
     it: "Ti accompagniamo nelle pratiche: cosa fare, quali documenti preparare e cosa ti manca.",
     en: "We guide you through your paperwork: what to do, which documents to prepare and what's left.",
   },
+  pt1: { es: "Guías con fuentes oficiales", it: "Guide con fonti ufficiali", en: "Guides with official sources" },
+  pt2: { es: "Tu progreso, siempre guardado", it: "I tuoi progressi, sempre salvati", en: "Your progress, always saved" },
+  pt3: { es: "Gratis y en tu idioma", it: "Gratis e nella tua lingua", en: "Free and in your language" },
+  notTranslated: { es: "", it: "", en: "" },
   start: { es: "Crear mi cuenta gratis", it: "Crea il mio account gratis", en: "Create my free account" },
   haveAccount: { es: "Ya tengo cuenta", it: "Ho già un account", en: "I already have an account" },
   free: { es: "Gratis. Sin tarjeta.", it: "Gratis. Senza carta.", en: "Free. No card needed." },
@@ -77,7 +110,7 @@ const S = {
   official: { es: "Oficial", it: "Ufficiale", en: "Official" },
   checkedOn: { es: "Revisado el", it: "Verificato il", en: "Checked on" },
   stale: { es: "Lleva más de 7 días sin revisarse: confírmalo en la fuente oficial.", it: "Non verificato da oltre 7 giorni: controlla la fonte ufficiale.", en: "Not checked for over 7 days: confirm with the official source." },
-  disclaimer: { es: "Emilly da información general, no asesoramiento legal.", it: "Emilly fornisce informazioni generali, non consulenza legale.", en: "Emilly gives general information, not legal advice." },
+  disclaimer: { es: "A posto da información general, no asesoramiento legal.", it: "A posto fornisce informazioni generali, non consulenza legale.", en: "A posto gives general information, not legal advice." },
   tabHome: { es: "Inicio", it: "Home", en: "Home" },
   tabGuides: { es: "Trámites", it: "Pratiche", en: "Guides" },
   tabAssistant: { es: "Asistente", it: "Assistente", en: "Assistant" },
@@ -147,8 +180,8 @@ const S = {
   notReady: { es: "Tu panel personal se está preparando. Mientras tanto puedes consultar todas las guías.", it: "Il tuo pannello personale è in preparazione. Intanto puoi consultare tutte le guide.", en: "Your personal dashboard is being prepared. Meanwhile you can browse every guide." },
   // ── Mis datos ──
   myData: { es: "Mis datos y privacidad", it: "I miei dati e privacy", en: "My data and privacy" },
-  myDataIntro: { es: "Esto es todo lo que Emilly guarda de ti. Puedes corregirlo, borrarlo o descargarlo.", it: "Questo è tutto ciò che Emilly conserva su di te. Puoi correggerlo, eliminarlo o scaricarlo.", en: "This is everything Emilly stores about you. You can correct, delete or download it." },
-  memory: { es: "Lo que Emilly recuerda", it: "Ciò che Emilly ricorda", en: "What Emilly remembers" },
+  myDataIntro: { es: "Esto es todo lo que A posto guarda de ti. Puedes corregirlo, borrarlo o descargarlo.", it: "Questo è tutto ciò che A posto conserva su di te. Puoi correggerlo, eliminarlo o scaricarlo.", en: "This is everything A posto stores about you. You can correct, delete or download it." },
+  memory: { es: "Lo que A posto recuerda", it: "Ciò che A posto ricorda", en: "What A posto remembers" },
   memoryEmpty: { es: "Todavía nada.", it: "Ancora niente.", en: "Nothing yet." },
   interest: { es: "Te interesa", it: "Ti interessa", en: "You're interested in" },
   youSaid: { es: "Lo dijiste tú", it: "L'hai detto tu", en: "You said this" },
@@ -167,8 +200,12 @@ const S = {
 } satisfies Record<string, { es: string; it?: string; en?: string }>;
 
 export type StringKey = keyof typeof S;
+export type Locale = Partial<Record<StringKey, string>>;
 
-export function translate(key: StringKey, lang: Lang): string {
+const LOCALES: Partial<Record<UiLang, Locale>> = { fr, ar, ro, sq, uk, bn };
+
+export function translate(key: StringKey, lang: UiLang): string {
   const entry: { es: string; it?: string; en?: string } = S[key];
-  return entry[lang] ?? entry.es;
+  if (lang === "es" || lang === "it" || lang === "en") return entry[lang] ?? entry.es;
+  return LOCALES[lang]?.[key] ?? entry.en ?? entry.es;
 }

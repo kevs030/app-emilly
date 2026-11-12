@@ -1,4 +1,4 @@
-# Emilly — app móvil (iOS y Android)
+# A posto — app móvil (iOS y Android)
 
 App nativa hecha con React + TypeScript + Vite + Capacitor. Los archivos van **empaquetados dentro de la app**; no carga la web remota. Comparte base de datos (Supabase), reglas de seguridad y contenido verificado con la web (`../src/content`).
 
@@ -31,7 +31,7 @@ npm run sync
 Compila y copia los archivos nuevos a los proyectos nativos.
 
 ## Configuración pendiente en Supabase (panel)
-1. **Authentication → URL Configuration → Redirect URLs:** añadir `com.emilly.app://auth/**` (enlaces de los correos hacia la app) y `http://localhost:5173/**` (pruebas).
+1. **Authentication → URL Configuration → Redirect URLs:** añadir `com.aposto.app://auth/**` (enlaces de los correos hacia la app) y `http://localhost:5173/**` (pruebas).
 2. **Authentication → Emails → SMTP:** configurar un servicio de correo propio (por ejemplo, Resend). Sin él, Supabase solo envía correos a los miembros del equipo.
 3. **Authentication → Sign In / Providers → Phone:** activar con un proveedor de SMS (por ejemplo, Twilio). Hasta entonces, la pestaña «Teléfono» muestra un aviso.
 4. **Authentication → Attack Protection:** activar CAPTCHA y la protección de contraseñas filtradas.
@@ -48,4 +48,4 @@ android/ ios/  proyectos nativos generados por Capacitor
 ```
 
 ## Identificador de la app
-`com.emilly.app` (en `capacitor.config.ts`). Se puede cambiar hasta la primera subida a las tiendas; después, no.
+`com.aposto.app` (en `capacitor.config.ts`). Se puede cambiar hasta la primera subida a las tiendas; después, no.

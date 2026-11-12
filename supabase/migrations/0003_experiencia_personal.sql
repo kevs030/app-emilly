@@ -1,4 +1,4 @@
--- Emilly — fase 2: trámites con progreso real, recordatorios, memoria personal y analítica
+-- A posto — fase 2: trámites con progreso real, recordatorios, memoria personal y analítica
 -- Principios: cada persona solo ve y toca lo suyo (RLS), límites de tamaño en la base de datos,
 -- el progreso se calcula contando filas reales, y la analítica de uso exige consentimiento.
 -- Se puede ejecutar más de una vez sin romper nada.

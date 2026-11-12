@@ -37,7 +37,7 @@ export function Guides() {
                 <span className="block font-semibold">{c(g.title)}</span>
                 <span className="mt-1 line-clamp-2 block text-[15px] text-ink-soft">{c(g.summary)}</span>
               </span>
-              <ArrowRight size={20} className="mt-1 shrink-0 text-terracotta" aria-hidden />
+              <ArrowRight size={20} className="rtl:rotate-180 mt-1 shrink-0 text-terracotta" aria-hidden />
             </Link>
           </li>
         ))}
@@ -48,7 +48,7 @@ export function Guides() {
 
 export function GuideDetail() {
   const { slug = "" } = useParams();
-  const { t, c } = useLang();
+  const { t, c, contentFallback } = useLang();
   const { available, procedureFor, progressOf, isDone, start, toggleItem, setStatus, removeProcedure, reminders, log } = usePersonal();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(false);
@@ -81,6 +81,7 @@ export function GuideDetail() {
         <header>
           <h1 className="text-[26px] font-bold leading-tight tracking-tight">{c(guide.title)}</h1>
           <p className="mt-2 text-ink-soft">{c(guide.summary)}</p>
+          {contentFallback && <p className="mt-3 rounded-2xl bg-beige p-3 text-[14px]">{t("notTranslated")}</p>}
         </header>
 
         {available && !proc && (

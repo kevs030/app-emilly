@@ -7,10 +7,9 @@ import { useLang } from "~/lib/lang";
 
 export function Logo({ size = 44 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 64 64" role="img" aria-label="Emilly">
+    <svg width={size} height={size} viewBox="0 0 64 64" role="img" aria-label="A posto">
       <rect width="64" height="64" rx="18" fill="#A65D3D" />
-      <path d="M22 16h22v7H30v6h12v7H30v6h14v7H22z" fill="#fff" />
-      <circle cx="47" cy="17" r="4.5" fill="#DCE6D8" />
+      <path d="M18 33.5l9.5 9.5L46 23" fill="none" stroke="#fff" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -24,7 +23,7 @@ export function Screen({ title, back, children }: { title?: string; back?: boole
         <header className="mb-4 flex min-h-11 items-center gap-1">
           {back && (
             <button type="button" onClick={() => navigate(-1)} aria-label={t("back")} className="-ml-2 flex h-11 w-11 items-center justify-center rounded-full text-brown">
-              <ChevronLeft size={26} aria-hidden />
+              <ChevronLeft size={26} className="rtl:rotate-180" aria-hidden />
             </button>
           )}
           {title && <h1 className="text-2xl font-bold tracking-tight">{title}</h1>}

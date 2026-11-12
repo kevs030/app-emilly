@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Emilly</string>
-    <string name="title_activity_main">Emilly</string>
-    <string name="package_name">com.emilly.app</string>
-    <string name="custom_url_scheme">com.emilly.app</string>
+    <string name="app_name">A posto</string>
+    <string name="title_activity_main">A posto</string>
+    <string name="package_name">com.aposto.app</string>
+    <string name="custom_url_scheme">com.aposto.app</string>
 </resources>

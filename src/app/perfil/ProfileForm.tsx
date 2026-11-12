@@ -43,8 +43,8 @@ export function ProfileForm({ profile, lang }: { profile: Profile; lang: "es" | 
           <input type="checkbox" name="consent_personalization" defaultChecked={profile.consent_personalization} className="mt-1" />
           <span>
             {T(
-              "Acepto que Emilly use los datos de abajo para darme avisos y respuestas personalizadas. Puedo retirarlo cuando quiera y los datos se borran.",
-              "I agree that Emilly uses the data below to give me personalised reminders and answers. I can withdraw at any time and the data is deleted.",
+              "Acepto que A posto use los datos de abajo para darme avisos y respuestas personalizadas. Puedo retirarlo cuando quiera y los datos se borran.",
+              "I agree that A posto uses the data below to give me personalised reminders and answers. I can withdraw at any time and the data is deleted.",
             )}
           </span>
         </label>

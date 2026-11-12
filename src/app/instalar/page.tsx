@@ -2,31 +2,31 @@ import { getLang } from "@/lib/lang";
 
 const T = {
   es: {
-    title: "Instala Emilly en tu celular",
+    title: "Instala A posto en tu celular",
     intro: "Es gratis, no ocupa casi espacio y se abre como cualquier app, con su icono en la pantalla de inicio.",
     android: "Android (Chrome)",
     androidSteps: ["Abre esta página en Chrome.", "Pulsa los tres puntitos ⋮ arriba a la derecha.", "Pulsa «Instalar app» o «Añadir a pantalla de inicio».", "Confirma con «Instalar»."],
     iphone: "iPhone (Safari)",
     iphoneSteps: ["Abre esta página en Safari.", "Pulsa el botón Compartir (el cuadrado con la flecha hacia arriba).", "Baja y pulsa «Añadir a pantalla de inicio».", "Pulsa «Añadir»."],
-    done: "Listo: verás el icono de Emilly junto a tus otras apps.",
+    done: "Listo: verás el icono de A posto junto a tus otras apps.",
   },
   en: {
-    title: "Install Emilly on your phone",
+    title: "Install A posto on your phone",
     intro: "It's free, takes almost no space and opens like any app, with its icon on your home screen.",
     android: "Android (Chrome)",
     androidSteps: ["Open this page in Chrome.", "Tap the three dots ⋮ at the top right.", "Tap “Install app” or “Add to Home screen”.", "Confirm with “Install”."],
     iphone: "iPhone (Safari)",
     iphoneSteps: ["Open this page in Safari.", "Tap the Share button (square with an up arrow).", "Scroll down and tap “Add to Home Screen”.", "Tap “Add”."],
-    done: "Done: you'll see the Emilly icon next to your other apps.",
+    done: "Done: you'll see the A posto icon next to your other apps.",
   },
   it: {
-    title: "Installa Emilly sul telefono",
+    title: "Installa A posto sul telefono",
     intro: "È gratis, occupa pochissimo spazio e si apre come qualsiasi app.",
     android: "Android (Chrome)",
     androidSteps: ["Apri questa pagina in Chrome.", "Tocca i tre puntini ⋮ in alto a destra.", "Tocca «Installa app» o «Aggiungi a schermata Home».", "Conferma con «Installa»."],
     iphone: "iPhone (Safari)",
     iphoneSteps: ["Apri questa pagina in Safari.", "Tocca il pulsante Condividi (quadrato con freccia).", "Tocca «Aggiungi alla schermata Home».", "Tocca «Aggiungi»."],
-    done: "Fatto: vedrai l'icona di Emilly tra le tue app.",
+    done: "Fatto: vedrai l'icona di A posto tra le tue app.",
   },
 };
 
