@@ -156,7 +156,13 @@ export function Auth() {
                   })}
                 </ul>
                 <label className="flex items-start gap-3 text-[15px]">
-                  <input type="checkbox" required className="mt-1 h-5 w-5 accent-[#A65D3D]" /> <span>{t("age")}</span>
+                  <input type="checkbox" required className="mt-1 h-5 w-5 accent-[#A65D3D]" />{" "}
+                  <span>
+                    {t("age")}{" "}
+                    <Link to="/privacy" className="font-semibold text-brown underline">
+                      {t("privacyPolicy")}
+                    </Link>
+                  </span>
                 </label>
               </>
             )}
@@ -189,7 +195,13 @@ export function Auth() {
             <Field label={t("phoneNumber")} type="tel" inputMode="tel" autoComplete="tel-national" required value={national} onChange={(e) => setNational(e.target.value)} />
             {mode === "signup" && (
               <label className="flex items-start gap-3 text-[15px]">
-                <input type="checkbox" required className="mt-1 h-5 w-5 accent-[#A65D3D]" /> <span>{t("age")}</span>
+                <input type="checkbox" required className="mt-1 h-5 w-5 accent-[#A65D3D]" />{" "}
+                  <span>
+                    {t("age")}{" "}
+                    <Link to="/privacy" className="font-semibold text-brown underline">
+                      {t("privacyPolicy")}
+                    </Link>
+                  </span>
               </label>
             )}
             {error && <Alert kind="error">{error}</Alert>}

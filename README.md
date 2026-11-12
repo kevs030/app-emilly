@@ -17,6 +17,7 @@ La app y la web comparten la misma base de datos y el mismo contenido. Lo que se
 ## Por dónde empezar
 
 - **¿Qué me falta configurar?** → [`docs/08-pasos-pendientes.md`](docs/08-pasos-pendientes.md)
+- **¿Cómo publico la app en Google Play y en el App Store?** → [`docs/10-publicar-en-tiendas.md`](docs/10-publicar-en-tiendas.md)
 - **¿Cómo veo la app en mi ordenador o en mi teléfono?** → [`mobile/README.md`](mobile/README.md)
 - **¿Cuál es el plan y qué está hecho?** → [`docs/07-plan-app-movil.md`](docs/07-plan-app-movil.md)
 - **¿Cómo cambio el texto de una guía?** → edita `src/content/guides.ts` y actualiza su fecha `lastVerified`.

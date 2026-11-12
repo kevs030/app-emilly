@@ -1,37 +1,38 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f5f7f6;
-  --foreground: #12211f;
+  /* Paleta cálida de A posto (la misma que la app móvil) */
+  --background: #f7f2ea;
+  --foreground: #34312e;
   --card: #ffffff;
-  --muted: #55625f;
-  --border: #dfe6e3;
-  --brand: #0f766e;
-  --brand-strong: #0a4f4a;
-  --brand-soft: #e4f3f0;
+  --muted: #6b6560;
+  --border: #e6dccd;
+  --brand: #a65d3d; /* terracota oscuro: contraste 4,9:1 con texto blanco */
+  --brand-strong: #795548;
+  --brand-soft: #dce6d8; /* verde suave */
   --on-brand: #ffffff;
-  --accent: #f59e0b;
-  --warn-bg: #fff5e0;
-  --warn-fg: #7a4b00;
-  --danger: #b42318;
-  --shadow: 0 1px 2px rgb(16 32 29 / 0.05), 0 8px 24px -12px rgb(16 32 29 / 0.18);
+  --accent: #c77b59;
+  --warn-bg: #f6e7d6;
+  --warn-fg: #6e4322;
+  --danger: #a3392b;
+  --shadow: 0 1px 2px rgb(52 49 46 / 0.05), 0 10px 24px -14px rgb(121 85 72 / 0.35);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0e1514;
-    --foreground: #e9efed;
-    --card: #162120;
-    --muted: #9fb0ac;
-    --border: #263634;
-    --brand: #2dd4bf;
-    --brand-strong: #0f766e;
-    --brand-soft: #12302d;
-    --on-brand: #06201d;
-    --accent: #fbbf24;
-    --warn-bg: #3a2c10;
-    --warn-fg: #ffd58a;
-    --danger: #ff8a7a;
+    --background: #1f1b18;
+    --foreground: #f1ebe3;
+    --card: #2a2521;
+    --muted: #b8ada2;
+    --border: #3d3630;
+    --brand: #e09a78;
+    --brand-strong: #c77b59;
+    --brand-soft: #2f3a2c;
+    --on-brand: #2a1a12;
+    --accent: #e09a78;
+    --warn-bg: #3d2e1f;
+    --warn-fg: #f3cfa6;
+    --danger: #ff9a8a;
     --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 10px 28px -14px rgb(0 0 0 / 0.6);
   }
 }
@@ -98,7 +99,7 @@ body {
 }
 .btn-hero {
   background: #ffffff;
-  color: #0a4f4a;
+  color: #5d4037;
 }
 .btn-hero-outline {
   background: rgb(255 255 255 / 0.12);
@@ -136,7 +137,13 @@ body {
   font-weight: 600;
 }
 .icon-tile {
-  @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-soft text-brand;
+  @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-soft;
+  color: #4d6647;
+}
+@media (prefers-color-scheme: dark) {
+  .icon-tile {
+    color: #b9cdb2;
+  }
 }
 
 /* ── Portada ── */
@@ -145,9 +152,9 @@ body {
   overflow: hidden;
   color: #fff;
   background:
-    radial-gradient(900px 380px at 100% -10%, rgb(45 212 191 / 0.35), transparent 60%),
-    radial-gradient(600px 300px at -10% 110%, rgb(245 158 11 / 0.22), transparent 60%),
-    linear-gradient(135deg, #083f3b 0%, #0f766e 100%);
+    radial-gradient(900px 380px at 100% -10%, rgb(220 230 216 / 0.3), transparent 60%),
+    radial-gradient(600px 300px at -10% 110%, rgb(199 123 89 / 0.45), transparent 60%),
+    linear-gradient(135deg, #5d4037 0%, #a65d3d 100%);
 }
 .hero-blob {
   position: absolute;

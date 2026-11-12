@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0f766e",
+  themeColor: "#a65d3d",
   width: "device-width",
   initialScale: 1,
 };
@@ -139,7 +139,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/instalar" className="hover:text-brand">
+                  <Link href="/descargar" className="hover:text-brand">
                     {f.install}
                   </Link>
                 </li>

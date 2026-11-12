@@ -165,4 +165,5 @@ export const ro: Locale = {
   asstError: "Nu am putut obține răspunsul. Încearcă din nou.",
   ex1: "Ce îmi mai lipsește pentru a termina demersul?",
   ex2: "Explică-mi această scrisoare pe care am primit-o",
+  privacyPolicy: "Politica de confidențialitate",
 };

@@ -11,6 +11,7 @@ import { Auth } from "~/screens/Auth";
 import { GuideDetail, Guides } from "~/screens/Guides";
 import { Home } from "~/screens/Home";
 import { NewPassword, ResetPassword } from "~/screens/Password";
+import { Privacy } from "~/screens/Privacy";
 import { Profile } from "~/screens/Profile";
 import { Welcome } from "~/screens/Welcome";
 
@@ -96,6 +97,7 @@ export function App() {
               <Route path="/reset" element={<ResetPassword />} />
             </Route>
             <Route path="/new-password" element={<NewPassword />} />
+            <Route path="/privacy" element={<Privacy />} />
             <Route element={<Private />}>
               <Route path="/" element={<Home />} />
               <Route path="/guides" element={<Guides />} />

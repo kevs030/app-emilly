@@ -165,4 +165,5 @@ export const fr: Locale = {
   asstError: "Impossible d'obtenir la réponse. Réessayez.",
   ex1: "Que me manque-t-il pour terminer ma démarche ?",
   ex2: "Expliquez-moi cette lettre que j'ai reçue",
+  privacyPolicy: "Politique de confidentialité",
 };

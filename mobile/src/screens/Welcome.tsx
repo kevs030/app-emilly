@@ -45,6 +45,9 @@ export function Welcome() {
           {t("haveAccount")}
         </Link>
         <p className="hint text-center">{t("free")}</p>
+        <Link to="/privacy" className="block text-center text-[14px] font-medium text-brown underline">
+          {t("privacyPolicy")}
+        </Link>
       </div>
     </div>
   );

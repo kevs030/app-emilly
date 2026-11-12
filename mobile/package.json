@@ -1,7 +1,7 @@
 {
   "name": "aposto-mobile",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,10 @@
     "typecheck": "tsc --noEmit",
     "sync": "npm run build && cap sync",
     "ios": "npm run sync && cap open ios",
-    "android": "npm run sync && cap open android"
+    "android": "npm run sync && cap open android",
+    "android:bundle": "npm run sync && cd android && ./gradlew bundleRelease",
+    "android:apk": "npm run sync && cd android && ./gradlew assembleRelease",
+    "assets": "capacitor-assets generate --iconBackgroundColor '#A65D3D' --iconBackgroundColorDark '#A65D3D' --splashBackgroundColor '#F7F2EA' --splashBackgroundColorDark '#F7F2EA'"
   },
   "dependencies": {
     "@aparajita/capacitor-secure-storage": "^8.0.1",
@@ -26,6 +29,7 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@capacitor/assets": "^4.0.0",
     "@capacitor/cli": "^8.6.0",
     "@tailwindcss/vite": "^4.3.5",
     "@types/react": "^19.3.0",

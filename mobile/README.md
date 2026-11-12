@@ -37,6 +37,15 @@ Compila y copia los archivos nuevos a los proyectos nativos.
 4. **Authentication → Attack Protection:** activar CAPTCHA y la protección de contraseñas filtradas.
 5. **Authentication → Sign In / Providers → Email:** longitud mínima de contraseña 10.
 
+## Publicar en las tiendas
+Pasos completos y comandos en [`../docs/10-publicar-en-tiendas.md`](../docs/10-publicar-en-tiendas.md).
+
+| Para | Comando |
+|---|---|
+| Generar el .AAB firmado (Google Play) | `npm run android:bundle` |
+| Generar el .APK firmado (descarga directa) | `npm run android:apk` |
+| Regenerar iconos y pantalla de inicio | `npm run assets` |
+
 ## Estructura
 ```
 src/lib/       cliente de Supabase (sesión cifrada en el teléfono), validación, textos, idioma

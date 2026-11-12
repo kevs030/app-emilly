@@ -160,6 +160,9 @@ export function Profile() {
         <Link to="/data" className="btn btn-secondary">
           {t("myData")}
         </Link>
+        <Link to="/privacy" className="btn btn-quiet">
+          {t("privacyPolicy")}
+        </Link>
         <button type="button" className="btn btn-secondary" onClick={() => supabase.auth.signOut()}>
           {t("signOut")}
         </button>

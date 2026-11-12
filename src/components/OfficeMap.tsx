@@ -11,7 +11,7 @@ type Lang = "es" | "en" | "it";
 
 export const CATEGORIES = [
   { id: "questura", color: "#1d4ed8", es: "Questura (permisos)", en: "Questura (permits)", it: "Questura" },
-  { id: "entrate", color: "#0f766e", es: "Agenzia delle Entrate", en: "Agenzia delle Entrate", it: "Agenzia delle Entrate" },
+  { id: "entrate", color: "#2f6f4f", es: "Agenzia delle Entrate", en: "Agenzia delle Entrate", it: "Agenzia delle Entrate" },
   { id: "ayuda", color: "#be185d", es: "Ayuda a migrantes", en: "Migrant support", it: "Aiuto ai migranti" },
   { id: "patronato", color: "#b45309", es: "Patronatos y CAF (gratis)", en: "Patronati & CAF (free)", it: "Patronati e CAF" },
   { id: "inps", color: "#6d28d9", es: "INPS", en: "INPS", it: "INPS" },

@@ -55,8 +55,8 @@ export default async function Home() {
   return (
     <div className="space-y-12">
       <section className="hero -mx-4 -mt-6 px-4 py-12 sm:mx-0 sm:mt-0 sm:rounded-3xl sm:px-10 sm:py-16">
-        <span className="hero-blob" style={{ width: 220, height: 220, right: -40, top: -60, background: "#5eead4" }} />
-        <span className="hero-blob" style={{ width: 180, height: 180, left: -50, bottom: -70, background: "#fbbf24", animationDelay: "-5s" }} />
+        <span className="hero-blob" style={{ width: 220, height: 220, right: -40, top: -60, background: "#dce6d8" }} />
+        <span className="hero-blob" style={{ width: 180, height: 180, left: -50, bottom: -70, background: "#c77b59", animationDelay: "-5s" }} />
         <div className="relative max-w-2xl">
           <p className="fade-up inline-flex rounded-full bg-white/15 px-3 py-1 text-xs font-medium backdrop-blur">{tr(H.kicker, lang)}</p>
           <h1 className="fade-up mt-4 text-4xl font-bold leading-tight tracking-tight sm:text-5xl" style={{ animationDelay: "80ms" }}>

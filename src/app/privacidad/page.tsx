@@ -1,41 +1,18 @@
-/**
- * BORRADOR de política de privacidad. Debe revisarlo un abogado experto en protección
- * de datos (RGPD) antes del lanzamiento. Ver docs/02-analisis-legal.md.
- */
-export default function PrivacyPage() {
+import type { Metadata } from "next";
+import { PrivacyContent } from "@/components/PrivacyContent";
+import { privacyLabels } from "@/content/legal";
+import { tr } from "@/lib/i18n";
+import { getLang } from "@/lib/lang";
+
+export const metadata: Metadata = { title: "Privacidad / Privacy" };
+
+/** Política de privacidad pública. Es la URL que se indica en Google Play y en el App Store. */
+export default async function PrivacyPage() {
+  const lang = await getLang();
   return (
-    <article className="prose max-w-none space-y-3 text-sm">
-      <h1 className="text-2xl font-bold">Privacidad (borrador)</h1>
-      <p className="rounded bg-warn-bg p-2 text-warn-fg">Borrador pendiente de revisión legal antes del lanzamiento.</p>
-      <h2 className="font-semibold">Qué datos tratamos</h2>
-      <ul className="list-disc pl-5">
-        <li>Correo o teléfono, para que puedas entrar con un código (base legal: contrato, art. 6.1.b RGPD).</li>
-        <li>Tu nombre público y lo que publicas en el foro.</li>
-        <li>
-          Solo si das tu consentimiento (art. 6.1.a): país de origen, ciudad, tipo de permiso, fecha de vencimiento e hijos a cargo. Los usamos
-          únicamente para avisos y respuestas personalizadas. Si retiras el consentimiento, se borran.
-        </li>
-        <li>
-          Voz del asistente: es opcional. Si pulsas el micrófono, tu navegador convierte tu voz en texto (en Chrome y Safari, el audio lo
-          procesa el servicio de voz de Google o Apple). A posto no guarda grabaciones.
-        </li>
-        <li>
-          Publicidad: los anuncios de A posto son propios, de texto y sin cookies ni rastreadores. Solo contamos cuántos clics recibe cada
-          anuncio, sin saber quién los hace.
-        </li>
-        <li>Mensajes al asistente: se envían a nuestro proveedor de IA (Anthropic) para generar la respuesta. No los usamos para publicidad.</li>
-      </ul>
-      <h2 className="font-semibold">Lo que NO hacemos</h2>
-      <ul className="list-disc pl-5">
-        <li>No vendemos tus datos ni los compartimos con autoridades, salvo por obligación legal.</li>
-        <li>No pedimos números de pasaporte, datos de salud, religión ni antecedentes penales.</li>
-        <li>No recopilamos datos de tus redes sociales.</li>
-      </ul>
-      <h2 className="font-semibold">Tus derechos</h2>
-      <p>
-        Puedes ver, corregir y borrar tus datos desde &quot;Mi perfil&quot;. El botón &quot;Borrar mi cuenta&quot; elimina todo de forma
-        permanente. También puedes reclamar ante el Garante per la protezione dei dati personali.
-      </p>
+    <article className="max-w-3xl space-y-4">
+      <h1 className="text-3xl font-bold tracking-tight">{tr(privacyLabels.title, lang)}</h1>
+      <PrivacyContent lang={lang} />
     </article>
   );
 }

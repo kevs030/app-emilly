@@ -165,4 +165,5 @@ export const sq: Locale = {
   asstError: "Nuk u mor përgjigjja. Provo përsëri.",
   ex1: "Çfarë më mungon për të përfunduar procedurën?",
   ex2: "Më shpjego këtë letër që kam marrë",
+  privacyPolicy: "Politika e privatësisë",
 };

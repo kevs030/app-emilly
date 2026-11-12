@@ -212,6 +212,7 @@ const S = {
   asstError: { es: "No se pudo obtener la respuesta. Inténtalo de nuevo.", it: "Impossibile ottenere la risposta. Riprova.", en: "Couldn't get the answer. Please try again." },
   ex1: { es: "¿Qué me falta para terminar mi trámite?", it: "Cosa mi manca per completare la mia pratica?", en: "What do I still need to finish my procedure?" },
   ex2: { es: "Explícame esta carta que he recibido", it: "Spiegami questa lettera che ho ricevuto", en: "Explain this letter I received" },
+  privacyPolicy: { es: "Política de privacidad", it: "Informativa sulla privacy", en: "Privacy policy" },
 } satisfies Record<string, { es: string; it?: string; en?: string }>;
 
 export type StringKey = keyof typeof S;

@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @source "../src";
+/* Componentes compartidos con la web */
+@source "../../src/components/PrivacyContent.tsx";
 
 /*
  * Sistema de diseño de A posto (móvil). Paleta cálida.
