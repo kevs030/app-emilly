@@ -144,3 +144,19 @@ Cada fase termina con: qué cambió, archivos tocados, pruebas ejecutadas y cóm
 - Clave del asistente sin configurar en Vercel.
 - El mapa nacional no está probado con datos reales.
 - Trabajo a medias en la rama `wip/art-31`: guía del art. 31 terminada; sección de bancos y «lugares de ayuda» del foro sin hacer.
+
+## K. Avance
+
+### Etapa 1.1 (12/11/2026) — hecha
+- Proyecto `mobile/` (React + TypeScript + Vite + Capacitor 8) con proyectos nativos `android/` e `ios/` generados.
+- Sistema de diseño cálido (`mobile/src/styles.css`). Botones en terracota oscuro `#A65D3D` por contraste.
+- Registro y acceso por correo + contraseña, verificación por correo, recuperación y nueva contraseña.
+- Registro y acceso por teléfono con código SMS: selector de país, reenvío bloqueado 60 s, máximo 5 intentos por código. Queda apagado hasta activar un proveedor de SMS en Supabase.
+- Vincular correo y teléfono a la misma cuenta desde el perfil.
+- Sesión cifrada en el teléfono (Keychain / Keystore), enlaces profundos `com.emilly.app://auth/...`, botón atrás de Android, aviso sin conexión.
+- Perfil gradual: solo se pide el nombre, y solo si falta.
+- Guías y formularios oficiales, leídos del contenido compartido con la web.
+- **Decisión:** el contenido compartido se queda en `src/content/` y la app lo importa con un alias, en vez de moverlo a `shared/`. Así no se toca la web en producción.
+- **Aplazado a la fase 3:** la API con token para el asistente, porque el asistente aún no está en la app.
+
+Pruebas: 16 comprobaciones automáticas en navegador con el servidor simulado (registro, contraseña débil, acceso erróneo, sesión que persiste, cierre de sesión, rutas privadas, recuperación, teléfono no válido, bloqueo tras 5 códigos). No se ha probado contra el servidor real ni en un teléfono.

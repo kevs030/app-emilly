@@ -1,0 +1,218 @@
+@import "tailwindcss";
+@source "../src";
+
+/*
+ * Sistema de diseño de Emilly (móvil). Paleta cálida.
+ * Todas las pantallas usan estos tokens y las clases de abajo; no se definen colores sueltos.
+ */
+:root {
+  --cream: #f7f2ea; /* fondo */
+  --beige: #ede2d3; /* superficies secundarias, bordes */
+  --terracotta: #c77b59; /* acento: iconos, detalles, progreso */
+  --terracotta-deep: #a65d3d; /* botones: contraste 4,9:1 con texto blanco */
+  --brown: #795548; /* títulos secundarios, enlaces */
+  --sage: #91a58b; /* éxito, confirmaciones */
+  --sage-soft: #dce6d8; /* fondos de éxito y de ayuda */
+  --ink: #34312e; /* texto */
+  --ink-soft: #6b6560; /* texto secundario: 5,3:1 sobre crema */
+  --white: #ffffff;
+  --danger: #a3392b;
+  --danger-soft: #f8e4df;
+  --radius: 20px;
+  --shadow: 0 1px 2px rgb(52 49 46 / 0.05), 0 10px 24px -14px rgb(121 85 72 / 0.35);
+}
+
+@theme inline {
+  --color-cream: var(--cream);
+  --color-beige: var(--beige);
+  --color-terracotta: var(--terracotta);
+  --color-terracotta-deep: var(--terracotta-deep);
+  --color-brown: var(--brown);
+  --color-sage: var(--sage);
+  --color-sage-soft: var(--sage-soft);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --font-sans: ui-rounded, "SF Pro Rounded", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+:focus-visible {
+  outline: 3px solid var(--terracotta);
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+
+/* ── Componentes ── */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 52px; /* objetivo táctil grande */
+  width: 100%;
+  padding: 0 20px;
+  border-radius: 16px;
+  font-weight: 650;
+  font-size: 17px;
+  background: var(--terracotta-deep);
+  color: var(--white);
+  transition:
+    transform 0.12s ease,
+    filter 0.12s ease;
+}
+.btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+.btn:disabled {
+  opacity: 0.55;
+}
+.btn-secondary {
+  background: var(--beige);
+  color: var(--ink);
+}
+.btn-quiet {
+  background: transparent;
+  color: var(--brown);
+  min-height: 44px;
+  font-weight: 600;
+}
+.btn-danger {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+.field-label {
+  display: block;
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+.input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  border-radius: 14px;
+  border: 1.5px solid var(--beige);
+  background: var(--white);
+  font-size: 17px; /* 16px o más: iOS no hace zoom al escribir */
+  color: var(--ink);
+}
+.input:focus {
+  outline: none;
+  border-color: var(--terracotta);
+  box-shadow: 0 0 0 4px rgb(199 123 89 / 0.18);
+}
+.hint {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.alert {
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 15px;
+}
+.alert-error {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+.alert-ok {
+  background: var(--sage-soft);
+  color: #3d5238;
+}
+.icon-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: var(--sage-soft);
+  color: #4d6647;
+}
+.segmented {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 16px;
+  background: var(--beige);
+}
+.segmented button {
+  min-height: 44px;
+  border-radius: 12px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.segmented button[aria-selected="true"] {
+  background: var(--white);
+  color: var(--ink);
+  box-shadow: 0 1px 3px rgb(52 49 46 / 0.12);
+}
+.progress {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--beige);
+  overflow: hidden;
+}
+.progress > span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--terracotta);
+  transition: width 0.4s ease;
+}
+
+/* Zonas seguras del teléfono (muesca y barra de gestos) */
+.safe-top {
+  padding-top: max(16px, env(safe-area-inset-top));
+}
+.safe-bottom {
+  padding-bottom: max(10px, env(safe-area-inset-bottom));
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
