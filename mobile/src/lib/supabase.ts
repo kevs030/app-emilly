@@ -9,7 +9,8 @@ export const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || "sb
 
 export const isNative = Capacitor.isNativePlatform();
 export const APP_SCHEME = "com.aposto.app";
-export const API_URL = import.meta.env.VITE_API_URL || "https://app-emilly.vercel.app";
+// En el teléfono el servidor es la web publicada; en el navegador, el mismo sitio desde el que se sirve la app.
+export const API_URL = import.meta.env.VITE_API_URL || (isNative ? "https://app-emilly.vercel.app" : window.location.origin);
 
 /**
  * En el teléfono la sesión se guarda cifrada (Keychain en iOS, Keystore en Android).
@@ -27,5 +28,5 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
 
 /** Dirección a la que vuelven los enlaces de los correos (verificación y nueva contraseña). */
 export function redirectUrl(path = ""): string {
-  return isNative ? `${APP_SCHEME}://auth${path}` : `${window.location.origin}${path}`;
+  return isNative ? `${APP_SCHEME}://auth${path}` : `${window.location.origin}${import.meta.env.BASE_URL.replace(/\/$/, "")}${path}`;
 }

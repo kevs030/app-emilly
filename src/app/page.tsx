@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, BadgeCheck, CalendarCheck, FileDown, HandCoins, Lock, MapPin, MessageCircle, PlayCircle, ShieldAlert, Users, Wallet } from "lucide-react";
+import { ArrowRight, BadgeCheck, CalendarCheck, FileDown, HandCoins, Lock, MapPin, MessageCircle, PlayCircle, ShieldAlert, Smartphone, Users, Wallet } from "lucide-react";
 import { getLang } from "@/lib/lang";
 import { t, tr } from "@/lib/i18n";
 import { guides } from "@/content/guides";
@@ -16,6 +16,7 @@ const H = {
     en: "Residence permit, tax code, healthcare, benefits and more. We explain what to do, which documents to bring and where to go.",
     it: "Permesso di soggiorno, codice fiscale, sanità, bonus e altro: cosa fare, quali documenti portare e dove andare.",
   },
+  open: { es: "Abrir la app", en: "Open the app", it: "Apri l'app" },
   ask: { es: "Preguntar al asistente", en: "Ask the assistant", it: "Chiedi all'assistente" },
   popular: { es: "Trámites más buscados", en: "Most searched procedures", it: "Pratiche più cercate" },
   popularSub: { es: "Cada guía incluye los formularios oficiales y la fecha de revisión.", en: "Each guide includes the official forms and the date it was checked.", it: "Ogni guida include i moduli ufficiali e la data di verifica." },
@@ -66,7 +67,11 @@ export default async function Home() {
             {tr(H.sub, lang)}
           </p>
           <div className="fade-up mt-6 flex flex-wrap gap-3" style={{ animationDelay: "240ms" }}>
-            <Link href="/asistente" className="btn btn-hero">
+            {/* La app completa (trámites con progreso, documentos, traductor, citas…) vive en /app/. */}
+            <a href="/app/" className="btn btn-hero">
+              <Smartphone size={18} aria-hidden /> {tr(H.open, lang)}
+            </a>
+            <Link href="/asistente" className="btn btn-hero-outline">
               <MessageCircle size={18} aria-hidden /> {tr(H.ask, lang)}
             </Link>
             <InstallButton lang={lang} className="btn btn-hero-outline" />

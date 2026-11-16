@@ -1,1 +1,5 @@
-mobile
+# La app se compila durante la publicación; los proyectos nativos no hacen falta en la web.
+mobile/android
+mobile/ios
+mobile/dist
+mobile/tests

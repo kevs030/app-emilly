@@ -45,3 +45,6 @@ next-env.d.ts
 *.keystore
 *.jks
 signing-key-info.txt
+
+# La app compilada para la web se genera al publicar
+/public/app

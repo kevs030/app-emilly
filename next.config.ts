@@ -40,6 +40,14 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  // La app (carpeta mobile/) se publica como archivos estáticos en /app/. Sus pantallas se resuelven
+  // en el navegador, así que cualquier dirección bajo /app que no sea un archivo devuelve su página principal.
+  async rewrites() {
+    return [
+      { source: "/app", destination: "/app/index.html" },
+      { source: "/app/:path*", destination: "/app/index.html" },
+    ];
+  },
   async headers() {
     return [
       {

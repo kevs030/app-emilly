@@ -2,6 +2,9 @@
    Servidor simulado: ninguna prueba toca datos reales ni gasta créditos. Uso: npm run build && npm run preview & ; node tests/e2e/fase2.cjs */
 const { chromium } = require("playwright");
 const { makeApp } = require("./mock.cjs");
+const ORIGIN = process.env.APP_ORIGIN || "http://localhost:4173";
+const PREFIX = process.env.APP_PREFIX || ""; // "/app" cuando se prueba la app servida dentro de la web
+
 
 let PNG = Buffer.alloc(0); // se genera en el navegador tras iniciar sesión
 const cors = { "access-control-allow-origin": "*", "access-control-allow-headers": "*", "access-control-allow-methods": "*", "access-control-expose-headers": "X-Credits-Remaining" };
@@ -48,7 +51,7 @@ const ANSWER = "[1] Qué es\nCarta del INPS sobre el Assegno Unico.\n[2] Qué pi
     if (m === "DELETE") { const b = JSON.parse(req.postData()); calls.storageDelete.push(b.prefixes); b.prefixes.forEach((k) => files.delete(k)); return json(r, 200, []); }
     if (m === "GET") return r.fulfill({ status: 200, headers: { ...cors, "content-type": "image/png" }, body: PNG });
   });
-  await p.route("https://app-emilly.vercel.app/api/**", async (r) => {
+  await p.route("**/api/**", async (r) => {
     const req = r.request(); const u = new URL(req.url());
     if (req.method() === "OPTIONS") return r.fulfill({ status: 204, headers: cors });
     if (u.pathname === "/api/points") return json(r, 200, { points: [[45.4642, 9.19, "Questura di Milano", "Via Fatebenefratelli 11"], [41.9, 12.49, "Questura di Roma", "Via di San Vitale 15"]] });
@@ -59,7 +62,7 @@ const ANSWER = "[1] Qué es\nCarta del INPS sobre el Assegno Unico.\n[2] Qué pi
   });
   await p.route("https://tile.openstreetmap.org/**", (r) => r.fulfill({ status: 200, headers: { "content-type": "image/png" }, body: PNG }));
   await p.route("https://nominatim.openstreetmap.org/**", (r) => json(r, 200, [{ lat: "45.4642", lon: "9.19" }]));
-  const go = async (path, wait) => { await p.goto("http://localhost:4173" + path); if (wait) await p.waitForSelector(wait); };
+  const go = async (path, wait) => { await p.goto(ORIGIN + (PREFIX && path.startsWith(PREFIX + "/") ? "" : PREFIX) + path); if (wait) await p.waitForSelector(wait); };
 
   await login();
   PNG = Buffer.from(await p.evaluate(() => { const c = document.createElement("canvas"); c.width = 60; c.height = 80; const x = c.getContext("2d"); x.fillStyle = "#fff"; x.fillRect(0, 0, 60, 80); x.fillStyle = "#000"; x.fillText("INPS", 5, 20); return c.toDataURL("image/png").split(",")[1]; }), "base64");

@@ -42,7 +42,8 @@ async function makeApp(br, errs, opts) {
       if (m === 'PATCH') { db[table].filter(x => match(x, u)).forEach(x => { Object.assign(x, body()); if (x.status === 'done') x.completed_at = new Date().toISOString(); }); return r.fulfill({ status: 204, headers: cors }); }
       if (m === 'DELETE') { db[table] = db[table].filter(x => !match(x, u)); if (table === 'procedures') db.procedure_items = []; return r.fulfill({ status: 204, headers: cors }); }
     });
-    const login = async () => { await p.goto('http://localhost:4173/auth?mode=signin'); await p.fill('input[type=email]', 'ana@example.com'); await p.fill('input[type=password]', 'Correcta12345'); await p.click('button.btn:has-text("Entrar")'); await p.waitForSelector('text=Hola, Ana'); };
+    await p.route('**/api/points*', r => r.fulfill({ status: 200, headers: { ...cors, 'content-type': 'application/json' }, body: JSON.stringify({ points: [[41.9, 12.49, 'Questura di Roma', 'Via di San Vitale 15']] }) }));
+    const login = async () => { await p.goto((process.env.APP_ORIGIN || 'http://localhost:4173') + (process.env.APP_PREFIX || '') + '/auth?mode=signin'); await p.fill('input[type=email]', 'ana@example.com'); await p.fill('input[type=password]', 'Correcta12345'); await p.click('button.btn:has-text("Entrar")'); await p.waitForSelector('text=Hola, Ana'); };
     return { p, db, rpc, login };
   };
   return mk(opts);

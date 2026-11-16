@@ -7,7 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: "A Posto",
     description: "Trámites, ayudas, mapas, videos y comunidad para personas migrantes en Italia.",
     id: "/",
-    start_url: "/",
+    start_url: "/app/",
     scope: "/",
     display: "standalone",
     orientation: "portrait",
@@ -23,9 +23,9 @@ export default function manifest(): MetadataRoute.Manifest {
       { src: "/icons/icon-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
     ],
     shortcuts: [
-      { name: "Asistente", url: "/asistente" },
-      { name: "Trámites", url: "/guias" },
-      { name: "Foro", url: "/foro" },
+      { name: "Asistente", url: "/app/assistant" },
+      { name: "Trámites", url: "/app/guides" },
+      { name: "Mis documentos", url: "/app/documents" },
     ],
   };
 }

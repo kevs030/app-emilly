@@ -101,7 +101,7 @@ function Public() {
 export function App() {
   return (
     <LangProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, "")}>
         <AuthProvider>
           <Routes>
             <Route element={<Public />}>
