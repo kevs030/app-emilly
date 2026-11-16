@@ -3,8 +3,8 @@ import type { MetadataRoute } from "next";
 /** Convierte la web en una app instalable (PWA) y es la base del paquete de Android (TWA). */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "A posto",
-    short_name: "a posto",
+    name: "A Posto",
+    short_name: "A Posto",
     description: "Trámites, ayudas, mapas, videos y comunidad para personas migrantes en Italia.",
     id: "/",
     start_url: "/",

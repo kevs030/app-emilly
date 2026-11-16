@@ -1,4 +1,4 @@
-// Genera el logo oficial «a posto» y sus iconos PNG.
+// Genera el logo oficial «A Posto» y sus iconos PNG.
 // Uso: node scripts/make-logo.mjs
 // Las letras están dibujadas con trazos (no dependen de ninguna tipografía instalada),
 // así el logo se ve igual en cualquier dispositivo.
@@ -21,7 +21,7 @@ for (let i = 0; i < 360; i++) {
 const badgePath = `M${pts.join("L")}Z`;
 const check = `M${badge.cx - 46} ${badge.cy + 4}l32 32l60 -68`;
 
-// ── Palabra «a posto» con trazos redondeados ──
+// ── Palabra «A Posto» con trazos redondeados ──
 const W = 13; // grosor del trazo
 const R = 22; // radio de las letras redondas
 const GAP = 12;
@@ -52,13 +52,29 @@ const letters = {
     parts.push(`<path d="M${cx + q} ${-q}A${q} ${q} 0 1 0 ${cx} 0A${q} ${q} 0 1 1 ${cx - q} ${q}"/>`);
     x = cx + q + h;
   },
+  A() {
+    const half = 26;
+    const top = -R - 22;
+    const cx = x + h + half;
+    const barY = R - 20;
+    const barHalf = (half * (barY - top)) / (R - top) - 2;
+    parts.push(`<path d="M${cx - half} ${R}L${cx} ${top}L${cx + half} ${R}"/>`, `<path d="M${(cx - barHalf).toFixed(1)} ${barY}H${(cx + barHalf).toFixed(1)}"/>`);
+    x = cx + half + h;
+  },
+  P() {
+    const top = -R - 22;
+    const rb = 17;
+    const sx = x + h;
+    parts.push(`<path d="M${sx} ${R}V${top}H${sx + 16}a${rb} ${rb} 0 0 1 0 ${2 * rb}H${sx}"/>`);
+    x = sx + 16 + rb + h;
+  },
   t() {
     const sx = x + h + 12;
     parts.push(`<path d="M${sx} ${-R - 22}V${R - 10}a10 10 0 0 0 10 10h6"/>`, `<path d="M${sx - 12} ${-R}H${sx + 16}"/>`);
     x = sx + 16 + h;
   },
 };
-for (const ch of "a posto") {
+for (const ch of "A Posto") {
   if (ch === " ") {
     x += SPACE - GAP;
     continue;
@@ -70,11 +86,11 @@ const wordWidth = x - GAP;
 const scale = Math.min(1, (SIZE - 2 * SAFE - 8) / wordWidth);
 const wordY = 372; // línea central de las letras
 const tx = (SIZE - wordWidth * scale) / 2;
-const bottom = wordY + (R + 30 + h) * scale;
+const bottom = wordY + (R + h) * scale;
 if (bottom > SIZE - SAFE || badge.cy - badge.r - badge.wave < SAFE) throw new Error("El dibujo se sale del margen de seguridad");
 
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}" role="img" aria-label="a posto">
-  <title>a posto</title>
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}" role="img" aria-label="A Posto">
+  <title>A Posto</title>
   <rect width="${SIZE}" height="${SIZE}" fill="#FFFFFF"/>
   <path d="${badgePath}" fill="${GREEN}"/>
   <path d="${check}" fill="none" stroke="#FFFFFF" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>

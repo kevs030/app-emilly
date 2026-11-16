@@ -17,7 +17,7 @@ export const APP = {
   /** Archivo .apk oficial. Debe existir en `public/a-posto.apk` antes de publicar la web. */
   apkUrl: "/a-posto.apk",
   /** Nombre con el que se guarda el archivo al descargarlo. */
-  apkFileName: "a-posto.apk",
+  apkFileName: "A-Posto.apk",
   /** Versión del APK publicado, por ejemplo "1.0.0". */
   apkVersion: "",
   /** Huella SHA-256 del APK, para que cualquiera pueda comprobar que el archivo es auténtico. */

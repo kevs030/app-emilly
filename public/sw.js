@@ -1,7 +1,7 @@
 /* Service Worker de A posto.
    - Las páginas se piden siempre a la red (contenido al día); sin conexión se muestra una página de aviso.
    - Solo se guardan en caché archivos estáticos públicos. Nunca datos personales, sesiones ni respuestas de /api. */
-const VERSION = "aposto-v1";
+const VERSION = "aposto-v2";
 const OFFLINE_URL = "/offline.html";
 const PRECACHE = [OFFLINE_URL, "/icons/icon-192.png", "/icons/icon-512.png", "/logo-aposto.svg"];
 

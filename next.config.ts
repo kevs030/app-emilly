@@ -57,7 +57,7 @@ const nextConfig: NextConfig = {
       { source: "/sw.js", headers: [{ key: "Cache-Control", value: "no-cache, no-store, must-revalidate" }, { key: "Service-Worker-Allowed", value: "/" }] },
       // Verificación de la app de Android (TWA): Google exige JSON y sin redirecciones.
       { source: "/.well-known/assetlinks.json", headers: [{ key: "Content-Type", value: "application/json" }, { key: "Cache-Control", value: "public, max-age=3600" }] },
-      { source: "/a-posto.apk", headers: [{ key: "Content-Type", value: "application/vnd.android.package-archive" }, { key: "Content-Disposition", value: 'attachment; filename="a-posto.apk"' }] },
+      { source: "/a-posto.apk", headers: [{ key: "Content-Type", value: "application/vnd.android.package-archive" }, { key: "Content-Disposition", value: 'attachment; filename="A-Posto.apk"' }] },
     ];
   },
 };
