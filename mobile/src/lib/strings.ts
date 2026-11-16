@@ -383,6 +383,47 @@ const S = {
   simR_adiResidence: { es: "Exige 5 años de residencia en Italia, los 2 últimos seguidos.", it: "Richiede 5 anni di residenza in Italia, gli ultimi 2 continuativi.", en: "It requires 5 years of residence in Italy, the last 2 continuous." },
   simR_adiResidenceCheck: { es: "Comprueba si cumples 5 años de residencia, los 2 últimos seguidos.", it: "Verifica se hai 5 anni di residenza, gli ultimi 2 continuativi.", en: "Check whether you have 5 years of residence, the last 2 continuous." },
   simR_adiHousehold: { es: "Es para familias con menores, personas con discapacidad o mayores de 60 años: confirma si es tu caso.", it: "È per nuclei con minori, persone con disabilità o over 60: verifica se è il tuo caso.", en: "It is for households with minors, people with disabilities or people over 60: confirm whether that applies to you." },
+  // Guía de primer uso (pantalla /tour)
+  tour1Title: { es: "Bienvenida a A Posto", it: "Benvenuta e benvenuto in A Posto", en: "Welcome to A Posto" },
+  tour1Body: {
+    es: "Elige tu idioma. La app está en 9 idiomas; las guías oficiales, en español, italiano e inglés. Puedes cambiarlo cuando quieras desde Perfil.",
+    it: "Scegli la tua lingua. L'app è in 9 lingue; le guide ufficiali in spagnolo, italiano e inglese. Puoi cambiarla quando vuoi dal Profilo.",
+    en: "Choose your language. The app is in 9 languages; the official guides are in Spanish, Italian and English. You can change it anytime in Profile.",
+  },
+  tour2Title: { es: "Tus trámites, paso a paso", it: "Le tue pratiche, passo dopo passo", en: "Your paperwork, step by step" },
+  tour2Body: {
+    es: "Cada guía te dice qué hacer, en qué orden y qué documentos llevar. Marca lo que ya hiciste: tu progreso queda guardado en tu cuenta.",
+    it: "Ogni guida ti dice cosa fare, in che ordine e quali documenti portare. Segna ciò che hai fatto: i tuoi progressi restano salvati nel tuo account.",
+    en: "Each guide tells you what to do, in which order and which documents to bring. Tick what you've done: your progress is saved in your account.",
+  },
+  tour2Try: { es: "Ver las guías", it: "Vedi le guide", en: "See the guides" },
+  tour3Title: { es: "Pregunta y entiende tus cartas", it: "Chiedi e capisci le tue lettere", en: "Ask and understand your letters" },
+  tour3Body: {
+    es: "Escribe tu duda al asistente en tu idioma. Si recibes una carta en italiano, hazle una foto: te decimos qué es y qué te pide.",
+    it: "Scrivi il tuo dubbio all'assistente nella tua lingua. Se ricevi una lettera in italiano, fotografala: ti diciamo cos'è e cosa ti chiede.",
+    en: "Ask the assistant in your language. If you get a letter in Italian, take a photo: we tell you what it is and what it asks of you.",
+  },
+  tour3TryChat: { es: "Hablar con el asistente", it: "Parla con l'assistente", en: "Talk to the assistant" },
+  tour3TryScan: { es: "Traducir una carta", it: "Traduci una lettera", en: "Translate a letter" },
+  tour4Title: { es: "No olvides ninguna fecha", it: "Non dimenticare nessuna data", en: "Never miss a date" },
+  tour4Body: {
+    es: "Apunta tus citas y vencimientos (por ejemplo, el del permiso de residencia) y recibe un aviso. Busca en el mapa las oficinas cercanas.",
+    it: "Segna appuntamenti e scadenze (ad esempio quella del permesso di soggiorno) e ricevi un avviso. Cerca sulla mappa gli uffici vicini.",
+    en: "Add your appointments and deadlines (for example, your residence permit) and get a reminder. Find nearby offices on the map.",
+  },
+  tour4TryDates: { es: "Mis citas y fechas", it: "I miei appuntamenti e scadenze", en: "My appointments and dates" },
+  tour4TryMap: { es: "Oficinas en el mapa", it: "Uffici sulla mappa", en: "Offices on the map" },
+  tour5Title: { es: "Tus datos son tuyos", it: "I tuoi dati sono tuoi", en: "Your data is yours" },
+  tour5Body: {
+    es: "Solo te pedimos lo necesario. Desde Perfil puedes ver y descargar tus datos o borrar tu cuenta. Esta guía siempre está en Perfil → «Cómo funciona».",
+    it: "Ti chiediamo solo il necessario. Dal Profilo puoi vedere e scaricare i tuoi dati o eliminare l'account. Questa guida è sempre in Profilo → «Come funziona».",
+    en: "We only ask for what's needed. In Profile you can see and download your data or delete your account. This guide is always in Profile → “How it works”.",
+  },
+  tourSkip: { es: "Saltar", it: "Salta", en: "Skip" },
+  tourNext: { es: "Siguiente", it: "Avanti", en: "Next" },
+  tourStart: { es: "Empezar", it: "Inizia", en: "Get started" },
+  howItWorks: { es: "Cómo funciona", it: "Come funziona", en: "How it works" },
+  langsAvailable: { es: "Disponible en 9 idiomas", it: "Disponibile in 9 lingue", en: "Available in 9 languages" },
 } satisfies Record<string, { es: string; it?: string; en?: string }>;
 
 export type StringKey = keyof typeof S;

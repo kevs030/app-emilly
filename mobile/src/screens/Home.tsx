@@ -1,6 +1,6 @@
 import { ArrowRight, Bell, BellRing, Calculator, CalendarDays, FolderLock, IdCard, ScanText, CircleCheckBig, Clock, HandCoins, ListChecks, MapPin, MessageCircle, Search, Sparkles, Sprout, UserRound, Users } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { getGuide, guides } from "@/content/guides";
 import { useAuth } from "~/auth/AuthProvider";
 import { useLang } from "~/lib/lang";
@@ -8,6 +8,7 @@ import { usePersonal, type Procedure } from "~/lib/personal";
 import type { StringKey } from "~/lib/strings";
 import { Alert, Field, Screen } from "~/ui/kit";
 import { AddReminder, ReminderRow } from "~/ui/Reminders";
+import { tourSeen } from "./Tour";
 
 function ProgressBar({ percent, label }: { percent: number; label: string }) {
   return (
@@ -58,7 +59,7 @@ const SHORTCUTS: Shortcut[] = [
 
 export function Home() {
   const { t, c, lang } = useLang();
-  const { profile, saveProfile } = useAuth();
+  const { user, profile, saveProfile } = useAuth();
   const { available, loading, procedures, reminders, facts, activity, progressOf, setInterest } = usePersonal();
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
@@ -82,6 +83,9 @@ export function Home() {
   const started = new Set(procedures.map((p) => p.guide_slug));
   const recommended = interests.filter((s) => !started.has(s) && getGuide(s)).slice(0, 3);
   const recent = activity.filter((a) => a.type !== "item_undone").slice(0, 5);
+
+  // Primera vez con esta cuenta en este dispositivo: se abre la guía de uso.
+  if (!tourSeen(user?.id)) return <Navigate to="/tour" replace />;
 
   return (
     <Screen>

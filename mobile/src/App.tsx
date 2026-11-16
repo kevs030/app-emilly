@@ -1,6 +1,6 @@
 import { FileText, House, MessageCircle, UserRound, WifiOff } from "lucide-react";
 import { useEffect, useState } from "react";
-import { BrowserRouter, Navigate, NavLink, Outlet, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, NavLink, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import { AuthProvider, useAuth } from "~/auth/AuthProvider";
 import { LangProvider, useLang } from "~/lib/lang";
 import { PersonalProvider } from "~/lib/personal";
@@ -25,6 +25,7 @@ import { NewPassword, ResetPassword } from "~/screens/Password";
 import { Privacy } from "~/screens/Privacy";
 import { Profile } from "~/screens/Profile";
 import { Search } from "~/screens/Search";
+import { Tour } from "~/screens/Tour";
 import { Welcome } from "~/screens/Welcome";
 
 function useOnline() {
@@ -52,6 +53,7 @@ function Private() {
   const { ready, session, profile } = useAuth();
   const { t } = useLang();
   const online = useOnline();
+  const bare = useLocation().pathname === "/tour"; // la guía de uso ocupa toda la pantalla
   useSessionTracking(Boolean(session && profile?.consent_analytics));
   if (!ready) return <Splash />;
   if (!session) return <Navigate to="/welcome" replace />;
@@ -74,18 +76,20 @@ function Private() {
           <Outlet />
         </PersonalProvider>
       </main>
-      <nav className="safe-bottom border-t border-beige bg-white" aria-label="Principal">
-        <ul className="mx-auto flex max-w-md">
-          {tabs.map((tab) => (
-            <li key={tab.to} className="flex-1">
-              <NavLink to={tab.to} end={tab.end} className={({ isActive }) => `flex min-h-14 flex-col items-center justify-center gap-0.5 pt-2 text-[12px] ${isActive ? "font-bold text-terracotta-deep" : "text-ink-soft"}`}>
-                <tab.icon size={23} aria-hidden />
-                {tab.label}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      {!bare && (
+        <nav className="safe-bottom border-t border-beige bg-white" aria-label="Principal">
+          <ul className="mx-auto flex max-w-md">
+            {tabs.map((tab) => (
+              <li key={tab.to} className="flex-1">
+                <NavLink to={tab.to} end={tab.end} className={({ isActive }) => `flex min-h-14 flex-col items-center justify-center gap-0.5 pt-2 text-[12px] ${isActive ? "font-bold text-terracotta-deep" : "text-ink-soft"}`}>
+                  <tab.icon size={23} aria-hidden />
+                  {tab.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
     </div>
   );
 }
@@ -113,6 +117,7 @@ export function App() {
             <Route path="/privacy" element={<Privacy />} />
             <Route element={<Private />}>
               <Route path="/" element={<Home />} />
+              <Route path="/tour" element={<Tour />} />
               <Route path="/guides" element={<Guides />} />
               <Route path="/guides/:slug" element={<GuideDetail />} />
               <Route path="/search" element={<Search />} />

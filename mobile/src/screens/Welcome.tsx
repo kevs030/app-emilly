@@ -1,4 +1,4 @@
-import { CalendarCheck, FileCheck2, HeartHandshake } from "lucide-react";
+import { CalendarCheck, FileCheck2, HeartHandshake, Languages } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLang } from "~/lib/lang";
 import { UI_LANGS, type UiLang } from "~/lib/strings";
@@ -36,6 +36,26 @@ export function Welcome() {
             </li>
           ))}
         </ul>
+        <section className="mt-8" aria-labelledby="langs-title">
+          <h2 id="langs-title" className="flex items-center gap-2 text-[15px] font-semibold text-ink-soft">
+            <Languages size={18} aria-hidden /> {t("langsAvailable")}
+          </h2>
+          <ul className="mt-3 flex flex-wrap gap-2">
+            {UI_LANGS.map((l) => (
+              <li key={l.code}>
+                <button
+                  type="button"
+                  lang={l.code}
+                  aria-pressed={lang === l.code}
+                  onClick={() => setLang(l.code)}
+                  className={`min-h-11 rounded-full px-4 text-[15px] font-medium ${lang === l.code ? "bg-terracotta-deep text-white" : "bg-beige"}`}
+                >
+                  {l.name}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </section>
       </div>
       <div className="space-y-3 pb-4">
         <Link to="/auth?mode=signup" className="btn">
@@ -45,7 +65,7 @@ export function Welcome() {
           {t("haveAccount")}
         </Link>
         <p className="hint text-center">{t("free")}</p>
-        <Link to="/privacy" className="block text-center text-[14px] font-medium text-brown underline">
+        <Link to="/privacy" className="flex min-h-11 items-center justify-center text-[14px] font-medium text-brown underline">
           {t("privacyPolicy")}
         </Link>
       </div>

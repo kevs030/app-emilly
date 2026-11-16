@@ -160,6 +160,9 @@ export function Profile() {
           {error && <Alert kind="error">{error}</Alert>}
         </section>
 
+        <Link to="/tour" className="btn btn-secondary">
+          {t("howItWorks")}
+        </Link>
         <Link to="/data" className="btn btn-secondary">
           {t("myData")}
         </Link>
