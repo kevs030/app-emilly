@@ -8,6 +8,15 @@ import { useSessionTracking } from "~/lib/useSessionTracking";
 import { MyData } from "~/screens/MyData";
 import { Appointments } from "~/screens/Appointments";
 import { Assistant } from "~/screens/Assistant";
+import { ChatHistory } from "~/screens/ChatHistory";
+import { Community, CommunityNew, CommunityPost } from "~/screens/Community";
+import { Documents } from "~/screens/Documents";
+import { MyFile } from "~/screens/MyFile";
+import { Notifications } from "~/screens/Notifications";
+import { OfficesMap } from "~/screens/OfficesMap";
+import { Scan } from "~/screens/Scan";
+import { Simulator } from "~/screens/Simulator";
+import { NotifySync } from "~/ui/NotifySync";
 import { Auth } from "~/screens/Auth";
 import { Benefits } from "~/screens/Benefits";
 import { GuideDetail, Guides } from "~/screens/Guides";
@@ -61,6 +70,7 @@ function Private() {
       )}
       <main className="flex-1 overflow-y-auto">
         <PersonalProvider>
+          <NotifySync />
           <Outlet />
         </PersonalProvider>
       </main>
@@ -109,6 +119,16 @@ export function App() {
               <Route path="/benefits" element={<Benefits />} />
               <Route path="/appointments" element={<Appointments />} />
               <Route path="/assistant" element={<Assistant />} />
+              <Route path="/assistant/history" element={<ChatHistory />} />
+              <Route path="/documents" element={<Documents />} />
+              <Route path="/scan" element={<Scan />} />
+              <Route path="/notifications" element={<Notifications />} />
+              <Route path="/file" element={<MyFile />} />
+              <Route path="/simulator" element={<Simulator />} />
+              <Route path="/map" element={<OfficesMap />} />
+              <Route path="/community" element={<Community />} />
+              <Route path="/community/new" element={<CommunityNew />} />
+              <Route path="/community/:id" element={<CommunityPost />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/data" element={<MyData />} />
             </Route>

@@ -1,14 +1,18 @@
+import { useState } from "react";
 import { useLang } from "~/lib/lang";
 import { usePersonal } from "~/lib/personal";
 import { Screen } from "~/ui/kit";
+import { MonthCalendar } from "~/ui/MonthCalendar";
 import { AddReminder, ReminderRow } from "~/ui/Reminders";
 
 /** Citas y fechas que la persona apunta. No se calculan plazos: solo se guarda lo que ella escribe. */
 export function Appointments() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const { available, loading, reminders } = usePersonal();
   const byDate = [...reminders].sort((a, b) => a.due_date.localeCompare(b.due_date));
-  const pending = byDate.filter((r) => !r.done);
+  const [day, setDay] = useState<string | null>(null);
+  const pending = byDate.filter((r) => !r.done && (!day || r.due_date === day));
+  const marked = new Set(byDate.filter((r) => !r.done).map((r) => r.due_date));
   const done = byDate.filter((r) => r.done).reverse();
 
   return (
@@ -18,8 +22,13 @@ export function Appointments() {
       {available && loading && <p className="mt-4 text-ink-soft">{t("loading")}</p>}
       {available && !loading && (
         <div className="mt-4 space-y-5">
+          <section className="card">
+            <MonthCalendar marked={marked} selected={day} onSelect={setDay} />
+          </section>
           <section className="card space-y-3">
-            <h2 className="text-lg font-bold">{t("pendingOnes")}</h2>
+            <h2 className="text-lg font-bold">
+              {day ? new Date(`${day}T12:00:00`).toLocaleDateString(lang, { day: "numeric", month: "long" }) : t("pendingOnes")}
+            </h2>
             {pending.length === 0 ? (
               <p className="text-[15px] text-ink-soft">{t("noReminders")}</p>
             ) : (
@@ -29,7 +38,7 @@ export function Appointments() {
                 ))}
               </ul>
             )}
-            <AddReminder />
+            <AddReminder key={day ?? "all"} initialDate={day ?? undefined} />
           </section>
           {done.length > 0 && (
             <section className="card space-y-3">

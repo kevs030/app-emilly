@@ -45,12 +45,12 @@ export function ReminderRow({ r }: { r: Reminder }) {
 }
 
 /** Formulario para añadir un recordatorio. Las fechas las pone la persona: no son plazos oficiales. */
-export function AddReminder({ procedureId }: { procedureId?: number }) {
+export function AddReminder({ procedureId, initialDate }: { procedureId?: number; initialDate?: string }) {
   const { t } = useLang();
   const { addReminder } = usePersonal();
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(initialDate ?? "");
   const [error, setError] = useState(false);
 
   if (!open) {

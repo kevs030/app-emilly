@@ -1,11 +1,10 @@
-import { ArrowRight, Bell, CalendarDays, CircleCheckBig, Clock, HandCoins, ListChecks, MapPin, MessageCircle, Search, Sparkles, Sprout, UserRound, Users } from "lucide-react";
+import { ArrowRight, Bell, BellRing, Calculator, CalendarDays, FolderLock, IdCard, ScanText, CircleCheckBig, Clock, HandCoins, ListChecks, MapPin, MessageCircle, Search, Sparkles, Sprout, UserRound, Users } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { getGuide, guides } from "@/content/guides";
 import { useAuth } from "~/auth/AuthProvider";
 import { useLang } from "~/lib/lang";
 import { usePersonal, type Procedure } from "~/lib/personal";
-import { API_URL } from "~/lib/supabase";
 import type { StringKey } from "~/lib/strings";
 import { Alert, Field, Screen } from "~/ui/kit";
 import { AddReminder, ReminderRow } from "~/ui/Reminders";
@@ -39,16 +38,21 @@ function ProcedureCard({ p }: { p: Procedure }) {
   );
 }
 
-type Shortcut = { icon: typeof Search; label: StringKey } & ({ to: string } | { web: string });
+type Shortcut = { icon: typeof Search; label: StringKey; to: string };
 
-/** Accesos del inicio. Solo figuran destinos reales; lo que aún no existe no se muestra. */
+/** Accesos del inicio. Cada uno abre una pantalla que existe y funciona. */
 const SHORTCUTS: Shortcut[] = [
   { to: "/guides", icon: ListChecks, label: "tabGuides" },
   { to: "/benefits", icon: HandCoins, label: "benefits" },
   { to: "/assistant", icon: MessageCircle, label: "tabAssistant" },
+  { to: "/map", icon: MapPin, label: "offices" },
   { to: "/appointments", icon: CalendarDays, label: "appointments" },
-  { web: "/mapa", icon: MapPin, label: "offices" },
-  { web: "/foro", icon: Users, label: "community" },
+  { to: "/documents", icon: FolderLock, label: "myDocuments" },
+  { to: "/scan", icon: ScanText, label: "translator" },
+  { to: "/community", icon: Users, label: "community" },
+  { to: "/notifications", icon: BellRing, label: "notifications" },
+  { to: "/file", icon: IdCard, label: "myFile" },
+  { to: "/simulator", icon: Calculator, label: "simulator" },
   { to: "/profile", icon: UserRound, label: "tabProfile" },
 ];
 
@@ -114,15 +118,9 @@ export function Home() {
               const cls = "card flex h-full min-h-24 flex-col items-center justify-center gap-2 px-2 py-3 text-center";
               return (
                 <li key={s.label}>
-                  {"web" in s ? (
-                    <a href={`${API_URL}${s.web}`} target="_blank" rel="noopener noreferrer" className={cls} title={t("opensWeb")}>
-                      {inner}
-                    </a>
-                  ) : (
-                    <Link to={s.to} className={cls}>
-                      {inner}
-                    </Link>
-                  )}
+                  <Link to={s.to} className={cls}>
+                    {inner}
+                  </Link>
                 </li>
               );
             })}

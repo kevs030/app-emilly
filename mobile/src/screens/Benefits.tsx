@@ -1,6 +1,6 @@
-import { ExternalLink } from "lucide-react";
+import { Calculator, ExternalLink } from "lucide-react";
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { bonuses } from "@/content/bonuses";
 import { useLang } from "~/lib/lang";
 import { Screen } from "~/ui/kit";
@@ -17,6 +17,9 @@ export function Benefits() {
   return (
     <Screen title={t("benefits")} back>
       <p className="text-[15px] text-ink-soft">{t("benefitsLead")}</p>
+      <Link to="/simulator" className="btn btn-secondary mt-3">
+        <Calculator size={20} aria-hidden /> {t("simulator")}
+      </Link>
       {contentFallback && <p className="mt-3 rounded-xl bg-beige p-3 text-[14px]">{t("notTranslated")}</p>}
       <ul className="mt-4 space-y-4">
         {bonuses.map((b) => (

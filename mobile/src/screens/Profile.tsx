@@ -2,6 +2,7 @@ import { Mail, Smartphone } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "~/auth/AuthProvider";
+import { removeAllFiles } from "~/lib/documents";
 import { useLang } from "~/lib/lang";
 import { UI_LANGS, type UiLang } from "~/lib/strings";
 import { redirectUrl, supabase } from "~/lib/supabase";
@@ -65,6 +66,8 @@ export function Profile() {
 
   async function removeAccount() {
     if (!window.confirm(t("deleteConfirm"))) return;
+    // Primero se retiran los archivos de «Mis documentos»; después se borra la cuenta y todos sus datos.
+    if (user && !(await removeAllFiles(user.id))) return setError(t("generic"));
     const { error } = await supabase.rpc("delete_my_account");
     if (error) return setError(t("generic"));
     await supabase.auth.signOut();

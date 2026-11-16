@@ -1,7 +1,9 @@
-import { Bot, Clapperboard, Package, Send } from "lucide-react";
+import { Bot, Clapperboard, History, Package, Send, SquarePen } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { streamAI } from "~/lib/ai";
 import { useLang } from "~/lib/lang";
-import { API_URL, supabase } from "~/lib/supabase";
+import { supabase } from "~/lib/supabase";
 import { Alert, Screen } from "~/ui/kit";
 
 type Msg = { role: "user" | "assistant"; content: string };
@@ -12,12 +14,16 @@ type Msg = { role: "user" | "assistant"; content: string };
  */
 export function Assistant() {
   const { t } = useLang();
+  const [params, setParams] = useSearchParams();
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
   const [credits, setCredits] = useState<number | null>(null);
   const [error, setError] = useState("");
   const bottom = useRef<HTMLDivElement>(null);
+  // Conversación guardada en la cuenta. Si las tablas aún no existen, el chat funciona igual sin guardar.
+  const conversation = useRef<number | null>(null);
+  const opened = params.get("c");
 
   useEffect(() => {
     let alive = true;
@@ -33,6 +39,42 @@ export function Assistant() {
     };
   }, []);
 
+  // Abrir una conversación anterior desde el historial.
+  useEffect(() => {
+    const id = Number(opened);
+    if (!opened || !Number.isInteger(id) || conversation.current === id) return;
+    let alive = true;
+    void supabase
+      .from("ai_messages")
+      .select("role, content")
+      .eq("conversation_id", id)
+      .order("id")
+      .then(({ data }) => {
+        if (!alive || !data?.length) return;
+        conversation.current = id;
+        setMessages(data as Msg[]);
+      });
+    return () => {
+      alive = false;
+    };
+  }, [opened]);
+
+  function startNew() {
+    conversation.current = null;
+    setMessages([]);
+    setError("");
+    setParams({}, { replace: true });
+  }
+
+  async function remember(role: Msg["role"], content: string, firstQuestion: string) {
+    if (conversation.current === null) {
+      const { data, error: e } = await supabase.from("ai_conversations").insert({ title: firstQuestion.slice(0, 80) }).select("id").single();
+      if (e || !data) return;
+      conversation.current = data.id as number;
+    }
+    await supabase.from("ai_messages").insert({ conversation_id: conversation.current, role, content: content.slice(0, 12000) });
+  }
+
   async function ask(text: string) {
     if (!text || busy) return;
     setError("");
@@ -40,40 +82,24 @@ export function Assistant() {
     setMessages([...next, { role: "assistant", content: "" }]);
     setInput("");
     setBusy(true);
-    try {
-      const { data } = await supabase.auth.getSession();
-      const res = await fetch(`${API_URL}/api/assistant`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${data.session?.access_token ?? ""}` },
-        body: JSON.stringify({ messages: next.slice(-20) }),
-      });
-      if (res.status === 402) {
-        setCredits(0);
-        setMessages(messages);
-        return;
-      }
-      if (res.status === 429) throw new Error(t("tooMany"));
-      if (res.status === 503) throw new Error(t("asstNotReady"));
-      if (!res.ok || !res.body) throw new Error(t("asstError"));
-      const left = Number(res.headers.get("X-Credits-Remaining"));
-      if (Number.isFinite(left)) setCredits(left);
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let acc = "";
-      for (;;) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        acc += decoder.decode(value, { stream: true });
-        setMessages([...next, { role: "assistant", content: acc }]);
-        bottom.current?.scrollIntoView({ block: "end" });
-      }
-    } catch (e) {
-      setMessages(messages);
-      setInput(text);
-      setError(e instanceof TypeError ? t("offline") : (e as Error).message);
-    } finally {
-      setBusy(false);
+    let answer = "";
+    const res = await streamAI("/api/assistant", { messages: next.slice(-20) }, (all) => {
+      answer = all;
+      setMessages([...next, { role: "assistant", content: all }]);
+      bottom.current?.scrollIntoView({ block: "end" });
+    });
+    setBusy(false);
+    if (res.status === "ok") {
+      if (res.credits !== null) setCredits(res.credits);
+      // Se guarda solo lo que de verdad se preguntó y se respondió.
+      await remember("user", text, next[0].content);
+      if (answer.trim()) await remember("assistant", answer, next[0].content);
+      return;
     }
+    setMessages(messages);
+    if (res.status === "no_credits") return setCredits(0);
+    setInput(text);
+    setError(t(res.status === "rate_limited" ? "tooMany" : res.status === "not_ready" ? "asstNotReady" : res.status === "offline" ? "offline" : "asstError"));
   }
 
   const out = credits === 0;
@@ -85,11 +111,19 @@ export function Assistant() {
           <Bot size={20} className="mt-0.5 shrink-0" aria-hidden />
           <p className="min-w-0 flex-1">{t("asstNotice")}</p>
         </div>
-        {credits !== null && (
-          <p className="text-[14px] font-semibold text-brown" aria-live="polite">
-            {credits} {t("creditsLeft")}
+        <div className="flex min-h-11 items-center gap-2">
+          <p className="min-w-0 flex-1 text-[14px] font-semibold text-brown" aria-live="polite">
+            {credits !== null && `${credits} ${t("creditsLeft")}`}
           </p>
-        )}
+          {messages.length > 0 && (
+            <button type="button" onClick={startNew} disabled={busy} className="flex min-h-11 items-center gap-1 rounded-full bg-beige px-3 text-[14px] font-medium">
+              <SquarePen size={16} aria-hidden /> {t("chatNew")}
+            </button>
+          )}
+          <Link to="/assistant/history" className="flex min-h-11 items-center gap-1 rounded-full bg-beige px-3 text-[14px] font-medium">
+            <History size={16} aria-hidden /> {t("chatHistory")}
+          </Link>
+        </div>
 
         <div className="flex-1 space-y-3">
           {messages.length === 0 && !out && (

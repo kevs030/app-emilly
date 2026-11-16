@@ -172,6 +172,10 @@ body {
   justify-content: center;
   gap: 6px;
 }
+.segmented.three {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.segmented button[aria-pressed="true"],
 .segmented button[aria-selected="true"] {
   background: var(--white);
   color: var(--ink);

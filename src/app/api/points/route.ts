@@ -40,11 +40,11 @@ export async function GET(req: Request) {
       }
       return Response.json(
         { cat, updated: new Date().toISOString().slice(0, 10), points },
-        { headers: { "Cache-Control": "public, max-age=3600, s-maxage=604800, stale-while-revalidate=2592000" } },
+        { headers: { "Cache-Control": "public, max-age=3600, s-maxage=604800, stale-while-revalidate=2592000", "Access-Control-Allow-Origin": "*" } },
       );
     } catch (e) {
       tried.push(`${host}:${(e as Error).name}`);
     }
   }
-  return Response.json({ error: "unavailable", tried }, { status: 502, headers: { "Cache-Control": "no-store" } });
+  return Response.json({ error: "unavailable", tried }, { status: 502, headers: { "Cache-Control": "no-store", "Access-Control-Allow-Origin": "*" } });
 }

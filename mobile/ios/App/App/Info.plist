@@ -77,6 +77,12 @@
 			</array>
 		</dict>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>A posto usa tu ubicación solo para mostrarte las oficinas más cercanas en el mapa. No se guarda.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>A posto usa la cámara para que fotografíes tus documentos y cartas.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>A posto accede a tus fotos solo cuando eliges una imagen de un documento.</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 </dict>

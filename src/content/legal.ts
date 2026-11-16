@@ -5,7 +5,7 @@ import type { L10n } from "./types";
  * BORRADOR: debe revisarlo un profesional de protección de datos antes del lanzamiento.
  * Si cambia el tratamiento de datos en el código, hay que actualizar este texto y su fecha.
  */
-export const PRIVACY_UPDATED = "2026-11-12";
+export const PRIVACY_UPDATED = "2026-11-16";
 
 export const privacyIntro: L10n = {
   es: "A posto te ayuda con tus trámites en Italia. Aquí explicamos, en claro, qué datos guardamos, para qué y cómo puedes borrarlos.",
@@ -38,9 +38,29 @@ export const privacySections: { title: L10n; items: L10n[] }[] = [
         en: "Activity history: which guide you opened or which step you ticked, so you can pick up where you left off. We keep at most the last 300 actions and you can delete them.",
       },
       {
-        es: "Asistente de IA: tus preguntas se envían a nuestro proveedor de inteligencia artificial (Anthropic, en Estados Unidos) junto con tu progreso guardado, para generar la respuesta. A posto no guarda las conversaciones. Guardamos cuántas preguntas te quedan y sus movimientos.",
-        it: "Assistente IA: le tue domande sono inviate al nostro fornitore di intelligenza artificiale (Anthropic, negli Stati Uniti) insieme ai tuoi progressi salvati, per generare la risposta. A posto non conserva le conversazioni. Conserviamo quante domande ti restano e i relativi movimenti.",
-        en: "AI assistant: your questions are sent to our artificial intelligence provider (Anthropic, in the United States) together with your saved progress, to generate the answer. A posto does not store conversations. We keep how many questions you have left and their movements.",
+        es: "Asistente de IA: tus preguntas se envían a nuestro proveedor de inteligencia artificial (Anthropic, en Estados Unidos) junto con tu progreso guardado, para generar la respuesta. Tus conversaciones se guardan en tu cuenta para que puedas continuarlas, y puedes borrarlas cuando quieras. Guardamos cuántas preguntas te quedan y sus movimientos.",
+        it: "Assistente IA: le tue domande sono inviate al nostro fornitore di intelligenza artificiale (Anthropic, negli Stati Uniti) insieme ai tuoi progressi salvati, per generare la risposta. Le conversazioni sono salvate nel tuo account per poterle continuare e puoi cancellarle quando vuoi. Conserviamo quante domande ti restano e i relativi movimenti.",
+        en: "AI assistant: your questions are sent to our artificial intelligence provider (Anthropic, in the United States) together with your saved progress, to generate the answer. Your conversations are saved in your account so you can continue them, and you can delete them at any time. We keep how many questions you have left and their movements.",
+      },
+      {
+        es: "Mis documentos: si guardas fotos o PDF de tus documentos, se almacenan en un espacio privado en la Unión Europea al que solo accede tu cuenta. Nadie más puede verlos y puedes borrarlos cuando quieras. Son opcionales: la app funciona sin ellos.",
+        it: "I miei documenti: se salvi foto o PDF dei tuoi documenti, sono conservati in uno spazio privato nell'Unione Europea accessibile solo dal tuo account. Nessun altro può vederli e puoi cancellarli quando vuoi. Sono facoltativi.",
+        en: "My documents: if you save photos or PDFs of your documents, they are stored in a private space in the European Union that only your account can access. Nobody else can see them and you can delete them at any time. They are optional.",
+      },
+      {
+        es: "Lector de documentos: cuando pides que la app lea y traduzca una foto, esa imagen se envía a nuestro proveedor de inteligencia artificial (Anthropic, en Estados Unidos) solo para generar la respuesta. Te pedimos confirmación cada vez. Nuestro servidor no guarda la imagen; la explicación solo se guarda si tú guardas el documento.",
+        it: "Lettore di documenti: quando chiedi all'app di leggere e tradurre una foto, l'immagine è inviata al nostro fornitore di intelligenza artificiale (Anthropic, negli Stati Uniti) solo per generare la risposta. Ti chiediamo conferma ogni volta. Il nostro server non conserva l'immagine.",
+        en: "Document reader: when you ask the app to read and translate a photo, that image is sent to our artificial intelligence provider (Anthropic, in the United States) only to generate the answer. We ask you to confirm each time. Our server does not keep the image.",
+      },
+      {
+        es: "Avisos en el teléfono: solo si los activas. Se programan en tu propio dispositivo y por defecto no muestran el contenido de tus citas.",
+        it: "Notifiche sul telefono: solo se le attivi. Sono programmate sul tuo dispositivo e, per impostazione predefinita, non mostrano il contenuto dei tuoi appuntamenti.",
+        en: "Phone notifications: only if you turn them on. They are scheduled on your own device and by default do not show the content of your appointments.",
+      },
+      {
+        es: "Ubicación: solo si pulsas «Cerca de mí» en el mapa. Se usa en tu dispositivo para centrar el mapa y no se guarda.",
+        it: "Posizione: solo se premi «Vicino a me» sulla mappa. È usata sul dispositivo per centrare la mappa e non viene salvata.",
+        en: "Location: only if you tap “Near me” on the map. It is used on your device to centre the map and is not stored.",
       },
       {
         es: "Estadísticas de uso: solo si las activas. Contamos tus sesiones y el tiempo de uso activo. Nunca lo que escribes. Si las desactivas, se borran.",

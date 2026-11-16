@@ -9,6 +9,9 @@ export type Profile = {
   preferred_language: string;
   country_of_origin: string | null;
   city: string | null;
+  permit_type: string | null;
+  permit_expiry: string | null;
+  has_children: boolean | null;
   consent_personalization: boolean;
   consent_analytics: boolean;
 };
@@ -24,7 +27,7 @@ type Ctx = {
 };
 const AuthContext = createContext<Ctx | null>(null);
 
-const PROFILE_COLUMNS = "display_name, preferred_language, country_of_origin, city, consent_personalization, consent_analytics";
+const PROFILE_COLUMNS = "display_name, preferred_language, country_of_origin, city, permit_type, permit_expiry, has_children, consent_personalization, consent_analytics";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate();

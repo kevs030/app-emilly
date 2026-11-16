@@ -123,3 +123,36 @@ Se trabaja en la rama `desarrollo`. Nada pasa a producción ni a la base de dato
 **No probado:** nada de esto contra el servidor real ni en un teléfono; la revisión automática de GitHub hasta ver su primer resultado.
 **Riesgos:** las traducciones nuevas a francés, árabe, rumano, albanés, ucraniano y bengalí no las ha revisado un hablante nativo.
 **No hecho a propósito:** la migración 0006 no está aplicada en producción y nada se ha publicado (requiere autorización).
+
+### Entrega 2 — Fases 2 a 9 · 16/11/2026 · rama `desarrollo`
+
+**Diagnóstico del asistente («no está activo»):** la base de datos está bien (la función de créditos existe y la cuenta tiene saldo). El servidor responde 503 antes de gastar nada porque el despliegue actual no ve la clave `ANTHROPIC_API_KEY`: o no está guardada con ese nombre exacto, o se guardó después del último despliegue (Vercel solo aplica las variables en despliegues nuevos). Se añade `/api/health`, que dice sin secretos si la clave está configurada.
+
+**Base de datos (sin aplicar en producción):** `supabase/migrations/0007_documentos_y_conversaciones.sql` — tabla `documents`, almacén privado `documents` (8 MB, solo imágenes y PDF, cada persona solo su carpeta), tablas `ai_conversations` y `ai_messages`, y la descarga de datos ampliada.
+
+**Servidor (web):** `src/lib/ai-server.ts` (piezas comunes de IA), `src/app/api/document/route.ts` (lector de documentos: OCR, explicación y traducción; 1 crédito), `src/app/api/health/route.ts`, `src/app/api/assistant/route.ts` (usa las piezas comunes), `src/app/api/points/route.ts` (accesible desde la app), `src/content/legal.ts` (política de privacidad: documentos, lector, avisos, ubicación, conversaciones guardadas).
+
+**App — archivos nuevos:** `lib/ai.ts`, `lib/image.ts`, `lib/analysis.ts`, `lib/documents.ts`, `lib/notify.ts`, `lib/simulator.ts`, `lib/forum.ts`, `ui/DocReader.tsx`, `ui/Switch.tsx`, `ui/NotifySync.tsx`, `ui/MonthCalendar.tsx`, `screens/Documents.tsx`, `screens/Scan.tsx`, `screens/Notifications.tsx`, `screens/MyFile.tsx`, `screens/ChatHistory.tsx`, `screens/Simulator.tsx`, `screens/OfficesMap.tsx`, `screens/Community.tsx`.
+**App — modificados:** `App.tsx`, `screens/Home.tsx` (12 accesos), `screens/Assistant.tsx` (historial), `screens/Appointments.tsx` (calendario), `screens/Benefits.tsx`, `screens/Profile.tsx` (borrar cuenta retira antes los archivos), `auth/AuthProvider.tsx`, textos (148 nuevos × 9 idiomas), permisos de Android e iOS (ubicación, cámara, avisos), `index.html` (política de contenido para el mapa).
+
+| Fase | Qué funciona | Pendiente |
+|---|---|---|
+| 2 Expediente | Situación opcional (país, ciudad, permiso, caducidad, hijos), resumen, consentimiento para usarla en el asistente | — |
+| 3 Trámites | Ya existía: empezar, pasos, documentos, terminar, recordatorios | Notas por trámite |
+| 4 Asistente | Conversaciones guardadas, historial, abrir y borrar | Que la clave esté activa en Vercel |
+| 5 Documentos y traductor | Guardar foto/PDF en almacén privado, ver con enlace de 1 minuto, borrar; leer, explicar y traducir con confirmación previa | PDF no se leen con IA (solo fotos) |
+| 6 Calendario y avisos | Calendario mensual, centro de avisos, avisos locales en el teléfono con consentimiento y sin contenido por defecto | Avisos «push» desde servidor (no hacen falta para las citas) |
+| 7 Simulador | 7 preguntas, resultado orientativo basado solo en requisitos publicados; nada se guarda | Más ayudas cuando se añadan al contenido |
+| 8 Mapa | Dentro de la app: categorías, buscar ciudad, cerca de mí, las 6 más cercanas, cómo llegar | Verlo con datos reales (ver «No probado») |
+| 9 Comunidad | Dentro de la app: leer, preguntar, responder, denunciar, borrar lo propio | Tema «lugares de ayuda» |
+| 10 Seguridad | Pruebas de ataque de las tablas nuevas; sin claves en la app | Aplicar 0006 y 0007; activar protección de contraseñas filtradas y CAPTCHA en Supabase |
+| 11 Panel admin | Sin cambios (el de la web sigue funcionando) | Estadísticas de documentos e IA |
+
+**Pruebas ejecutadas:**
+- Lógica: 34 de 34 (se añaden simulador, plan de avisos y lectura de documentos).
+- Navegador con servidor simulado: 24 de 24 (fase 1) y 36 de 36 (fases 2–9).
+- Migración 0007 en base de datos local: se aplica dos veces sin error; 8 intentos de ataque rechazados (carpeta ajena, cuenta ajena, tipo de archivo, conversación ajena, función interna, anónimo) y la descarga de datos incluye lo nuevo.
+- Web: tipos, estilo y compilación correctos. Búsqueda de claves secretas en la app compilada: ninguna.
+
+**No probado (no se puede desde aquí):** el lector de documentos y el asistente contra la IA real (falta la clave activa); el almacén de archivos real de Supabase; avisos, cámara y ubicación en un teléfono; el mapa con datos reales de OpenStreetMap.
+**Riesgos:** la calidad de lectura de fotos malas es desconocida hasta probar con cartas reales; las 148 traducciones nuevas a 6 idiomas necesitan revisión nativa; guardar documentos de identidad aumenta la responsabilidad legal (conviene la revisión de un profesional de protección de datos antes de abrir al público).
