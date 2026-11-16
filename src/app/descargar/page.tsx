@@ -42,7 +42,7 @@ const T = {
     apkHash: "Huella SHA-256 del archivo (para comprobar que es auténtico):",
     apkSteps: ["Descarga el archivo desde esta página.", "Ábrelo. Android te pedirá permitir la instalación desde tu navegador: acepta solo para esta instalación.", "Pulsa «Instalar»."],
     apkWarn: "Descarga el APK solo desde esta página. No instales copias que te envíen por WhatsApp, Telegram u otras webs.",
-    apkSoon: "La descarga directa estará disponible junto con la versión de Google Play.",
+    apkHint: "Al descargar, toca «Abrir» y activa «Permitir desde esta fuente» si tu teléfono lo solicita.",
     privacy: "Política de privacidad",
     del: "Eliminar mi cuenta",
     about: "Quiénes somos",
@@ -78,7 +78,7 @@ const T = {
     apkHash: "Impronta SHA-256 del file (per verificare che sia autentico):",
     apkSteps: ["Scarica il file da questa pagina.", "Aprilo. Android chiederà di consentire l'installazione dal browser: accetta solo per questa installazione.", "Tocca «Installa»."],
     apkWarn: "Scarica l'APK solo da questa pagina. Non installare copie ricevute su WhatsApp, Telegram o altri siti.",
-    apkSoon: "Il download diretto sarà disponibile insieme alla versione su Google Play.",
+    apkHint: "Dopo il download, tocca «Apri» e attiva «Consenti da questa fonte» se il telefono lo chiede.",
     privacy: "Informativa sulla privacy",
     del: "Elimina il mio account",
     about: "Chi siamo",
@@ -114,7 +114,7 @@ const T = {
     apkHash: "SHA-256 fingerprint of the file (to check it is authentic):",
     apkSteps: ["Download the file from this page.", "Open it. Android will ask to allow installing from your browser: accept only for this install.", "Tap “Install”."],
     apkWarn: "Download the APK only from this page. Do not install copies sent over WhatsApp, Telegram or other websites.",
-    apkSoon: "The direct download will be available together with the Google Play version.",
+    apkHint: "After downloading, tap “Open” and turn on “Allow from this source” if your phone asks.",
     privacy: "Privacy policy",
     del: "Delete my account",
     about: "About us",
@@ -271,30 +271,25 @@ export default async function DownloadPage() {
           <Download size={22} className="text-brand" aria-hidden /> {s.apkTitle}
         </h2>
         <p className="mt-2 text-sm text-muted">{s.apkBody}</p>
-        {APP.apkUrl ? (
-          <>
-            <a href={APP.apkUrl} className="btn-ghost mt-4" rel="noopener noreferrer">
-              <Download size={18} aria-hidden /> {s.apkCta}
-              {APP.apkVersion && (
-                <span className="text-muted">
-                  · {s.apkVersion} {APP.apkVersion}
-                </span>
-              )}
-            </a>
-            <ol className="mt-4 list-decimal space-y-1 ps-5 text-sm">
-              {s.apkSteps.map((x) => (
-                <li key={x}>{x}</li>
-              ))}
-            </ol>
-            {APP.apkSha256 && (
-              <p className="mt-4 text-xs text-muted">
-                {s.apkHash}
-                <code className="mt-1 block break-all rounded-lg bg-background p-2 font-mono text-[11px] text-foreground">{APP.apkSha256}</code>
-              </p>
-            )}
-          </>
-        ) : (
-          <p className="mt-4 rounded-xl bg-brand-soft p-3 text-sm">{s.apkSoon}</p>
+        <a href={APP.apkUrl} download={APP.apkFileName} className="btn mt-4" type="application/vnd.android.package-archive">
+          <Download size={18} aria-hidden /> {s.apkCta}
+          {APP.apkVersion && (
+            <span>
+              · {s.apkVersion} {APP.apkVersion}
+            </span>
+          )}
+        </a>
+        <p className="mt-2 text-sm text-muted">{s.apkHint}</p>
+        <ol className="mt-4 list-decimal space-y-1 ps-5 text-sm">
+          {s.apkSteps.map((x) => (
+            <li key={x}>{x}</li>
+          ))}
+        </ol>
+        {APP.apkSha256 && (
+          <p className="mt-4 text-xs text-muted">
+            {s.apkHash}
+            <code className="mt-1 block break-all rounded-lg bg-background p-2 font-mono text-[11px] text-foreground">{APP.apkSha256}</code>
+          </p>
         )}
         <p className="mt-4 rounded-xl bg-warn-bg p-3 text-sm text-warn-fg">{s.apkWarn}</p>
       </section>

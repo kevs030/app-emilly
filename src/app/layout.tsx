@@ -9,6 +9,7 @@ import { getUser } from "@/lib/supabase/server";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import { BottomNav } from "@/components/BottomNav";
 import { Logo } from "@/components/Icons";
+import { ServiceWorker } from "@/components/ServiceWorker";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 
@@ -157,6 +158,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           </p>
         </footer>
         <BottomNav lang={lang} />
+        <ServiceWorker />
       </body>
     </html>
   );

@@ -1,24 +1,26 @@
 import type { MetadataRoute } from "next";
 
-/** Convierte la web en una app instalable (PWA) en Android, iPhone y ordenador. */
+/** Convierte la web en una app instalable (PWA) y es la base del paquete de Android (TWA). */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "A posto — Guía para migrantes en Italia",
-    short_name: "A posto",
+    name: "A posto",
+    short_name: "a posto",
     description: "Trámites, ayudas, mapas, videos y comunidad para personas migrantes en Italia.",
     id: "/",
     start_url: "/",
     scope: "/",
     display: "standalone",
     orientation: "portrait",
-    background_color: "#f7f2ea",
-    theme_color: "#a65d3d",
+    background_color: "#FFFFFF",
+    theme_color: "#16A34A",
     lang: "es",
+    dir: "ltr",
     categories: ["education", "utilities", "social"],
     icons: [
-      { src: "/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
-      { src: "/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
-      { src: "/icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
+      { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
+      { src: "/icons/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
+      // El logo deja un 15 % de margen, así que también sirve como icono adaptable de Android.
+      { src: "/icons/icon-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
     ],
     shortcuts: [
       { name: "Asistente", url: "/asistente" },
