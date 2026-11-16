@@ -10,7 +10,7 @@ export const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || "sb
 export const isNative = Capacitor.isNativePlatform();
 export const APP_SCHEME = "com.aposto.app";
 // En el teléfono el servidor es la web publicada; en el navegador, el mismo sitio desde el que se sirve la app.
-export const API_URL = import.meta.env.VITE_API_URL || (isNative ? "https://app-emilly.vercel.app" : window.location.origin);
+export const API_URL = import.meta.env.VITE_API_URL || (isNative || typeof window === "undefined" ? "https://app-emilly.vercel.app" : window.location.origin);
 
 /**
  * En el teléfono la sesión se guarda cifrada (Keychain en iOS, Keystore en Android).
