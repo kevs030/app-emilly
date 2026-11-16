@@ -1,14 +1,19 @@
 /** Reglas de validación del acceso. El servidor (Supabase) vuelve a comprobarlo todo. */
 
-export const PASSWORD_MIN = 10;
+// Mismas reglas que tiene configuradas Supabase (Authentication → Email): 12 caracteres,
+// minúscula, mayúscula, número y símbolo. Si se cambian allí, hay que cambiarlas aquí.
+export const PASSWORD_MIN = 12;
+/** Símbolos que Supabase acepta como «símbolo». */
+const SYMBOLS = /[!@#$%^&*()_+\-=[\]{};'\\:"|<>?,./`~]/;
 
-export type PasswordIssue = "short" | "letters" | "digits";
+export type PasswordIssue = "short" | "letters" | "digits" | "symbols";
 
 export function passwordIssues(pw: string): PasswordIssue[] {
   const issues: PasswordIssue[] = [];
   if (pw.length < PASSWORD_MIN) issues.push("short");
-  if (!/[a-zA-ZÀ-ÿ]/.test(pw)) issues.push("letters");
+  if (!/[a-z]/.test(pw) || !/[A-Z]/.test(pw)) issues.push("letters");
   if (!/[0-9]/.test(pw)) issues.push("digits");
+  if (!SYMBOLS.test(pw)) issues.push("symbols");
   return issues;
 }
 

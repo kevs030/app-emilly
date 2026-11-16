@@ -28,10 +28,14 @@ describe("progreso de un trámite", () => {
 });
 
 describe("validación del acceso", () => {
-  it("exige longitud, letra y número en la contraseña", () => {
-    expect(passwordIssues("corta")).toEqual(["short", "digits"]);
-    expect(passwordIssues("1234567890")).toEqual(["letters"]);
-    expect(passwordIssues("Correcta12345")).toEqual([]);
+  it("exige lo mismo que Supabase: 12 caracteres, minúscula, mayúscula, número y símbolo", () => {
+    expect(passwordIssues("corta")).toEqual(["short", "letters", "digits", "symbols"]);
+    expect(passwordIssues("123456789012")).toEqual(["letters", "symbols"]);
+    expect(passwordIssues("solominusculas1!")).toEqual(["letters"]);
+    expect(passwordIssues("SinSimbolo12345")).toEqual(["symbols"]);
+    expect(passwordIssues("Correcta12345")).toEqual(["symbols"]);
+    expect(passwordIssues("Correcta-12345")).toEqual([]);
+    expect(passwordIssues("Abcdefgh1jk?")).toEqual([]);
   });
   it("valida correos", () => {
     expect(isEmail("ana@example.com")).toBe(true);

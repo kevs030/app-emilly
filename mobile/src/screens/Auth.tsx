@@ -145,6 +145,7 @@ export function Auth() {
                       ["short", "pwShort"],
                       ["letters", "pwLetters"],
                       ["digits", "pwDigits"],
+                      ["symbols", "pwSymbols"],
                     ] as const
                   ).map(([issue, key]) => {
                     const ok = password.length > 0 && !issues.includes(issue);
