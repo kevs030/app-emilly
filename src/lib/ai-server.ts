@@ -15,6 +15,34 @@ export function aiKeyPresent(): boolean {
 
 const anthropic = new Anthropic();
 
+/** Motivo de un fallo del proveedor de IA, sin datos sensibles: sirve para saber qué arreglar. */
+export function aiErrorCode(err: unknown): string {
+  if (err instanceof Anthropic.AuthenticationError) return "invalid_key";
+  if (err instanceof Anthropic.PermissionDeniedError) return "no_permission";
+  if (err instanceof Anthropic.NotFoundError) return "model_not_found";
+  if (err instanceof Anthropic.RateLimitError) return "rate_limited";
+  if (err instanceof Anthropic.BadRequestError) return /credit balance/i.test(err.message) ? "no_balance" : "bad_request";
+  if (err instanceof Anthropic.APIConnectionError) return "unreachable";
+  if (err instanceof Anthropic.APIError) return `error_${err.status ?? "unknown"}`;
+  return "error_unknown";
+}
+
+let lastCheck: { at: number; status: string } | null = null;
+
+/** Comprueba, sin gastar nada, que la clave es válida y que el modelo está disponible. Se repite como mucho cada minuto. */
+export async function aiProviderStatus(): Promise<string> {
+  if (!aiKeyPresent()) return "key_missing";
+  if (lastCheck && Date.now() - lastCheck.at < 60_000) return lastCheck.status;
+  let status = "ok";
+  try {
+    await anthropic.models.retrieve(AI_MODEL);
+  } catch (err) {
+    status = aiErrorCode(err);
+  }
+  lastCheck = { at: Date.now(), status };
+  return status;
+}
+
 // Orígenes de la app empaquetada (iOS, Android) y de las pruebas locales.
 const APP_ORIGINS = new Set(["capacitor://localhost", "https://localhost", "http://localhost", "http://localhost:5173", "http://localhost:4173"]);
 
@@ -94,9 +122,10 @@ export function streamAnswer({ userId, headers, remaining, system, messages, eff
         const final = await stream.finalMessage();
         if (final.stop_reason === "refusal") controller.enqueue(encoder.encode("\n\n(No puedo ayudar con esta petición. / I can't help with this request.)"));
       } catch (err) {
-        console.error("ai_error", err instanceof Anthropic.APIError ? err.status : err);
+        const code = aiErrorCode(err);
+        console.error("ai_error", code, err instanceof Anthropic.APIError ? err.message : err);
         if (!sent) await refund(userId);
-        controller.enqueue(encoder.encode("\n\n⚠️ Error. Inténtalo de nuevo en un momento. / Please try again shortly."));
+        controller.enqueue(encoder.encode(`\n\n⚠️ Error. Inténtalo de nuevo en un momento. / Please try again shortly. [${code}]`));
       } finally {
         controller.close();
       }
