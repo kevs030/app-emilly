@@ -1,16 +1,16 @@
 import type { L10n } from "./types";
 
 /**
- * Política de privacidad de A posto (app y web). Describe lo que el código hace de verdad.
+ * Política de privacidad de A Posto (app y web). Describe lo que el código hace de verdad.
  * BORRADOR: debe revisarlo un profesional de protección de datos antes del lanzamiento.
  * Si cambia el tratamiento de datos en el código, hay que actualizar este texto y su fecha.
  */
 export const PRIVACY_UPDATED = "2026-11-16";
 
 export const privacyIntro: L10n = {
-  es: "A posto te ayuda con tus trámites en Italia. Aquí explicamos, en claro, qué datos guardamos, para qué y cómo puedes borrarlos.",
-  it: "A posto ti aiuta con le pratiche in Italia. Qui spieghiamo in modo chiaro quali dati conserviamo, perché e come puoi cancellarli.",
-  en: "A posto helps you with paperwork in Italy. Here we explain plainly which data we keep, why, and how you can delete it.",
+  es: "A Posto te ayuda con tus trámites en Italia. Aquí explicamos, en claro, qué datos guardamos, para qué y cómo puedes borrarlos.",
+  it: "A Posto ti aiuta con le pratiche in Italia. Qui spieghiamo in modo chiaro quali dati conserviamo, perché e come puoi cancellarli.",
+  en: "A Posto helps you with paperwork in Italy. Here we explain plainly which data we keep, why, and how you can delete it.",
 };
 
 export const privacySections: { title: L10n; items: L10n[] }[] = [
@@ -146,7 +146,7 @@ export const privacySections: { title: L10n; items: L10n[] }[] = [
   },
   {
     title: { es: "Edad", it: "Età", en: "Age" },
-    items: [{ es: "A posto es para personas de 14 años o más.", it: "A posto è destinato a persone dai 14 anni in su.", en: "A posto is for people aged 14 or older." }],
+    items: [{ es: "A Posto es para personas de 14 años o más.", it: "A Posto è destinato a persone dai 14 anni in su.", en: "A Posto is for people aged 14 or older." }],
   },
 ];
 

@@ -9,7 +9,7 @@ export function NotifySync() {
   const { reminders, loading } = usePersonal();
   useEffect(() => {
     if (loading) return;
-    void syncNotifications(reminders, loadNotify(), { title: "A posto", today: t("notifToday"), soon: t("notifSoon") }).catch(() => undefined);
+    void syncNotifications(reminders, loadNotify(), { title: "A Posto", today: t("notifToday"), soon: t("notifSoon") }).catch(() => undefined);
   }, [reminders, loading, t]);
   return null;
 }

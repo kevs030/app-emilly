@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  /* Paleta cálida de A posto (la misma que la app móvil) */
+  /* Paleta cálida de A Posto (la misma que la app móvil) */
   --background: #f7f2ea;
   --foreground: #34312e;
   --card: #ffffff;

@@ -8,19 +8,19 @@ import { getLang } from "@/lib/lang";
 
 export const metadata: Metadata = {
   title: "Descargar la app · Scarica l'app",
-  description: "A posto: la app gratuita que te guía en tus trámites en Italia. Disponible para Android y iPhone.",
+  description: "A Posto: la app gratuita que te guía en tus trámites en Italia. Disponible para Android y iPhone.",
 };
 
 const T = {
   es: {
     kicker: "App gratuita para Android y iPhone",
     title: "Tus trámites en Italia, en regla.",
-    sub: "A posto te dice qué hacer, qué documentos preparar y adónde ir. Paso a paso, con fuentes oficiales y en tu idioma.",
+    sub: "A Posto te dice qué hacer, qué documentos preparar y adónde ir. Paso a paso, con fuentes oficiales y en tu idioma.",
     play: ["Disponible en", "Google Play"],
     store: ["Consíguelo en el", "App Store"],
     soon: "Próximamente",
     freeNote: "Gratis. Sin tarjeta. Sin suscripción.",
-    whatTitle: "Qué hace A posto",
+    whatTitle: "Qué hace A Posto",
     features: [
       ["Guías paso a paso", "Permiso de residencia, código fiscal, sanidad, residencia, art. 31 y más, con los formularios oficiales."],
       ["Tu progreso guardado", "Marca cada paso y cada documento. La app te recuerda qué te falta y dónde lo dejaste."],
@@ -33,14 +33,14 @@ const T = {
       ["Fuentes oficiales", "Cada guía enlaza a la Polizia di Stato, INPS, Agenzia delle Entrate o al Ministerio, con su fecha de revisión."],
       ["Tus datos son tuyos", "Pedimos lo mínimo. Puedes ver, descargar y borrar todo desde la app, cuando quieras."],
       ["Sin letra pequeña", "No vendemos tus datos. No pedimos dinero por un trámite. No prometemos permisos."],
-      ["Independiente", "A posto no es una web del Gobierno ni de una agencia. Es información general, no asesoramiento legal."],
+      ["Independiente", "A Posto no es una web del Gobierno ni de una agencia. Es información general, no asesoramiento legal."],
     ],
     iosTitle: "Instalar en iPhone o iPad",
-    iosBody: "En iPhone no existen archivos de instalación como en Android: Apple solo permite instalar apps desde el App Store o añadiéndolas a la pantalla de inicio. Mientras llega la versión del App Store, puedes tener A posto con su icono en un minuto:",
-    iosSteps: ["Abre esta página en Safari.", "Pulsa el botón Compartir: el cuadrado con una flecha hacia arriba.", "Baja y pulsa «Añadir a pantalla de inicio».", "Pulsa «Añadir». El icono de A posto aparecerá junto a tus otras apps."],
+    iosBody: "En iPhone no existen archivos de instalación como en Android: Apple solo permite instalar apps desde el App Store o añadiéndolas a la pantalla de inicio. Mientras llega la versión del App Store, puedes tener A Posto con su icono en un minuto:",
+    iosSteps: ["Abre esta página en Safari.", "Pulsa el botón Compartir: el cuadrado con una flecha hacia arriba.", "Baja y pulsa «Añadir a pantalla de inicio».", "Pulsa «Añadir». El icono de A Posto aparecerá junto a tus otras apps."],
     iosNote: "Es gratis, no pide permisos y se actualiza sola. Si no ves la opción, comprueba que estás en Safari y no dentro de Instagram, Facebook o WhatsApp.",
     apkTitle: "Descarga directa para Android (APK)",
-    apkBody: "Si prefieres no usar Google Play, puedes instalar el archivo oficial firmado por A posto. Recomendamos Google Play: se actualiza solo.",
+    apkBody: "Si prefieres no usar Google Play, puedes instalar el archivo oficial firmado por A Posto. Recomendamos Google Play: se actualiza solo.",
     apkCta: "Descargar APK",
     apkVersion: "Versión",
     apkHash: "Huella SHA-256 del archivo (para comprobar que es auténtico):",
@@ -56,12 +56,12 @@ const T = {
   it: {
     kicker: "App gratuita per Android e iPhone",
     title: "Le tue pratiche in Italia, a posto.",
-    sub: "A posto ti dice cosa fare, quali documenti preparare e dove andare. Passo dopo passo, con fonti ufficiali e nella tua lingua.",
+    sub: "A Posto ti dice cosa fare, quali documenti preparare e dove andare. Passo dopo passo, con fonti ufficiali e nella tua lingua.",
     play: ["Disponibile su", "Google Play"],
     store: ["Scarica su", "App Store"],
     soon: "Prossimamente",
     freeNote: "Gratis. Senza carta. Senza abbonamento.",
-    whatTitle: "Cosa fa A posto",
+    whatTitle: "Cosa fa A Posto",
     features: [
       ["Guide passo dopo passo", "Permesso di soggiorno, codice fiscale, sanità, residenza, art. 31 e altro, con i moduli ufficiali."],
       ["I tuoi progressi salvati", "Segna ogni passaggio e ogni documento. L'app ti ricorda cosa manca e dove eri rimasto."],
@@ -74,14 +74,14 @@ const T = {
       ["Fonti ufficiali", "Ogni guida rimanda a Polizia di Stato, INPS, Agenzia delle Entrate o al Ministero, con la data di verifica."],
       ["I dati sono tuoi", "Chiediamo il minimo. Puoi vedere, scaricare ed eliminare tutto dall'app, quando vuoi."],
       ["Nessuna sorpresa", "Non vendiamo i tuoi dati. Non chiediamo denaro per una pratica. Non promettiamo permessi."],
-      ["Indipendente", "A posto non è un sito del Governo né di un'agenzia. Sono informazioni generali, non consulenza legale."],
+      ["Indipendente", "A Posto non è un sito del Governo né di un'agenzia. Sono informazioni generali, non consulenza legale."],
     ],
     iosTitle: "Installare su iPhone o iPad",
-    iosBody: "Su iPhone non esistono file di installazione come su Android: Apple permette di installare le app solo dall'App Store o aggiungendole alla schermata Home. In attesa della versione App Store, puoi avere A posto con la sua icona in un minuto:",
-    iosSteps: ["Apri questa pagina in Safari.", "Tocca il pulsante Condividi: il quadrato con la freccia verso l'alto.", "Scorri e tocca «Aggiungi alla schermata Home».", "Tocca «Aggiungi». L'icona di A posto apparirà accanto alle altre app."],
+    iosBody: "Su iPhone non esistono file di installazione come su Android: Apple permette di installare le app solo dall'App Store o aggiungendole alla schermata Home. In attesa della versione App Store, puoi avere A Posto con la sua icona in un minuto:",
+    iosSteps: ["Apri questa pagina in Safari.", "Tocca il pulsante Condividi: il quadrato con la freccia verso l'alto.", "Scorri e tocca «Aggiungi alla schermata Home».", "Tocca «Aggiungi». L'icona di A Posto apparirà accanto alle altre app."],
     iosNote: "È gratis, non chiede permessi e si aggiorna da sola. Se non vedi l'opzione, controlla di essere in Safari e non dentro Instagram, Facebook o WhatsApp.",
     apkTitle: "Download diretto per Android (APK)",
-    apkBody: "Se preferisci non usare Google Play, puoi installare il file ufficiale firmato da A posto. Consigliamo Google Play: si aggiorna da solo.",
+    apkBody: "Se preferisci non usare Google Play, puoi installare il file ufficiale firmato da A Posto. Consigliamo Google Play: si aggiorna da solo.",
     apkCta: "Scarica APK",
     apkVersion: "Versione",
     apkHash: "Impronta SHA-256 del file (per verificare che sia autentico):",
@@ -97,12 +97,12 @@ const T = {
   en: {
     kicker: "Free app for Android and iPhone",
     title: "Your paperwork in Italy, sorted.",
-    sub: "A posto tells you what to do, which documents to prepare and where to go. Step by step, with official sources and in your language.",
+    sub: "A Posto tells you what to do, which documents to prepare and where to go. Step by step, with official sources and in your language.",
     play: ["Get it on", "Google Play"],
     store: ["Download on the", "App Store"],
     soon: "Coming soon",
     freeNote: "Free. No card. No subscription.",
-    whatTitle: "What A posto does",
+    whatTitle: "What A Posto does",
     features: [
       ["Step-by-step guides", "Residence permit, tax code, healthcare, residency, art. 31 and more, with the official forms."],
       ["Your progress, saved", "Tick each step and document. The app reminds you what's left and where you stopped."],
@@ -115,14 +115,14 @@ const T = {
       ["Official sources", "Every guide links to Polizia di Stato, INPS, Agenzia delle Entrate or the Ministry, with its review date."],
       ["Your data is yours", "We ask for the minimum. You can view, download and delete everything from the app, any time."],
       ["No small print", "We don't sell your data. We don't ask for money for a procedure. We don't promise permits."],
-      ["Independent", "A posto is not a government or agency website. It is general information, not legal advice."],
+      ["Independent", "A Posto is not a government or agency website. It is general information, not legal advice."],
     ],
     iosTitle: "Install on iPhone or iPad",
-    iosBody: "iPhones have no install files like Android: Apple only allows installing apps from the App Store or by adding them to the Home Screen. Until the App Store version arrives, you can have A posto with its icon in a minute:",
-    iosSteps: ["Open this page in Safari.", "Tap the Share button: the square with an arrow pointing up.", "Scroll down and tap “Add to Home Screen”.", "Tap “Add”. The A posto icon will appear next to your other apps."],
+    iosBody: "iPhones have no install files like Android: Apple only allows installing apps from the App Store or by adding them to the Home Screen. Until the App Store version arrives, you can have A Posto with its icon in a minute:",
+    iosSteps: ["Open this page in Safari.", "Tap the Share button: the square with an arrow pointing up.", "Scroll down and tap “Add to Home Screen”.", "Tap “Add”. The A Posto icon will appear next to your other apps."],
     iosNote: "It is free, asks for no permissions and updates itself. If you do not see the option, check that you are in Safari and not inside Instagram, Facebook or WhatsApp.",
     apkTitle: "Direct download for Android (APK)",
-    apkBody: "If you prefer not to use Google Play, you can install the official file signed by A posto. We recommend Google Play: it updates automatically.",
+    apkBody: "If you prefer not to use Google Play, you can install the official file signed by A Posto. We recommend Google Play: it updates automatically.",
     apkCta: "Download APK",
     apkVersion: "Version",
     apkHash: "SHA-256 fingerprint of the file (to check it is authentic):",
@@ -192,7 +192,7 @@ function PhoneMockup() {
           <span className={`h-2 flex-1 rounded-full ${done ? "bg-[#ede2d3]" : "bg-[#d9cdbc]"}`} />
         </div>
       ))}
-      <div className="mt-3 rounded-xl bg-[#a65d3d] py-2 text-center text-[10px] font-semibold text-white">A posto ✓</div>
+      <div className="mt-3 rounded-xl bg-[#a65d3d] py-2 text-center text-[10px] font-semibold text-white">A Posto ✓</div>
     </div>
   );
 }

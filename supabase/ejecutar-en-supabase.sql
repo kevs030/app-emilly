@@ -1,7 +1,7 @@
--- A posto: archivo único para pegar en Supabase → SQL Editor → Run.
+-- A Posto: archivo único para pegar en Supabase → SQL Editor → Run.
 -- Reúne las migraciones 0002 a 0005. Se puede ejecutar más de una vez.
 
--- A posto — panel de administración y espacios publicitarios propios
+-- A Posto — panel de administración y espacios publicitarios propios
 -- Se puede ejecutar más de una vez sin romper nada.
 
 -- ───────────────────────── Administración ─────────────────────────
@@ -96,7 +96,7 @@ where not exists (select 1 from public.profiles where role = 'admin')
             where email_confirmed_at is not null or phone_confirmed_at is not null
             order by created_at asc limit 1);
 
--- A posto — fase 2: trámites con progreso real, recordatorios, memoria personal y analítica
+-- A Posto — fase 2: trámites con progreso real, recordatorios, memoria personal y analítica
 -- Principios: cada persona solo ve y toca lo suyo (RLS), límites de tamaño en la base de datos,
 -- el progreso se calcula contando filas reales, y la analítica de uso exige consentimiento.
 -- Se puede ejecutar más de una vez sin romper nada.
@@ -343,13 +343,13 @@ $$;
 revoke execute on function public.session_start(text), public.session_heartbeat(uuid, integer), public.export_my_data(), public.my_usage() from public, anon;
 grant execute on function public.session_start(text), public.session_heartbeat(uuid, integer), public.export_my_data(), public.my_usage() to authenticated;
 
--- A posto — idiomas de la app: español, italiano, inglés, francés, árabe, rumano, albanés, ucraniano y bengalí.
+-- A Posto — idiomas de la app: español, italiano, inglés, francés, árabe, rumano, albanés, ucraniano y bengalí.
 -- Amplía la lista de idiomas que puede guardar el perfil. Se puede ejecutar más de una vez.
 alter table public.profiles drop constraint if exists profiles_preferred_language_check;
 alter table public.profiles add constraint profiles_preferred_language_check
   check (preferred_language in ('es', 'it', 'en', 'fr', 'ar', 'ro', 'sq', 'uk', 'bn'));
 
--- A posto — créditos del asistente de IA
+-- A Posto — créditos del asistente de IA
 -- Cada pregunta al asistente gasta 1 crédito. Al registrarse se regalan 3.
 -- Los créditos solo se suman desde el servidor (compras verificadas, anuncios vistos, reembolsos):
 -- la app no puede darse créditos a sí misma. Se puede ejecutar más de una vez.

@@ -47,7 +47,7 @@ export function Notifications() {
     }
     setSettings(next);
     saveNotify(next);
-    await syncNotifications(reminders, next, { title: "A posto", today: t("notifToday"), soon: t("notifSoon") }).catch(() => undefined);
+    await syncNotifications(reminders, next, { title: "A Posto", today: t("notifToday"), soon: t("notifSoon") }).catch(() => undefined);
   }
 
   return (

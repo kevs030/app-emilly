@@ -8,7 +8,7 @@ import type { StringKey } from "~/lib/strings";
 import { supabase } from "~/lib/supabase";
 import { Alert, Screen } from "~/ui/kit";
 
-/** Transparencia: todo lo que A posto guarda de la persona, con opción de corregir, borrar y descargar. */
+/** Transparencia: todo lo que A Posto guarda de la persona, con opción de corregir, borrar y descargar. */
 export function MyData() {
   const { t, c, lang } = useLang();
   const { profile, saveProfile } = useAuth();
@@ -38,7 +38,7 @@ export function MyData() {
     const file = new File([text], "aposto-mis-datos.json", { type: "application/json" });
     try {
       if (navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ files: [file], title: "A posto" });
+        await navigator.share({ files: [file], title: "A Posto" });
         return setInfo(t("exportDone"));
       }
     } catch {

@@ -6,7 +6,7 @@ import type { CapacitorConfig } from "@capacitor/cli";
  */
 const config: CapacitorConfig = {
   appId: "com.aposto.app",
-  appName: "A posto",
+  appName: "A Posto",
   webDir: "dist",
   backgroundColor: "#F7F2EA",
   ios: { contentInset: "always" },

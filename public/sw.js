@@ -1,4 +1,4 @@
-/* Service Worker de A posto.
+/* Service Worker de A Posto.
    - Las páginas se piden siempre a la red (contenido al día); sin conexión se muestra una página de aviso.
    - Solo se guardan en caché archivos estáticos públicos. Nunca datos personales, sesiones ni respuestas de /api. */
 const VERSION = "aposto-v2";

@@ -1,4 +1,4 @@
-# A posto — app móvil (iOS y Android)
+# A Posto — app móvil (iOS y Android)
 
 App nativa hecha con React + TypeScript + Vite + Capacitor. Los archivos van **empaquetados dentro de la app**; no carga la web remota. Comparte base de datos (Supabase), reglas de seguridad y contenido verificado con la web (`../src/content`).
 

@@ -9,7 +9,7 @@ export const runtime = "nodejs";
 export const maxDuration = 60;
 
 /**
- * Asistente de A posto. Cada pregunta gasta 1 crédito de la persona (ver migración 0005).
+ * Asistente de A Posto. Cada pregunta gasta 1 crédito de la persona (ver migración 0005).
  * - Exige cuenta: por cookie (web) o por token en la cabecera Authorization (app móvil).
  * - El crédito se descuenta en la base de datos ANTES de llamar a la IA y de forma atómica.
  * - El proveedor y el modelo se eligen en `lib/ai-server.ts`, en un solo sitio.

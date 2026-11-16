@@ -9,9 +9,9 @@ import { Chat } from "@/components/Chat";
 export const metadata: Metadata = { title: "Asistente" };
 
 const GATE = {
-  es: { body: "El asistente responde tus dudas con la información verificada de A posto y recuerda tus trámites. Crea tu cuenta gratis y recibe 3 preguntas de regalo.", cta: "Crear cuenta o entrar" },
-  en: { body: "The assistant answers your questions using A posto's verified information and remembers your procedures. Create your free account and get 3 free questions.", cta: "Create account or sign in" },
-  it: { body: "L'assistente risponde alle tue domande con le informazioni verificate di A posto e ricorda le tue pratiche. Crea il tuo account gratis e ricevi 3 domande in regalo.", cta: "Crea account o accedi" },
+  es: { body: "El asistente responde tus dudas con la información verificada de A Posto y recuerda tus trámites. Crea tu cuenta gratis y recibe 3 preguntas de regalo.", cta: "Crear cuenta o entrar" },
+  en: { body: "The assistant answers your questions using A Posto's verified information and remembers your procedures. Create your free account and get 3 free questions.", cta: "Create account or sign in" },
+  it: { body: "L'assistente risponde alle tue domande con le informazioni verificate di A Posto e ricorda le tue pratiche. Crea il tuo account gratis e ricevi 3 domande in regalo.", cta: "Crea account o accedi" },
 };
 
 export default async function AssistantPage() {

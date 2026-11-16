@@ -1,4 +1,4 @@
-# 11. Auditoría de A posto y plan de ejecución
+# 11. Auditoría de A Posto y plan de ejecución
 
 Fecha: 16/11/2026. Evidencias: lectura del repositorio, recorrido automático de la web en producción (31 páginas, vista móvil) e inspección de la base de datos con el conector de Supabase (solo lectura).
 

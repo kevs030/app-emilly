@@ -1,9 +1,9 @@
 /**
- * Datos públicos de A posto que hay que rellenar antes de publicar.
+ * Datos públicos de A Posto que hay que rellenar antes de publicar.
  * Mientras un valor esté vacío, la web y la app muestran «Próximamente» en lugar de un enlace roto.
  */
 export const APP = {
-  name: "A posto",
+  name: "A Posto",
   /** Dirección pública de la web (cámbiala cuando haya dominio propio). */
   webUrl: "https://app-emilly.vercel.app",
 

@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <!-- Enlaces de los correos de A posto (verificar cuenta, nueva contraseña): com.aposto.app://auth/... -->
+            <!-- Enlaces de los correos de A Posto (verificar cuenta, nueva contraseña): com.aposto.app://auth/... -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

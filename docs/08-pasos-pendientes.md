@@ -36,7 +36,7 @@ Sin esto, Supabase solo envía correos a los miembros del equipo.
 
 ## 5. SMS (acceso por teléfono) — desbloquea el registro con número de móvil
 1. Crea una cuenta en https://www.twilio.com y verifica tu identidad. Añade saldo.
-2. En Twilio → **Verify** → **Services** → **Create new**. Nombre: `A posto`. Copia el **Service SID** (empieza por `VA`).
+2. En Twilio → **Verify** → **Services** → **Create new**. Nombre: `A Posto`. Copia el **Service SID** (empieza por `VA`).
 3. En la portada de la consola de Twilio copia el **Account SID** (empieza por `AC`) y el **Auth Token**.
 4. Supabase → **Authentication** → **Sign In / Providers** → **Phone** → activar:
    - *SMS provider*: **Twilio Verify**.
@@ -52,7 +52,7 @@ Supabase → **Authentication** → **Attack Protection**: activar CAPTCHA (Clou
 
 ## 7. Cuentas para publicar la app
 - Apple Developer Program (99 USD al año) y Google Play Console (25 USD una vez).
-- Antes de publicar: comprobar que el nombre «A posto» está libre en las dos tiendas y que no es una marca registrada de otro en Italia (base de datos de la UIBM/EUIPO).
+- Antes de publicar: comprobar que el nombre «A Posto» está libre en las dos tiendas y que no es una marca registrada de otro en Italia (base de datos de la UIBM/EUIPO).
 - El identificador de la app es `com.aposto.app`. Se puede cambiar hasta la primera subida.
 
 ## 8. Antes del lanzamiento público

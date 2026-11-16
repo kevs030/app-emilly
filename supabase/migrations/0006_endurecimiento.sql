@@ -1,4 +1,4 @@
--- A posto — endurecimiento tras la auditoría de seguridad (16/11/2026)
+-- A Posto — endurecimiento tras la auditoría de seguridad (16/11/2026)
 -- No cambia datos. Se puede ejecutar más de una vez.
 
 -- 1. Las funciones de los disparadores son internas: nadie debe poder invocarlas desde la API.

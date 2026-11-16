@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-        <string>A posto</string>
+        <string>A Posto</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -78,11 +78,11 @@
 		</dict>
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>A posto usa tu ubicación solo para mostrarte las oficinas más cercanas en el mapa. No se guarda.</string>
+	<string>A Posto usa tu ubicación solo para mostrarte las oficinas más cercanas en el mapa. No se guarda.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>A posto usa la cámara para que fotografíes tus documentos y cartas.</string>
+	<string>A Posto usa la cámara para que fotografíes tus documentos y cartas.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>A posto accede a tus fotos solo cuando eliges una imagen de un documento.</string>
+	<string>A Posto accede a tus fotos solo cuando eliges una imagen de un documento.</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 </dict>

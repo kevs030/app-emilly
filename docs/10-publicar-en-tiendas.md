@@ -1,4 +1,4 @@
-# 10. Publicar A posto en Google Play y en el App Store
+# 10. Publicar A Posto en Google Play y en el App Store
 
 La app es nativa (Capacitor): sus archivos van empaquetados dentro. No es un acceso directo web.
 Todo se hace desde un Mac, en la carpeta `mobile/`. Identificador de la app: `com.aposto.app`.
@@ -45,7 +45,7 @@ Resultado: `mobile/android/app/build/outputs/bundle/release/app-release.aab`. Es
 Si falla con «SDK location not found», abre una vez el proyecto con `npm run android` (Android Studio crea el archivo que falta) y repite.
 
 ### 1.4 Subirlo
-1. play.google.com/console → **Crear aplicación** → nombre «A posto», tipo App, gratuita.
+1. play.google.com/console → **Crear aplicación** → nombre «A Posto», tipo App, gratuita.
 2. Acepta **Play App Signing** (Google guarda la clave final; la tuya es la «clave de subida»).
 3. **Pruebas → Prueba interna → Crear versión** → sube el `.aab`.
 4. Rellena la ficha: ver el checklist del punto 3.
@@ -85,7 +85,7 @@ Compila la app y abre Xcode.
 En Xcode: proyecto **App** → pestaña **Signing & Capabilities** → marca **Automatically manage signing** y elige tu **Team**. Xcode crea el certificado y el perfil.
 
 ### 2.3 Crear la ficha en App Store Connect
-appstoreconnect.apple.com → **Apps** → **+** → Nueva app: plataforma iOS, nombre «A posto», idioma principal, Bundle ID `com.aposto.app`, SKU `aposto`.
+appstoreconnect.apple.com → **Apps** → **+** → Nueva app: plataforma iOS, nombre «A Posto», idioma principal, Bundle ID `com.aposto.app`, SKU `aposto`.
 
 ### 2.4 Archivar y subir (esto genera y firma el .IPA)
 1. Arriba en Xcode, elige el destino **Any iOS Device (arm64)**.
@@ -118,7 +118,7 @@ En Xcode → **General**: sube **Build** (1 → 2 → 3…) y, si cambia la vers
 | Cuestionarios de privacidad de las tiendas | **Falta** | Ver 3.1 |
 | Clasificación por edades | **Falta** | Cuestionario en cada tienda |
 | Condiciones de uso | **Falta** | Recomendables antes de vender paquetes de preguntas |
-| Verificar que el nombre «A posto» está libre | **Falta** | En las dos tiendas y como marca en Italia/UE |
+| Verificar que el nombre «A Posto» está libre | **Falta** | En las dos tiendas y como marca en Italia/UE |
 
 ### 3.1 Qué declarar en los cuestionarios de datos (según lo que hace el código)
 - **Datos de contacto:** correo o teléfono. Finalidad: funcionamiento de la app. Vinculados a la persona.

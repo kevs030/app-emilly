@@ -1,4 +1,4 @@
--- A posto — créditos del asistente de IA
+-- A Posto — créditos del asistente de IA
 -- Cada pregunta al asistente gasta 1 crédito. Al registrarse se regalan 3.
 -- Los créditos solo se suman desde el servidor (compras verificadas, anuncios vistos, reembolsos):
 -- la app no puede darse créditos a sí misma. Se puede ejecutar más de una vez.

@@ -14,7 +14,7 @@ export function tr(text: L10n, lang: Lang): string {
 }
 
 const ui = {
-  appName: { es: "A posto", en: "A posto", it: "A posto" },
+  appName: { es: "A Posto", en: "A Posto", it: "A Posto" },
   tagline: {
     es: "Tu guía para vivir en Italia: trámites, ayudas, mapas y comunidad.",
     en: "Your guide to living in Italy: paperwork, benefits, maps and community.",
@@ -44,9 +44,9 @@ const ui = {
     it: "Informazione non verificata da oltre 7 giorni: controlla la fonte ufficiale.",
   },
   disclaimer: {
-    es: "A posto da información general, no asesoramiento legal. Para tu caso concreto, consulta a un abogado o a un Patronato (gratis).",
-    en: "A posto provides general information, not legal advice. For your specific case, talk to a lawyer or a Patronato (free).",
-    it: "A posto fornisce informazioni generali, non consulenza legale. Per il tuo caso rivolgiti a un avvocato o a un Patronato.",
+    es: "A Posto da información general, no asesoramiento legal. Para tu caso concreto, consulta a un abogado o a un Patronato (gratis).",
+    en: "A Posto provides general information, not legal advice. For your specific case, talk to a lawyer or a Patronato (free).",
+    it: "A Posto fornisce informazioni generali, non consulenza legale. Per il tuo caso rivolgiti a un avvocato o a un Patronato.",
   },
   aiNotice: {
     es: "Estás hablando con una inteligencia artificial. Puede equivocarse: comprueba siempre los enlaces oficiales.",

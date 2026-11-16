@@ -7,7 +7,7 @@ import { useLang } from "~/lib/lang";
 
 export function Logo({ size = 44 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 64 64" role="img" aria-label="A posto">
+    <svg width={size} height={size} viewBox="0 0 64 64" role="img" aria-label="A Posto">
       <rect width="64" height="64" rx="18" fill="#A65D3D" />
       <path d="M18 33.5l9.5 9.5L46 23" fill="none" stroke="#fff" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
     </svg>

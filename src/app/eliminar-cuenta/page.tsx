@@ -12,10 +12,10 @@ export const metadata: Metadata = { title: "Eliminar cuenta / Elimina account" }
  */
 const T = {
   es: {
-    title: "Eliminar tu cuenta de A posto",
+    title: "Eliminar tu cuenta de A Posto",
     intro: "Puedes borrar tu cuenta y todos tus datos cuando quieras. Es inmediato y no se puede deshacer.",
     appTitle: "Desde la app",
-    app: ["Abre A posto y entra en «Perfil».", "Baja hasta el final y pulsa «Borrar mi cuenta y mis datos».", "Confirma."],
+    app: ["Abre A Posto y entra en «Perfil».", "Baja hasta el final y pulsa «Borrar mi cuenta y mis datos».", "Confirma."],
     webTitle: "Desde la web",
     web: "Inicia sesión, abre «Mi perfil», marca «Confirmo» y pulsa «Borrar mi cuenta y mis datos».",
     webCta: "Ir a mi perfil",
@@ -26,10 +26,10 @@ const T = {
     pending: "El correo de contacto se publicará aquí antes del lanzamiento.",
   },
   it: {
-    title: "Eliminare il tuo account A posto",
+    title: "Eliminare il tuo account A Posto",
     intro: "Puoi eliminare l'account e tutti i tuoi dati quando vuoi. È immediato e non si può annullare.",
     appTitle: "Dall'app",
-    app: ["Apri A posto ed entra in «Profilo».", "Scorri fino in fondo e premi «Elimina il mio account e i miei dati».", "Conferma."],
+    app: ["Apri A Posto ed entra in «Profilo».", "Scorri fino in fondo e premi «Elimina il mio account e i miei dati».", "Conferma."],
     webTitle: "Dal sito",
     web: "Accedi, apri «Il mio profilo», spunta la conferma e premi il pulsante di eliminazione.",
     webCta: "Vai al mio profilo",
@@ -40,10 +40,10 @@ const T = {
     pending: "L'email di contatto sarà pubblicata qui prima del lancio.",
   },
   en: {
-    title: "Delete your A posto account",
+    title: "Delete your A Posto account",
     intro: "You can delete your account and all your data whenever you want. It is immediate and cannot be undone.",
     appTitle: "From the app",
-    app: ["Open A posto and go to “Profile”.", "Scroll to the bottom and tap “Delete my account and data”.", "Confirm."],
+    app: ["Open A Posto and go to “Profile”.", "Scroll to the bottom and tap “Delete my account and data”.", "Confirm."],
     webTitle: "From the website",
     web: "Sign in, open “My profile”, tick the confirmation and press the delete button.",
     webCta: "Go to my profile",
