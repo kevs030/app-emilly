@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import type { NextConfig } from "next";
 import { SUPABASE_URL } from "./src/lib/supabase/config";
 import { MIRROR_ORIGINS } from "./src/lib/overpass";
@@ -25,7 +26,11 @@ const csp = [
   "upgrade-insecure-requests",
 ].join("; ");
 
+// El botón de descarga directa solo aparece si el archivo existe al compilar: nunca un enlace roto.
+const apkAvailable = existsSync("public/a-posto.apk");
+
 const nextConfig: NextConfig = {
+  env: { NEXT_PUBLIC_APK_AVAILABLE: apkAvailable ? "1" : "" },
   poweredByHeader: false,
   turbopack: {
     rules: {
