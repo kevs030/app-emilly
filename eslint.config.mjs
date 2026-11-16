@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // La app móvil (Vite + Capacitor) tiene su propia configuración.
     "mobile/**",
+    // Copia compilada de la app que se sirve en /app (se genera al publicar).
+    "public/app/**",
   ]),
 ]);
 
