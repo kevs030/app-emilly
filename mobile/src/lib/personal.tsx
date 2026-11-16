@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import { getGuide } from "@/content/guides";
 import type { Guide } from "@/content/types";
 import { useAuth } from "~/auth/AuthProvider";
+import { computeProgress } from "./progress";
 import { supabase } from "./supabase";
 
 /**
@@ -96,22 +97,7 @@ export function PersonalProvider({ children }: { children: ReactNode }) {
     const progressOf: Ctx["progressOf"] = (p) => {
       const guide = getGuide(p.guide_slug);
       if (!guide) return null;
-      const mine = items.filter((x) => x.procedure_id === p.id);
-      const stepsTotal = guide.steps.length;
-      const docsTotal = guide.documents.length;
-      // Solo cuentan los índices que existen hoy en la guía.
-      const stepsDone = mine.filter((x) => x.kind === "step" && x.idx < stepsTotal).length;
-      const docsDone = mine.filter((x) => x.kind === "document" && x.idx < docsTotal).length;
-      const total = stepsTotal + docsTotal;
-      const done = stepsDone + docsDone;
-      let nextStep: number | null = null;
-      for (let n = 0; n < stepsTotal; n++) {
-        if (!mine.some((x) => x.kind === "step" && x.idx === n)) {
-          nextStep = n;
-          break;
-        }
-      }
-      return { guide, stepsDone, stepsTotal, docsDone, docsTotal, done, total, percent: total ? Math.round((done / total) * 100) : 0, nextStep };
+      return { guide, ...computeProgress(guide, items.filter((x) => x.procedure_id === p.id)) };
     };
     return {
       available,

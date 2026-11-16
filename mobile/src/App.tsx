@@ -6,13 +6,16 @@ import { LangProvider, useLang } from "~/lib/lang";
 import { PersonalProvider } from "~/lib/personal";
 import { useSessionTracking } from "~/lib/useSessionTracking";
 import { MyData } from "~/screens/MyData";
+import { Appointments } from "~/screens/Appointments";
 import { Assistant } from "~/screens/Assistant";
 import { Auth } from "~/screens/Auth";
+import { Benefits } from "~/screens/Benefits";
 import { GuideDetail, Guides } from "~/screens/Guides";
 import { Home } from "~/screens/Home";
 import { NewPassword, ResetPassword } from "~/screens/Password";
 import { Privacy } from "~/screens/Privacy";
 import { Profile } from "~/screens/Profile";
+import { Search } from "~/screens/Search";
 import { Welcome } from "~/screens/Welcome";
 
 function useOnline() {
@@ -102,6 +105,9 @@ export function App() {
               <Route path="/" element={<Home />} />
               <Route path="/guides" element={<Guides />} />
               <Route path="/guides/:slug" element={<GuideDetail />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/benefits" element={<Benefits />} />
+              <Route path="/appointments" element={<Appointments />} />
               <Route path="/assistant" element={<Assistant />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/data" element={<MyData />} />

@@ -1,10 +1,11 @@
-import { ArrowRight, Bell, CircleCheckBig, Clock, Sparkles, Sprout } from "lucide-react";
+import { ArrowRight, Bell, CalendarDays, CircleCheckBig, Clock, HandCoins, ListChecks, MapPin, MessageCircle, Search, Sparkles, Sprout, UserRound, Users } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { getGuide, guides } from "@/content/guides";
 import { useAuth } from "~/auth/AuthProvider";
 import { useLang } from "~/lib/lang";
 import { usePersonal, type Procedure } from "~/lib/personal";
+import { API_URL } from "~/lib/supabase";
 import type { StringKey } from "~/lib/strings";
 import { Alert, Field, Screen } from "~/ui/kit";
 import { AddReminder, ReminderRow } from "~/ui/Reminders";
@@ -37,6 +38,19 @@ function ProcedureCard({ p }: { p: Procedure }) {
     </Link>
   );
 }
+
+type Shortcut = { icon: typeof Search; label: StringKey } & ({ to: string } | { web: string });
+
+/** Accesos del inicio. Solo figuran destinos reales; lo que aún no existe no se muestra. */
+const SHORTCUTS: Shortcut[] = [
+  { to: "/guides", icon: ListChecks, label: "tabGuides" },
+  { to: "/benefits", icon: HandCoins, label: "benefits" },
+  { to: "/assistant", icon: MessageCircle, label: "tabAssistant" },
+  { to: "/appointments", icon: CalendarDays, label: "appointments" },
+  { web: "/mapa", icon: MapPin, label: "offices" },
+  { web: "/foro", icon: Users, label: "community" },
+  { to: "/profile", icon: UserRound, label: "tabProfile" },
+];
 
 export function Home() {
   const { t, c, lang } = useLang();
@@ -80,6 +94,40 @@ export function Home() {
             </button>
           </form>
         )}
+
+        {/* Buscador y accesos: cada uno lleva a una pantalla que existe y funciona. */}
+        <Link to="/search" className="input flex items-center gap-3 text-ink-soft" role="search">
+          <Search size={20} className="shrink-0" aria-hidden /> <span className="min-w-0 flex-1 truncate">{t("searchPlaceholder")}</span>
+        </Link>
+
+        <nav aria-label={t("quickAccess")}>
+          <ul className="grid grid-cols-3 gap-3">
+            {SHORTCUTS.map((s) => {
+              const inner = (
+                <>
+                  <span className="icon-tile">
+                    <s.icon size={22} aria-hidden />
+                  </span>
+                  <span className="text-[13px] font-medium leading-tight">{t(s.label)}</span>
+                </>
+              );
+              const cls = "card flex h-full min-h-24 flex-col items-center justify-center gap-2 px-2 py-3 text-center";
+              return (
+                <li key={s.label}>
+                  {"web" in s ? (
+                    <a href={`${API_URL}${s.web}`} target="_blank" rel="noopener noreferrer" className={cls} title={t("opensWeb")}>
+                      {inner}
+                    </a>
+                  ) : (
+                    <Link to={s.to} className={cls}>
+                      {inner}
+                    </Link>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
 
         {!available && <p className="card text-ink-soft">{t("notReady")}</p>}
 

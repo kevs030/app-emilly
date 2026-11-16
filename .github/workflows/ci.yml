@@ -1,0 +1,40 @@
+# Revisión automática: se ejecuta en cada cambio. No publica nada.
+name: Pruebas
+on:
+  push:
+    branches: [main, desarrollo]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  web-y-app:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            mobile/package-lock.json
+      - name: Web · instalar
+        run: npm ci
+      - name: Web · estilo y tipos
+        run: |
+          npm run lint
+          npx next typegen
+          npm run typecheck
+      - name: Contenido · fechas de revisión
+        run: npm run check:freshness
+        continue-on-error: true
+      - name: App · instalar
+        run: npm ci
+        working-directory: mobile
+      - name: App · tipos, pruebas y compilación
+        run: |
+          npm run typecheck
+          npm test
+          npm run build
+        working-directory: mobile
