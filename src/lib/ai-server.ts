@@ -29,20 +29,6 @@ export function aiErrorCode(err: unknown): string {
   return `local_${String(e?.name ?? "Error")}${e?.code ? `_${String(e.code)}` : ""}`.replace(/[^A-Za-z0-9_]/g, "").slice(0, 60);
 }
 
-/** Forma de la clave guardada, sin revelar su contenido: sirve para detectar un pegado incorrecto. */
-export function aiKeyShape() {
-  const key = process.env.ANTHROPIC_API_KEY ?? "";
-  return {
-    length: key.length,
-    starts_with_sk_ant: key.startsWith("sk-ant-"),
-    has_spaces_or_line_breaks: /\s/.test(key),
-    has_quotes: /["'`]/.test(key),
-    has_unusual_characters: /[^A-Za-z0-9_\-\s"'`]/.test(key),
-    auth_token_also_set: Boolean(process.env.ANTHROPIC_AUTH_TOKEN),
-    base_url_overridden: Boolean(process.env.ANTHROPIC_BASE_URL),
-  };
-}
-
 let lastCheck: { at: number; status: string } | null = null;
 
 /** Comprueba, sin gastar nada, que la clave es válida y que el modelo está disponible. Se repite como mucho cada minuto. */
