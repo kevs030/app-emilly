@@ -3,8 +3,8 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "REEMPLAZAR_POR_EL_PACKAGE_ID_DE_PWABUILDER",
-      "sha256_cert_fingerprints": ["REEMPLAZAR_POR_LA_HUELLA_SHA256_DE_PWABUILDER"]
+      "package_name": "app.aposto.twa",
+      "sha256_cert_fingerprints": ["1C:67:9B:F6:E6:9C:AB:74:32:F4:DA:91:E3:15:E9:95:C9:9F:F8:F7:E8:94:F3:3B:10:FB:D0:D5:DE:69:2E:5A"]
     }
   }
 ]

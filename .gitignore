@@ -40,3 +40,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 !.env.example
+
+# Llaves de firma de Android: nunca en el repositorio
+*.keystore
+*.jks
+signing-key-info.txt
