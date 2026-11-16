@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   description: "Trámites, ayudas, mapas, videos y comunidad para personas migrantes en Italia. Información gratuita con fuentes oficiales.",
   applicationName: "A posto",
   appleWebApp: { capable: true, title: "A posto", statusBarStyle: "default" },
+  icons: { icon: [{ url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }], apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }] },
 };
 
 export const viewport: Viewport = {

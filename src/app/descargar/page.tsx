@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BadgeCheck, Bell, Bot, CheckCircle2, Download, FileCheck2, Languages, ListChecks, Lock, ShieldCheck, Smartphone, Trash2 } from "lucide-react";
+import { BadgeCheck, Bell, Bot, CheckCircle2, Download, FileCheck2, Languages, ListChecks, Lock, ShieldCheck, Smartphone, Trash2, Share } from "lucide-react";
 import { APP } from "@/config/app";
 import { Logo } from "@/components/Icons";
 import { Reveal } from "@/components/Reveal";
@@ -35,6 +35,10 @@ const T = {
       ["Sin letra pequeña", "No vendemos tus datos. No pedimos dinero por un trámite. No prometemos permisos."],
       ["Independiente", "A posto no es una web del Gobierno ni de una agencia. Es información general, no asesoramiento legal."],
     ],
+    iosTitle: "Instalar en iPhone o iPad",
+    iosBody: "En iPhone no existen archivos de instalación como en Android: Apple solo permite instalar apps desde el App Store o añadiéndolas a la pantalla de inicio. Mientras llega la versión del App Store, puedes tener A posto con su icono en un minuto:",
+    iosSteps: ["Abre esta página en Safari.", "Pulsa el botón Compartir: el cuadrado con una flecha hacia arriba.", "Baja y pulsa «Añadir a pantalla de inicio».", "Pulsa «Añadir». El icono de A posto aparecerá junto a tus otras apps."],
+    iosNote: "Es gratis, no pide permisos y se actualiza sola. Si no ves la opción, comprueba que estás en Safari y no dentro de Instagram, Facebook o WhatsApp.",
     apkTitle: "Descarga directa para Android (APK)",
     apkBody: "Si prefieres no usar Google Play, puedes instalar el archivo oficial firmado por A posto. Recomendamos Google Play: se actualiza solo.",
     apkCta: "Descargar APK",
@@ -72,6 +76,10 @@ const T = {
       ["Nessuna sorpresa", "Non vendiamo i tuoi dati. Non chiediamo denaro per una pratica. Non promettiamo permessi."],
       ["Indipendente", "A posto non è un sito del Governo né di un'agenzia. Sono informazioni generali, non consulenza legale."],
     ],
+    iosTitle: "Installare su iPhone o iPad",
+    iosBody: "Su iPhone non esistono file di installazione come su Android: Apple permette di installare le app solo dall'App Store o aggiungendole alla schermata Home. In attesa della versione App Store, puoi avere A posto con la sua icona in un minuto:",
+    iosSteps: ["Apri questa pagina in Safari.", "Tocca il pulsante Condividi: il quadrato con la freccia verso l'alto.", "Scorri e tocca «Aggiungi alla schermata Home».", "Tocca «Aggiungi». L'icona di A posto apparirà accanto alle altre app."],
+    iosNote: "È gratis, non chiede permessi e si aggiorna da sola. Se non vedi l'opzione, controlla di essere in Safari e non dentro Instagram, Facebook o WhatsApp.",
     apkTitle: "Download diretto per Android (APK)",
     apkBody: "Se preferisci non usare Google Play, puoi installare il file ufficiale firmato da A posto. Consigliamo Google Play: si aggiorna da solo.",
     apkCta: "Scarica APK",
@@ -109,6 +117,10 @@ const T = {
       ["No small print", "We don't sell your data. We don't ask for money for a procedure. We don't promise permits."],
       ["Independent", "A posto is not a government or agency website. It is general information, not legal advice."],
     ],
+    iosTitle: "Install on iPhone or iPad",
+    iosBody: "iPhones have no install files like Android: Apple only allows installing apps from the App Store or by adding them to the Home Screen. Until the App Store version arrives, you can have A posto with its icon in a minute:",
+    iosSteps: ["Open this page in Safari.", "Tap the Share button: the square with an arrow pointing up.", "Scroll down and tap “Add to Home Screen”.", "Tap “Add”. The A posto icon will appear next to your other apps."],
+    iosNote: "It is free, asks for no permissions and updates itself. If you do not see the option, check that you are in Safari and not inside Instagram, Facebook or WhatsApp.",
     apkTitle: "Direct download for Android (APK)",
     apkBody: "If you prefer not to use Google Play, you can install the official file signed by A posto. We recommend Google Play: it updates automatically.",
     apkCta: "Download APK",
@@ -267,6 +279,19 @@ export default async function DownloadPage() {
             {s.web}
           </Link>
         </p>
+      </section>
+
+      <section id="iphone" className="card">
+        <h2 className="flex items-center gap-2 text-xl font-bold">
+          <Share size={22} className="text-brand" aria-hidden /> {s.iosTitle}
+        </h2>
+        <p className="mt-2 text-sm text-muted">{s.iosBody}</p>
+        <ol className="mt-4 list-decimal space-y-1 ps-5 text-sm">
+          {s.iosSteps.map((x) => (
+            <li key={x}>{x}</li>
+          ))}
+        </ol>
+        <p className="mt-4 rounded-xl bg-brand-soft p-3 text-sm">{s.iosNote}</p>
       </section>
 
       <section id="apk" className="card">

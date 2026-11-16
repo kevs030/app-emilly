@@ -89,4 +89,6 @@ mkdirSync("public/icons", { recursive: true });
 for (const size of [192, 512]) {
   await sharp(Buffer.from(svg), { density: 300 }).resize(size, size).png({ compressionLevel: 9 }).toFile(`public/icons/icon-${size}.png`);
 }
+// Icono para la pantalla de inicio del iPhone (sin transparencia, 180 px).
+await sharp(Buffer.from(svg), { density: 300 }).resize(180, 180).flatten({ background: "#FFFFFF" }).png({ compressionLevel: 9 }).toFile("public/icons/apple-touch-icon.png");
 console.log(`logo-aposto.svg, icons/icon-192.png e icons/icon-512.png generados (palabra a escala ${scale.toFixed(2)})`);
