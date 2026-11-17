@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FileText, House, MapPin, MessageCircle, Users } from "lucide-react";
+import { Download, FileText, HandCoins, House, MapPin } from "lucide-react";
 
 const ITEMS = [
   { href: "/", icon: House, es: "Inicio", en: "Home", it: "Home" },
   { href: "/guias", icon: FileText, es: "Trámites", en: "Guides", it: "Pratiche" },
-  { href: "/asistente", icon: MessageCircle, es: "Asistente", en: "Assistant", it: "Assistente" },
+  { href: "/ayudas", icon: HandCoins, es: "Ayudas", en: "Benefits", it: "Bonus" },
   { href: "/mapa", icon: MapPin, es: "Mapa", en: "Map", it: "Mappa" },
-  { href: "/foro", icon: Users, es: "Foro", en: "Forum", it: "Forum" },
+  { href: "/descargar", icon: Download, es: "La app", en: "The app", it: "L'app" },
 ] as const;
 
 /** Barra inferior tipo app, solo en móvil. */

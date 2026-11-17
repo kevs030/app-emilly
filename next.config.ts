@@ -40,13 +40,12 @@ const nextConfig: NextConfig = {
       },
     },
   },
-  // La app (carpeta mobile/) se publica como archivos estáticos en /app/. Sus pantallas se resuelven
-  // en el navegador, así que cualquier dirección bajo /app que no sea un archivo devuelve su página principal.
-  async rewrites() {
-    return [
-      { source: "/app", destination: "/app/index.html" },
-      { source: "/app/:path*", destination: "/app/index.html" },
-    ];
+  // La app es independiente (se instala en el teléfono); la web solo informa y ofrece la descarga.
+  // Las direcciones de la antigua app dentro de la web llevan a la página de descarga. Son temporales (307)
+  // para poder volver atrás sin que los navegadores las recuerden.
+  async redirects() {
+    const toDownload = ["/app", "/app/:path*", "/entrar", "/perfil", "/asistente", "/foro", "/foro/:path*"];
+    return toDownload.map((source) => ({ source, destination: "/descargar", permanent: false }));
   },
   async headers() {
     return [

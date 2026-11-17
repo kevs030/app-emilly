@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { ArrowRight, BadgeCheck, CalendarCheck, FileDown, HandCoins, Lock, MapPin, MessageCircle, PlayCircle, ShieldAlert, Smartphone, Users, Wallet } from "lucide-react";
+import { ArrowRight, BadgeCheck, BookUser, CalendarCheck, Download, FileDown, FileText, HandCoins, Lock, MapPin, PlayCircle, ShieldAlert, Wallet } from "lucide-react";
 import { getLang } from "@/lib/lang";
 import { t, tr } from "@/lib/i18n";
 import { guides } from "@/content/guides";
 import { GuideIcon } from "@/components/Icons";
 import { Reveal } from "@/components/Reveal";
-import { InstallButton } from "@/components/InstallButton";
+import { centers } from "@/content/centers";
 import { AdSlot } from "@/components/AdSlot";
 
 const H = {
@@ -16,8 +16,22 @@ const H = {
     en: "Residence permit, tax code, healthcare, benefits and more. We explain what to do, which documents to bring and where to go.",
     it: "Permesso di soggiorno, codice fiscale, sanità, bonus e altro: cosa fare, quali documenti portare e dove andare.",
   },
-  open: { es: "Abrir la app", en: "Open the app", it: "Apri l'app" },
-  ask: { es: "Preguntar al asistente", en: "Ask the assistant", it: "Chiedi all'assistente" },
+  download: { es: "Descargar la app para Android", en: "Download the Android app", it: "Scarica l'app per Android" },
+  guides: { es: "Ver los trámites", en: "See the procedures", it: "Vedi le pratiche" },
+  centers: { es: "Las oficinas que vas a necesitar", en: "The offices you will need", it: "Gli uffici di cui avrai bisogno" },
+  centersSub: {
+    es: "Qué se hace en cada una. En el mapa encuentras la más cercana a ti.",
+    en: "What each one is for. Find the nearest one on the map.",
+    it: "A cosa serve ognuno. Sulla mappa trovi il più vicino a te.",
+  },
+  centersMore: { es: "Más información", en: "Learn more", it: "Scopri di più" },
+  photoNote: { es: "Fotos ilustrativas.", en: "Illustrative photos.", it: "Foto illustrative." },
+  appTitle: { es: "Lleva todo esto en tu teléfono", en: "Carry all this on your phone", it: "Porta tutto questo sul telefono" },
+  appSub: {
+    es: "La app A Posto guarda tu progreso en cada trámite, te recuerda las citas, responde tus dudas con el asistente y guarda tus documentos solo en tu teléfono. Gratis.",
+    en: "The A Posto app saves your progress on each procedure, reminds you of appointments, answers your questions with the assistant and keeps your documents only on your phone. Free.",
+    it: "L'app A Posto salva i progressi di ogni pratica, ti ricorda gli appuntamenti, risponde ai dubbi con l'assistente e tiene i documenti solo sul tuo telefono. Gratis.",
+  },
   popular: { es: "Trámites más buscados", en: "Most searched procedures", it: "Pratiche più cercate" },
   popularSub: { es: "Cada guía incluye los formularios oficiales y la fecha de revisión.", en: "Each guide includes the official forms and the date it was checked.", it: "Ogni guida include i moduli ufficiali e la data di verifica." },
   tools: { es: "Todo lo que necesitas", en: "Everything you need", it: "Tutto ciò che ti serve" },
@@ -39,20 +53,20 @@ const TRUST = [
 ] as const;
 
 const STEPS = [
-  { es: "Cuéntanos tu situación", en: "Tell us your situation", it: "Raccontaci la tua situazione", d: { es: "Busca tu trámite o pregúntale al asistente con tus palabras, también por voz.", en: "Find your procedure or ask the assistant in your own words, by voice too.", it: "Cerca la pratica o chiedi all'assistente, anche a voce." } },
+  { es: "Descarga la app", en: "Download the app", it: "Scarica l'app", d: { es: "Instálala en tu Android y cuéntale tu situación en 4 preguntas.", en: "Install it on your Android and tell it your situation in 4 questions.", it: "Installala sul tuo Android e racconta la tua situazione in 4 domande." } },
   { es: "Sigue los pasos", en: "Follow the steps", it: "Segui i passaggi", d: { es: "Descarga el formulario oficial, reúne los documentos y mira dónde está tu oficina.", en: "Download the official form, gather the documents and find your office.", it: "Scarica il modulo ufficiale e trova il tuo ufficio." } },
-  { es: "No te quedes solo", en: "You're not alone", it: "Non sei solo", d: { es: "Pregunta en el foro a personas que ya pasaron por lo mismo.", en: "Ask people in the forum who have been through the same.", it: "Chiedi nel forum a chi ci è già passato." } },
+  { es: "Resuelve tus dudas", en: "Get answers", it: "Risolvi i dubbi", d: { es: "Pregunta al asistente de la app con tus palabras, o a la comunidad.", en: "Ask the app's assistant in your own words, or the community.", it: "Chiedi all'assistente dell'app con parole tue, o alla comunità." } },
 ] as const;
 
 export default async function Home() {
   const lang = await getLang();
   const tools = [
-    { href: "/asistente", icon: MessageCircle, label: t("navAssistant", lang) },
+    { href: "/guias", icon: FileText, label: t("navGuides", lang) },
     { href: "/mapa", icon: MapPin, label: t("navMap", lang) },
     { href: "/documentos", icon: FileDown, label: lang === "en" ? "Official forms" : lang === "it" ? "Moduli ufficiali" : "Formularios" },
     { href: "/ayudas", icon: HandCoins, label: t("navBonus", lang) },
     { href: "/videos", icon: PlayCircle, label: t("navVideos", lang) },
-    { href: "/foro", icon: Users, label: t("navForum", lang) },
+    { href: "/contactos", icon: BookUser, label: t("navDirectory", lang) },
   ];
   return (
     <div className="space-y-12">
@@ -68,14 +82,13 @@ export default async function Home() {
             {tr(H.sub, lang)}
           </p>
           <div className="fade-up mt-6 flex flex-wrap gap-3" style={{ animationDelay: "240ms" }}>
-            {/* La app completa (trámites con progreso, documentos, traductor, citas…) vive en /app/. */}
-            <a href="/app/" className="btn btn-hero">
-              <Smartphone size={18} aria-hidden /> {tr(H.open, lang)}
-            </a>
-            <Link href="/asistente" className="btn btn-hero-outline">
-              <MessageCircle size={18} aria-hidden /> {tr(H.ask, lang)}
+            {/* La app es independiente: se instala en el teléfono. La web solo informa y ofrece la descarga. */}
+            <Link href="/descargar" className="btn btn-hero">
+              <Download size={18} aria-hidden /> {tr(H.download, lang)}
             </Link>
-            <InstallButton lang={lang} className="btn btn-hero-outline" />
+            <Link href="/guias" className="btn btn-hero-outline">
+              <FileText size={18} aria-hidden /> {tr(H.guides, lang)}
+            </Link>
           </div>
         </div>
       </section>
@@ -111,6 +124,41 @@ export default async function Home() {
             </Reveal>
           ))}
         </div>
+      </section>
+
+      <section aria-labelledby="centers-title">
+        <h2 id="centers-title" className="text-2xl font-bold tracking-tight">{tr(H.centers, lang)}</h2>
+        <p className="mt-1 text-muted">{tr(H.centersSub, lang)}</p>
+        <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {centers.map((c, i) => (
+            <Reveal key={c.id} delay={(i % 3) * 70}>
+              <li className="card flex h-full flex-col overflow-hidden p-0">
+                <img
+                  src={`/centros/${c.img}-640.webp`}
+                  srcSet={`/centros/${c.img}-640.webp 640w, /centros/${c.img}-960.webp 960w`}
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  width={640}
+                  height={366}
+                  loading="lazy"
+                  decoding="async"
+                  alt=""
+                  className="aspect-[7/4] w-full object-cover"
+                />
+                <div className="flex flex-1 flex-col p-4">
+                  <h3 className="font-semibold">{c.name[lang]}</h3>
+                  <p className="text-xs font-medium text-brand" lang="it">
+                    {c.local}
+                  </p>
+                  <p className="mt-2 flex-1 text-sm text-muted">{c.what[lang]}</p>
+                  <Link href={c.href} className="mt-3 inline-flex min-h-11 items-center gap-1 text-sm font-medium text-brand underline">
+                    {tr(H.centersMore, lang)} <ArrowRight size={16} aria-hidden />
+                  </Link>
+                </div>
+              </li>
+            </Reveal>
+          ))}
+        </ul>
+        <p className="mt-2 text-xs text-muted">{tr(H.photoNote, lang)}</p>
       </section>
 
       <section>
@@ -160,6 +208,16 @@ export default async function Home() {
           ))}
         </ol>
       </section>
+
+      <Reveal>
+        <section className="hero rounded-3xl px-6 py-10 sm:px-10">
+          <h2 className="text-2xl font-bold tracking-tight">{tr(H.appTitle, lang)}</h2>
+          <p className="mt-2 max-w-2xl text-white/90">{tr(H.appSub, lang)}</p>
+          <Link href="/descargar" className="btn btn-hero mt-5">
+            <Download size={18} aria-hidden /> {tr(H.download, lang)}
+          </Link>
+        </section>
+      </Reveal>
 
       <AdSlot placement="home" lang={lang} />
     </div>

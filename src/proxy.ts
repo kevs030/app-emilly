@@ -5,11 +5,12 @@ import { SUPABASE_PUBLIC_KEY, SUPABASE_URL } from "@/lib/supabase/config";
 /** Refresca la sesión de Supabase en cada petición (patrón oficial de @supabase/ssr). */
 export async function proxy(request: NextRequest) {
   // Si Supabase devuelve el enlace del correo a la portada de la web (su dirección por defecto),
-  // se reenvía a la app, que es donde se creó la cuenta y donde se completa la entrada.
+  // la cuenta ya está confirmada: se lleva a la página de la app para que entre desde el teléfono.
   const { pathname, searchParams } = request.nextUrl;
   if (pathname === "/" && (searchParams.has("code") || searchParams.has("error_description"))) {
     const to = request.nextUrl.clone();
-    to.pathname = "/app/";
+    to.pathname = "/descargar";
+    to.search = "?confirmado=1";
     return NextResponse.redirect(to, 303);
   }
   let response = NextResponse.next({ request });

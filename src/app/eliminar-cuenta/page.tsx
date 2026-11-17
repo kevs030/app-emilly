@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Trash2 } from "lucide-react";
 import { APP } from "@/config/app";
 import { getLang } from "@/lib/lang";
@@ -71,13 +70,6 @@ export default async function DeleteAccountPage() {
             <li key={x}>{x}</li>
           ))}
         </ol>
-      </section>
-      <section className="card">
-        <h2 className="font-semibold">{s.webTitle}</h2>
-        <p className="mt-2 text-sm">{s.web}</p>
-        <Link href="/perfil" className="btn mt-3">
-          {s.webCta}
-        </Link>
       </section>
       <section className="card">
         <h2 className="font-semibold">{s.whatTitle}</h2>

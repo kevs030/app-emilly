@@ -1,11 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import Link from "next/link";
-import { ShieldCheck, UserRound } from "lucide-react";
+import { Download, ShieldCheck } from "lucide-react";
 import "./globals.css";
 import { getLang } from "@/lib/lang";
 import { t } from "@/lib/i18n";
-import { getUser } from "@/lib/supabase/server";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import { BottomNav } from "@/components/BottomNav";
 import { Logo } from "@/components/Icons";
@@ -59,16 +58,13 @@ const FOOT = {
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   const lang = await getLang();
-  const user = await getUser();
   const f = FOOT[lang];
   const nav = [
     { href: "/guias", label: t("navGuides", lang) },
     { href: "/ayudas", label: t("navBonus", lang) },
-    { href: "/asistente", label: t("navAssistant", lang) },
     { href: "/mapa", label: t("navMap", lang) },
     { href: "/videos", label: t("navVideos", lang) },
     { href: "/contactos", label: t("navDirectory", lang) },
-    { href: "/foro", label: t("navForum", lang) },
   ];
   return (
     <html lang={lang} className={`${geistSans.variable} h-full antialiased`}>
@@ -87,9 +83,9 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             </nav>
             <div className="ml-auto flex items-center gap-3 text-sm">
               <LangSwitcher current={lang} />
-              <Link href={user ? "/perfil" : "/entrar"} className="btn-ghost px-3 py-1.5">
-                <UserRound size={16} aria-hidden />
-                {user ? t("navProfile", lang) : t("login", lang)}
+              <Link href="/descargar" className="btn-ghost px-3 py-1.5">
+                <Download size={16} aria-hidden />
+                {f.install}
               </Link>
             </div>
           </div>

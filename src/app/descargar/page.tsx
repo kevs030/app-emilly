@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BadgeCheck, Bell, Bot, CheckCircle2, Download, FileCheck2, Languages, ListChecks, Lock, ShieldCheck, Smartphone, Trash2, Share } from "lucide-react";
+import { BadgeCheck, Bell, Bot, CheckCircle2, Download, FileCheck2, Languages, ListChecks, Lock, ShieldCheck, Smartphone, Trash2 } from "lucide-react";
 import { APP } from "@/config/app";
 import { Logo } from "@/components/Icons";
 import { Reveal } from "@/components/Reveal";
@@ -40,7 +40,7 @@ const T = {
     iosSteps: ["Abre esta página en Safari.", "Pulsa el botón Compartir: el cuadrado con una flecha hacia arriba.", "Baja y pulsa «Añadir a pantalla de inicio».", "Pulsa «Añadir». El icono de A Posto aparecerá junto a tus otras apps."],
     iosNote: "Es gratis, no pide permisos y se actualiza sola. Si no ves la opción, comprueba que estás en Safari y no dentro de Instagram, Facebook o WhatsApp.",
     apkTitle: "Descarga directa para Android (APK)",
-    apkBody: "Si prefieres no usar Google Play, puedes instalar el archivo oficial firmado por A Posto. Recomendamos Google Play: se actualiza solo.",
+    apkBody: "Mientras llega a Google Play, instala el archivo oficial firmado por A Posto. Es la app completa: funciona por sí sola, sin abrir la web.",
     apkCta: "Descargar APK",
     apkVersion: "Versión",
     apkHash: "Huella SHA-256 del archivo (para comprobar que es auténtico):",
@@ -48,6 +48,9 @@ const T = {
     apkWarn: "Descarga el APK solo desde esta página. No instales copias que te envíen por WhatsApp, Telegram u otras webs.",
     apkSoon: "El archivo se está preparando. Vuelve en unos días.",
     apkHint: "Al descargar, toca «Abrir» y activa «Permitir desde esta fuente» si tu teléfono lo solicita.",
+    iosSoon: "La versión para iPhone llegará al App Store. Mientras tanto, en la web puedes consultar todas las guías, las ayudas y el mapa de oficinas.",
+    confirmed: "Tu correo está confirmado. Abre la app A Posto en tu teléfono y entra con tu correo y tu contraseña.",
+    apkMain: "Descargar para Android",
     privacy: "Política de privacidad",
     del: "Eliminar mi cuenta",
     about: "Quiénes somos",
@@ -81,7 +84,7 @@ const T = {
     iosSteps: ["Apri questa pagina in Safari.", "Tocca il pulsante Condividi: il quadrato con la freccia verso l'alto.", "Scorri e tocca «Aggiungi alla schermata Home».", "Tocca «Aggiungi». L'icona di A Posto apparirà accanto alle altre app."],
     iosNote: "È gratis, non chiede permessi e si aggiorna da sola. Se non vedi l'opzione, controlla di essere in Safari e non dentro Instagram, Facebook o WhatsApp.",
     apkTitle: "Download diretto per Android (APK)",
-    apkBody: "Se preferisci non usare Google Play, puoi installare il file ufficiale firmato da A Posto. Consigliamo Google Play: si aggiorna da solo.",
+    apkBody: "In attesa di Google Play, installa il file ufficiale firmato da A Posto. È l'app completa: funziona da sola, senza aprire il sito.",
     apkCta: "Scarica APK",
     apkVersion: "Versione",
     apkHash: "Impronta SHA-256 del file (per verificare che sia autentico):",
@@ -89,6 +92,9 @@ const T = {
     apkWarn: "Scarica l'APK solo da questa pagina. Non installare copie ricevute su WhatsApp, Telegram o altri siti.",
     apkSoon: "Il file è in preparazione. Torna tra qualche giorno.",
     apkHint: "Dopo il download, tocca «Apri» e attiva «Consenti da questa fonte» se il telefono lo chiede.",
+    iosSoon: "La versione per iPhone arriverà sull'App Store. Nel frattempo, sul sito trovi tutte le guide, i bonus e la mappa degli uffici.",
+    confirmed: "La tua email è confermata. Apri l'app A Posto sul telefono ed entra con email e password.",
+    apkMain: "Scarica per Android",
     privacy: "Informativa sulla privacy",
     del: "Elimina il mio account",
     about: "Chi siamo",
@@ -122,7 +128,7 @@ const T = {
     iosSteps: ["Open this page in Safari.", "Tap the Share button: the square with an arrow pointing up.", "Scroll down and tap “Add to Home Screen”.", "Tap “Add”. The A Posto icon will appear next to your other apps."],
     iosNote: "It is free, asks for no permissions and updates itself. If you do not see the option, check that you are in Safari and not inside Instagram, Facebook or WhatsApp.",
     apkTitle: "Direct download for Android (APK)",
-    apkBody: "If you prefer not to use Google Play, you can install the official file signed by A Posto. We recommend Google Play: it updates automatically.",
+    apkBody: "Until it reaches Google Play, install the official file signed by A Posto. It is the full app: it works on its own, without opening the website.",
     apkCta: "Download APK",
     apkVersion: "Version",
     apkHash: "SHA-256 fingerprint of the file (to check it is authentic):",
@@ -130,6 +136,9 @@ const T = {
     apkWarn: "Download the APK only from this page. Do not install copies sent over WhatsApp, Telegram or other websites.",
     apkSoon: "The file is being prepared. Please come back in a few days.",
     apkHint: "After downloading, tap “Open” and turn on “Allow from this source” if your phone asks.",
+    iosSoon: "The iPhone version is coming to the App Store. Meanwhile, the website has all the guides, benefits and the office map.",
+    confirmed: "Your email is confirmed. Open the A Posto app on your phone and sign in with your email and password.",
+    apkMain: "Download for Android",
     privacy: "Privacy policy",
     del: "Delete my account",
     about: "About us",
@@ -171,36 +180,26 @@ function StoreButton({ href, lines, soon }: { href: string; lines: string[]; soo
   );
 }
 
-/** Dibujo de un teléfono con la pantalla de progreso de la app. Es una ilustración, no una captura. */
+/** Captura real de la pantalla de inicio de la app, dentro de un marco de teléfono. */
 function PhoneMockup() {
   return (
-    <div className="mx-auto w-56 rounded-[2.2rem] border-[6px] border-[#1f1b18] bg-[#f7f2ea] p-3 text-[#34312e] shadow-2xl" aria-hidden>
-      <div className="mx-auto mb-3 h-1.5 w-16 rounded-full bg-[#1f1b18]/20" />
-      <p className="text-sm font-bold">Hola, Ana</p>
-      <div className="mt-2 rounded-2xl bg-[#dce6d8] p-3">
-        <p className="text-[10px] font-semibold text-[#3d5238]">Codice fiscale</p>
-        <div className="mt-2 h-2 rounded-full bg-white/70">
-          <div className="h-2 w-2/3 rounded-full bg-[#c77b59]" />
-        </div>
-        <p className="mt-1 text-[9px]">2 / 3</p>
-      </div>
-      {[true, true, false].map((done, i) => (
-        <div key={i} className="mt-2 flex items-center gap-2 rounded-xl bg-white p-2">
-          <span className={`flex h-4 w-4 items-center justify-center rounded-full border ${done ? "border-[#91a58b] bg-[#91a58b]" : "border-[#ede2d3]"}`}>
-            {done && <span className="block h-1.5 w-1.5 rounded-full bg-white" />}
-          </span>
-          <span className={`h-2 flex-1 rounded-full ${done ? "bg-[#ede2d3]" : "bg-[#d9cdbc]"}`} />
-        </div>
-      ))}
-      <div className="mt-3 rounded-xl bg-[#a65d3d] py-2 text-center text-[10px] font-semibold text-white">A Posto ✓</div>
+    <div className="mx-auto w-60 overflow-hidden rounded-[2.2rem] border-[6px] border-[#1f1b18] bg-[#f7f2ea] shadow-2xl">
+      <img src="/centros/app-inicio.webp" width={360} height={734} alt="" className="block h-auto w-full" />
     </div>
   );
 }
 
-export default async function DownloadPage() {
+export default async function DownloadPage({ searchParams }: { searchParams: Promise<{ confirmado?: string }> }) {
   const s = T[await getLang()];
+  const confirmed = (await searchParams).confirmado === "1";
+  const apk = Boolean(process.env.NEXT_PUBLIC_APK_AVAILABLE);
   return (
     <div className="space-y-12">
+      {confirmed && (
+        <p role="status" className="flex items-start gap-2 rounded-2xl bg-brand-soft p-4 font-medium">
+          <CheckCircle2 size={22} className="mt-0.5 shrink-0 text-brand" aria-hidden /> {s.confirmed}
+        </p>
+      )}
       <section className="hero -mx-4 -mt-6 px-4 py-12 sm:mx-0 sm:mt-0 sm:rounded-3xl sm:px-10 sm:py-14">
         <div className="relative grid items-center gap-10 sm:grid-cols-[1.3fr_1fr]">
           <div>
@@ -213,7 +212,12 @@ export default async function DownloadPage() {
             <p className="fade-up mt-4 text-lg text-white/90" style={{ animationDelay: "160ms" }}>
               {s.sub}
             </p>
-            <div className="fade-up mt-7 flex flex-wrap gap-3" style={{ animationDelay: "240ms" }}>
+            {apk && (
+              <a href="#apk" className="btn btn-hero fade-up mt-7" style={{ animationDelay: "220ms" }}>
+                <Download size={18} aria-hidden /> {s.apkMain}
+              </a>
+            )}
+            <div className="fade-up mt-5 flex flex-wrap gap-3" style={{ animationDelay: "240ms" }}>
               <StoreButton href={APP.googlePlayUrl} lines={s.play} soon={s.soon} />
               <StoreButton href={APP.appStoreUrl} lines={s.store} soon={s.soon} />
             </div>
@@ -275,23 +279,14 @@ export default async function DownloadPage() {
           <Link href="/sobre" className="text-brand underline">
             {s.about}
           </Link>
-          <Link href="/" className="text-brand underline">
-            {s.web}
-          </Link>
         </p>
       </section>
 
       <section id="iphone" className="card">
         <h2 className="flex items-center gap-2 text-xl font-bold">
-          <Share size={22} className="text-brand" aria-hidden /> {s.iosTitle}
+          <Smartphone size={22} className="text-brand" aria-hidden /> {s.iosTitle}
         </h2>
-        <p className="mt-2 text-sm text-muted">{s.iosBody}</p>
-        <ol className="mt-4 list-decimal space-y-1 ps-5 text-sm">
-          {s.iosSteps.map((x) => (
-            <li key={x}>{x}</li>
-          ))}
-        </ol>
-        <p className="mt-4 rounded-xl bg-brand-soft p-3 text-sm">{s.iosNote}</p>
+        <p className="mt-2 text-sm text-muted">{s.iosSoon}</p>
       </section>
 
       <section id="apk" className="card">
