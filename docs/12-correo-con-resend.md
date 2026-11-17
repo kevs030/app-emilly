@@ -8,27 +8,33 @@ Nunca pegues claves en el chat ni en el repositorio: solo en las pantallas de Re
 
 ---
 
-## Paso 0 — Un dominio propio (obligatorio para Resend)
+## Paso 0 — Comprar un dominio propio (obligatorio para Resend)
 
-Resend solo envía a cualquier destinatario desde un dominio verificado. `app-emilly.vercel.app`
-no sirve, porque es de Vercel y no se pueden añadir registros DNS.
+Resend **no vende dominios**: hay que comprarlo en un registrador. Recomendado: **Cloudflare**,
+porque cobra el precio de coste, sin recargos, y Resend configura sus registros con un solo botón.
+`app-emilly.vercel.app` no sirve, porque es de Vercel.
 
-1. Compra un dominio (de 10 a 20 € al año aprox.), por ejemplo en Cloudflare, Namecheap o Aruba.
-   Ideas: `aposto.app`, `apostoapp.it`, `a-posto.it`. Comprueba que esté libre.
-2. Guarda el acceso al panel del dominio: ahí añadirás los registros DNS del paso 1.
-
-(Más adelante el mismo dominio puede apuntar a la web en Vercel.)
+1. Entra en https://dash.cloudflare.com/sign-up y crea una cuenta gratuita (o inicia sesión).
+2. Menú izquierdo **Domain Registration** → **Register Domains**.
+3. Escribe el nombre que quieres (por ejemplo `aposto`) → **Search**. Aparece cada terminación
+   (.app, .com, .eu…) con su precio por año. Si la que quieres no sale, Cloudflare no la vende:
+   elige otra o cómprala en otro registrador (por ejemplo, Aruba para `.it`).
+4. Pulsa **Purchase** en la que elijas → datos de contacto → tarjeta → **Complete purchase**.
+   Deja activada la renovación automática.
 
 ## Paso 1 — Verificar el dominio en Resend
 
-1. Entra en https://resend.com → menú izquierdo **Domains** → botón **Add Domain**.
-2. Escribe tu dominio. En **Region** elige **Ireland (eu-west-1)**: los datos se quedan en la UE.
-3. Pulsa **Add**. Resend muestra 3 o 4 registros DNS (tipo **MX** y **TXT**, nombres como
-   `send` y `resend._domainkey`).
-4. En otra pestaña, abre el panel de tu dominio → **DNS** → añade **cada** registro copiando
-   *Type*, *Name* y *Value* tal cual.
-5. Vuelve a Resend → **Verify DNS Records**. Puede tardar de minutos a unas horas.
-   Espera a que el dominio diga **Verified** en verde.
+Resend recomienda usar un **subdominio** para el correo, por ejemplo `mail.TU-DOMINIO`. Así, la
+reputación del correo no afecta al dominio principal.
+
+1. Entra en https://resend.com → menú izquierdo **Domains** → **Add Domain**.
+2. Escribe `mail.TU-DOMINIO`. En **Region** elige **Ireland (eu-west-1)**: los datos quedan en la UE.
+3. Pulsa **Add**.
+4. Si el dominio está en Cloudflare: pulsa **Sign in to Cloudflare** → **Authorize**. Resend crea
+   los registros solo y el dominio queda verificado en pocos minutos.
+5. Si está en otro registrador: copia cada registro (**MX** `send`, **TXT** SPF y **TXT**
+   `resend._domainkey`) en el panel DNS del registrador y pulsa **Verify DNS Records**.
+6. Espera a que el dominio diga **Verified** en verde.
 
 ## Paso 2 — Crear la clave para Supabase
 
@@ -42,7 +48,7 @@ no sirve, porque es de Vercel y no se pueden añadir registros DNS.
 1. https://supabase.com/dashboard → proyecto de A Posto.
 2. Menú izquierdo **Authentication** → **Emails** → pestaña **SMTP Settings**.
 3. Activa **Enable Custom SMTP** y rellena:
-   - **Sender email:** `no-reply@TU-DOMINIO`
+   - **Sender email:** `no-reply@mail.TU-DOMINIO`
    - **Sender name:** `A Posto`
    - **Host:** `smtp.resend.com`
    - **Port number:** `465`
@@ -87,7 +93,7 @@ Haz lo mismo en **Reset Password** cambiando el texto por «Crear una nueva cont
 ## Paso 7 — Probar
 
 1. Abre la app y crea una cuenta con un correo **que no sea del equipo** (por ejemplo, uno personal nuevo).
-2. Debe llegar un correo de `no-reply@TU-DOMINIO` en menos de un minuto (mira también en Spam).
+2. Debe llegar un correo de `no-reply@mail.TU-DOMINIO` en menos de un minuto (mira también en Spam).
 3. Pulsa el botón: la cuenta queda confirmada y la app entra.
 4. Si no llega: Resend → **Emails** muestra cada envío y su error; Supabase →
    **Logs** → **Auth** muestra si Supabase intentó enviarlo.
