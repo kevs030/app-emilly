@@ -36,6 +36,8 @@ export const ro: Locale = {
   notArrived3: "Dacă e în Spam, marchează-l „Nu este spam”: următoarele vor ajunge în inbox.",
   wrongEmail: "Greșit scris? Corectează e-mailul",
   alreadyConfirmed: "Ți-ai confirmat deja e-mailul? Intră",
+  apkUpdate: "Există o versiune nouă A Posto.",
+  apkUpdateCta: "Descarcă",
   back: "Înapoi",
   badLogin: "E-mail sau parolă greșită.",
   notConfirmed: "Încă nu ți-ai confirmat e-mailul. Deschide linkul pe care ți l-am trimis.",

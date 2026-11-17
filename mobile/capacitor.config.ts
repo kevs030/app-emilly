@@ -11,6 +11,11 @@ const config: CapacitorConfig = {
   backgroundColor: "#F7F2EA",
   ios: { contentInset: "always" },
   android: { allowMixedContent: false },
+  plugins: {
+    // Actualizaciones en vivo desde nuestra web (scripts/build-app-update.mjs). Modo manual, sin estadísticas
+    // ni servidores de terceros: la app solo habla con app-emilly.vercel.app.
+    CapacitorUpdater: { autoUpdate: false, statsUrl: "", channelUrl: "", appReadyTimeout: 10000, resetWhenUpdate: true },
+  },
 };
 
 export default config;

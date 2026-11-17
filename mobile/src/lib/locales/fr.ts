@@ -36,6 +36,8 @@ export const fr: Locale = {
   notArrived3: "S'il est dans les spams, marquez-le « Non spam » : les suivants arriveront dans la boîte de réception.",
   wrongEmail: "Faute de frappe ? Corriger l'adresse",
   alreadyConfirmed: "Adresse déjà confirmée ? Se connecter",
+  apkUpdate: "Une nouvelle version d'A Posto est disponible.",
+  apkUpdateCta: "Télécharger",
   back: "Retour",
   badLogin: "E-mail ou mot de passe incorrect.",
   notConfirmed: "Vous n'avez pas encore confirmé votre e-mail. Ouvrez le lien que nous vous avons envoyé.",

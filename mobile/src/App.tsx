@@ -1,5 +1,7 @@
 import { FileText, HandCoins, House, LogIn, MapPin, MessageCircle, UserRound, WifiOff } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useApkUpdate } from "~/lib/liveUpdate";
+import { API_URL } from "~/lib/supabase";
 import { BrowserRouter, Link, Navigate, NavLink, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import { AuthProvider, useAuth } from "~/auth/AuthProvider";
 import { LangProvider, useLang } from "~/lib/lang";
@@ -62,6 +64,7 @@ function Private({ guestOk = false }: { guestOk?: boolean }) {
   const path = useLocation().pathname;
   const bare = path === "/tour" || path === "/start"; // guía de uso y cuestionario a pantalla completa
   useSessionTracking(Boolean(session && profile?.consent_analytics));
+  const apk = useApkUpdate();
   if (!ready) return <Splash />;
   if (!session && !guestOk) return <Navigate to="/welcome" replace />;
   const guest = !session;
@@ -92,6 +95,14 @@ function Private({ guestOk = false }: { guestOk?: boolean }) {
             <Link to="/welcome" className="inline-flex min-h-11 items-center font-semibold text-brown underline">
               {t("guestCreate")}
             </Link>
+          </p>
+        )}
+        {apk && (
+          <p className="safe-top flex flex-wrap items-center justify-center gap-x-3 bg-gold-soft px-4 pb-2 pt-2 text-center text-[14px] font-medium" role="status">
+            {t("apkUpdate")}
+            <a href={new URL(apk.url, API_URL).toString()} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center font-bold text-terracotta-hover underline">
+              {t("apkUpdateCta")}
+            </a>
           </p>
         )}
         <main className="flex-1 overflow-y-auto">

@@ -98,7 +98,7 @@ export function Home() {
             {(profile?.display_name?.trim()[0] ?? "").toUpperCase() || <UserRound size={24} />}
           </span>
           <h1 className="min-w-0 flex-1 text-[26px] font-bold leading-tight tracking-tight">{profile?.display_name ? `${t("hello")}, ${profile.display_name}` : t("helloNoName")}</h1>
-          <Link to="/notifications" aria-label={t("notifications")} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-terracotta-deep">
+          <Link to="/notifications" aria-label={t("notifications")} className="-me-2 flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-terracotta-deep">
             <BellRing size={24} aria-hidden />
           </Link>
         </header>

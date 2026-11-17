@@ -1,5 +1,10 @@
 @import "tailwindcss";
 @source "../src";
+/* Solo el código de la app: así la compilación es idéntica en cualquier máquina (las actualizaciones en vivo dependen de ello) */
+@source not "../tests";
+@source not "../android";
+@source not "../ios";
+@source not "../dist";
 /* Componentes compartidos con la web */
 @source "../../src/components/PrivacyContent.tsx";
 

@@ -36,6 +36,8 @@ export const sq: Locale = {
   notArrived3: "Nëse e gjeni te Spam, shënojeni «Nuk është spam»: të tjerat do të vijnë në kutinë hyrëse.",
   wrongEmail: "E shkruar gabim? Korrigjo email-in",
   alreadyConfirmed: "E keni konfirmuar më parë email-in? Hyni",
+  apkUpdate: "Ka një version të ri të A Posto.",
+  apkUpdateCta: "Shkarko",
   back: "Kthehu",
   badLogin: "Emaili ose fjalëkalimi nuk është i saktë.",
   notConfirmed: "Nuk e ke konfirmuar ende emailin. Hap lidhjen që të dërguam.",

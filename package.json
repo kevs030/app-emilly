@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/build-app-update.mjs && next build",
+    "build:app-update": "node scripts/build-app-update.mjs",
     "build:app": "node scripts/build-app.mjs",
     "start": "next start",
     "lint": "eslint",
@@ -32,6 +33,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
+    "fflate": "0.8.2",
     "tailwindcss": "4.3.3",
     "tsx": "^4.23.15",
     "typescript": "^5"

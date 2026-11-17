@@ -64,6 +64,9 @@ const nextConfig: NextConfig = {
       { source: "/sw.js", headers: [{ key: "Cache-Control", value: "no-cache, no-store, must-revalidate" }, { key: "Service-Worker-Allowed", value: "/" }] },
       // Verificación de la app de Android (TWA): Google exige JSON y sin redirecciones.
       { source: "/.well-known/assetlinks.json", headers: [{ key: "Content-Type", value: "application/json" }, { key: "Cache-Control", value: "public, max-age=3600" }] },
+      // Actualizaciones en vivo de la app: el manifiesto siempre fresco; los paquetes no cambian nunca (llevan su huella en el nombre).
+      { source: "/app-update/latest.json", headers: [{ key: "Cache-Control", value: "no-cache, no-store, must-revalidate" }] },
+      { source: "/app-update/:file*.zip", headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }] },
       { source: "/video/:file*", headers: [{ key: "Cache-Control", value: "public, max-age=604800" }] },
       { source: "/a-posto.apk", headers: [{ key: "Content-Type", value: "application/vnd.android.package-archive" }, { key: "Content-Disposition", value: 'attachment; filename="A-Posto.apk"' }] },
     ];

@@ -48,3 +48,6 @@ signing-key-info.txt
 
 # La app compilada para la web se genera al publicar
 /public/app
+
+# Paquetes de actualización en vivo de la app: se generan al publicar
+/public/app-update
