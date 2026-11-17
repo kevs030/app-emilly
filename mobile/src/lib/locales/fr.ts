@@ -358,6 +358,7 @@ export const fr: Locale = {
   howItWorks: "Comment ça marche",
   langsAvailable: "Disponible en 9 langues",
   // Portada, contraseña guardada y huella
+  emailLinkSignIn: "Votre e-mail est confirmé. Connectez-vous avec votre e-mail et votre mot de passe.",
   welcomeTitle: "Bienvenue !",
   peopleAlt: "Illustration : des personnes d'origines différentes, ensemble et main dans la main, qui disent bonjour en plusieurs langues.",
   pwSaveHint: "Votre téléphone vous proposera d'enregistrer le mot de passe pour la prochaine fois.",

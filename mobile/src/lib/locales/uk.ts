@@ -358,6 +358,7 @@ export const uk: Locale = {
   howItWorks: "Як це працює",
   langsAvailable: "Доступно 9 мовами",
   // Portada, contraseña guardada y huella
+  emailLinkSignIn: "Вашу пошту підтверджено. Увійдіть за допомогою пошти та пароля.",
   welcomeTitle: "Ласкаво просимо!",
   peopleAlt: "Ілюстрація: люди різного походження разом, тримаються за руки й вітаються різними мовами.",
   pwSaveHint: "Телефон запропонує зберегти пароль на наступний раз.",

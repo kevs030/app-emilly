@@ -2,6 +2,7 @@ import { BookOpen, Languages, LogIn, UserPlus } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLang } from "~/lib/lang";
+import { openedFromEmailLink } from "~/lib/supabase";
 import { UI_LANGS, type UiLang } from "~/lib/strings";
 import { Illustration } from "~/ui/Illustration";
 import { TutorialVideo } from "~/ui/TutorialVideo";
@@ -14,7 +15,7 @@ import { AuthForm, type AuthMode } from "./Auth";
  */
 export function Welcome() {
   const { t, lang, setLang } = useLang();
-  const [mode, setMode] = useState<AuthMode>("signup");
+  const [mode, setMode] = useState<AuthMode>(openedFromEmailLink ? "signin" : "signup");
   return (
     <div className="safe-top safe-bottom mx-auto flex min-h-full max-w-md flex-col px-5">
       <div className="flex justify-end pt-1">
@@ -46,6 +47,11 @@ export function Welcome() {
             </button>
           ))}
         </div>
+        {openedFromEmailLink && (
+          <p role="status" className="rounded-xl bg-beige px-4 py-3 font-medium">
+            {t("emailLinkSignIn")}
+          </p>
+        )}
         <AuthForm mode={mode} setMode={setMode} hideSwitch />
       </section>
 

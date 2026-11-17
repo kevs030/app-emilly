@@ -26,6 +26,9 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
   },
 });
 
+/** La página se abrió desde el enlace de un correo (confirmación de cuenta o nueva contraseña). Se lee antes de que Supabase limpie la dirección. */
+export const openedFromEmailLink = !isNative && typeof window !== "undefined" && /[?&#](code|token_hash|error_description)=/.test(window.location.search + window.location.hash);
+
 /** Dirección a la que vuelven los enlaces de los correos (verificación y nueva contraseña). */
 export function redirectUrl(path = ""): string {
   return isNative ? `${APP_SCHEME}://auth${path}` : `${window.location.origin}${import.meta.env.BASE_URL.replace(/\/$/, "")}${path}`;

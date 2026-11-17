@@ -358,6 +358,7 @@ export const ar: Locale = {
   howItWorks: "كيف يعمل",
   langsAvailable: "متوفر بـ 9 لغات",
   // Portada, contraseña guardada y huella
+  emailLinkSignIn: "تم تأكيد بريدك الإلكتروني. ادخل ببريدك الإلكتروني وكلمة المرور.",
   welcomeTitle: "أهلًا وسهلًا!",
   peopleAlt: "رسم توضيحي: أشخاص من أصول مختلفة، معًا ويدًا بيد، يلقون التحية بعدة لغات.",
   pwSaveHint: "سيعرض عليك هاتفك حفظ كلمة المرور للمرة القادمة.",

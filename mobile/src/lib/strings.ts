@@ -425,6 +425,7 @@ const S = {
   howItWorks: { es: "Cómo funciona", it: "Come funziona", en: "How it works" },
   langsAvailable: { es: "Disponible en 9 idiomas", it: "Disponibile in 9 lingue", en: "Available in 9 languages" },
   // Portada, contraseña guardada y huella
+  emailLinkSignIn: { es: "Tu correo ya está confirmado. Entra con tu correo y tu contraseña.", it: "La tua email è confermata. Entra con email e password.", en: "Your email is confirmed. Sign in with your email and password." },
   welcomeTitle: { es: "¡Bienvenido/a!", it: "Benvenuto/a!", en: "Welcome!" },
   peopleAlt: { es: "Ilustración: personas de distintos orígenes, juntas y de la mano, saludando en varios idiomas.", it: "Illustrazione: persone di origini diverse, insieme e mano nella mano, che salutano in varie lingue.", en: "Illustration: people from different backgrounds, together and holding hands, saying hello in several languages." },
   pwSaveHint: { es: "Tu teléfono te ofrecerá guardar la contraseña para la próxima vez.", it: "Il telefono ti proporrà di salvare la password per la prossima volta.", en: "Your phone will offer to save the password for next time." },
