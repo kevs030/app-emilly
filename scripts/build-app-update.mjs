@@ -30,6 +30,16 @@ for (const f of srcFiles) h.update(f).update("\0").update(readFileSync(f)).updat
 // Variables VITE_* (se incrustan en la app al compilar)
 for (const [k, v] of Object.entries(process.env).filter(([k]) => k.startsWith("VITE_")).sort()) h.update(`${k}=${v}\0`);
 const hash = h.digest("hex");
+// Diagnóstico (sin contenido): cuántos archivos y huella de cada carpeta, y NOMBRES de variables VITE_*.
+const perSource = Object.fromEntries(
+  SOURCES.map((p) => {
+    const hh = createHash("sha256");
+    const fs2 = srcFiles.filter((f) => f === p || f.startsWith(p + "/"));
+    for (const f of fs2) hh.update(f).update("\0").update(readFileSync(f)).update("\0");
+    return [p, `${fs2.length}:${hh.digest("hex").slice(0, 10)}`];
+  }),
+);
+const viteVars = Object.keys(process.env).filter((k) => k.startsWith("VITE_")).sort();
 writeFileSync(join(DIST, "live-version.json"), JSON.stringify({ hash }));
 
 const entries = {};
@@ -52,6 +62,6 @@ if (existsSync("mobile/android/app/build.gradle")) {
 }
 writeFileSync(
   join(OUT, "latest.json"),
-  JSON.stringify({ hash, url: `/app-update/${name}`, checksum, minNative, apk: { versionCode, versionName, url: "/descargar" } }, null, 2),
+  JSON.stringify({ hash, url: `/app-update/${name}`, checksum, minNative, apk: { versionCode, versionName, url: "/descargar" }, sources: perSource, viteVars }, null, 2),
 );
 console.log(`Paquete de actualización ${hash.slice(0, 12)} (${(zip.length / 1048576).toFixed(1)} MB), mínimo nativo ${minNative}`);
