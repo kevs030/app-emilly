@@ -58,7 +58,7 @@ const ANSWER = "[1] Qué es\nCarta del INPS sobre el Assegno Unico.\n[2] Qué pi
     const body = JSON.parse(req.postData());
     const auth = (req.headers()["authorization"] || "").startsWith("Bearer ey");
     if (u.pathname === "/api/document") { calls.document.push({ lang: body.lang, mime: body.mime, size: body.image.length, auth }); return r.fulfill({ status: 200, headers: { ...cors, "content-type": "text/plain", "x-credits-remaining": "2" }, body: ANSWER }); }
-    if (u.pathname === "/api/assistant") { calls.assistant.push({ n: body.messages.length, auth }); return r.fulfill({ status: 200, headers: { ...cors, "content-type": "text/plain", "x-credits-remaining": "1" }, body: "Te falta presentar el ISEE." }); }
+    if (u.pathname === "/api/assistant") { calls.assistant.push({ n: body.messages.length, auth, situation: body.situation }); return r.fulfill({ status: 200, headers: { ...cors, "content-type": "text/plain", "x-credits-remaining": "1" }, body: "Te falta presentar el ISEE." }); }
   });
   await p.route("https://tile.openstreetmap.org/**", (r) => r.fulfill({ status: 200, headers: { "content-type": "image/png" }, body: PNG }));
   await p.route("https://nominatim.openstreetmap.org/**", (r) => json(r, 200, [{ lat: "45.4642", lon: "9.19" }]));
@@ -66,6 +66,9 @@ const ANSWER = "[1] Qué es\nCarta del INPS sobre el Assegno Unico.\n[2] Qué pi
 
   await login();
   PNG = Buffer.from(await p.evaluate(() => { const c = document.createElement("canvas"); c.width = 60; c.height = 80; const x = c.getContext("2d"); x.fillStyle = "#fff"; x.fillRect(0, 0, 60, 80); x.fillStyle = "#000"; x.fillText("INPS", 5, 20); return c.toDataURL("image/png").split(",")[1]; }), "base64");
+  // Lo que hay guardado en el teléfono (IndexedDB / almacenamiento local), tal como lo ve la app.
+  const localDocs = () => p.evaluate(() => new Promise((res) => { const r = indexedDB.open("aposto-docs"); r.onsuccess = () => { const all = r.result.transaction("docs").objectStore("docs").getAll(); all.onsuccess = () => res(all.result.sort((a, b) => b.created_at.localeCompare(a.created_at)).map((x) => { const b = new Uint8Array(x.data); return { title: x.title, kind: x.kind, mime: x.mime, size_bytes: x.size_bytes, expires_on: x.expires_on, analysis: x.analysis, analysis_lang: x.analysis_lang, bytes: b.length, encrypted: !(b[0] === 0xff && b[1] === 0xd8) }; })); }; }));
+  const localSituation = () => p.evaluate(() => { const k = Object.keys(localStorage).find((x) => x.startsWith("aposto:situation:")); return k ? JSON.parse(localStorage.getItem(k)) : null; });
   // ── Inicio: 12 accesos, todos reales ──
   const links = await p.locator('nav[aria-label="Accesos"] a').evaluateAll((a) => a.map((x) => [x.textContent.trim(), x.getAttribute("href")]));
   check("el inicio muestra los 12 accesos", links.length === 12, links.map((l) => l[0]).join(", "));
@@ -82,8 +85,10 @@ const ANSWER = "[1] Qué es\nCarta del INPS sobre el Assegno Unico.\n[2] Qué pi
   await p.locator('input[type=file]').nth(1).setInputFiles({ name: "permesso.png", mimeType: "image/png", buffer: PNG });
   await p.selectOption("#doc-kind", "permesso"); await p.fill('input[type=date]', "2027-03-01");
   await p.click('button.btn:has-text("Guardar")'); await p.waitForSelector("li.card >> text=permesso");
-  const d = t.documents[0];
-  check("documento: archivo en la carpeta privada de la persona", /^u1\/[0-9a-f-]{36}\.jpg$/.test(d.storage_path) && files.has(d.storage_path), d.storage_path);
+  let docs = await localDocs();
+  const d = docs[0];
+  check("documento: se guarda solo en el teléfono (nada se sube al servidor)", docs.length === 1 && files.size === 0 && t.documents.length === 0, JSON.stringify({ local: docs.length, files: files.size }));
+  check("documento: el archivo guardado está cifrado (no es una imagen legible)", d.encrypted && d.bytes > 0);
   check("documento: ficha con tipo, tamaño y caducidad", d.kind === "permesso" && d.mime === "image/jpeg" && d.size_bytes > 0 && d.expires_on === "2027-03-01");
   check("antes de leer no se envía nada a la IA", calls.document.length === 0);
   await p.click('button:has-text("Leer y traducir")');
@@ -92,21 +97,25 @@ const ANSWER = "[1] Qué es\nCarta del INPS sobre el Assegno Unico.\n[2] Qué pi
   check("leer: se envía con sesión, en el idioma de la persona", calls.document.length === 1 && calls.document[0].auth && calls.document[0].lang === "es" && calls.document[0].mime === "image/jpeg");
   check("leer: muestra las 4 partes y el aviso de revisión", (await p.locator("li.card h3").count()) === 4 && (await p.locator("text=30/11/2026").count()) === 1 && (await p.locator("text=No es asesoramiento legal").count()) === 1);
   await p.waitForTimeout(300);
-  check("leer: la explicación queda guardada en la ficha", (t.documents[0].analysis || "").includes("Carta del INPS") && t.documents[0].analysis_lang === "es");
+  docs = await localDocs();
+  check("leer: la explicación queda guardada en la ficha del teléfono", (docs[0].analysis || "").includes("Carta del INPS") && docs[0].analysis_lang === "es");
+  await p.click('li.card button:has-text("Ver documento")'); await p.waitForSelector("li.card img");
+  check("ver: la foto se descifra y se muestra dentro de la app", (await p.locator("li.card img").evaluate((i) => i.complete && i.naturalWidth > 0)) === true);
   await p.screenshot({ path: "tests/e2e/out-documentos.png", fullPage: true });
 
   // ── Traductor ──
   await go("/scan", "text=Hacer una foto");
   await p.locator('input[type=file]').nth(1).setInputFiles({ name: "carta.png", mimeType: "image/png", buffer: PNG });
   await p.click('button:has-text("Leer y traducir")'); await p.click('button:has-text("De acuerdo, leer")'); await p.waitForSelector("text=Traducción");
-  check("traductor: explica sin guardar nada", calls.document.length === 2 && t.documents.length === 1);
+  check("traductor: explica sin guardar nada", calls.document.length === 2 && (await localDocs()).length === 1);
   await p.click('button:has-text("Guardar en Mis documentos")'); await p.waitForSelector("text=Guardado");
-  check("traductor: guardar es opcional y conserva la explicación", t.documents.length === 2 && t.documents[0].kind === "lettera" && (t.documents[0].analysis || "").includes("Carta del INPS"));
+  docs = await localDocs();
+  check("traductor: guardar es opcional y conserva la explicación", docs.length === 2 && docs[0].kind === "lettera" && (docs[0].analysis || "").includes("Carta del INPS") && files.size === 0);
 
   // ── borrar documento ──
   await go("/documents", "li.card");
   await p.locator('li.card button[aria-label="Borrar"]').first().click(); await p.waitForTimeout(400);
-  check("borrar: se elimina el archivo y la ficha", t.documents.length === 1 && calls.storageDelete.length === 1 && files.size === 1);
+  check("borrar: se elimina del teléfono", (await localDocs()).length === 1);
 
   // ── Citas con calendario y Avisos ──
   await go("/appointments", "text=Pendientes");
@@ -125,7 +134,9 @@ const ANSWER = "[1] Qué es\nCarta del INPS sobre el Assegno Unico.\n[2] Qué pi
   await go("/file", "text=Mi situación");
   await p.fill('input[autocomplete="address-level2"]', "Milano"); await p.selectOption("#permit", "lavoro"); await p.selectOption("#children", "yes");
   await p.click('button.btn:has-text("Guardar")'); await p.waitForSelector("text=Guardado");
-  check("expediente: guarda situación", db.profile.city === "Milano" && db.profile.permit_type === "lavoro" && db.profile.has_children === true && db.profile.country_of_origin === null);
+  const sit = await localSituation();
+  check("expediente: la ciudad va al servidor", db.profile.city === "Milano" && db.profile.country_of_origin === null);
+  check("expediente: permiso e hijos se guardan solo en el teléfono", sit && sit.permit_type === "lavoro" && sit.has_children === true && !db.profile.permit_type && db.profile.has_children == null, JSON.stringify({ sit, server: db.profile }));
   check("expediente: compartir con el asistente empieza desactivado", (await p.locator('[role=switch]').getAttribute("aria-checked")) === "false");
   await p.click('[role=switch]'); await p.waitForTimeout(300);
   check("expediente: el consentimiento se guarda al activarlo", db.profile.consent_personalization === true);
@@ -134,6 +145,7 @@ const ANSWER = "[1] Qué es\nCarta del INPS sobre el Assegno Unico.\n[2] Qué pi
   await go("/assistant", "textarea");
   await p.fill("textarea", "¿Qué me falta para el Assegno Unico?"); await p.click('button[aria-label="Enviar"]'); await p.waitForSelector("text=Te falta presentar el ISEE.");
   await p.waitForTimeout(400);
+  check("asistente: con consentimiento recibe la situación desde el teléfono", calls.assistant[0] && calls.assistant[0].situation && calls.assistant[0].situation.permit_type === "lavoro", JSON.stringify(calls.assistant[0] || {}));
   check("asistente: responde y actualiza el saldo", calls.assistant.length === 1 && calls.assistant[0].auth && (await p.locator("text=1 preguntas").count() + await p.locator("text=/^1 /").count()) > 0);
   check("asistente: guarda la conversación (1) y sus 2 mensajes", t.ai_conversations.length === 1 && t.ai_messages.length === 2 && t.ai_messages.some((m) => m.role === "assistant"));
   await p.click('a:has-text("Historial")'); await p.waitForSelector("li.card");

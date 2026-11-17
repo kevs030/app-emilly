@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarDays, FileText, ListChecks } from "lucide-react";
+import { ArrowRight, CalendarDays, FileText, ListChecks, ShieldCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "~/auth/AuthProvider";
@@ -24,7 +24,7 @@ export const PERMITS: [string, string | null][] = [
 /** Mi expediente: los datos que la persona decide dar, en un solo sitio. Todos son opcionales. */
 export function MyFile() {
   const { t } = useLang();
-  const { profile, saveProfile } = useAuth();
+  const { user, profile, saveProfile } = useAuth();
   const { procedures, reminders } = usePersonal();
   const [form, setForm] = useState({ country: "", city: "", permit: "", expiry: "", children: "" });
   const [state, setState] = useState<"idle" | "busy" | "saved" | "error">("idle");
@@ -36,8 +36,8 @@ export function MyFile() {
     setForm({ country: profile.country_of_origin ?? "", city: profile.city ?? "", permit: profile.permit_type ?? "", expiry: profile.permit_expiry ?? "", children: profile.has_children === null ? "" : profile.has_children ? "yes" : "no" });
   }, [profile]);
   useEffect(() => {
-    void listDocuments().then((d) => setDocCount(d ? d.length : null));
-  }, []);
+    if (user) void listDocuments(user.id).then((d) => setDocCount(d ? d.length : null));
+  }, [user]);
 
   async function save(e: React.FormEvent) {
     e.preventDefault();
@@ -107,6 +107,9 @@ export function MyFile() {
             <option value="no">{t("no")}</option>
           </select>
         </div>
+        <p className="flex items-start gap-2 rounded-2xl bg-sage-soft p-3 text-[14px]">
+          <ShieldCheck size={18} className="mt-0.5 shrink-0" aria-hidden /> {t("situationLocal")}
+        </p>
         {state === "saved" && <Alert kind="ok">{t("saved")}</Alert>}
         {state === "error" && <Alert kind="error">{t("generic")}</Alert>}
         <button className="btn" disabled={state === "busy"}>

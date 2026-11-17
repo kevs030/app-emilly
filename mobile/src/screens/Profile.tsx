@@ -2,6 +2,7 @@ import { Mail, Smartphone } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { BiometricToggle } from "~/ui/AppLock";
+import { clearSituation } from "~/lib/situation";
 import { useAuth } from "~/auth/AuthProvider";
 import { removeAllFiles } from "~/lib/documents";
 import { useLang } from "~/lib/lang";
@@ -71,6 +72,7 @@ export function Profile() {
     if (user && !(await removeAllFiles(user.id))) return setError(t("generic"));
     const { error } = await supabase.rpc("delete_my_account");
     if (error) return setError(t("generic"));
+    if (user) await clearSituation(user.id); // lo guardado solo en este teléfono también se borra
     await supabase.auth.signOut();
   }
 

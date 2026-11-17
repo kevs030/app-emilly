@@ -207,7 +207,7 @@ export const ro: Locale = {
   notifications: "Notificări",
   myFile: "Dosarul meu",
   simulator: "Simulator de ajutoare",
-  docPrivate: "Documentele tale sunt păstrate într-un spațiu privat în Uniunea Europeană. Doar contul tău le poate vedea și le poți șterge oricând.",
+  docPrivate: "Documentele tale rămân doar pe acest telefon, criptate. Nu se încarcă pe niciun server. Dacă schimbi telefonul sau ștergi aplicația, se pierd: păstrează mereu originalele.",
   docAdd: "Adaugă un document",
   docTakePhoto: "Fă o fotografie",
   docChooseFile: "Alege fotografie sau PDF",
@@ -394,4 +394,10 @@ export const ro: Locale = {
   planHome: "Mergi la pagina principală",
   startCard: "Spune-ne situația ta",
   startCardHint: "4 întrebări și îți spunem de unde să începi.",
+  // Modo invitado y datos solo en el teléfono
+  guestBanner: "Folosești A Posto fără cont.",
+  guestCreate: "Creează un cont gratuit",
+  browseNoAccount: "Vezi ghidurile fără cont",
+  guestGuideHint: "Creează un cont gratuit ca să bifezi pașii, să-ți salvezi progresul și să primești mementouri.",
+  situationLocal: "Tipul permisului, data expirării și dacă ai copii rămân doar pe acest telefon, criptate. Nu ajung pe serverul nostru.",
 };

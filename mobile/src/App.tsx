@@ -1,6 +1,6 @@
-import { FileText, House, MessageCircle, UserRound, WifiOff } from "lucide-react";
+import { FileText, HandCoins, House, LogIn, MapPin, MessageCircle, UserRound, WifiOff } from "lucide-react";
 import { useEffect, useState } from "react";
-import { BrowserRouter, Navigate, NavLink, Outlet, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Link, Navigate, NavLink, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import { AuthProvider, useAuth } from "~/auth/AuthProvider";
 import { LangProvider, useLang } from "~/lib/lang";
 import { PersonalProvider } from "~/lib/personal";
@@ -50,8 +50,12 @@ function Splash() {
   return <div className="flex h-full items-center justify-center text-ink-soft">{t("loading")}</div>;
 }
 
-/** Pantallas privadas: sin sesión se vuelve a la bienvenida. */
-function Private() {
+/**
+ * Pantallas de la app. Sin sesión se vuelve a la bienvenida, salvo las de consulta (`guestOk`):
+ * guías, ayudas, buscador y mapa se pueden leer sin cuenta, para que nadie tenga que dar
+ * un correo o un número solo para informarse.
+ */
+function Private({ guestOk = false }: { guestOk?: boolean }) {
   const { ready, session, profile } = useAuth();
   const { t } = useLang();
   const online = useOnline();
@@ -59,19 +63,35 @@ function Private() {
   const bare = path === "/tour" || path === "/start"; // guía de uso y cuestionario a pantalla completa
   useSessionTracking(Boolean(session && profile?.consent_analytics));
   if (!ready) return <Splash />;
-  if (!session) return <Navigate to="/welcome" replace />;
-  const tabs = [
-    { to: "/", icon: House, label: t("tabHome"), end: true },
-    { to: "/guides", icon: FileText, label: t("tabGuides"), end: false },
-    { to: "/assistant", icon: MessageCircle, label: t("tabAssistant"), end: false },
-    { to: "/profile", icon: UserRound, label: t("tabProfile"), end: false },
-  ];
+  if (!session && !guestOk) return <Navigate to="/welcome" replace />;
+  const guest = !session;
+  const tabs = guest
+    ? [
+        { to: "/guides", icon: FileText, label: t("tabGuides"), end: false },
+        { to: "/benefits", icon: HandCoins, label: t("benefits"), end: false },
+        { to: "/map", icon: MapPin, label: t("offices"), end: false },
+        { to: "/welcome", icon: LogIn, label: t("signIn"), end: false },
+      ]
+    : [
+        { to: "/", icon: House, label: t("tabHome"), end: true },
+        { to: "/guides", icon: FileText, label: t("tabGuides"), end: false },
+        { to: "/assistant", icon: MessageCircle, label: t("tabAssistant"), end: false },
+        { to: "/profile", icon: UserRound, label: t("tabProfile"), end: false },
+      ];
   return (
     <AppLock>
       <div className="flex h-full flex-col">
         {!online && (
           <p className="safe-top flex items-center justify-center gap-2 bg-beige px-4 pb-2 text-[14px]" role="status">
             <WifiOff size={16} aria-hidden /> {t("offline")}
+          </p>
+        )}
+        {guest && (
+          <p className="safe-top flex flex-wrap items-center justify-center gap-x-2 bg-sage-soft px-4 pb-2 pt-2 text-center text-[14px]" role="note">
+            {t("guestBanner")}{" "}
+            <Link to="/welcome" className="inline-flex min-h-11 items-center font-semibold text-brown underline">
+              {t("guestCreate")}
+            </Link>
           </p>
         )}
         <main className="flex-1 overflow-y-auto">
@@ -120,14 +140,18 @@ export function App() {
             </Route>
             <Route path="/new-password" element={<NewPassword />} />
             <Route path="/privacy" element={<Privacy />} />
-            <Route element={<Private />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/tour" element={<Tour />} />
-              <Route path="/start" element={<Start />} />
+            <Route element={<Private guestOk />}>
               <Route path="/guides" element={<Guides />} />
               <Route path="/guides/:slug" element={<GuideDetail />} />
               <Route path="/search" element={<Search />} />
               <Route path="/benefits" element={<Benefits />} />
+              <Route path="/simulator" element={<Simulator />} />
+              <Route path="/map" element={<OfficesMap />} />
+            </Route>
+            <Route element={<Private />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/tour" element={<Tour />} />
+              <Route path="/start" element={<Start />} />
               <Route path="/appointments" element={<Appointments />} />
               <Route path="/assistant" element={<Assistant />} />
               <Route path="/assistant/history" element={<ChatHistory />} />
@@ -135,8 +159,6 @@ export function App() {
               <Route path="/scan" element={<Scan />} />
               <Route path="/notifications" element={<Notifications />} />
               <Route path="/file" element={<MyFile />} />
-              <Route path="/simulator" element={<Simulator />} />
-              <Route path="/map" element={<OfficesMap />} />
               <Route path="/community" element={<Community />} />
               <Route path="/community/new" element={<CommunityNew />} />
               <Route path="/community/:id" element={<CommunityPost />} />

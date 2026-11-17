@@ -4,17 +4,6 @@ import { useActionState } from "react";
 import { updateProfile, type ActionState } from "./actions";
 import type { Profile } from "@/lib/next-steps";
 
-const PERMITS = {
-  lavoro: { es: "Trabajo", en: "Work" },
-  famiglia: { es: "Familia", en: "Family" },
-  studio: { es: "Estudio", en: "Study" },
-  protezione: { es: "Protección / asilo", en: "Protection / asylum" },
-  lungo_periodo: { es: "UE larga duración", en: "EU long-term" },
-  attesa_occupazione: { es: "Espera de empleo", en: "Job seeking" },
-  altro: { es: "Otro", en: "Other" },
-  nessuno: { es: "No tengo permiso", en: "I don't have a permit" },
-} as const;
-
 export function ProfileForm({ profile, lang }: { profile: Profile; lang: "es" | "en" | "it" }) {
   const [state, action, pending] = useActionState<ActionState, FormData>(updateProfile, {});
   const l = lang === "en" ? "en" : "es";
@@ -51,23 +40,13 @@ export function ProfileForm({ profile, lang }: { profile: Profile; lang: "es" | 
         <div className="grid gap-3 sm:grid-cols-2">
           <input name="country_of_origin" className="input" maxLength={60} defaultValue={profile.country_of_origin ?? ""} placeholder={T("País de origen", "Country of origin")} />
           <input name="city" className="input" maxLength={60} defaultValue={profile.city ?? ""} placeholder={T("Ciudad en Italia", "City in Italy")} />
-          <select name="permit_type" className="input" defaultValue={profile.permit_type ?? ""}>
-            <option value="">{T("Tipo de permiso", "Permit type")}</option>
-            {Object.entries(PERMITS).map(([k, v]) => (
-              <option key={k} value={k}>
-                {v[l]}
-              </option>
-            ))}
-          </select>
-          <label className="text-sm">
-            {T("Vencimiento del permiso", "Permit expiry date")}
-            <input type="date" name="permit_expiry" className="input mt-1" defaultValue={profile.permit_expiry ?? ""} />
-          </label>
         </div>
-        <label className="flex items-center gap-2 text-sm">
-          <input type="checkbox" name="has_children" defaultChecked={profile.has_children ?? false} />
-          {T("Tengo hijos a cargo", "I have dependent children")}
-        </label>
+        <p className="rounded-xl bg-brand-soft p-3 text-sm">
+          {T(
+            "Tu tipo de permiso, su caducidad y si tienes hijos se guardan solo en la app de tu teléfono, nunca en nuestro servidor. Puedes indicarlos en la app: Perfil → Mi expediente.",
+            "Your permit type, its expiry date and whether you have children are stored only in the app on your phone, never on our server. You can add them in the app: Profile → My file.",
+          )}
+        </p>
       </fieldset>
 
       <label className="flex items-start gap-2 text-sm">

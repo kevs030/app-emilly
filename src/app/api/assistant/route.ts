@@ -22,12 +22,23 @@ const Body = z.object({
     .refine((m) => m[m.length - 1].role === "user", "last message must be from the user")
     .refine((m) => m[0].role === "user", "first message must be from the user")
     .refine((m) => m.every((x, i) => i === 0 || x.role !== m[i - 1].role), "roles must alternate"),
+  /**
+   * Situación migratoria: vive SOLO en el teléfono de la persona. La app la envía en cada
+   * pregunta si hay consentimiento; aquí se usa para responder y no se guarda en ningún sitio.
+   */
+  situation: z
+    .object({
+      permit_type: z.string().max(40).nullable(),
+      permit_expiry: z.iso.date().nullable(),
+      has_children: z.boolean().nullable(),
+    })
+    .optional(),
 });
 
 /** Datos reales guardados por la persona. Nada de esto lo deduce ni lo inventa la IA. */
-async function loadContext(supabase: SupabaseClient, userId: string): Promise<UserContext> {
+async function loadContext(supabase: SupabaseClient, userId: string, situation: z.infer<typeof Body>["situation"]): Promise<UserContext> {
   const [profile, procedures, items, reminders] = await Promise.all([
-    supabase.from("profiles").select("display_name, country_of_origin, city, permit_type, permit_expiry, has_children, preferred_language, consent_personalization").eq("id", userId).maybeSingle(),
+    supabase.from("profiles").select("display_name, country_of_origin, city, preferred_language, consent_personalization").eq("id", userId).maybeSingle(),
     supabase.from("procedures").select("id, guide_slug, status").order("updated_at", { ascending: false }).limit(10),
     supabase.from("procedure_items").select("procedure_id, kind, idx"),
     supabase.from("reminders").select("title, due_date").eq("done", false).order("due_date").limit(5),
@@ -35,7 +46,7 @@ async function loadContext(supabase: SupabaseClient, userId: string): Promise<Us
   const p = profile.data;
   const ctx: UserContext = { language: p?.preferred_language ?? undefined, name: p?.display_name ?? undefined };
   if (p?.consent_personalization) {
-    ctx.profile = { country_of_origin: p.country_of_origin, city: p.city, permit_type: p.permit_type, permit_expiry: p.permit_expiry, has_children: p.has_children };
+    ctx.profile = { country_of_origin: p.country_of_origin, city: p.city, permit_type: situation?.permit_type ?? null, permit_expiry: situation?.permit_expiry ?? null, has_children: situation?.has_children ?? null };
   }
   ctx.procedures = (procedures.data ?? []).flatMap((proc) => {
     const guide = getGuide(proc.guide_slug);
@@ -87,7 +98,7 @@ export async function POST(req: Request) {
   const remaining = spend.data as number;
   if (remaining < 0) return json({ error: "no_credits" }, 402);
 
-  const context = await loadContext(auth.supabase, auth.userId);
+  const context = await loadContext(auth.supabase, auth.userId, body.situation);
   return streamAnswer({
     userId: auth.userId,
     headers,

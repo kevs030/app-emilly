@@ -27,7 +27,7 @@ let p;
   await p.click('section[aria-labelledby="langs-title"] button:has-text("العربية")');
   check("bienvenida: el árabe se muestra de derecha a izquierda", (await p.evaluate(() => document.documentElement.dir)) === "rtl");
   await p.click('section[aria-labelledby="langs-title"] button:has-text("Español")');
-  check("bienvenida: botones de 44 px o más", (await small()).length === 0, (await small()).join(" | "));
+  { await p.waitForTimeout(400); const sm = await small(); check("bienvenida: botones de 44 px o más", sm.length === 0, sm.join(" | ")); }
   check("bienvenida: sin desbordamiento horizontal", await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
 
   // Portada: bienvenida arriba y, debajo, la tarjeta para crear cuenta o entrar
@@ -41,7 +41,7 @@ let p;
   await p.click('[role=tab]:has-text("Celular")');
   check("portada: opción de entrar con el número de celular", (await p.locator('[role=tab][aria-selected="true"]').innerText()).includes("Celular"));
   await p.click('[role=tab]:has-text("Correo")');
-  check("portada: botones de 44 px o más", (await small()).length === 0, (await small()).join(" | "));
+  { await p.waitForTimeout(400); const sm = await small(); check("portada: botones de 44 px o más", sm.length === 0, sm.join(" | ")); }
   check("portada: sin desbordamiento horizontal", await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
   await p.goto(ORIGIN + PREFIX + "/"); await p.waitForURL(/\/welcome$/);
   check("sin cuenta no se puede entrar al resto de la app", path() === "/welcome");
@@ -56,7 +56,7 @@ let p;
   check("guía: elegir idioma traduce la guía", (await p.locator("h1").innerText()).includes("Benvenuta"));
   check("guía: el idioma elegido se guarda en el perfil", db.profile.preferred_language === "it");
   await p.click('ul[aria-label] button:has-text("Español")'); await p.waitForTimeout(300);
-  check("guía: botones de 44 px o más", (await small()).length === 0, (await small()).join(" | "));
+  { await p.waitForTimeout(400); const sm = await small(); check("guía: botones de 44 px o más", sm.length === 0, sm.join(" | ")); }
 
   check("guía: cada paso tiene su ilustración", (await p.locator("svg.ppl").count()) === 1);
   const titles = [];
@@ -94,13 +94,15 @@ let p;
   await p.click('button[aria-pressed]:has-text("Sí")');
   check("pregunta 4: dónde vive", (await p.locator("legend").innerText()).includes("vives"));
   await p.fill('input[autocomplete="address-level2"]', "Torino"); await p.fill('input[autocomplete="country-name"]', "Perú");
-  check("cuestionario: botones de 44 px o más", (await small()).length === 0, (await small()).join(" | "));
+  { await p.waitForTimeout(400); const sm = await small(); check("cuestionario: botones de 44 px o más", sm.length === 0, sm.join(" | ")); }
   await p.click('button.btn:has-text("Ver mi plan")'); await p.waitForSelector("text=Tu plan para empezar");
   const plan = await p.locator("ol a").evaluateAll((a) => a.map((x) => x.getAttribute("href")));
   check("plan: el permiso que vence pronto va primero", /permesso-di-soggiorno$/.test(plan[0] || ""), plan.join(", "));
   check("plan: incluye lo que eligió", plan.some((h) => /codice-fiscale$/.test(h)));
   check("plan: con hijos ofrece las ayudas para familias", plan.some((h) => /\/benefits$/.test(h)));
-  check("respuestas guardadas en el perfil", db.profile.permit_type === "lavoro" && db.profile.permit_expiry === soon && db.profile.has_children === true && db.profile.city === "Torino" && db.profile.country_of_origin === "Perú", JSON.stringify(db.profile));
+  const sit = await p.evaluate(() => { const k = Object.keys(localStorage).find((x) => x.startsWith("aposto:situation:")); return k ? JSON.parse(localStorage.getItem(k)) : null; });
+  check("ciudad y país guardados en el perfil", db.profile.city === "Torino" && db.profile.country_of_origin === "Perú", JSON.stringify(db.profile));
+  check("permiso, caducidad e hijos guardados SOLO en el teléfono", sit && sit.permit_type === "lavoro" && sit.permit_expiry === soon && sit.has_children === true && !db.profile.permit_type && !db.profile.permit_expiry && db.profile.has_children == null, JSON.stringify({ sit, server: db.profile }));
   check("guías recomendadas guardadas como «Para ti»", ["permesso-di-soggiorno", "codice-fiscale"].every((s) => db.user_facts.some((f) => f.key === "interest" && f.value === s)), JSON.stringify(db.user_facts));
   await p.click('button.btn:has-text("Ir al inicio")'); await p.waitForSelector("text=Hola, Ana");
   check("inicio: ya no muestra la tarjeta del cuestionario", (await p.locator('a[href$="/start"]').count()) === 0);

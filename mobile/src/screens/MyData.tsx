@@ -34,7 +34,9 @@ export function MyData() {
     setError(false);
     const { data, error } = await supabase.rpc("export_my_data");
     if (error || !data) return setError(true);
-    const text = JSON.stringify(data, null, 2);
+    // Lo que se guarda solo en este teléfono también forma parte de «mis datos».
+    const onThisPhone = profile ? { permit_type: profile.permit_type, permit_expiry: profile.permit_expiry, has_children: profile.has_children } : null;
+    const text = JSON.stringify({ ...(data as object), saved_only_on_this_phone: onThisPhone }, null, 2);
     const file = new File([text], "aposto-mis-datos.json", { type: "application/json" });
     try {
       if (navigator.canShare?.({ files: [file] })) {

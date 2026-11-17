@@ -1,4 +1,4 @@
-import { Languages, LogIn, UserPlus } from "lucide-react";
+import { BookOpen, Languages, LogIn, UserPlus } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLang } from "~/lib/lang";
@@ -49,6 +49,9 @@ export function Welcome() {
       </section>
 
       <p className="hint mt-3 text-center">{t("free")}</p>
+      <Link to="/guides" className="btn btn-secondary mt-4">
+        <BookOpen size={20} aria-hidden /> {t("browseNoAccount")}
+      </Link>
 
       <section className="mt-6" aria-labelledby="langs-title">
         <h2 id="langs-title" className="flex items-center gap-2 text-[15px] font-semibold text-ink-soft">

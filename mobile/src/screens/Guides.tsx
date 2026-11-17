@@ -4,6 +4,7 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { documentsFor } from "@/content/documents";
 import { getGuide, guides } from "@/content/guides";
 import { isStale } from "@/lib/i18n";
+import { useAuth } from "~/auth/AuthProvider";
 import { useLang } from "~/lib/lang";
 import { usePersonal } from "~/lib/personal";
 import { Alert, Screen } from "~/ui/kit";
@@ -50,6 +51,7 @@ export function GuideDetail() {
   const { slug = "" } = useParams();
   const { t, c, contentFallback } = useLang();
   const { available, procedureFor, progressOf, isDone, start, toggleItem, setStatus, removeProcedure, reminders, log } = usePersonal();
+  const { session } = useAuth();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(false);
   const guide = getGuide(slug);
@@ -83,6 +85,15 @@ export function GuideDetail() {
           <p className="mt-2 text-ink-soft">{c(guide.summary)}</p>
           {contentFallback && <p className="mt-3 rounded-2xl bg-beige p-3 text-[14px]">{t("notTranslated")}</p>}
         </header>
+
+        {!session && (
+          <section className="card bg-sage-soft">
+            <p className="text-[15px]">{t("guestGuideHint")}</p>
+            <Link to="/welcome" className="btn mt-3">
+              {t("guestCreate")}
+            </Link>
+          </section>
+        )}
 
         {available && !proc && (
           <section className="card bg-sage-soft">

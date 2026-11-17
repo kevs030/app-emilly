@@ -1,6 +1,7 @@
 import { Bot, Clapperboard, History, Package, Send, SquarePen } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
+import { useAuth } from "~/auth/AuthProvider";
 import { streamAI } from "~/lib/ai";
 import { useLang } from "~/lib/lang";
 import { supabase } from "~/lib/supabase";
@@ -14,6 +15,7 @@ type Msg = { role: "user" | "assistant"; content: string };
  */
 export function Assistant() {
   const { t } = useLang();
+  const { profile } = useAuth();
   const [params, setParams] = useSearchParams();
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
@@ -83,7 +85,7 @@ export function Assistant() {
     setInput("");
     setBusy(true);
     let answer = "";
-    const res = await streamAI("/api/assistant", { messages: next.slice(-20) }, (all) => {
+    const res = await streamAI("/api/assistant", { messages: next.slice(-20), situation: profile?.consent_personalization ? { permit_type: profile.permit_type, permit_expiry: profile.permit_expiry, has_children: profile.has_children } : undefined }, (all) => {
       answer = all;
       setMessages([...next, { role: "assistant", content: all }]);
       bottom.current?.scrollIntoView({ block: "end" });

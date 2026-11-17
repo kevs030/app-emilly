@@ -254,7 +254,7 @@ const S = {
   notifications: { es: "Avisos", it: "Notifiche", en: "Notifications" },
   myFile: { es: "Mi expediente", it: "Il mio fascicolo", en: "My file" },
   simulator: { es: "Simulador de ayudas", it: "Simulatore di aiuti", en: "Benefits simulator" },
-  docPrivate: { es: "Tus documentos se guardan en un espacio privado en la Unión Europea. Solo tu cuenta puede verlos y puedes borrarlos cuando quieras.", it: "I tuoi documenti sono conservati in uno spazio privato nell'Unione Europea. Solo il tuo account può vederli e puoi cancellarli quando vuoi.", en: "Your documents are stored in a private space in the European Union. Only your account can see them and you can delete them at any time." },
+  docPrivate: { es: "Tus documentos se guardan solo en este teléfono, cifrados. No se suben a ningún servidor. Si cambias de teléfono o borras la app, se pierden: conserva siempre los originales.", it: "I tuoi documenti restano solo su questo telefono, cifrati. Non vengono caricati su nessun server. Se cambi telefono o elimini l'app, vanno persi: conserva sempre gli originali.", en: "Your documents are stored only on this phone, encrypted. They are never uploaded to any server. If you change phone or delete the app, they are lost: always keep the originals." },
   docAdd: { es: "Añadir un documento", it: "Aggiungi un documento", en: "Add a document" },
   docTakePhoto: { es: "Hacer una foto", it: "Scatta una foto", en: "Take a photo" },
   docChooseFile: { es: "Elegir foto o PDF", it: "Scegli foto o PDF", en: "Choose a photo or PDF" },
@@ -461,6 +461,12 @@ const S = {
   planHome: { es: "Ir al inicio", it: "Vai alla home", en: "Go to home" },
   startCard: { es: "Cuéntanos tu situación", it: "Raccontaci la tua situazione", en: "Tell us about your situation" },
   startCardHint: { es: "4 preguntas y te decimos por dónde empezar.", it: "4 domande e ti diciamo da dove iniziare.", en: "4 questions and we'll tell you where to start." },
+  // Modo invitado y datos solo en el teléfono
+  guestBanner: { es: "Estás usando A Posto sin cuenta.", it: "Stai usando A Posto senza account.", en: "You're using A Posto without an account." },
+  guestCreate: { es: "Crear cuenta gratis", it: "Crea un account gratis", en: "Create a free account" },
+  browseNoAccount: { es: "Ver las guías sin crear cuenta", it: "Vedi le guide senza account", en: "See the guides without an account" },
+  guestGuideHint: { es: "Crea una cuenta gratis para marcar tus pasos, guardar tu progreso y recibir avisos de fechas.", it: "Crea un account gratis per segnare i passi, salvare i progressi e ricevere avvisi sulle scadenze.", en: "Create a free account to tick off your steps, save your progress and get date reminders." },
+  situationLocal: { es: "Tu tipo de permiso, su caducidad y si tienes hijos se guardan solo en este teléfono, cifrados. No llegan a nuestro servidor.", it: "Il tipo di permesso, la scadenza e se hai figli restano solo su questo telefono, cifrati. Non arrivano al nostro server.", en: "Your permit type, its expiry and whether you have children stay only on this phone, encrypted. They never reach our server." },
 } satisfies Record<string, { es: string; it?: string; en?: string }>;
 
 export type StringKey = keyof typeof S;

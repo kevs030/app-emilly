@@ -1,8 +1,9 @@
 import { Camera, ExternalLink, FileText, FolderLock, Trash2, Upload } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "~/auth/AuthProvider";
-import { addDocument, DOC_KINDS, documentBlob, documentUrl, listDocuments, MAX_BYTES, removeDocument, saveAnalysis, type Doc, type DocKind } from "~/lib/documents";
+import { addDocument, DOC_KINDS, documentBlob, listDocuments, MAX_BYTES, removeDocument, saveAnalysis, type Doc, type DocKind } from "~/lib/documents";
 import { prepareImage } from "~/lib/image";
+import { isNative } from "~/lib/supabase";
 import { useLang } from "~/lib/lang";
 import type { StringKey } from "~/lib/strings";
 import { AnalysisView, ReadButton } from "~/ui/DocReader";
@@ -14,15 +15,29 @@ function DocCard({ doc, onChange }: { doc: Doc; onChange: () => void }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(false);
   const [analysis, setAnalysis] = useState(doc.analysis);
+  const [preview, setPreview] = useState<string | null>(null);
   const isImage = doc.mime.startsWith("image/");
 
+  useEffect(() => () => void (preview && URL.revokeObjectURL(preview)), [preview]);
+
+  /** Se descifra en el teléfono. Las fotos se ven aquí mismo; los PDF se abren con el visor del sistema. */
   async function view() {
+    if (preview) return setPreview(null);
     setBusy(true);
     setError(false);
-    const url = await documentUrl(doc);
+    const blob = await documentBlob(doc);
     setBusy(false);
-    if (url) window.open(url, "_blank", "noopener");
-    else setError(true);
+    if (!blob) return setError(true);
+    if (isImage) return setPreview(URL.createObjectURL(blob));
+    const file = new File([blob], `${doc.title.replace(/[^\p{L}\p{N} _-]/gu, "").slice(0, 40) || "documento"}.pdf`, { type: doc.mime });
+    try {
+      if (isNative && navigator.canShare?.({ files: [file] })) return await navigator.share({ files: [file], title: doc.title });
+    } catch {
+      return; // la persona cerró el menú
+    }
+    const url = URL.createObjectURL(blob);
+    window.open(url, "_blank", "noopener");
+    setTimeout(() => URL.revokeObjectURL(url), 60_000);
   }
   async function remove() {
     if (!window.confirm(t("docDeleteConfirm"))) return;
@@ -54,9 +69,10 @@ function DocCard({ doc, onChange }: { doc: Doc; onChange: () => void }) {
           <Trash2 size={18} aria-hidden />
         </button>
       </div>
-      <button type="button" className="btn btn-secondary" disabled={busy} onClick={view}>
+      <button type="button" className="btn btn-secondary" disabled={busy} aria-expanded={isImage ? Boolean(preview) : undefined} onClick={view}>
         <ExternalLink size={18} aria-hidden /> {t("docView")}
       </button>
+      {preview && <img src={preview} alt={doc.title} className="w-full rounded-2xl border border-beige" />}
       {analysis ? (
         <>
           <button type="button" className="btn btn-quiet" aria-expanded={open} onClick={() => setOpen((v) => !v)}>
@@ -95,7 +111,7 @@ export function Documents() {
   const camera = useRef<HTMLInputElement>(null);
   const picker = useRef<HTMLInputElement>(null);
 
-  const reload = useCallback(async () => setDocs(await listDocuments()), []);
+  const reload = useCallback(async () => setDocs(user ? await listDocuments(user.id) : []), [user]);
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- carga inicial
     reload();

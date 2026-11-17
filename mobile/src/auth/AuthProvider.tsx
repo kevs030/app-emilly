@@ -2,6 +2,7 @@ import { App as CapApp } from "@capacitor/app";
 import type { Session, User } from "@supabase/supabase-js";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
+import { isEmptySituation, loadSituation, saveSituation, SITUATION_KEYS, splitPatch, type Situation } from "~/lib/situation";
 import { isNative, supabase, SUPABASE_KEY, SUPABASE_URL } from "~/lib/supabase";
 
 export type Profile = {
@@ -27,7 +28,9 @@ type Ctx = {
 };
 const AuthContext = createContext<Ctx | null>(null);
 
-const PROFILE_COLUMNS = "display_name, preferred_language, country_of_origin, city, permit_type, permit_expiry, has_children, consent_personalization, consent_analytics";
+const PROFILE_COLUMNS = "display_name, preferred_language, country_of_origin, city, consent_personalization, consent_analytics";
+/** Columnas antiguas: solo se leen para pasar los datos al teléfono y vaciarlas en el servidor. */
+const LEGACY_COLUMNS = SITUATION_KEYS.join(", ");
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
@@ -86,8 +89,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const refreshProfile = useCallback(async () => {
     if (!userId) return;
-    const { data } = await supabase.from("profiles").select(PROFILE_COLUMNS).eq("id", userId).maybeSingle();
-    setProfile((data as Profile | null) ?? null);
+    const [{ data }, legacy, local] = await Promise.all([
+      supabase.from("profiles").select(PROFILE_COLUMNS).eq("id", userId).maybeSingle(),
+      supabase.from("profiles").select(LEGACY_COLUMNS).eq("id", userId).maybeSingle(),
+      loadSituation(userId),
+    ]);
+    let situation: Situation = local;
+    // Cuentas antiguas: la situación estaba en el servidor. Se pasa al teléfono y se borra del servidor.
+    const old = legacy.data as Situation | null;
+    if (old && !isEmptySituation(old)) {
+      if (isEmptySituation(local)) situation = { permit_type: old.permit_type, permit_expiry: old.permit_expiry, has_children: old.has_children };
+      if (await saveSituation(userId, situation)) await supabase.from("profiles").update({ permit_type: null, permit_expiry: null, has_children: null }).eq("id", userId);
+    }
+    setProfile(data ? ({ ...(data as Omit<Profile, keyof Situation>), ...situation } as Profile) : null);
   }, [userId]);
 
   useEffect(() => {
@@ -98,18 +112,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const saveProfile = useCallback(
     async (patch: Partial<Profile>) => {
       if (!userId) return false;
-      const { error } = await supabase.from("profiles").update(patch).eq("id", userId);
-      if (error) return false;
+      const { local, remote } = splitPatch(patch);
+      if (Object.keys(local).length) {
+        const current = await loadSituation(userId);
+        if (!(await saveSituation(userId, { ...current, ...local }))) return false;
+      }
+      if (Object.keys(remote).length) {
+        const { error } = await supabase.from("profiles").update(remote).eq("id", userId);
+        if (error) return false;
+      }
       await refreshProfile();
       return true;
     },
-    [userId, refreshProfile],
+    [userId, refreshProfile]
   );
 
-  const value = useMemo<Ctx>(
-    () => ({ ready, session, user: session?.user ?? null, profile, phoneLoginEnabled, refreshProfile, saveProfile }),
-    [ready, session, profile, phoneLoginEnabled, refreshProfile, saveProfile],
-  );
+  const value = useMemo<Ctx>(() => ({ ready, session, user: session?.user ?? null, profile, phoneLoginEnabled, refreshProfile, saveProfile }), [ready, session, profile, phoneLoginEnabled, refreshProfile, saveProfile]);
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

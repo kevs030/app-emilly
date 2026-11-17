@@ -1,4 +1,4 @@
-import { ArrowRight, Check, HandCoins } from "lucide-react";
+import { ArrowRight, Check, HandCoins, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getGuide, guides } from "@/content/guides";
@@ -124,6 +124,9 @@ export function Start() {
         {step === 2 && (
           <fieldset>
             <legend className="text-[26px] font-bold leading-tight">{t("qPermit")}</legend>
+            <p className="mt-2 flex items-start gap-2 text-[14px] text-ink-soft">
+              <ShieldCheck size={18} className="mt-0.5 shrink-0" aria-hidden /> {t("situationLocal")}
+            </p>
             <ul className="mt-5 space-y-2">
               {PERMITS.map(([value, label]) => (
                 <li key={value}>

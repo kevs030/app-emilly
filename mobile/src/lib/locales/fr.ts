@@ -207,7 +207,7 @@ export const fr: Locale = {
   notifications: "Notifications",
   myFile: "Mon dossier",
   simulator: "Simulateur d'aides",
-  docPrivate: "Vos documents sont conservés dans un espace privé dans l'Union européenne. Seul votre compte peut les voir et vous pouvez les supprimer à tout moment.",
+  docPrivate: "Vos documents restent uniquement sur ce téléphone, chiffrés. Ils ne sont envoyés sur aucun serveur. Si vous changez de téléphone ou supprimez l'app, ils sont perdus : gardez toujours les originaux.",
   docAdd: "Ajouter un document",
   docTakePhoto: "Prendre une photo",
   docChooseFile: "Choisir une photo ou un PDF",
@@ -394,4 +394,10 @@ export const fr: Locale = {
   planHome: "Aller à l'accueil",
   startCard: "Parlez-nous de votre situation",
   startCardHint: "4 questions et nous vous disons par où commencer.",
+  // Modo invitado y datos solo en el teléfono
+  guestBanner: "Vous utilisez A Posto sans compte.",
+  guestCreate: "Créer un compte gratuit",
+  browseNoAccount: "Voir les guides sans compte",
+  guestGuideHint: "Créez un compte gratuit pour cocher vos étapes, enregistrer votre progression et recevoir des rappels de dates.",
+  situationLocal: "Votre type de titre de séjour, sa date d'expiration et le fait d'avoir des enfants restent uniquement sur ce téléphone, chiffrés. Ils n'arrivent pas sur notre serveur.",
 };

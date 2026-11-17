@@ -19,15 +19,15 @@ function daysFrom(today: string, date: string) {
 /** Centro de avisos: fechas próximas que la persona guardó, y ajustes de los avisos del teléfono. */
 export function Notifications() {
   const { t, lang } = useLang();
-  const { profile } = useAuth();
+  const { user, profile } = useAuth();
   const { reminders, available } = usePersonal();
   const [docs, setDocs] = useState<Doc[]>([]);
   const [settings, setSettings] = useState<NotifySettings>(loadNotify);
   const [denied, setDenied] = useState(false);
 
   useEffect(() => {
-    void listDocuments().then((d) => setDocs(d ?? []));
-  }, []);
+    if (user) void listDocuments(user.id).then((d) => setDocs(d ?? []));
+  }, [user]);
 
   const today = new Date().toLocaleDateString("sv"); // AAAA-MM-DD en hora local
   const items: Item[] = [

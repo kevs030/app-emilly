@@ -5,7 +5,7 @@ import type { L10n } from "./types";
  * BORRADOR: debe revisarlo un profesional de protección de datos antes del lanzamiento.
  * Si cambia el tratamiento de datos en el código, hay que actualizar este texto y su fecha.
  */
-export const PRIVACY_UPDATED = "2026-11-16";
+export const PRIVACY_UPDATED = "2026-11-17";
 
 export const privacyIntro: L10n = {
   es: "A Posto te ayuda con tus trámites en Italia. Aquí explicamos, en claro, qué datos guardamos, para qué y cómo puedes borrarlos.",
@@ -23,9 +23,9 @@ export const privacySections: { title: L10n; items: L10n[] }[] = [
         en: "Your account: email or phone number, so you can sign in. Your password is stored encrypted and we cannot read it.",
       },
       {
-        es: "Tu perfil: el nombre que elijas y tu idioma. Solo si lo aceptas, también país de origen, ciudad, tipo de permiso, su fecha de vencimiento y si tienes hijos a cargo.",
-        it: "Il tuo profilo: il nome che scegli e la lingua. Solo se acconsenti, anche Paese d'origine, città, tipo di permesso, scadenza e figli a carico.",
-        en: "Your profile: the name you choose and your language. Only if you agree, also country of origin, city, permit type, its expiry date and whether you have dependent children.",
+        es: "Tu perfil: el nombre que elijas, tu idioma y, si quieres, tu país de origen y tu ciudad. Tu tipo de permiso, su fecha de vencimiento y si tienes hijos a cargo NO los guardamos: se quedan solo en tu teléfono, cifrados, y nuestro servidor no puede saberlos.",
+        it: "Il tuo profilo: il nome che scegli, la lingua e, se vuoi, Paese d'origine e città. Tipo di permesso, scadenza e figli a carico NON li conserviamo: restano solo sul tuo telefono, cifrati, e il nostro server non può conoscerli.",
+        en: "Your profile: the name you choose, your language and, if you want, your country of origin and city. Your permit type, its expiry date and whether you have dependent children are NOT stored by us: they stay only on your phone, encrypted, and our server cannot know them.",
       },
       {
         es: "Tu progreso: los trámites que empiezas, los pasos y documentos que marcas, tus recordatorios y los temas que eliges como interés.",
@@ -38,14 +38,14 @@ export const privacySections: { title: L10n; items: L10n[] }[] = [
         en: "Activity history: which guide you opened or which step you ticked, so you can pick up where you left off. We keep at most the last 300 actions and you can delete them.",
       },
       {
-        es: "Asistente de IA: tus preguntas se envían a nuestro proveedor de inteligencia artificial (Anthropic, en Estados Unidos) junto con tu progreso guardado, para generar la respuesta. Tus conversaciones se guardan en tu cuenta para que puedas continuarlas, y puedes borrarlas cuando quieras. Guardamos cuántas preguntas te quedan y sus movimientos.",
-        it: "Assistente IA: le tue domande sono inviate al nostro fornitore di intelligenza artificiale (Anthropic, negli Stati Uniti) insieme ai tuoi progressi salvati, per generare la risposta. Le conversazioni sono salvate nel tuo account per poterle continuare e puoi cancellarle quando vuoi. Conserviamo quante domande ti restano e i relativi movimenti.",
-        en: "AI assistant: your questions are sent to our artificial intelligence provider (Anthropic, in the United States) together with your saved progress, to generate the answer. Your conversations are saved in your account so you can continue them, and you can delete them at any time. We keep how many questions you have left and their movements.",
+        es: "Asistente de IA: tus preguntas se envían a nuestro proveedor de inteligencia artificial (Anthropic, en Estados Unidos) junto con tu progreso guardado y, solo si lo aceptas, los datos de tu situación que guardas en el teléfono, para generar la respuesta. Esos datos de situación no se guardan en nuestro servidor. Tus conversaciones se guardan en tu cuenta para que puedas continuarlas, y puedes borrarlas cuando quieras. Guardamos cuántas preguntas te quedan y sus movimientos.",
+        it: "Assistente IA: le tue domande sono inviate al nostro fornitore di intelligenza artificiale (Anthropic, negli Stati Uniti) insieme ai tuoi progressi salvati e, solo se acconsenti, ai dati sulla tua situazione salvati sul telefono, per generare la risposta. Questi dati non vengono conservati sul nostro server. Le conversazioni sono salvate nel tuo account per poterle continuare e puoi cancellarle quando vuoi. Conserviamo quante domande ti restano e i relativi movimenti.",
+        en: "AI assistant: your questions are sent to our artificial intelligence provider (Anthropic, in the United States) together with your saved progress and, only if you agree, the situation details stored on your phone, to generate the answer. Those situation details are not stored on our server. Your conversations are saved in your account so you can continue them, and you can delete them at any time. We keep how many questions you have left and their movements.",
       },
       {
-        es: "Mis documentos: si guardas fotos o PDF de tus documentos, se almacenan en un espacio privado en la Unión Europea al que solo accede tu cuenta. Nadie más puede verlos y puedes borrarlos cuando quieras. Son opcionales: la app funciona sin ellos.",
-        it: "I miei documenti: se salvi foto o PDF dei tuoi documenti, sono conservati in uno spazio privato nell'Unione Europea accessibile solo dal tuo account. Nessun altro può vederli e puoi cancellarli quando vuoi. Sono facoltativi.",
-        en: "My documents: if you save photos or PDFs of your documents, they are stored in a private space in the European Union that only your account can access. Nobody else can see them and you can delete them at any time. They are optional.",
+        es: "Mis documentos: si guardas fotos o PDF de tus documentos, se guardan solo en tu teléfono, cifrados. No los subimos a ningún servidor. Si cambias de teléfono o borras la app, se pierden. Son opcionales: la app funciona sin ellos.",
+        it: "I miei documenti: se salvi foto o PDF dei tuoi documenti, restano solo sul tuo telefono, cifrati. Non li carichiamo su nessun server. Se cambi telefono o elimini l'app, vanno persi. Sono facoltativi.",
+        en: "My documents: if you save photos or PDFs of your documents, they are stored only on your phone, encrypted. We never upload them to any server. If you change phone or delete the app, they are lost. They are optional.",
       },
       {
         es: "Lector de documentos: cuando pides que la app lea y traduzca una foto, esa imagen se envía a nuestro proveedor de inteligencia artificial (Anthropic, en Estados Unidos) solo para generar la respuesta. Te pedimos confirmación cada vez. Nuestro servidor no guarda la imagen; la explicación solo se guarda si tú guardas el documento.",

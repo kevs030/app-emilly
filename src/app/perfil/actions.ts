@@ -11,12 +11,6 @@ const ProfileSchema = z.object({
   display_name: z.preprocess(emptyToNull, z.string().trim().min(2).max(40).nullable()),
   country_of_origin: z.preprocess(emptyToNull, z.string().trim().max(60).nullable()),
   city: z.preprocess(emptyToNull, z.string().trim().max(60).nullable()),
-  permit_type: z.preprocess(
-    emptyToNull,
-    z.enum(["lavoro", "famiglia", "studio", "protezione", "lungo_periodo", "attesa_occupazione", "altro", "nessuno"]).nullable(),
-  ),
-  permit_expiry: z.preprocess(emptyToNull, z.iso.date().nullable()),
-  has_children: z.preprocess((v) => v === "on", z.boolean()),
   preferred_language: z.enum(["es", "en", "it"]),
   consent_personalization: z.preprocess((v) => v === "on", z.boolean()),
   consent_analytics: z.preprocess((v) => v === "on", z.boolean()),
@@ -33,9 +27,9 @@ export async function updateProfile(_prev: ActionState, form: FormData): Promise
 
   const data = parsed.data;
   // Si retira el consentimiento, borramos los datos personales opcionales (minimización, art. 5 RGPD).
-  const values = data.consent_personalization
-    ? data
-    : { ...data, country_of_origin: null, city: null, permit_type: null, permit_expiry: null, has_children: null };
+  // La situación migratoria (permiso, caducidad, hijos) NO se guarda desde aquí: vive solo en la app del
+  // teléfono, que además pasa allí los valores antiguos y los borra del servidor.
+  const values = data.consent_personalization ? data : { ...data, country_of_origin: null, city: null };
 
   const { error } = await supabase
     .from("profiles")

@@ -100,8 +100,9 @@ export function PersonalProvider({ children }: { children: ReactNode }) {
       return { guide, ...computeProgress(guide, items.filter((x) => x.procedure_id === p.id)) };
     };
     return {
-      available,
-      loading,
+      // Sin sesión (modo invitado) no hay datos personales que guardar ni cargar.
+      available: available && Boolean(userId),
+      loading: loading && Boolean(userId),
       procedures,
       items,
       reminders,

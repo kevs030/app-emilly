@@ -207,7 +207,7 @@ export const sq: Locale = {
   notifications: "Njoftime",
   myFile: "Dosja ime",
   simulator: "Simulues ndihmash",
-  docPrivate: "Dokumentet e tua ruhen në një hapësirë private në Bashkimin Evropian. Vetëm llogaria jote mund t'i shohë dhe mund t'i fshish kurdo.",
+  docPrivate: "Dokumentet tuaja ruhen vetëm në këtë telefon, të enkriptuara. Nuk ngarkohen në asnjë server. Nëse ndërroni telefon ose fshini aplikacionin, humbasin: ruani gjithmonë origjinalet.",
   docAdd: "Shto një dokument",
   docTakePhoto: "Bëj një foto",
   docChooseFile: "Zgjidh foto ose PDF",
@@ -394,4 +394,10 @@ export const sq: Locale = {
   planHome: "Shko në faqen kryesore",
   startCard: "Na tregoni situatën tuaj",
   startCardHint: "4 pyetje dhe ju themi nga të filloni.",
+  // Modo invitado y datos solo en el teléfono
+  guestBanner: "Po përdorni A Posto pa llogari.",
+  guestCreate: "Krijoni llogari falas",
+  browseNoAccount: "Shikoni udhëzuesit pa llogari",
+  guestGuideHint: "Krijoni një llogari falas për të shënuar hapat, për të ruajtur përparimin dhe për të marrë kujtesa për datat.",
+  situationLocal: "Lloji i lejes, afati i saj dhe nëse keni fëmijë ruhen vetëm në këtë telefon, të enkriptuara. Nuk arrijnë në serverin tonë.",
 };
