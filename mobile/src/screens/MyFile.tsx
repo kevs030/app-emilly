@@ -63,7 +63,7 @@ export function MyFile() {
   ];
 
   return (
-    <Screen title={t("myFile")} back>
+    <Screen title={t("myFile")} back help="file">
       <p className="text-[15px] text-ink-soft">{t("fileLead")}</p>
 
       <ul className="mt-4 space-y-2">

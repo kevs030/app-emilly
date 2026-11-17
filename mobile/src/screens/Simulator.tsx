@@ -45,7 +45,7 @@ export function Simulator() {
 
   if (results) {
     return (
-      <Screen title={t("simulator")} back>
+      <Screen title={t("simulator")} back help="simulator">
         <p className="rounded-2xl bg-beige p-3 text-[14px]">{t("simDisclaimer")}</p>
         {results.length === 0 && <p className="card mt-4 text-ink-soft">{t("simNone")}</p>}
         <ul className="mt-4 space-y-3">
@@ -80,7 +80,7 @@ export function Simulator() {
   }
 
   return (
-    <Screen title={t("simulator")} back>
+    <Screen title={t("simulator")} back help="simulator">
       <p className="text-[15px] text-ink-soft">{t("simLead")}</p>
       <form onSubmit={submit} className="mt-4 space-y-4">
         {QUESTIONS.map(([key, label]) => (

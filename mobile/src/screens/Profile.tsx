@@ -95,7 +95,7 @@ export function Profile() {
   }
 
   return (
-    <Screen title={t("profile")}>
+    <Screen title={t("profile")} help="profile">
       <div className="rise space-y-5">
         <form onSubmit={save} className="card space-y-4">
           <Field label={t("name")} hint={t("askNameHint")} maxLength={40} value={name} onChange={(e) => setName(e.target.value)} />

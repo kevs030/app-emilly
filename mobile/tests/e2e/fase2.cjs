@@ -128,7 +128,7 @@ const ANSWER = "[1] Qué es\nCarta del INPS sobre el Assegno Unico.\n[2] Qué pi
   check("calendario: el día queda marcado", (await p.locator(`section button[aria-pressed]`).nth(target.getDate() - 1).getAttribute("aria-label")).includes("tiene cita"));
   await go("/notifications", "text=Próximas fechas");
   check("avisos: muestra la cita próxima", (await p.locator("a.card:has-text('Cita Questura')").count()) === 1);
-  check("avisos: en el navegador el interruptor está desactivado y lo explica", (await p.locator('[role=switch]').first().isDisabled()) && (await p.locator("text=app instalada").count()) === 1);
+  check("avisos: en el navegador el interruptor está desactivado y lo explica", (await p.locator('[role=switch]').first().isDisabled()) && (await p.locator("text=app instalada").count()) >= 1);
 
   // ── Mi expediente ──
   await go("/file", "text=Mi situación");

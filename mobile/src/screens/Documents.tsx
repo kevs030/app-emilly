@@ -150,7 +150,7 @@ export function Documents() {
   }
 
   return (
-    <Screen title={t("myDocuments")} back>
+    <Screen title={t("myDocuments")} back help="documents">
       <p className="flex gap-2 rounded-2xl bg-sage-soft p-3 text-[14px]">
         <FolderLock size={18} className="mt-0.5 shrink-0" aria-hidden />
         <span>{t("docPrivate")}</span>

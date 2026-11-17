@@ -30,7 +30,7 @@ function Tick({ on, label, onClick }: { on: boolean; label: string; onClick: () 
 export function Guides() {
   const { t, c } = useLang();
   return (
-    <Screen title={t("guidesTitle")}>
+    <Screen title={t("guidesTitle")} help="guides">
       <ul className="rise space-y-3">
         {guides.map((g) => (
           <li key={g.slug}>

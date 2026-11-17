@@ -78,7 +78,7 @@ const SUPA = "https://emuyxcrtkfqizavslwfj.supabase.co";
     const copies = await p.locator("li.card", { hasText: "Pasaporte" }).count();
     check("migración: el documento antiguo se copia al teléfono (una sola vez)", copies === 1, `copias: ${copies}`);
     check("migración: después se borra del servidor (archivo y ficha)", server.docs.length === 0 && server.files.size === 0, JSON.stringify({ docs: server.docs.length, files: server.files.size }));
-    check("documentos: el texto ya no habla de servidor", (await p.locator("text=solo en este teléfono, cifrados").count()) === 1);
+    check("documentos: el texto ya no habla de servidor", (await p.locator("text=solo en este teléfono, cifrados").count()) >= 1);
     await p.goto(ORIGIN + PREFIX + "/documents"); await p.waitForSelector("li.card");
     await p.waitForTimeout(300);
     check("migración: no se duplica al volver a entrar", (await p.locator("li.card", { hasText: "Pasaporte" }).count()) === 1);

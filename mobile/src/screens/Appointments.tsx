@@ -16,7 +16,7 @@ export function Appointments() {
   const done = byDate.filter((r) => r.done).reverse();
 
   return (
-    <Screen title={t("appointments")} back>
+    <Screen title={t("appointments")} back help="appointments">
       <p className="text-[15px] text-ink-soft">{t("appointmentsLead")}</p>
       {!available && <p className="card mt-4 text-ink-soft">{t("notReady")}</p>}
       {available && loading && <p className="mt-4 text-ink-soft">{t("loading")}</p>}

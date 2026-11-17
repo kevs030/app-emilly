@@ -2,7 +2,7 @@
  * Ilustraciones de A Posto (generadas con Recraft en ElevenLabs y comprimidas a WebP).
  * Dos tamaños: el teléfono descarga solo el que necesita (16–68 KB cada una).
  */
-export type IllustrationName = "bienvenida" | "tramites" | "asistente" | "citas" | "privacidad";
+export type IllustrationName = "bienvenida" | "tramites" | "asistente" | "citas" | "privacidad" | "documentos" | "mapa" | "comunidad" | "ayudas" | "traductor";
 
 export function Illustration({ name, alt = "", className = "", eager = false }: { name: IllustrationName; alt?: string; className?: string; eager?: boolean }) {
   const base = `${import.meta.env.BASE_URL}ill/${name}`;

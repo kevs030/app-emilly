@@ -51,7 +51,7 @@ export function Notifications() {
   }
 
   return (
-    <Screen title={t("notifications")} back>
+    <Screen title={t("notifications")} back help="notifications">
       <section>
         <h2 className="mb-3 text-lg font-bold">{t("notifUpcoming")}</h2>
         {!available && <p className="card text-ink-soft">{t("notReady")}</p>}

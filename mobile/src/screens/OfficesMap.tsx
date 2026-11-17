@@ -166,7 +166,7 @@ export function OfficesMap() {
   }
 
   return (
-    <Screen title={t("offices")} back>
+    <Screen title={t("offices")} back help="map">
       <form onSubmit={search} className="flex gap-2" role="search">
         <input className="input min-w-0 flex-1" aria-label={t("mapCity")} placeholder={t("mapCity")} maxLength={80} value={city} onChange={(e) => setCity(e.target.value)} />
         <button className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-terracotta-deep text-white" aria-label={t("searchTitle")}>

@@ -1,7 +1,8 @@
-import { ChevronLeft, Eye, EyeOff } from "lucide-react";
+import { ChevronLeft, CircleHelp, Eye, EyeOff } from "lucide-react";
 import { useId, useState, type InputHTMLAttributes, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLang } from "~/lib/lang";
+import { helpHidden, ScreenHelp, setHelpHidden, type HelpId } from "./ScreenHelp";
 
 /** Piezas comunes del sistema de diseño. Las pantallas se construyen con estas, no con estilos sueltos. */
 
@@ -14,9 +15,16 @@ export function Logo({ size = 44 }: { size?: number }) {
   );
 }
 
-export function Screen({ title, back, children }: { title?: string; back?: boolean; children: ReactNode }) {
+export function Screen({ title, back, help, children }: { title?: string; back?: boolean; help?: HelpId; children: ReactNode }) {
   const navigate = useNavigate();
   const { t } = useLang();
+  // «Cómo funciona»: abierta la primera vez; luego se abre con el botón «?».
+  const [helpOpen, setHelpOpen] = useState(() => (help ? !helpHidden(help) : false));
+  const toggleHelp = (open: boolean) => {
+    if (!help) return;
+    setHelpHidden(help, !open);
+    setHelpOpen(open);
+  };
   return (
     <div className="safe-top mx-auto flex min-h-full w-full max-w-md flex-col px-5 pb-6">
       {(back || title) && (
@@ -26,9 +34,15 @@ export function Screen({ title, back, children }: { title?: string; back?: boole
               <ChevronLeft size={26} className="rtl:rotate-180" aria-hidden />
             </button>
           )}
-          {title && <h1 className="text-2xl font-bold tracking-tight">{title}</h1>}
+          {title && <h1 className="min-w-0 flex-1 text-2xl font-bold tracking-tight">{title}</h1>}
+          {help && !helpOpen && (
+            <button type="button" onClick={() => toggleHelp(true)} aria-label={t("helpTitle")} className="ms-auto flex min-h-11 items-center gap-1 rounded-full bg-beige px-3 text-[14px] font-semibold text-brown">
+              <CircleHelp size={18} aria-hidden /> {t("helpShort")}
+            </button>
+          )}
         </header>
       )}
+      {help && helpOpen && <ScreenHelp id={help} onClose={() => toggleHelp(false)} />}
       {children}
     </div>
   );

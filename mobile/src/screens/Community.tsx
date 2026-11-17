@@ -34,7 +34,7 @@ export function Community() {
   }, [filter]);
 
   return (
-    <Screen title={t("community")} back>
+    <Screen title={t("community")} back help="community">
       <Rules />
       <Link to="/community/new" className="btn mt-4">
         <MessageSquarePlus size={20} aria-hidden /> {t("forumAsk")}

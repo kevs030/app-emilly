@@ -51,7 +51,7 @@ export function Scan() {
   }
 
   return (
-    <Screen title={t("translator")} back>
+    <Screen title={t("translator")} back help="scan">
       <p className="text-[15px] text-ink-soft">{t("scanLead")}</p>
       <input ref={camera} type="file" accept="image/*" capture="environment" hidden onChange={(e) => choose(e.target.files?.[0])} />
       <input ref={picker} type="file" accept="image/jpeg,image/png,image/webp" hidden onChange={(e) => choose(e.target.files?.[0])} />

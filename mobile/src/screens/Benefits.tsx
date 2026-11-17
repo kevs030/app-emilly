@@ -16,7 +16,7 @@ export function Benefits() {
   }, [hash]);
 
   return (
-    <Screen title={t("benefits")} back>
+    <Screen title={t("benefits")} back help="benefits">
       <p className="text-[15px] text-ink-soft">{t("benefitsLead")}</p>
       <Link to="/simulator" className="btn btn-secondary mt-3">
         <Calculator size={20} aria-hidden /> {t("simulator")}
