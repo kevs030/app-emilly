@@ -1,21 +1,25 @@
-import { ChevronLeft, CircleHelp, Eye, EyeOff } from "lucide-react";
+import { ArrowLeft, CircleHelp, Eye, EyeOff } from "lucide-react";
 import { useId, useState, type InputHTMLAttributes, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLang } from "~/lib/lang";
-import { helpHidden, ScreenHelp, setHelpHidden, type HelpId } from "./ScreenHelp";
+import { HELP, helpHidden, ScreenHelp, setHelpHidden, type HelpId } from "./ScreenHelp";
+import { Illustration } from "./Illustration";
 
 /** Piezas comunes del sistema de diseño. Las pantallas se construyen con estas, no con estilos sueltos. */
 
 export function Logo({ size = 44 }: { size?: number }) {
+  // Casa de A Posto: el mismo dibujo que en la web (public/logo-aposto.svg).
   return (
     <svg width={size} height={size} viewBox="0 0 64 64" role="img" aria-label="A Posto">
-      <rect width="64" height="64" rx="18" fill="#A65D3D" />
-      <path d="M18 33.5l9.5 9.5L46 23" fill="none" stroke="#fff" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="41" y="11" width="7" height="13" rx="2" fill="#A65337" />
+      <path d="M15.5 28v23.5a4 4 0 0 0 4 4h25a4 4 0 0 0 4-4V28" fill="none" stroke="#A65337" strokeWidth="6" strokeLinejoin="round" />
+      <path d="M25.5 55.5V43a6.5 6.5 0 0 1 13 0v12.5z" fill="#D9A65E" />
+      <path d="M8 31 32 10l24 21" fill="none" stroke="#A65337" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
 
-export function Screen({ title, back, help, children }: { title?: string; back?: boolean; help?: HelpId; children: ReactNode }) {
+export function Screen({ title, back, help, banner = true, children }: { title?: string; back?: boolean; help?: HelpId; banner?: boolean; children: ReactNode }) {
   const navigate = useNavigate();
   const { t } = useLang();
   // «Cómo funciona»: abierta la primera vez; luego se abre con el botón «?».
@@ -31,7 +35,7 @@ export function Screen({ title, back, help, children }: { title?: string; back?:
         <header className="mb-4 flex min-h-11 items-center gap-1">
           {back && (
             <button type="button" onClick={() => navigate(-1)} aria-label={t("back")} className="-ml-2 flex h-11 w-11 items-center justify-center rounded-full text-brown">
-              <ChevronLeft size={26} className="rtl:rotate-180" aria-hidden />
+              <ArrowLeft size={24} className="rtl:rotate-180" aria-hidden />
             </button>
           )}
           {title && <h1 className="min-w-0 flex-1 text-2xl font-bold tracking-tight">{title}</h1>}
@@ -43,6 +47,8 @@ export function Screen({ title, back, help, children }: { title?: string; back?:
         </header>
       )}
       {help && helpOpen && <ScreenHelp id={help} onClose={() => toggleHelp(false)} />}
+      {/* Cada sección tiene su ilustración (personas y lugares de Italia); con la ayuda abierta ya se ve dentro de ella. */}
+      {help && banner && !helpOpen && <Illustration name={HELP[help]} className="mb-5 !aspect-[16/7] object-cover" />}
       {children}
     </div>
   );

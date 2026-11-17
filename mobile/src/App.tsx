@@ -106,9 +106,8 @@ function Private({ guestOk = false }: { guestOk?: boolean }) {
               {tabs.map((tab) => (
                 <li key={tab.to} className="flex-1">
                   <NavLink to={tab.to} end={tab.end} className={({ isActive }) => `group flex min-h-14 flex-col items-center justify-center gap-0.5 pt-1.5 text-[12px] ${isActive ? "font-bold text-terracotta-deep" : "font-medium text-ink-soft"}`}>
-                    {/* Pestaña activa: icono sobre una pastilla terracota suave */}
-                    <span className="flex h-8 w-14 items-center justify-center rounded-full transition-colors group-aria-[current=page]:bg-[var(--ap-terracotta-soft)]">
-                      <tab.icon size={22} aria-hidden />
+                    <span className="flex h-8 items-center justify-center">
+                      <tab.icon size={24} strokeWidth={2} aria-hidden />
                     </span>
                     {tab.label}
                   </NavLink>

@@ -4,7 +4,8 @@ import Link from "next/link";
 import { ChevronDown, Download, Search, ShieldCheck } from "lucide-react";
 import "./globals.css";
 import { getLang } from "@/lib/lang";
-import { t } from "@/lib/i18n";
+import { t, tr } from "@/lib/i18n";
+import { guides } from "@/content/guides";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import { BottomNav } from "@/components/BottomNav";
 import { Logo } from "@/components/Icons";
@@ -34,8 +35,10 @@ const FOOT = {
     who: "Quiénes somos",
     docs: "Formularios oficiales",
     install: "Descargar la app",
+    allGuides: "Ver todos los trámites",
     info: "Información",
     search: "Buscar un trámite",
+    searchShort: "Buscar…",
     offices: "Oficinas",
     privacy: "Privacidad",
   },
@@ -46,8 +49,10 @@ const FOOT = {
     who: "About us",
     docs: "Official forms",
     install: "Get the app",
+    allGuides: "See all procedures",
     info: "Information",
     search: "Search a procedure",
+    searchShort: "Search…",
     offices: "Offices",
     privacy: "Privacy",
   },
@@ -58,8 +63,10 @@ const FOOT = {
     who: "Chi siamo",
     docs: "Moduli ufficiali",
     install: "Scarica l'app",
+    allGuides: "Vedi tutte le pratiche",
     info: "Informazioni",
     search: "Cerca una pratica",
+    searchShort: "Cerca…",
     offices: "Uffici",
     privacy: "Privacy",
   },
@@ -72,6 +79,20 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     { href: "/guias", label: t("navGuides", lang) },
     { href: "/ayudas", label: t("navBonus", lang) },
     { href: "/mapa", label: f.offices },
+  ];
+  const menus = [
+    {
+      label: t("navBonus", lang),
+      items: [
+        { href: "/ayudas", label: t("navBonus", lang) },
+        { href: "/mapa", label: f.offices },
+        { href: "/contactos", label: t("navDirectory", lang) },
+      ],
+    },
+    {
+      label: t("navGuides", lang),
+      items: [...guides.slice(0, 5).map((g) => ({ href: `/guias/${g.slug}`, label: tr(g.title, lang) })), { href: "/guias", label: f.allGuides }],
+    },
   ];
   const info = [
     { href: "/documentos", label: f.docs },
@@ -89,40 +110,38 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
               <Logo /> A Posto
             </Link>
             <nav className="hidden items-center gap-1 text-[15px] md:flex" aria-label="Secciones">
-              {nav.slice(0, 3).map((n) => (
-                <Link key={n.href} href={n.href} className="nav-link">
-                  {n.label}
-                </Link>
+              {/* Menús desplegables sin JavaScript, accesibles con teclado */}
+              {[...menus, { label: f.info, items: info }].map((m) => (
+                <details key={m.label} className="nav-menu relative">
+                  <summary className="nav-link flex cursor-pointer list-none items-center gap-1">
+                    {m.label} <ChevronDown size={16} aria-hidden />
+                  </summary>
+                  <ul className="card absolute start-0 top-full z-10 mt-2 w-64 space-y-0.5 !p-2">
+                    {m.items.map((n) => (
+                      <li key={n.href}>
+                        <Link href={n.href} className="nav-link block">
+                          {n.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
               ))}
-              {/* Menú «Información»: sin JavaScript, accesible con teclado */}
-              <details className="nav-menu relative">
-                <summary className="nav-link flex cursor-pointer list-none items-center gap-1">
-                  {f.info} <ChevronDown size={16} aria-hidden />
-                </summary>
-                <ul className="card absolute start-0 top-full mt-2 w-56 space-y-0.5 p-2">
-                  {info.map((n) => (
-                    <li key={n.href}>
-                      <Link href={n.href} className="nav-link block">
-                        {n.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </details>
             </nav>
             <form action="/guias" role="search" className="ml-auto hidden lg:block">
               <label className="relative block">
                 <span className="sr-only">{f.search}</span>
                 <Search size={17} className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-muted" aria-hidden />
-                <input type="search" name="q" maxLength={60} placeholder={f.search} className="input !min-h-10 w-52 !ps-9 text-sm" />
+                <input type="search" name="q" maxLength={60} placeholder={f.searchShort} className="input !min-h-10 w-44 !ps-9 text-sm" />
               </label>
             </form>
             <div className="ml-auto flex items-center gap-2 text-sm lg:ml-0">
               <LangSwitcher current={lang} />
-              <Link href="/descargar" aria-label={f.install} className="btn !min-h-10 whitespace-nowrap !px-3.5 text-sm">
-                <Download size={16} aria-hidden />
-                <span className="hidden sm:inline">{f.install}</span>
-              </Link>
+              <span className="md:hidden">
+                <Link href="/descargar" aria-label={f.install} className="btn !min-h-10 whitespace-nowrap !px-3.5 text-sm">
+                  <Download size={16} aria-hidden />
+                </Link>
+              </span>
             </div>
           </div>
           {/* Móvil y tableta: buscador y accesos que no caben arriba */}

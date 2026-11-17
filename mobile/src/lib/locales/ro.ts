@@ -361,6 +361,8 @@ export const ro: Locale = {
   langsAvailable: "Disponibil în 9 limbi",
   // Portada, contraseña guardada y huella
   emailLinkSignIn: "E-mailul tău este confirmat. Intră cu e-mailul și parola.",
+  emailPh: "E-mailul tău",
+  passwordPh: "Parola ta",
   welcomeTitle: "Bun venit!",
   peopleAlt: "Ilustrație: oameni de origini diferite, împreună și ținându-se de mână, salutând în mai multe limbi.",
   pwSaveHint: "Telefonul îți va propune să salvezi parola pentru data viitoare.",

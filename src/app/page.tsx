@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, BadgeCheck, BookUser, CalendarCheck, Download, FileDown, FileText, HandCoins, Lock, MapPin, PlayCircle, ShieldAlert, Wallet } from "lucide-react";
+import { ArrowRight, BadgeCheck, BookUser, CalendarCheck, Download, FileDown, FileText, HandCoins, Lock, MapPin, PlayCircle, ShieldAlert, Video, Wallet } from "lucide-react";
 import { getLang } from "@/lib/lang";
 import { t, tr } from "@/lib/i18n";
 import { guides } from "@/content/guides";
@@ -16,6 +16,8 @@ const H = {
     en: "Residence permit, tax code, healthcare, benefits and more. We explain what to do, which documents to bring and where to go.",
     it: "Permesso di soggiorno, codice fiscale, sanità, bonus e altro: cosa fare, quali documenti portare e dove andare.",
   },
+  downloadShort: { es: "Descargar la app", en: "Download the app", it: "Scarica l'app" },
+  heroAlt: { es: "Una pareja sonríe en una plaza de Milán, con el Duomo detrás.", en: "A couple smiling in a square in Milan, with the Duomo behind them.", it: "Una coppia sorride in una piazza di Milano, con il Duomo alle spalle." },
   download: { es: "Descargar la app para Android", en: "Download the Android app", it: "Scarica l'app per Android" },
   guides: { es: "Ver los trámites", en: "See the procedures", it: "Vedi le pratiche" },
   centers: { es: "Las oficinas que vas a necesitar", en: "The offices you will need", it: "Gli uffici di cui avrai bisogno" },
@@ -65,44 +67,116 @@ export default async function Home() {
     { href: "/mapa", icon: MapPin, label: t("navMap", lang) },
     { href: "/documentos", icon: FileDown, label: lang === "en" ? "Official forms" : lang === "it" ? "Moduli ufficiali" : "Formularios" },
     { href: "/ayudas", icon: HandCoins, label: t("navBonus", lang) },
-    { href: "/videos", icon: PlayCircle, label: t("navVideos", lang) },
+    { href: "/videos", icon: Video, label: t("navVideos", lang) },
     { href: "/contactos", icon: BookUser, label: t("navDirectory", lang) },
   ];
   return (
     <div className="space-y-12">
-      <section className="hero -mx-4 -mt-6 px-4 py-12 sm:mx-0 sm:mt-0 sm:rounded-3xl sm:px-10 sm:py-16">
-        <div className="relative max-w-2xl">
-          <p className="fade-up hero-kicker">{tr(H.kicker, lang)}</p>
-          <h1 className="fade-up mt-4 text-4xl font-bold leading-tight tracking-tight sm:text-5xl" style={{ animationDelay: "80ms" }}>
-            {tr(H.title, lang)}
-          </h1>
-          <p className="fade-up hero-sub mt-4 text-lg" style={{ animationDelay: "160ms" }}>
-            {tr(H.sub, lang)}
-          </p>
-          <div className="fade-up mt-6 flex flex-wrap gap-3" style={{ animationDelay: "240ms" }}>
-            {/* La app es independiente: se instala en el teléfono. La web solo informa y ofrece la descarga. */}
-            <Link href="/descargar" className="btn btn-hero">
-              <Download size={18} aria-hidden /> {tr(H.download, lang)}
-            </Link>
-            <Link href="/guias" className="btn btn-hero-outline">
-              <FileText size={18} aria-hidden /> {tr(H.guides, lang)}
-            </Link>
+      {/* Portada: texto a la izquierda y, a la derecha, personas reales en Italia (el Duomo de Milán detrás) */}
+      <section className="hero -mx-4 -mt-6 sm:mx-0 sm:mt-0 sm:rounded-[28px]">
+        <div className="relative grid items-center md:grid-cols-[1.05fr_1fr]">
+          <div className="px-5 pb-6 pt-10 sm:px-10 md:py-14">
+            <h1 className="fade-up text-[2.6rem] font-extrabold leading-[1.05] tracking-tight sm:text-6xl">{tr(H.title, lang)}</h1>
+            <p className="fade-up hero-sub mt-5 max-w-xl text-lg" style={{ animationDelay: "80ms" }}>
+              {tr(H.sub, lang)}
+            </p>
+            <div className="fade-up mt-7 flex flex-col items-start gap-3" style={{ animationDelay: "160ms" }}>
+              <Link href="/descargar" className="btn btn-hero">
+                <Download size={18} aria-hidden /> {tr(H.download, lang)}
+              </Link>
+              <Link href="/guias" className="btn btn-hero-outline">
+                <FileText size={18} aria-hidden /> {tr(H.guides, lang)}
+              </Link>
+            </div>
+          </div>
+          <div className="hero-photo relative h-72 sm:h-96 md:h-full md:min-h-[460px]">
+            <img
+              src="/ill/pareja-960.webp"
+              srcSet="/ill/pareja-960.webp 960w, /ill/pareja-1344.webp 1344w"
+              sizes="(min-width: 768px) 50vw, 100vw"
+              width={1344}
+              height={768}
+              alt={tr(H.heroAlt, lang)}
+              fetchPriority="high"
+              className="absolute inset-0 h-full w-full object-cover object-[60%_30%]"
+            />
           </div>
         </div>
+        {/* Borde ondulado inferior, como una colina */}
+        <svg className="hero-wave" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden>
+          <path d="M0 40 C 200 0, 400 70, 650 30 S 1050 10, 1200 35 V60 H0 Z" />
+        </svg>
       </section>
 
-      <section className="grid gap-3 sm:grid-cols-4">
-        {TRUST.map((x, i) => (
-          <Reveal key={x.es} delay={i * 70}>
-            <div className="card h-full">
-              <span className="icon-tile">
-                <x.icon size={22} aria-hidden />
-              </span>
-              <p className="mt-3 font-semibold">{x[lang]}</p>
-              <p className="mt-1 text-sm text-muted">{x.d[lang]}</p>
+      <section className="grid gap-4 lg:grid-cols-[1.25fr_1fr]">
+        <ul className="grid grid-cols-3 gap-3">
+          {tools.map((x, i) => (
+            <Reveal key={x.href} delay={i * 40}>
+              <li className="h-full">
+                <Link href={x.href} className="card card-link flex h-full min-h-28 flex-col items-center justify-center gap-2 text-center">
+                  <span className="duo">
+                    <x.icon size={34} strokeWidth={1.75} aria-hidden />
+                  </span>
+                  <span className="text-sm font-semibold">{x.label}</span>
+                </Link>
+              </li>
+            </Reveal>
+          ))}
+        </ul>
+        <Reveal>
+          <section className="app-card relative flex h-full min-h-56 overflow-hidden rounded-[20px] p-6 text-white">
+            <div className="relative z-10 max-w-[58%] sm:max-w-[60%]">
+              <h2 className="text-2xl font-bold leading-tight">{tr(H.appTitle, lang)}</h2>
+              <p className="mt-2 text-sm text-white/90">{tr(H.appSub, lang)}</p>
+              <Link href="/descargar" className="btn mt-5 !border-white !bg-white !text-[var(--ap-sage-dark)] hover:!bg-[var(--ap-cream)]">
+                <Download size={18} aria-hidden /> {tr(H.downloadShort, lang)}
+              </Link>
             </div>
-          </Reveal>
-        ))}
+            <img src="/ill/movil-480.webp" width={480} height={480} alt="" loading="lazy" className="app-card-phone absolute -bottom-6 -right-8 w-[44%] max-w-[230px]" />
+          </section>
+        </Reveal>
+      </section>
+
+      <Reveal>
+        <Link href="/guias/decreto-flussi" className="card-link flex items-center gap-4 rounded-[20px] border border-accent/60 bg-warn-bg p-5 text-warn-fg">
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-accent bg-card text-brand">
+            <ShieldAlert size={24} aria-hidden />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block text-lg font-bold text-foreground">{tr(H.scamTitle, lang)}</span>
+            <span className="mt-1 block text-sm">{tr(H.scam, lang)}</span>
+          </span>
+          <ArrowRight size={22} className="shrink-0 text-brand rtl:rotate-180" aria-hidden />
+        </Link>
+      </Reveal>
+
+      <section>
+        <h2 className="text-2xl font-bold tracking-tight">{tr(H.how, lang)}</h2>
+        <div className="mt-4 grid items-center gap-6 md:grid-cols-2">
+          <img src="/ill/laptop-960.webp" srcSet="/ill/laptop-640.webp 640w, /ill/laptop-960.webp 960w" sizes="(min-width: 768px) 50vw, 100vw" width={1344} height={768} alt="" loading="lazy" className="w-full rounded-[24px] border border-border" />
+          <ol className="space-y-5">
+            {STEPS.map((s, i) => (
+              <li key={s.es} className="flex gap-4">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand text-lg font-bold text-on-brand">{i + 1}</span>
+                <span>
+                  <span className="block font-semibold">{s[lang]}</span>
+                  <span className="mt-1 block text-sm text-muted">{s.d[lang]}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <details className="card mt-5">
+          <summary className="flex min-h-11 cursor-pointer items-center gap-2 font-semibold text-brand">
+            <PlayCircle size={20} aria-hidden /> {tr(H.video, lang)}
+          </summary>
+          <figure className="mt-3 grid justify-items-center">
+            {/* No se descarga hasta que se pulsa «reproducir»: ahorra datos. */}
+            <video src="/video/tutorial-es.mp4" poster="/video/tutorial-es.jpg" controls playsInline preload="none" width={300} height={649} className="w-[min(300px,100%)] rounded-3xl border border-border bg-black">
+              <track kind="captions" src="/video/tutorial-es.vtt" srcLang="es" label="Español" />
+            </video>
+          </figure>
+        </details>
       </section>
 
       <section>
@@ -123,6 +197,7 @@ export default async function Home() {
           ))}
         </div>
       </section>
+
 
       <section aria-labelledby="centers-title">
         <h2 id="centers-title" className="text-2xl font-bold tracking-tight">{tr(H.centers, lang)}</h2>
@@ -159,63 +234,20 @@ export default async function Home() {
         <p className="mt-2 text-xs text-muted">{tr(H.photoNote, lang)}</p>
       </section>
 
-      <section>
-        <h2 className="text-2xl font-bold tracking-tight">{tr(H.tools, lang)}</h2>
-        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-6">
-          {tools.map((x, i) => (
-            <Reveal key={x.href} delay={i * 50}>
-              <Link href={x.href} className="card card-link flex h-full flex-col items-center gap-2 text-center">
-                <span className="icon-tile">
-                  <x.icon size={22} aria-hidden />
-                </span>
-                <span className="text-sm font-medium">{x.label}</span>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
+      <section className="grid gap-3 sm:grid-cols-4">
+        {TRUST.map((x, i) => (
+          <Reveal key={x.es} delay={i * 70}>
+            <div className="card h-full">
+              <span className="icon-tile">
+                <x.icon size={22} aria-hidden />
+              </span>
+              <p className="mt-3 font-semibold">{x[lang]}</p>
+              <p className="mt-1 text-sm text-muted">{x.d[lang]}</p>
+            </div>
+          </Reveal>
+        ))}
       </section>
 
-      <Reveal>
-        <section className="flex gap-3 rounded-[20px] border border-accent/50 bg-warn-bg p-5 text-warn-fg">
-          <ShieldAlert size={26} className="mt-0.5 shrink-0" aria-hidden />
-          <div>
-            <h2 className="font-bold">{tr(H.scamTitle, lang)}</h2>
-            <p className="mt-1 text-sm">{tr(H.scam, lang)}</p>
-          </div>
-        </section>
-      </Reveal>
-
-      <section>
-        <h2 className="text-2xl font-bold tracking-tight">{tr(H.how, lang)}</h2>
-        <figure className="mt-4 grid justify-items-center gap-2">
-          {/* No se descarga hasta que se pulsa «reproducir»: ahorra datos. */}
-          <video src="/video/tutorial-es.mp4" poster="/video/tutorial-es.jpg" controls playsInline preload="none" width={300} height={649} className="w-[min(300px,100%)] rounded-3xl border border-border bg-black shadow-sm">
-            <track kind="captions" src="/video/tutorial-es.vtt" srcLang="es" label="Español" />
-          </video>
-          <figcaption className="text-center text-sm text-muted">{tr(H.video, lang)}</figcaption>
-        </figure>
-        <ol className="mt-4 grid gap-3 sm:grid-cols-3">
-          {STEPS.map((s, i) => (
-            <Reveal key={s.es} delay={i * 90}>
-              <li className="card h-full">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand font-bold text-on-brand">{i + 1}</span>
-                <p className="mt-3 font-semibold">{s[lang]}</p>
-                <p className="mt-1 text-sm text-muted">{s.d[lang]}</p>
-              </li>
-            </Reveal>
-          ))}
-        </ol>
-      </section>
-
-      <Reveal>
-        <section className="hero rounded-3xl border px-6 py-10 sm:px-10">
-          <h2 className="text-2xl font-bold tracking-tight">{tr(H.appTitle, lang)}</h2>
-          <p className="hero-sub mt-2 max-w-2xl">{tr(H.appSub, lang)}</p>
-          <Link href="/descargar" className="btn btn-hero mt-5">
-            <Download size={18} aria-hidden /> {tr(H.download, lang)}
-          </Link>
-        </section>
-      </Reveal>
 
       <AdSlot placement="home" lang={lang} />
     </div>

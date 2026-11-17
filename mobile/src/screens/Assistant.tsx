@@ -108,7 +108,7 @@ export function Assistant() {
   const out = credits === 0;
 
   return (
-    <Screen title={t("tabAssistant")} help="assistant">
+    <Screen title={t("tabAssistant")} help="assistant" banner={false}>
       <div className="flex flex-1 flex-col gap-4">
         <div className="flex items-start gap-2 rounded-2xl bg-sage-soft p-3 text-[14px]">
           <Bot size={20} className="mt-0.5 shrink-0 text-sage-dark" aria-hidden />

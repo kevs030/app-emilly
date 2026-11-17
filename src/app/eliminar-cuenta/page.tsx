@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PageArt } from "@/components/PageArt";
 import { Trash2 } from "lucide-react";
 import { APP } from "@/config/app";
 import { getLang } from "@/lib/lang";
@@ -58,6 +59,7 @@ export default async function DeleteAccountPage() {
   const s = T[await getLang()];
   return (
     <article className="max-w-2xl space-y-5">
+      <PageArt name="privacidad" priority />
       <span className="icon-tile">
         <Trash2 size={22} aria-hidden />
       </span>

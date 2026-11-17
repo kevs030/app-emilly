@@ -361,6 +361,8 @@ export const bn: Locale = {
   langsAvailable: "৯টি ভাষায় পাওয়া যায়",
   // Portada, contraseña guardada y huella
   emailLinkSignIn: "আপনার ইমেইল নিশ্চিত হয়েছে। ইমেইল ও পাসওয়ার্ড দিয়ে প্রবেশ করুন।",
+  emailPh: "আপনার ইমেইল",
+  passwordPh: "আপনার পাসওয়ার্ড",
   welcomeTitle: "স্বাগতম!",
   peopleAlt: "চিত্র: বিভিন্ন দেশের মানুষ, একসাথে হাত ধরে, নানা ভাষায় শুভেচ্ছা জানাচ্ছে।",
   pwSaveHint: "পরের বারের জন্য আপনার ফোন পাসওয়ার্ড সংরক্ষণ করার প্রস্তাব দেবে।",

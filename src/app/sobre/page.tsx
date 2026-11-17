@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PageArt } from "@/components/PageArt";
 import { BadgeCheck, Bot, CalendarCheck, HandCoins, Lock, ShieldAlert } from "lucide-react";
 import { getLang } from "@/lib/lang";
 
@@ -49,6 +50,7 @@ export default async function AboutPage() {
   const s = T[await getLang()];
   return (
     <div className="space-y-6">
+      <PageArt name="bienvenida" priority />
       <header>
         <h1 className="text-3xl font-bold tracking-tight">{s.title}</h1>
         <p className="mt-2 max-w-2xl text-muted">{s.intro}</p>

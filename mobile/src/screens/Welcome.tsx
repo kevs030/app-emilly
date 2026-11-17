@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useLang } from "~/lib/lang";
 import { openedFromEmailLink } from "~/lib/supabase";
 import { UI_LANGS, type UiLang } from "~/lib/strings";
-import { Illustration } from "~/ui/Illustration";
+import { Illustration, Landscape } from "~/ui/Illustration";
 import { Logo } from "~/ui/kit";
 import { TutorialVideo } from "~/ui/TutorialVideo";
 import { AuthForm, type AuthMode } from "./Auth";
@@ -39,20 +39,21 @@ export function Welcome() {
       </header>
 
       <section className="card mt-6 space-y-5" aria-label={mode === "signup" ? t("signUp") : t("signIn")}>
-        <div className="segmented" role="group">
+        {/* Crear cuenta / Entrar: uno encima del otro; el elegido va en terracota */}
+        <div className="grid gap-3" role="group">
           {(
             [
               ["signup", UserPlus, "signUp"],
               ["signin", LogIn, "signIn"],
             ] as const
           ).map(([m, Icon, label]) => (
-            <button key={m} type="button" aria-pressed={mode === m} onClick={() => setMode(m)}>
-              <Icon size={18} aria-hidden /> {t(label)}
+            <button key={m} type="button" aria-pressed={mode === m} onClick={() => setMode(m)} className={mode === m ? "btn" : "btn btn-secondary"}>
+              <Icon size={20} aria-hidden /> {t(label)}
             </button>
           ))}
         </div>
         {openedFromEmailLink && (
-          <p role="status" className="rounded-xl bg-beige px-4 py-3 font-medium">
+          <p role="status" className="alert alert-ok font-medium">
             {t("emailLinkSignIn")}
           </p>
         )}
@@ -87,6 +88,7 @@ export function Welcome() {
         </ul>
       </section>
 
+      <Landscape className="mt-6 -mx-5 w-[calc(100%+2.5rem)] max-w-none" />
       <div className="py-4">
         <Link to="/privacy" className="flex min-h-11 items-center justify-center text-[14px] font-medium text-brown underline">
           {t("privacyPolicy")}

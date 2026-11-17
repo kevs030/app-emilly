@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PageArt } from "@/components/PageArt";
 import Link from "next/link";
 import { getLang } from "@/lib/lang";
 import { tr } from "@/lib/i18n";
@@ -23,6 +24,7 @@ export default async function DocumentsPage() {
   const lang = await getLang();
   return (
     <div className="space-y-6">
+      <PageArt name="documentos" priority />
       <header>
         <h1 className="text-3xl font-bold tracking-tight">{tr(L.title, lang)}</h1>
         <p className="mt-2 max-w-2xl text-muted">{tr(L.intro, lang)}</p>

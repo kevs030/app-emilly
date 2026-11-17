@@ -44,12 +44,12 @@ export function setHelpHidden(id: HelpId, hidden: boolean) {
 export function ScreenHelp({ id, onClose }: { id: HelpId; onClose: () => void }) {
   const { t } = useLang();
   const rows = [
-    { icon: Compass, label: t("helpWhat"), text: t(`help_${id}_what` as StringKey) },
-    { icon: Hand, label: t("helpHow"), text: t(`help_${id}_how` as StringKey) },
-    { icon: ShieldAlert, label: t("helpImportant"), text: t(`help_${id}_imp` as StringKey) },
+    { icon: Compass, label: t("helpWhat"), text: t(`help_${id}_what` as StringKey), dot: "bg-sage-dark" },
+    { icon: Hand, label: t("helpHow"), text: t(`help_${id}_how` as StringKey), dot: "bg-sage-dark" },
+    { icon: ShieldAlert, label: t("helpImportant"), text: t(`help_${id}_imp` as StringKey), dot: "bg-terracotta-deep" },
   ];
   return (
-    <section className="help-card rise mb-5 space-y-4 rounded-3xl border border-beige bg-white p-4" aria-labelledby={`help-${id}`}>
+    <section className="help-card rise mb-5 space-y-4 rounded-[24px] border border-line bg-white p-4 shadow-[var(--ap-shadow-card)]" aria-labelledby={`help-${id}`}>
       <Illustration name={HELP[id]} />
       <h2 id={`help-${id}`} className="text-lg font-bold">
         {t("helpTitle")}
@@ -57,17 +57,17 @@ export function ScreenHelp({ id, onClose }: { id: HelpId; onClose: () => void })
       <ul className="space-y-3">
         {rows.map((r) => (
           <li key={r.label} className="flex items-start gap-3">
-            <span className="icon-tile" style={{ width: 40, height: 40, borderRadius: 12 }}>
+            <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-white ${r.dot}`}>
               <r.icon size={20} aria-hidden />
             </span>
             <span className="min-w-0 flex-1">
-              <span className="block text-[13px] font-semibold uppercase tracking-wide text-ink-soft">{r.label}</span>
-              <span className="block text-[15px]">{r.text}</span>
+              <span className="block text-[13px] font-bold uppercase tracking-wide text-ink">{r.label}</span>
+              <span className="block text-[15px] text-ink-soft">{r.text}</span>
             </span>
           </li>
         ))}
       </ul>
-      <button type="button" className="btn btn-secondary" onClick={onClose}>
+      <button type="button" className="btn" onClick={onClose}>
         {t("helpGotIt")}
       </button>
     </section>

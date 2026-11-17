@@ -1,4 +1,4 @@
-import { ArrowRight, Bell, BellRing, Calculator, CalendarDays, FolderLock, IdCard, ScanText, CircleCheckBig, Clock, HandCoins, ListChecks, MapPin, MessageCircle, Search, Sparkles, Sprout, UserRound, Users } from "lucide-react";
+import { ArrowRight, Bell, BellRing, Calculator, CalendarDays, FolderLock, IdCard, ScanText, CircleCheckBig, Clock, HandCoins, ListChecks, MapPin, MessageCircle, Scale, Search, Sparkles, Sprout, UserRound, Users } from "lucide-react";
 import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { getGuide, guides } from "@/content/guides";
@@ -8,6 +8,7 @@ import { usePersonal, type Procedure } from "~/lib/personal";
 import type { StringKey } from "~/lib/strings";
 import { Alert, Field, Screen } from "~/ui/kit";
 import { AddReminder, ReminderRow } from "~/ui/Reminders";
+import { Landscape } from "~/ui/Illustration";
 import { startDone } from "./Start";
 import { tourSeen } from "./Tour";
 import { SponsorBanner } from "~/ui/SponsorBanner";
@@ -92,7 +93,15 @@ export function Home() {
   return (
     <Screen>
       <div className="rise space-y-6">
-        <h1 className="pt-2 text-[28px] font-bold leading-tight tracking-tight">{profile?.display_name ? `${t("hello")}, ${profile.display_name}` : t("helloNoName")}</h1>
+        <header className="flex items-center gap-3 pt-2">
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-gold bg-gold-soft text-xl font-bold text-terracotta-hover" aria-hidden>
+            {(profile?.display_name?.trim()[0] ?? "").toUpperCase() || <UserRound size={24} />}
+          </span>
+          <h1 className="min-w-0 flex-1 text-[26px] font-bold leading-tight tracking-tight">{profile?.display_name ? `${t("hello")}, ${profile.display_name}` : t("helloNoName")}</h1>
+          <Link to="/notifications" aria-label={t("notifications")} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-terracotta-deep">
+            <BellRing size={24} aria-hidden />
+          </Link>
+        </header>
 
         {/* Perfil gradual: solo pedimos el nombre, y solo si falta. */}
         {profile && !profile.display_name && (
@@ -109,7 +118,7 @@ export function Home() {
         {!startDone(user?.id) && (
           <Link to="/start" className="card flex items-center gap-3 border-gold/60 bg-gold-soft">
             <span className="icon-tile" style={{ background: "var(--white)" }}>
-              <Sparkles size={22} aria-hidden />
+              <Scale size={22} aria-hidden />
             </span>
             <span className="min-w-0 flex-1">
               <span className="block font-semibold">{t("startCard")}</span>
@@ -129,8 +138,8 @@ export function Home() {
             {SHORTCUTS.map((s) => {
               const inner = (
                 <>
-                  <span className="icon-tile">
-                    <s.icon size={22} aria-hidden />
+                  <span className="duo">
+                    <s.icon size={34} strokeWidth={1.75} aria-hidden />
                   </span>
                   <span className="text-[13px] font-medium leading-tight">{t(s.label)}</span>
                 </>
@@ -306,6 +315,8 @@ export function Home() {
             </ul>
           </section>
         )}
+        {/* Paisaje italiano al final del inicio: decorativo */}
+        <Landscape className="-mx-5 -mb-6 w-[calc(100%+2.5rem)] max-w-none" />
       </div>
     </Screen>
   );

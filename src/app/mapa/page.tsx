@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PageArt } from "@/components/PageArt";
 import { getLang } from "@/lib/lang";
 import { OfficeMapLoader } from "@/components/OfficeMapLoader";
 
@@ -27,6 +28,7 @@ export default async function MapPage() {
   const s = T[lang];
   return (
     <div className="space-y-4">
+      <PageArt name="mapa" priority />
       <header>
         <h1 className="text-3xl font-bold tracking-tight">{s.title}</h1>
         <p className="mt-2 max-w-2xl text-muted">{s.intro}</p>

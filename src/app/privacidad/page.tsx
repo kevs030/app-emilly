@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { PageArt } from "@/components/PageArt";
 import { PrivacyContent } from "@/components/PrivacyContent";
 import { privacyLabels } from "@/content/legal";
 import { tr } from "@/lib/i18n";
@@ -11,6 +12,7 @@ export default async function PrivacyPage() {
   const lang = await getLang();
   return (
     <article className="max-w-3xl space-y-4">
+      <PageArt name="privacidad" priority />
       <h1 className="text-3xl font-bold tracking-tight">{tr(privacyLabels.title, lang)}</h1>
       <PrivacyContent lang={lang} />
     </article>

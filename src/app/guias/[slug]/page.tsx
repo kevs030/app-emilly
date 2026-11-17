@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { GUIDE_ART, PageArt } from "@/components/PageArt";
 import Link from "next/link";
 import { getLang } from "@/lib/lang";
 import { t, tr } from "@/lib/i18n";
@@ -24,6 +25,7 @@ export default async function GuidePage(props: PageProps<"/guias/[slug]">) {
 
   return (
     <article className="space-y-5">
+      {GUIDE_ART[guide.slug] && <PageArt name={GUIDE_ART[guide.slug]} priority />}
       <Link href="/guias" className="text-sm text-brand">
         ← {t("navGuides", lang)}
       </Link>

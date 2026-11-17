@@ -225,6 +225,9 @@ body {
   background: var(--background-alt);
   border-bottom: 1px solid var(--border);
 }
+.hero::before {
+  content: none;
+}
 .hero::after {
   /* Detalle dorado discreto, como el sol de las ilustraciones */
   content: "";
@@ -236,6 +239,48 @@ body {
   border-radius: 9999px;
   background: radial-gradient(circle, color-mix(in srgb, var(--accent) 35%, transparent), transparent 70%);
   pointer-events: none;
+}
+.hero {
+  padding-bottom: 0;
+}
+.hero-photo img {
+  /* La foto se funde con el fondo crema por la izquierda (escritorio) o por arriba (móvil) */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%);
+}
+@media (min-width: 768px) {
+  .hero-photo img {
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 28%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 28%);
+  }
+}
+.hero-wave {
+  position: absolute;
+  inset-inline: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 34px;
+  fill: var(--background);
+  pointer-events: none;
+}
+/* Tarjeta verde «Lleva todo esto en tu teléfono» */
+.app-card {
+  background: var(--ap-sage-dark);
+}
+/* El dibujo del teléfono se funde con el verde de la tarjeta (sin recuadro) */
+.app-card-phone {
+  -webkit-mask-image: radial-gradient(ellipse 62% 62% at 58% 55%, #000 62%, transparent 78%);
+  mask-image: radial-gradient(ellipse 62% 62% at 58% 55%, #000 62%, transparent 78%);
+}
+/* Iconos a dos tonos: trazo verde oscuro y relleno salvia suave (igual que en la app) */
+.duo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sage-strong);
+}
+.duo svg {
+  fill: color-mix(in srgb, var(--ap-sage) 42%, var(--ap-surface));
 }
 .hero-kicker {
   @apply inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-semibold;

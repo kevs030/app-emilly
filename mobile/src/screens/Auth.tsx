@@ -149,8 +149,8 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
 
       {method === "email" ? (
         <form onSubmit={submitEmail} className="space-y-4" noValidate>
-          <Field label={t("email")} type="email" autoComplete="username" inputMode="email" autoCapitalize="none" required value={email} onChange={(e) => setEmail(e.target.value)} />
-          <PasswordField label={t("password")} autoComplete={mode === "signup" ? "new-password" : "current-password"} required value={password} onChange={(e) => setPassword(e.target.value)} />
+          <Field label={t("email")} placeholder={t("emailPh")} type="email" autoComplete="username" inputMode="email" autoCapitalize="none" required value={email} onChange={(e) => setEmail(e.target.value)} />
+          <PasswordField label={t("password")} placeholder={t("passwordPh")} autoComplete={mode === "signup" ? "new-password" : "current-password"} required value={password} onChange={(e) => setPassword(e.target.value)} />
           <p className="hint -mt-2">{t("pwSaveHint")}</p>
           {mode === "signup" && (
             <>

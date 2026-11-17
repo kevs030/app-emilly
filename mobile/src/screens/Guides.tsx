@@ -27,6 +27,17 @@ function Tick({ on, label, onClick }: { on: boolean; label: string; onClick: () 
   );
 }
 
+/** Foto de la oficina principal de cada trámite (las mismas que en la web). */
+const OFFICE_PHOTO: Record<string, string> = {
+  "permesso-di-soggiorno": "questura",
+  "codice-fiscale": "inps",
+  "sanidad-tessera-sanitaria": "sanidad",
+  "residencia-anagrafica": "comune",
+  "decreto-flussi": "patronato",
+  ciudadania: "comune",
+  "articolo-31": "questura",
+};
+
 export function Guides() {
   const { t, c } = useLang();
   return (
@@ -85,6 +96,17 @@ export function GuideDetail() {
     <Screen back>
       <article className="rise space-y-5">
         <header>
+          {OFFICE_PHOTO[guide.slug] && (
+            <img
+              src={`${import.meta.env.BASE_URL}centros/${OFFICE_PHOTO[guide.slug]}-960.webp`}
+              srcSet={`${import.meta.env.BASE_URL}centros/${OFFICE_PHOTO[guide.slug]}-640.webp 640w, ${import.meta.env.BASE_URL}centros/${OFFICE_PHOTO[guide.slug]}-960.webp 960w`}
+              sizes="(max-width: 480px) 100vw, 448px"
+              width={1344}
+              height={768}
+              alt=""
+              className="mb-4 aspect-[16/8] w-full rounded-[24px] border border-line object-cover"
+            />
+          )}
           <h1 className="text-[26px] font-bold leading-tight tracking-tight">{c(guide.title)}</h1>
           <p className="mt-2 text-ink-soft">{c(guide.summary)}</p>
           {contentFallback && <p className="mt-3 rounded-2xl bg-beige p-3 text-[14px]">{t("notTranslated")}</p>}

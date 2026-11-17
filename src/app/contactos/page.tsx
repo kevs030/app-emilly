@@ -1,4 +1,5 @@
 import { getLang } from "@/lib/lang";
+import { PageArt } from "@/components/PageArt";
 import { t, tr } from "@/lib/i18n";
 import { directory, directoryCategories } from "@/content/directory";
 
@@ -17,6 +18,7 @@ export default async function DirectoryPage() {
   const cats = Object.entries(directoryCategories).filter(([k]) => directory.some((d) => d.category === k && d.verified));
   return (
     <div className="space-y-6">
+      <PageArt name="patronato" priority />
       <h1 className="text-2xl font-bold">{t("navDirectory", lang)}</h1>
       {cats.map(([key, label]) => (
         <section key={key}>

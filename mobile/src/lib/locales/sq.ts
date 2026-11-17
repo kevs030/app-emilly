@@ -361,6 +361,8 @@ export const sq: Locale = {
   langsAvailable: "Në dispozicion në 9 gjuhë",
   // Portada, contraseña guardada y huella
   emailLinkSignIn: "Email-i juaj u konfirmua. Hyni me email-in dhe fjalëkalimin.",
+  emailPh: "Email-i juaj",
+  passwordPh: "Fjalëkalimi juaj",
   welcomeTitle: "Mirë se vini!",
   peopleAlt: "Ilustrim: njerëz me prejardhje të ndryshme, bashkë dhe dorë për dore, që përshëndesin në disa gjuhë.",
   pwSaveHint: "Telefoni do t'ju ofrojë ta ruani fjalëkalimin për herën tjetër.",

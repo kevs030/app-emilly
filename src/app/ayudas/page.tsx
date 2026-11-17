@@ -1,4 +1,5 @@
 import { getLang } from "@/lib/lang";
+import { PageArt } from "@/components/PageArt";
 import { t, tr } from "@/lib/i18n";
 import { bonuses } from "@/content/bonuses";
 import { Sources, Verified } from "@/components/Common";
@@ -18,6 +19,7 @@ export default async function BonusPage() {
   const lang = await getLang();
   return (
     <div className="space-y-4">
+      <PageArt name="ayudas" priority />
       <h1 className="text-2xl font-bold">{t("navBonus", lang)}</h1>
       <p className="rounded-lg bg-brand-soft p-3 text-sm">💡 {tr(L.tip, lang)}</p>
       {bonuses.map((b) => (

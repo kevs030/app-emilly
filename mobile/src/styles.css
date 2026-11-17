@@ -205,19 +205,32 @@ body {
   background: var(--sage-soft);
   color: var(--sage);
 }
+/* Iconos a dos tonos (accesos del inicio): trazo verde oscuro y relleno salvia suave */
+.duo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sage-dark);
+}
+.duo svg {
+  fill: color-mix(in srgb, var(--ap-sage) 42%, var(--ap-surface));
+}
+.duo svg :is(path, rect, circle)[fill="none"] {
+  fill: none;
+}
+/* Selector de dos o tres opciones (Correo / Celular…): botones separados con borde; el elegido en terracota */
 .segmented {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4px;
-  padding: 4px;
-  border-radius: 16px;
-  background: var(--beige);
+  gap: 10px;
 }
 .segmented button {
-  min-height: 44px;
-  border-radius: 12px;
+  min-height: 48px;
+  border-radius: var(--ap-radius-button);
+  border: 1.5px solid var(--line);
+  background: var(--white);
   font-weight: 600;
-  color: var(--ink-soft);
+  color: var(--ink);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -228,9 +241,9 @@ body {
 }
 .segmented button[aria-pressed="true"],
 .segmented button[aria-selected="true"] {
-  background: var(--white);
+  border-color: var(--terracotta-deep);
+  background: var(--ap-terracotta-soft);
   color: var(--terracotta-hover);
-  box-shadow: 0 1px 3px rgb(48 43 39 / 0.12);
 }
 .progress {
   height: 10px;

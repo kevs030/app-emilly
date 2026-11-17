@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PageArt } from "@/components/PageArt";
 import { SearchX } from "lucide-react";
 import { getLang } from "@/lib/lang";
 import { t, tr } from "@/lib/i18n";
@@ -28,7 +29,8 @@ export default async function GuidesPage({ searchParams }: { searchParams: Promi
     : guides;
   return (
     <div>
-      <h1 className="text-3xl font-bold tracking-tight">{t("navGuides", lang)}</h1>
+      <PageArt name="tramites" priority />
+      <h1 className="mt-5 text-3xl font-bold tracking-tight">{t("navGuides", lang)}</h1>
       {q && (
         <p className="mt-2 text-muted" role="status">
           {tr(L.results, lang)} «{q}»: {list.length}
