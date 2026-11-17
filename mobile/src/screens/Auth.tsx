@@ -1,5 +1,6 @@
 import { Check, Mail, Smartphone } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { suggestEmail } from "~/lib/emailTypos";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "~/auth/AuthProvider";
 import { useLang } from "~/lib/lang";
@@ -43,6 +44,14 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [info, setInfo] = useState("");
+  // Espera antes de poder pedir otro correo (Supabase admite uno cada 60 s)
+  const [wait, setWait] = useState(0);
+  useEffect(() => {
+    if (wait <= 0) return;
+    const id = setTimeout(() => setWait((w) => w - 1), 1000);
+    return () => clearTimeout(id);
+  }, [wait]);
+  const suggestion = method === "email" ? suggestEmail(email) : null;
 
   const issues = passwordIssues(password);
   const captcha = useCaptcha();
@@ -67,6 +76,7 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
       setBusy(false);
       // Misma respuesta exista o no la cuenta: así nadie puede averiguar qué correos están registrados.
       if (error && error.status !== 422) return fail(error.message, error.status);
+      setWait(60);
       setStep("email-sent");
     } else {
       const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password, options: { captchaToken: captcha.token } });
@@ -98,6 +108,7 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
   async function resendEmail() {
     setInfo("");
     const { error } = await supabase.auth.resend({ type: "signup", email: email.trim(), options: { emailRedirectTo: redirectUrl("/") } });
+    setWait(60);
     if (error) return fail(error.message, error.status);
     setInfo(t("checkEmailBody"));
   }
@@ -110,14 +121,32 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
         </span>
         <h1 className="text-2xl font-bold">{t("checkEmailTitle")}</h1>
         <p className="text-ink-soft">{t("checkEmailBody")}</p>
-        <p className="font-semibold">{email}</p>
+        <p className="break-all rounded-xl border border-line bg-white px-4 py-3 text-lg font-semibold">{email}</p>
         {error && <Alert kind="error">{error}</Alert>}
         {info && <Alert kind="ok">{info}</Alert>}
-        <button type="button" className="btn btn-secondary" onClick={resendEmail}>
-          {t("resend")}
+        <section className="alert alert-info space-y-1.5" aria-labelledby="not-arrived">
+          <h2 id="not-arrived" className="font-bold">
+            {t("notArrivedTitle")}
+          </h2>
+          <p>• {t("notArrived1")}</p>
+          <p className="break-words">• {t("notArrived2")}</p>
+          <p>• {t("notArrived3")}</p>
+        </section>
+        <button type="button" className="btn btn-secondary" onClick={resendEmail} disabled={wait > 0}>
+          {wait > 0 ? `${t("resendIn")} ${wait} s` : t("resend")}
         </button>
         <button type="button" className="btn btn-quiet" onClick={() => setStep("form")}>
-          {t("back")}
+          {t("wrongEmail")}
+        </button>
+        <button
+          type="button"
+          className="btn btn-quiet"
+          onClick={() => {
+            setMode("signin");
+            setStep("form");
+          }}
+        >
+          {t("alreadyConfirmed")}
         </button>
       </div>
     );
@@ -150,6 +179,16 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
       {method === "email" ? (
         <form onSubmit={submitEmail} className="space-y-4" noValidate>
           <Field label={t("email")} placeholder={t("emailPh")} type="email" autoComplete="username" inputMode="email" autoCapitalize="none" required value={email} onChange={(e) => setEmail(e.target.value)} />
+          {suggestion && (
+            <p className="alert alert-info flex flex-wrap items-center gap-x-2" role="status">
+              <span className="min-w-0 break-all">
+                {t("didYouMean")} <strong>{suggestion}</strong>?
+              </span>
+              <button type="button" className="min-h-11 font-semibold text-terracotta-hover underline" onClick={() => setEmail(suggestion)}>
+                {t("useThis")}
+              </button>
+            </p>
+          )}
           <PasswordField label={t("password")} placeholder={t("passwordPh")} autoComplete={mode === "signup" ? "new-password" : "current-password"} required value={password} onChange={(e) => setPassword(e.target.value)} />
           <p className="hint -mt-2">{t("pwSaveHint")}</p>
           {mode === "signup" && (
