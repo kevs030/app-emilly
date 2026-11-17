@@ -5,7 +5,7 @@ import { useAuth } from "~/auth/AuthProvider";
 import { useLang } from "~/lib/lang";
 import { UI_LANGS, type StringKey, type UiLang } from "~/lib/strings";
 import { startDone } from "./Start";
-import { PeopleTogether, SceneAssistant, SceneDates, SceneGuides, ScenePrivacy } from "~/ui/People";
+import { Illustration, type IllustrationName } from "~/ui/Illustration";
 
 /** Guarda en este dispositivo que la persona ya vio la guía de uso (una vez por cuenta). */
 const seenKey = (uid: string) => `aposto:tour:${uid}`;
@@ -27,22 +27,22 @@ function markSeen(uid: string | undefined) {
 }
 
 type Step = {
-  scene: typeof PeopleTogether;
+  scene: IllustrationName;
   title: StringKey;
   body: StringKey;
   items?: { icon: LucideIcon; text: StringKey; to: string }[];
 };
 
 const STEPS: Step[] = [
-  { scene: PeopleTogether, title: "tour1Title", body: "tour1Body" },
+  { scene: "bienvenida", title: "tour1Title", body: "tour1Body" },
   {
-    scene: SceneGuides,
+    scene: "tramites",
     title: "tour2Title",
     body: "tour2Body",
     items: [{ icon: ListChecks, text: "tour2Try", to: "/guides" }],
   },
   {
-    scene: SceneAssistant,
+    scene: "asistente",
     title: "tour3Title",
     body: "tour3Body",
     items: [
@@ -51,7 +51,7 @@ const STEPS: Step[] = [
     ],
   },
   {
-    scene: SceneDates,
+    scene: "citas",
     title: "tour4Title",
     body: "tour4Body",
     items: [
@@ -59,7 +59,7 @@ const STEPS: Step[] = [
       { icon: MapPin, text: "tour4TryMap", to: "/map" },
     ],
   },
-  { scene: ScenePrivacy, title: "tour5Title", body: "tour5Body" },
+  { scene: "privacidad", title: "tour5Title", body: "tour5Body" },
 ];
 
 /** Guía de primer uso: qué hace la app y por dónde empezar. Se puede volver a abrir desde el perfil. */
@@ -95,7 +95,7 @@ export function Tour() {
       </div>
 
       <div key={i} className="rise flex flex-1 flex-col py-6">
-        <step.scene label={t(step.title)} />
+        <Illustration name={step.scene} eager />
         <h1 className="mt-5 text-[28px] font-bold leading-tight tracking-tight">{t(step.title)}</h1>
         <p className="mt-3 text-lg text-ink-soft">{t(step.body)}</p>
 

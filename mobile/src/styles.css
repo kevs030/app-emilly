@@ -216,149 +216,16 @@ body {
 .rise {
   animation: rise 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
-/* Ilustraciones (ui/People.tsx). Movimiento suave; se apaga con «reducir movimiento». */
-.ppl {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 26px;
+/* Ilustraciones (ui/Illustration.tsx): aparecen con suavidad; nada se mueve si se pide «reducir movimiento». */
+.ill {
+  aspect-ratio: 1344 / 768;
+  max-width: 100%;
+  background: var(--beige);
+  animation: ill-in 0.6s ease-out both;
 }
-.ppl [class^="ppl-"] {
-  transform-box: fill-box;
-}
-.ppl-head {
-  transform-origin: 50% 100%;
-  animation: ppl-nod 4.2s ease-in-out infinite;
-}
-.ppl-blink {
-  transform-origin: 50% 50%;
-  animation: ppl-blink 5s infinite;
-}
-.ppl-wave {
-  transform-origin: 0% 100%;
-  animation: ppl-wave 1.6s ease-in-out infinite;
-}
-.ppl-walk {
-  animation: ppl-bob 0.9s ease-in-out infinite;
-}
-.ppl-leg-a,
-.ppl-leg-b {
-  transform-origin: 50% 0%;
-  animation: ppl-step 0.9s ease-in-out infinite;
-}
-.ppl-leg-b {
-  animation-direction: reverse;
-}
-.ppl-heart {
-  transform-origin: 50% 50%;
-  animation: ppl-float 4s ease-in-out infinite;
-}
-.ppl-pop {
-  transform-origin: 50% 100%;
-  animation: ppl-pop 6s ease-in-out infinite;
-}
-.ppl-cloud {
-  animation: ppl-drift 24s linear infinite;
-}
-.ppl-sun {
-  transform-origin: 50% 50%;
-  animation: ppl-spin 30s linear infinite;
-}
-.ppl-flag {
-  transform-origin: 0% 50%;
-  animation: ppl-flag 1.4s ease-in-out infinite;
-}
-.ppl-tick {
-  stroke-dasharray: 24;
-  animation: ppl-tick 5s ease-in-out infinite;
-}
-.ppl-letter {
-  transform-origin: 50% 100%;
-  animation: ppl-tilt 3s ease-in-out infinite;
-}
-.ppl-dash {
-  animation: ppl-dash 1.2s linear infinite;
-}
-.ppl-ring,
-.ppl-shield {
-  transform-origin: 50% 50%;
-  animation: ppl-pulse 2.4s ease-in-out infinite;
-}
-.ppl-bell {
-  transform-origin: 50% 0%;
-  animation: ppl-bell 2.4s ease-in-out infinite;
-}
-.ppl-pin {
-  animation: ppl-bounce 1.6s ease-in-out infinite;
-}
-@keyframes ppl-nod {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  30% { transform: translateY(-3px) rotate(-3deg); }
-  60% { transform: translateY(0) rotate(2deg); }
-}
-@keyframes ppl-blink {
-  0%, 92%, 100% { transform: scaleY(1); }
-  95% { transform: scaleY(0.1); }
-}
-@keyframes ppl-wave {
-  0%, 100% { transform: rotate(-6deg); }
-  50% { transform: rotate(10deg); }
-}
-@keyframes ppl-bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
-}
-@keyframes ppl-step {
-  0%, 100% { transform: rotate(-12deg); }
-  50% { transform: rotate(12deg); }
-}
-@keyframes ppl-float {
-  0% { transform: translateY(6px) scale(0.8); opacity: 0; }
-  30% { opacity: 1; }
-  100% { transform: translateY(-26px) scale(1.15); opacity: 0; }
-}
-@keyframes ppl-pop {
-  0%, 4% { transform: scale(0.4); opacity: 0; }
-  12%, 70% { transform: scale(1); opacity: 1; }
-  80%, 100% { transform: scale(0.9); opacity: 0; }
-}
-@keyframes ppl-drift {
-  0% { transform: translateX(-40px); }
-  50% { transform: translateX(40px); }
-  100% { transform: translateX(-40px); }
-}
-@keyframes ppl-spin {
-  to { transform: rotate(360deg); }
-}
-@keyframes ppl-flag {
-  0%, 100% { transform: skewY(0deg); }
-  50% { transform: skewY(-8deg); }
-}
-@keyframes ppl-tick {
-  0%, 10% { stroke-dashoffset: 24; }
-  25%, 85% { stroke-dashoffset: 0; }
-  100% { stroke-dashoffset: 24; }
-}
-@keyframes ppl-tilt {
-  0%, 100% { transform: rotate(-3deg); }
-  50% { transform: rotate(3deg); }
-}
-@keyframes ppl-dash {
-  to { stroke-dashoffset: -12; }
-}
-@keyframes ppl-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.08); }
-}
-@keyframes ppl-bell {
-  0%, 60%, 100% { transform: rotate(0deg); }
-  70% { transform: rotate(16deg); }
-  80% { transform: rotate(-14deg); }
-  90% { transform: rotate(8deg); }
-}
-@keyframes ppl-bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+@keyframes ill-in {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {

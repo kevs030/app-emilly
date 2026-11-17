@@ -7,7 +7,7 @@ import { useLang } from "~/lib/lang";
 import { usePersonal } from "~/lib/personal";
 import { recommend, suggestBenefits, type PlanAnswers } from "~/lib/plan";
 import { Alert, Field } from "~/ui/kit";
-import { SceneGuides } from "~/ui/People";
+import { Illustration } from "~/ui/Illustration";
 import { PERMITS } from "./MyFile";
 
 /** Guarda en este dispositivo que la persona ya hizo (o aplazó) el cuestionario inicial. */
@@ -95,7 +95,7 @@ export function Start() {
       <div key={step} className="rise flex flex-1 flex-col py-5">
         {step === 0 && (
           <>
-            <SceneGuides label={t("startTitle")} />
+            <Illustration name="tramites" eager />
             <h1 className="mt-5 text-[28px] font-bold leading-tight tracking-tight">{t("startTitle")}</h1>
             <p className="mt-3 text-lg text-ink-soft">{t("startBody")}</p>
           </>

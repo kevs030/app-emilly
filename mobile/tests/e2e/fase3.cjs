@@ -32,7 +32,8 @@ let p;
 
   // Portada: bienvenida arriba y, debajo, la tarjeta para crear cuenta o entrar
   check("portada: dice «¡Bienvenido/a!»", (await p.locator("h1").innerText()) === "¡Bienvenido/a!");
-  check("portada: ilustración con descripción para lectores de pantalla", (await p.locator('svg.ppl[role="img"]').getAttribute("aria-label")).includes("personas"));
+  await p.waitForFunction(() => { const i = document.querySelector("img.ill"); return i && i.complete && i.naturalWidth > 0; }, null, { timeout: 8000 }).catch(() => {});
+  check("portada: ilustración con descripción para lectores de pantalla", (await p.locator('img.ill').first().getAttribute("alt")).includes("personas") && (await p.locator('img.ill').first().evaluate((i) => i.complete && i.naturalWidth > 0)));
   check("portada: formulario de registro visible sin pasar a otra pantalla", (await p.locator('input[type=email]').count()) === 1 && (await p.locator('input[type=password]').count()) === 1);
   check("portada: correo y contraseña preparados para que el teléfono guarde la contraseña", (await p.locator('input[type=email]').getAttribute("autocomplete")) === "username" && (await p.locator('input[type=password]').getAttribute("autocomplete")) === "new-password");
   check("portada: aviso de que el teléfono ofrecerá guardar la contraseña", (await p.locator("text=guardar la contraseña").count()) === 1);
@@ -58,7 +59,7 @@ let p;
   await p.click('ul[aria-label] button:has-text("Español")'); await p.waitForTimeout(300);
   { await p.waitForTimeout(400); const sm = await small(); check("guía: botones de 44 px o más", sm.length === 0, sm.join(" | ")); }
 
-  check("guía: cada paso tiene su ilustración", (await p.locator("svg.ppl").count()) === 1);
+  check("guía: cada paso tiene su ilustración", (await p.locator("img.ill").count()) === 1);
   const titles = [];
   for (let n = 0; n < 4; n++) { await p.click('button.btn:has-text("Siguiente")'); await p.waitForTimeout(150); titles.push(await p.locator("h1").innerText()); }
   check("guía: 5 pasos con título", titles.length === 4 && titles.every((x) => x.length > 0), titles.join(" | "));
@@ -70,7 +71,7 @@ let p;
   await p.click('button.btn:has-text("Siguiente")'); await p.click('button.btn:has-text("Empezar")');
   await p.waitForSelector("text=Cuéntanos tu situación");
   check("«Empezar» abre el cuestionario de situación", path() === "/start");
-  check("cuestionario: a pantalla completa y con ilustración", (await p.locator('nav[aria-label="Principal"]').count()) === 0 && (await p.locator("svg.ppl").count()) === 1);
+  check("cuestionario: a pantalla completa y con ilustración", (await p.locator('nav[aria-label="Principal"]').count()) === 0 && (await p.locator("img.ill").count()) === 1);
 
   // «Ahora no»: se aplaza, el inicio lo ofrece con una tarjeta
   await p.click('button:has-text("Ahora no")'); await p.waitForSelector("text=Hola, Ana");

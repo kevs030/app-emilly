@@ -6,7 +6,7 @@ import { biometricAsked, biometricAvailable, biometricEnabled, biometricUnlock, 
 import { useLang } from "~/lib/lang";
 import { isNative, supabase } from "~/lib/supabase";
 import { Alert } from "./kit";
-import { PeopleTogether } from "./People";
+import { Illustration } from "./Illustration";
 
 /**
  * Solo en el teléfono:
@@ -138,7 +138,7 @@ function Gate({ children }: { children: ReactNode }) {
   const { t } = useLang();
   return (
     <div className="safe-top safe-bottom mx-auto flex min-h-full max-w-md flex-col items-center justify-center px-6 text-center">
-      <PeopleTogether className="max-w-[300px]" label={t("peopleAlt")} />
+      <Illustration name="bienvenida" alt={t("peopleAlt")} className="max-w-[300px]" eager />
       {children}
     </div>
   );

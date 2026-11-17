@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLang } from "~/lib/lang";
 import { UI_LANGS, type UiLang } from "~/lib/strings";
-import { PeopleTogether } from "~/ui/People";
+import { Illustration } from "~/ui/Illustration";
 import { AuthForm, type AuthMode } from "./Auth";
 
 /**
@@ -27,7 +27,7 @@ export function Welcome() {
       </div>
 
       <header className="rise pt-2 text-center">
-        <PeopleTogether className="mx-auto max-w-[340px]" label={t("peopleAlt")} />
+        <Illustration name="bienvenida" alt={t("peopleAlt")} className="mx-auto max-w-[340px]" eager />
         <h1 className="mt-3 text-[32px] font-bold leading-tight tracking-tight">{t("welcomeTitle")}</h1>
         <p className="mt-2 text-lg text-ink-soft">{t("tagline")}</p>
       </header>
