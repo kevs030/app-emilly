@@ -1,4 +1,4 @@
-import { ArrowRight, Check, CircleCheckBig, ExternalLink, FileDown, TriangleAlert } from "lucide-react";
+import { ArrowRight, BadgeCheck, Check, CircleCheckBig, ExternalLink, FileDown, FolderCheck, ListOrdered, TriangleAlert } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { documentsFor } from "@/content/documents";
@@ -115,7 +115,7 @@ export function GuideDetail() {
 
         {proc && pr && (
           <section className="card">
-            <p className="flex items-center gap-2 text-[14px] font-semibold text-[#3d5238]">
+            <p className="flex items-center gap-2 text-[14px] font-semibold text-sage-dark">
               {proc.status === "done" ? <CircleCheckBig size={18} aria-hidden /> : null}
               {proc.status === "done" ? `${t("finishedOn")} ${new Date(proc.completed_at ?? proc.updated_at).toLocaleDateString()}` : t("inProgress")}
             </p>
@@ -130,7 +130,9 @@ export function GuideDetail() {
         )}
 
         <section className="card">
-          <h2 className="text-lg font-bold">{t("steps")}</h2>
+          <h2 className="flex items-center gap-2 text-lg font-bold">
+            <ListOrdered size={20} className="text-sage" aria-hidden /> {t("steps")}
+          </h2>
           <ol className="mt-3 space-y-4">
             {guide.steps.map((s, i) => (
               <li key={i} className="flex gap-3">
@@ -152,7 +154,9 @@ export function GuideDetail() {
         </section>
 
         <section className="card">
-          <h2 className="text-lg font-bold">{t("documents")}</h2>
+          <h2 className="flex items-center gap-2 text-lg font-bold">
+            <FolderCheck size={20} className="text-sage" aria-hidden /> {t("documents")}
+          </h2>
           {tracking && proc ? (
             <ul className="mt-3 space-y-3 text-[15px]">
               {guide.documents.map((d, i) => (
@@ -190,14 +194,16 @@ export function GuideDetail() {
 
         {docs.length > 0 && (
           <section className="card">
-            <h2 className="text-lg font-bold">{t("forms")}</h2>
+            <h2 className="flex items-center gap-2 text-lg font-bold">
+              <FileDown size={20} className="text-sage" aria-hidden /> {t("forms")}
+            </h2>
             <ul className="mt-3 space-y-3">
               {docs.map((d) => (
                 <li key={d.id}>
-                  <a href={d.url} target="_blank" rel="noopener noreferrer" onClick={() => log("document_open", guide.slug)} className="flex items-center gap-3 rounded-2xl bg-cream p-3">
+                  <a href={d.url} target="_blank" rel="noopener noreferrer" onClick={() => log("document_open", guide.slug)} className="flex min-h-14 items-center gap-3 rounded-2xl border border-line bg-cream p-3">
                     <span className="icon-tile">{d.kind === "pdf" ? <FileDown size={20} aria-hidden /> : <ExternalLink size={20} aria-hidden />}</span>
                     <span className="min-w-0 flex-1">
-                      <span className="block text-[15px] font-semibold">{c(d.title)}</span>
+                      <span className="block text-[15px] font-semibold text-terracotta-hover">{c(d.title)}</span>
                       <span className="block text-[13px] text-ink-soft">{d.issuer}</span>
                     </span>
                   </a>
@@ -222,8 +228,8 @@ export function GuideDetail() {
         )}
 
         {guide.warnings?.map((w, i) => (
-          <p key={i} className="flex gap-3 rounded-2xl bg-beige p-4 text-[15px]">
-            <TriangleAlert size={20} className="mt-0.5 shrink-0 text-terracotta-deep" aria-hidden />
+          <p key={i} className="flex gap-3 rounded-2xl border-s-4 border-gold bg-info p-4 text-[15px] text-info-ink">
+            <TriangleAlert size={20} className="mt-0.5 shrink-0" aria-hidden />
             <span>{c(w)}</span>
           </p>
         ))}
@@ -233,17 +239,19 @@ export function GuideDetail() {
           <ul className="mt-2 space-y-2 text-[15px]">
             {guide.sources.map((s) => (
               <li key={s.url}>
-                <a href={s.url} target="_blank" rel="noopener noreferrer" className="text-brown underline">
+                <a href={s.url} target="_blank" rel="noopener noreferrer" className="text-terracotta-hover underline underline-offset-2">
                   {s.title}
                 </a>
-                {s.official && <span className="ml-2 rounded-full bg-sage-soft px-2 py-0.5 text-[12px] font-semibold text-[#3d5238]">{t("official")}</span>}
+                {s.official && <span className="tag ms-2">
+                    <BadgeCheck size={13} aria-hidden /> {t("official")}
+                  </span>}
               </li>
             ))}
           </ul>
           <p className="hint mt-3">
             {t("checkedOn")} {guide.lastVerified}
           </p>
-          {isStale(guide.lastVerified) && <p className="mt-2 rounded-xl bg-beige p-3 text-[14px]">{t("stale")}</p>}
+          {isStale(guide.lastVerified) && <p className="alert alert-info mt-2 text-[14px]">{t("stale")}</p>}
         </section>
         {proc && (
           <section className="space-y-2">

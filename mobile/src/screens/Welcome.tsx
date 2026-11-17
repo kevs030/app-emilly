@@ -5,6 +5,7 @@ import { useLang } from "~/lib/lang";
 import { openedFromEmailLink } from "~/lib/supabase";
 import { UI_LANGS, type UiLang } from "~/lib/strings";
 import { Illustration } from "~/ui/Illustration";
+import { Logo } from "~/ui/kit";
 import { TutorialVideo } from "~/ui/TutorialVideo";
 import { AuthForm, type AuthMode } from "./Auth";
 
@@ -18,8 +19,11 @@ export function Welcome() {
   const [mode, setMode] = useState<AuthMode>(openedFromEmailLink ? "signin" : "signup");
   return (
     <div className="safe-top safe-bottom mx-auto flex min-h-full max-w-md flex-col px-5">
-      <div className="flex justify-end pt-1">
-        <select aria-label={t("language")} className="rounded-xl bg-beige px-3 py-2 text-[15px] font-medium" value={lang} onChange={(e) => setLang(e.target.value as UiLang)}>
+      <div className="flex items-center justify-between gap-3 pt-1">
+        <span className="flex items-center gap-2 text-lg font-bold tracking-tight">
+          <Logo size={32} /> A Posto
+        </span>
+        <select aria-label={t("language")} className="min-h-11 rounded-xl border border-line bg-white px-3 text-[15px] font-medium" value={lang} onChange={(e) => setLang(e.target.value as UiLang)}>
           {UI_LANGS.map((l) => (
             <option key={l.code} value={l.code}>
               {l.name}

@@ -165,14 +165,14 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
                 ).map(([issue, key]) => {
                   const ok = password.length > 0 && !issues.includes(issue);
                   return (
-                    <li key={issue} className={`flex items-center gap-2 ${ok ? "text-[#3d5238]" : "text-ink-soft"}`}>
+                    <li key={issue} className={`flex items-center gap-2 ${ok ? "text-sage-dark" : "text-ink-soft"}`}>
                       <Check size={16} className={ok ? "opacity-100" : "opacity-30"} aria-hidden /> {t(key)}
                     </li>
                   );
                 })}
               </ul>
               <label className="flex items-start gap-3 text-[15px]">
-                <input type="checkbox" required className="mt-1 h-5 w-5 accent-[#A65D3D]" />{" "}
+                <input type="checkbox" required className="mt-1 h-5 w-5 accent-terracotta-deep" />{" "}
                 <span>
                   {t("age")}{" "}
                   <Link to="/privacy" className="font-semibold text-brown underline">
@@ -212,7 +212,7 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
           <Field label={t("phoneNumber")} type="tel" inputMode="tel" autoComplete="tel-national" required value={national} onChange={(e) => setNational(e.target.value)} />
           {mode === "signup" && (
             <label className="flex items-start gap-3 text-[15px]">
-              <input type="checkbox" required className="mt-1 h-5 w-5 accent-[#A65D3D]" />{" "}
+              <input type="checkbox" required className="mt-1 h-5 w-5 accent-terracotta-deep" />{" "}
               <span>
                 {t("age")}{" "}
                 <Link to="/privacy" className="font-semibold text-brown underline">

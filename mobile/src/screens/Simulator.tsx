@@ -24,7 +24,7 @@ const ISEE: [IseeBand, string | null][] = [
   ["unknown", null],
 ];
 const LOOK: Record<Verdict, { icon: typeof CircleHelp; label: StringKey; cls: string }> = {
-  possible: { icon: CircleCheckBig, label: "simPossible", cls: "bg-sage-soft text-[#3d5238]" },
+  possible: { icon: CircleCheckBig, label: "simPossible", cls: "bg-sage-soft text-sage-dark" },
   check: { icon: CircleHelp, label: "simCheck", cls: "bg-beige text-brown" },
   unlikely: { icon: CircleX, label: "simUnlikely", cls: "bg-white text-ink-soft" },
 };

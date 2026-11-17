@@ -1,0 +1,47 @@
+/*
+ * A Posto · Identidad «Mediterráneo Cálido»
+ * Fuente ÚNICA de colores, radios y sombras. La importan la web (src/app/globals.css)
+ * y la app (mobile/src/styles.css). Cambia un valor aquí y cambia en las dos.
+ *
+ * Contraste comprobado (WCAG 2.1):
+ *   texto blanco sobre terracota 5,4:1 · terracota sobre crema 4,8:1 · texto secundario sobre crema 4,7:1
+ *   iconos salvia sobre salvia suave 3,4:1 (iconos: mínimo 3:1)
+ *   Sobre beige: usar --ap-ink-soft-strong (5,2:1) y --ap-terracotta-hover (5,9:1) para texto pequeño.
+ *   El dorado es solo decorativo: nunca para texto.
+ */
+:root {
+  /* Principales */
+  --ap-cream: #f7f2e9; /* fondo general */
+  --ap-surface: #fffdf9; /* tarjetas y superficies */
+  --ap-terracotta: #a65337; /* botones principales y enlaces */
+  --ap-sage: #78866b; /* iconos y elementos secundarios */
+  --ap-gold: #d9a65e; /* detalles y destacados (decorativo) */
+  --ap-ink: #302b27; /* texto principal */
+
+  /* Complementarios */
+  --ap-terracotta-hover: #88412d;
+  --ap-sage-dark: #586747; /* elementos activos y texto verde */
+  --ap-beige: #efe5d7; /* fondos alternativos */
+  --ap-border: #e8ded1;
+  --ap-ink-soft: #746a60; /* texto secundario */
+  --ap-info: #f7e8d5; /* alertas informativas */
+
+  /* Derivados (estados y accesibilidad) */
+  --ap-terracotta-soft: #f4e3db;
+  --ap-sage-soft: #edf0e8;
+  --ap-gold-soft: #f6ead6;
+  --ap-ink-soft-strong: #665c53;
+  --ap-info-ink: #6b4a1f;
+  --ap-danger: #a3392b;
+  --ap-danger-soft: #f8e4df;
+  --ap-on-primary: #ffffff;
+
+  /* Forma */
+  --ap-radius-card: 20px;
+  --ap-radius-button: 14px;
+  --ap-radius-input: 12px;
+  --ap-shadow-card: 0 4px 14px rgb(48 43 39 / 0.07);
+  --ap-shadow-raised: 0 10px 24px rgb(48 43 39 / 0.1);
+  --ap-focus-ring: 0 0 0 3px rgb(166 83 55 / 0.22);
+  --ap-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}

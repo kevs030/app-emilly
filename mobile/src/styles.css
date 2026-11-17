@@ -3,37 +3,55 @@
 /* Componentes compartidos con la web */
 @source "../../src/components/PrivacyContent.tsx";
 
+/* Identidad «Mediterráneo Cálido»: los valores vienen de la fuente compartida con la web. */
+@import "../../src/styles/tokens.css";
+
 /*
- * Sistema de diseño de A Posto (móvil). Paleta cálida.
- * Todas las pantallas usan estos tokens y las clases de abajo; no se definen colores sueltos.
+ * Sistema de diseño de A Posto (móvil). Los nombres de siempre apuntan a los tokens compartidos;
+ * todas las pantallas usan estos tokens y las clases de abajo, sin colores sueltos.
  */
 :root {
-  --cream: #f7f2ea; /* fondo */
-  --beige: #ede2d3; /* superficies secundarias, bordes */
-  --terracotta: #c77b59; /* acento: iconos, detalles, progreso */
-  --terracotta-deep: #a65d3d; /* botones: contraste 4,9:1 con texto blanco */
-  --brown: #795548; /* títulos secundarios, enlaces */
-  --sage: #91a58b; /* éxito, confirmaciones */
-  --sage-soft: #dce6d8; /* fondos de éxito y de ayuda */
-  --ink: #34312e; /* texto */
-  --ink-soft: #6b6560; /* texto secundario: 5,3:1 sobre crema */
-  --white: #ffffff;
-  --danger: #a3392b;
-  --danger-soft: #f8e4df;
-  --radius: 20px;
-  --shadow: 0 1px 2px rgb(52 49 46 / 0.05), 0 10px 24px -14px rgb(121 85 72 / 0.35);
+  --cream: var(--ap-cream); /* fondo */
+  --beige: var(--ap-beige); /* superficies secundarias */
+  --line: var(--ap-border); /* bordes suaves */
+  --terracotta: var(--ap-terracotta); /* acento: detalles y enlaces */
+  --terracotta-deep: var(--ap-terracotta); /* botones principales */
+  --terracotta-hover: var(--ap-terracotta-hover);
+  --brown: var(--ap-terracotta-hover); /* enlaces y títulos secundarios: 5,9:1 incluso sobre beige */
+  --sage: var(--ap-sage); /* iconos */
+  --sage-dark: var(--ap-sage-dark); /* activos y texto verde */
+  --sage-soft: var(--ap-sage-soft); /* fondos de éxito y de ayuda */
+  --gold: var(--ap-gold); /* detalles decorativos (nunca texto) */
+  --gold-soft: var(--ap-gold-soft);
+  --info: var(--ap-info);
+  --info-ink: var(--ap-info-ink);
+  --ink: var(--ap-ink); /* texto */
+  --ink-soft: var(--ap-ink-soft); /* texto secundario */
+  --white: var(--ap-surface); /* tarjetas: blanco cálido */
+  --danger: var(--ap-danger);
+  --danger-soft: var(--ap-danger-soft);
+  --radius: var(--ap-radius-card);
+  --shadow: var(--ap-shadow-card);
 }
 
 @theme inline {
   --color-cream: var(--cream);
   --color-beige: var(--beige);
+  --color-line: var(--line);
   --color-terracotta: var(--terracotta);
   --color-terracotta-deep: var(--terracotta-deep);
+  --color-terracotta-hover: var(--terracotta-hover);
   --color-brown: var(--brown);
   --color-sage: var(--sage);
+  --color-sage-dark: var(--sage-dark);
   --color-sage-soft: var(--sage-soft);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-info: var(--info);
+  --color-info-ink: var(--info-ink);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
+  --color-white: var(--white);
   --color-danger: var(--danger);
   --color-danger-soft: var(--danger-soft);
   --font-sans: ui-rounded, "SF Pro Rounded", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -64,6 +82,7 @@ body {
 /* ── Componentes ── */
 .card {
   background: var(--white);
+  border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 18px;
   box-shadow: var(--shadow);
@@ -76,14 +95,19 @@ body {
   min-height: 52px; /* objetivo táctil grande */
   width: 100%;
   padding: 0 20px;
-  border-radius: 16px;
+  border-radius: var(--ap-radius-button);
+  border: 1.5px solid transparent;
   font-weight: 650;
   font-size: 17px;
   background: var(--terracotta-deep);
-  color: var(--white);
+  color: var(--ap-on-primary);
   transition:
     transform 0.12s ease,
-    filter 0.12s ease;
+    background-color 0.12s ease;
+}
+.btn:hover:not(:disabled),
+.btn:active:not(:disabled) {
+  background: var(--terracotta-hover);
 }
 .btn:active:not(:disabled) {
   transform: scale(0.98);
@@ -91,17 +115,28 @@ body {
 .btn:disabled {
   opacity: 0.55;
 }
+/* Secundario: blanco cálido con borde terracota */
 .btn-secondary {
-  background: var(--beige);
-  color: var(--ink);
+  background: var(--white);
+  color: var(--terracotta-deep);
+  border-color: var(--terracotta-deep);
 }
-.btn-quiet {
+.btn-secondary:hover:not(:disabled),
+.btn-secondary:active:not(:disabled) {
+  background: var(--ap-terracotta-soft);
+  color: var(--terracotta-hover);
+}
+.btn-quiet,
+.btn-quiet:hover:not(:disabled),
+.btn-quiet:active:not(:disabled) {
   background: transparent;
   color: var(--brown);
   min-height: 44px;
   font-weight: 600;
 }
-.btn-danger {
+.btn-danger,
+.btn-danger:hover:not(:disabled),
+.btn-danger:active:not(:disabled) {
   background: var(--danger-soft);
   color: var(--danger);
 }
@@ -115,8 +150,8 @@ body {
   width: 100%;
   min-height: 52px;
   padding: 0 16px;
-  border-radius: 14px;
-  border: 1.5px solid var(--beige);
+  border-radius: var(--ap-radius-input);
+  border: 1.5px solid var(--line);
   background: var(--white);
   font-size: 17px; /* 16px o más: iOS no hace zoom al escribir */
   color: var(--ink);
@@ -124,7 +159,7 @@ body {
 .input:focus {
   outline: none;
   border-color: var(--terracotta);
-  box-shadow: 0 0 0 4px rgb(199 123 89 / 0.18);
+  box-shadow: var(--ap-focus-ring);
 }
 .hint {
   font-size: 14px;
@@ -141,7 +176,23 @@ body {
 }
 .alert-ok {
   background: var(--sage-soft);
-  color: #3d5238;
+  color: var(--sage-dark);
+}
+.alert-info {
+  background: var(--info);
+  color: var(--info-ink);
+}
+/* Etiqueta pequeña: «Oficial», «Gratis»… */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 650;
+  background: var(--sage-soft);
+  color: var(--sage-dark);
 }
 .icon-tile {
   display: flex;
@@ -152,7 +203,7 @@ body {
   flex-shrink: 0;
   border-radius: 14px;
   background: var(--sage-soft);
-  color: #4d6647;
+  color: var(--sage);
 }
 .segmented {
   display: grid;
@@ -178,8 +229,8 @@ body {
 .segmented button[aria-pressed="true"],
 .segmented button[aria-selected="true"] {
   background: var(--white);
-  color: var(--ink);
-  box-shadow: 0 1px 3px rgb(52 49 46 / 0.12);
+  color: var(--terracotta-hover);
+  box-shadow: 0 1px 3px rgb(48 43 39 / 0.12);
 }
 .progress {
   height: 10px;
@@ -191,7 +242,7 @@ body {
   display: block;
   height: 100%;
   border-radius: 999px;
-  background: var(--terracotta);
+  background: var(--sage-dark);
   transition: width 0.4s ease;
 }
 
@@ -214,7 +265,7 @@ body {
   }
 }
 .rise {
-  animation: rise 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: rise 0.3s var(--ap-ease) both;
 }
 /* Ilustraciones (ui/Illustration.tsx): aparecen con suavidad; nada se mueve si se pide «reducir movimiento». */
 .ill {

@@ -79,7 +79,7 @@ export function NewPassword() {
           ).map(([issue, key]) => {
             const ok = password.length > 0 && !issues.includes(issue);
             return (
-              <li key={issue} className={`flex items-center gap-2 ${ok ? "text-[#3d5238]" : "text-ink-soft"}`}>
+              <li key={issue} className={`flex items-center gap-2 ${ok ? "text-sage-dark" : "text-ink-soft"}`}>
                 <Check size={16} className={ok ? "opacity-100" : "opacity-30"} aria-hidden /> {t(key)}
               </li>
             );

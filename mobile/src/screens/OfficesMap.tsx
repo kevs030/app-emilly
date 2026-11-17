@@ -8,12 +8,12 @@ import { API_URL } from "~/lib/supabase";
 import { Alert, Screen } from "~/ui/kit";
 
 const CATEGORIES = [
-  { id: "questura", color: "#1d4ed8", name: "Questura" },
-  { id: "entrate", color: "#2f6f4f", name: "Agenzia delle Entrate" },
-  { id: "patronato", color: "#b45309", name: "Patronato / CAF" },
-  { id: "inps", color: "#6d28d9", name: "INPS" },
-  { id: "prefettura", color: "#475569", name: "Prefettura" },
-  { id: "ayuda", color: "#be185d", name: null },
+  { id: "questura", color: "#a65337", name: "Questura" },
+  { id: "entrate", color: "#586747", name: "Agenzia delle Entrate" },
+  { id: "patronato", color: "#c08a3e", name: "Patronato / CAF" },
+  { id: "inps", color: "#302b27", name: "INPS" },
+  { id: "prefettura", color: "#78866b", name: "Prefettura" },
+  { id: "ayuda", color: "#88412d", name: null },
 ] as const;
 type CatId = (typeof CATEGORIES)[number]["id"];
 

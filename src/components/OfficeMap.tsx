@@ -10,12 +10,12 @@ import { MIRRORS, overpassBody, toPoints, type OsmElement, type Point } from "@/
 type Lang = "es" | "en" | "it";
 
 export const CATEGORIES = [
-  { id: "questura", color: "#1d4ed8", es: "Questura (permisos)", en: "Questura (permits)", it: "Questura" },
-  { id: "entrate", color: "#2f6f4f", es: "Agenzia delle Entrate", en: "Agenzia delle Entrate", it: "Agenzia delle Entrate" },
-  { id: "ayuda", color: "#be185d", es: "Ayuda a migrantes", en: "Migrant support", it: "Aiuto ai migranti" },
-  { id: "patronato", color: "#b45309", es: "Patronatos y CAF (gratis)", en: "Patronati & CAF (free)", it: "Patronati e CAF" },
-  { id: "inps", color: "#6d28d9", es: "INPS", en: "INPS", it: "INPS" },
-  { id: "prefettura", color: "#475569", es: "Prefectura", en: "Prefecture", it: "Prefettura" },
+  { id: "questura", color: "#a65337", es: "Questura (permisos)", en: "Questura (permits)", it: "Questura" },
+  { id: "entrate", color: "#586747", es: "Agenzia delle Entrate", en: "Agenzia delle Entrate", it: "Agenzia delle Entrate" },
+  { id: "ayuda", color: "#88412d", es: "Ayuda a migrantes", en: "Migrant support", it: "Aiuto ai migranti" },
+  { id: "patronato", color: "#c08a3e", es: "Patronatos y CAF (gratis)", en: "Patronati & CAF (free)", it: "Patronati e CAF" },
+  { id: "inps", color: "#302b27", es: "INPS", en: "INPS", it: "INPS" },
+  { id: "prefettura", color: "#78866b", es: "Prefectura", en: "Prefecture", it: "Prefettura" },
 ] as const;
 type CatId = (typeof CATEGORIES)[number]["id"];
 

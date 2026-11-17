@@ -164,12 +164,12 @@ function StoreButton({ href, lines, soon }: { href: string; lines: string[]; soo
       </span>
     </>
   );
-  const cls = "inline-flex min-h-14 min-w-52 items-center gap-3 rounded-2xl bg-[#1f1b18] px-5 py-2 text-white";
+  const cls = "inline-flex min-h-14 min-w-52 items-center gap-3 rounded-2xl bg-[var(--ap-ink)] px-5 py-2 text-white";
   if (!href) {
     return (
       <span className={`${cls} relative opacity-70`} aria-disabled="true">
         {inner}
-        <span className="absolute -top-3 end-3 rounded-full bg-white px-2 py-0.5 text-[11px] font-bold text-[#5d4037]">{soon}</span>
+        <span className="absolute -top-3 end-3 rounded-full bg-[var(--ap-gold)] px-2 py-0.5 text-[11px] font-bold text-[var(--ap-ink)]">{soon}</span>
       </span>
     );
   }
@@ -183,7 +183,7 @@ function StoreButton({ href, lines, soon }: { href: string; lines: string[]; soo
 /** Captura real de la pantalla de inicio de la app, dentro de un marco de teléfono. */
 function PhoneMockup() {
   return (
-    <div className="mx-auto w-60 overflow-hidden rounded-[2.2rem] border-[6px] border-[#1f1b18] bg-[#f7f2ea] shadow-2xl">
+    <div className="mx-auto w-60 overflow-hidden rounded-[2.2rem] border-[6px] border-[var(--ap-ink)] bg-[var(--ap-cream)] shadow-2xl">
       <img src="/centros/app-inicio.webp" width={360} height={734} alt="" className="block h-auto w-full" />
     </div>
   );
@@ -203,13 +203,13 @@ export default async function DownloadPage({ searchParams }: { searchParams: Pro
       <section className="hero -mx-4 -mt-6 px-4 py-12 sm:mx-0 sm:mt-0 sm:rounded-3xl sm:px-10 sm:py-14">
         <div className="relative grid items-center gap-10 sm:grid-cols-[1.3fr_1fr]">
           <div>
-            <p className="fade-up inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-medium backdrop-blur">
+            <p className="fade-up hero-kicker">
               <Logo size={18} /> {s.kicker}
             </p>
             <h1 className="fade-up mt-4 text-4xl font-bold leading-tight tracking-tight sm:text-5xl" style={{ animationDelay: "80ms" }}>
               {s.title}
             </h1>
-            <p className="fade-up mt-4 text-lg text-white/90" style={{ animationDelay: "160ms" }}>
+            <p className="fade-up hero-sub mt-4 text-lg" style={{ animationDelay: "160ms" }}>
               {s.sub}
             </p>
             {apk && (
@@ -221,7 +221,7 @@ export default async function DownloadPage({ searchParams }: { searchParams: Pro
               <StoreButton href={APP.googlePlayUrl} lines={s.play} soon={s.soon} />
               <StoreButton href={APP.appStoreUrl} lines={s.store} soon={s.soon} />
             </div>
-            <p className="mt-4 text-sm text-white/80">{s.freeNote}</p>
+            <p className="hero-sub mt-4 text-sm">{s.freeNote}</p>
           </div>
           <div className="fade-up" style={{ animationDelay: "200ms" }}>
             <PhoneMockup />

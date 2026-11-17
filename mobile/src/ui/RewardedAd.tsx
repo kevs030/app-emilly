@@ -57,7 +57,7 @@ export function RewardedAd({ onCredits, variant = "button", fallback = null }: {
   const trigger =
     variant === "row" ? (
       <button type="button" onClick={begin} disabled={!status || phase.kind === "loading"} className="flex w-full items-center gap-3 rounded-2xl bg-sage-soft p-3 text-left">
-        <span className="icon-tile" style={{ background: "#ffffff" }}>
+        <span className="icon-tile" style={{ background: "var(--white)" }}>
           <Clapperboard size={20} aria-hidden />
         </span>
         <span className="min-w-0 flex-1">
@@ -100,7 +100,7 @@ export function RewardedAd({ onCredits, variant = "button", fallback = null }: {
           )}
           {phase.kind === "done" && (
             <div className="flex flex-1 flex-col items-center justify-center gap-3 text-center">
-              <CircleCheckBig size={56} className="text-[#3d5238]" aria-hidden />
+              <CircleCheckBig size={56} className="text-sage-dark" aria-hidden />
               <h2 id="ad-title" className="text-[26px] font-bold">
                 {t("adThanks")}
               </h2>

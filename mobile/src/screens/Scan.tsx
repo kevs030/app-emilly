@@ -73,7 +73,7 @@ export function Scan() {
             <>
               <AnalysisView text={result} />
               {saved === "yes" ? (
-                <p className="flex items-center gap-2 text-[15px] font-semibold text-[#3d5238]" role="status">
+                <p className="flex items-center gap-2 text-[15px] font-semibold text-sage-dark" role="status">
                   <CircleCheckBig size={18} aria-hidden /> {t("saved")} ·{" "}
                   <Link to="/documents" className="underline">
                     {t("myDocuments")}

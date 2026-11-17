@@ -123,7 +123,7 @@ export function MyData() {
           <h2 className="text-lg font-bold">{t("usage")}</h2>
           <p className="mt-1 text-[14px] text-ink-soft">{t("usageHint")}</p>
           <label className="mt-3 flex items-center gap-3 font-medium">
-            <input type="checkbox" className="h-6 w-6 accent-[#A65D3D]" checked={analyticsOn} onChange={(e) => saveProfile({ consent_analytics: e.target.checked })} />
+            <input type="checkbox" className="h-6 w-6 accent-terracotta-deep" checked={analyticsOn} onChange={(e) => saveProfile({ consent_analytics: e.target.checked })} />
             {t("usageOn")}
           </label>
           {analyticsOn && usage && <p className="mt-2 text-[14px] text-ink-soft">{t("usageTotals").replace("{s}", String(usage.sessions)).replace("{m}", String(usage.active_minutes))}</p>}

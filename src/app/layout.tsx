@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import Link from "next/link";
-import { Download, ShieldCheck } from "lucide-react";
+import { ChevronDown, Download, Search, ShieldCheck } from "lucide-react";
 import "./globals.css";
 import { getLang } from "@/lib/lang";
 import { t } from "@/lib/i18n";
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#a65d3d",
+  themeColor: "#a65337",
   width: "device-width",
   initialScale: 1,
 };
@@ -34,6 +34,9 @@ const FOOT = {
     who: "Quiénes somos",
     docs: "Formularios oficiales",
     install: "Descargar la app",
+    info: "Información",
+    search: "Buscar un trámite",
+    offices: "Oficinas",
     privacy: "Privacidad",
   },
   en: {
@@ -43,6 +46,9 @@ const FOOT = {
     who: "About us",
     docs: "Official forms",
     install: "Get the app",
+    info: "Information",
+    search: "Search a procedure",
+    offices: "Offices",
     privacy: "Privacy",
   },
   it: {
@@ -52,6 +58,9 @@ const FOOT = {
     who: "Chi siamo",
     docs: "Moduli ufficiali",
     install: "Scarica l'app",
+    info: "Informazioni",
+    search: "Cerca una pratica",
+    offices: "Uffici",
     privacy: "Privacy",
   },
 };
@@ -62,43 +71,77 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   const nav = [
     { href: "/guias", label: t("navGuides", lang) },
     { href: "/ayudas", label: t("navBonus", lang) },
-    { href: "/mapa", label: t("navMap", lang) },
+    { href: "/mapa", label: f.offices },
+  ];
+  const info = [
+    { href: "/documentos", label: f.docs },
     { href: "/videos", label: t("navVideos", lang) },
     { href: "/contactos", label: t("navDirectory", lang) },
+    { href: "/sobre", label: f.who },
+    { href: "/privacidad", label: f.privacy },
   ];
   return (
     <html lang={lang} className={`${geistSans.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-sans">
-        <header className="sticky top-0 z-[1000] border-b border-border bg-background/90 backdrop-blur">
-          <div className="mx-auto flex max-w-5xl items-center gap-4 px-4 py-3">
-            <Link href="/" className="flex items-center gap-2 text-lg font-bold tracking-tight">
+        <header className="sticky top-0 z-[1000] border-b border-border bg-background/95 backdrop-blur">
+          <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-2.5">
+            <Link href="/" className="flex shrink-0 items-center gap-2 text-lg font-bold tracking-tight">
               <Logo /> A Posto
             </Link>
-            <nav className="hidden gap-4 text-sm sm:flex" aria-label="Secciones">
-              {nav.map((n) => (
-                <Link key={n.href} href={n.href} className="whitespace-nowrap text-muted transition-colors hover:text-brand">
+            <nav className="hidden items-center gap-1 text-[15px] md:flex" aria-label="Secciones">
+              {nav.slice(0, 3).map((n) => (
+                <Link key={n.href} href={n.href} className="nav-link">
+                  {n.label}
+                </Link>
+              ))}
+              {/* Menú «Información»: sin JavaScript, accesible con teclado */}
+              <details className="nav-menu relative">
+                <summary className="nav-link flex cursor-pointer list-none items-center gap-1">
+                  {f.info} <ChevronDown size={16} aria-hidden />
+                </summary>
+                <ul className="card absolute start-0 top-full mt-2 w-56 space-y-0.5 p-2">
+                  {info.map((n) => (
+                    <li key={n.href}>
+                      <Link href={n.href} className="nav-link block">
+                        {n.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            </nav>
+            <form action="/guias" role="search" className="ml-auto hidden lg:block">
+              <label className="relative block">
+                <span className="sr-only">{f.search}</span>
+                <Search size={17} className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-muted" aria-hidden />
+                <input type="search" name="q" maxLength={60} placeholder={f.search} className="input !min-h-10 w-52 !ps-9 text-sm" />
+              </label>
+            </form>
+            <div className="ml-auto flex items-center gap-2 text-sm lg:ml-0">
+              <LangSwitcher current={lang} />
+              <Link href="/descargar" aria-label={f.install} className="btn !min-h-10 whitespace-nowrap !px-3.5 text-sm">
+                <Download size={16} aria-hidden />
+                <span className="hidden sm:inline">{f.install}</span>
+              </Link>
+            </div>
+          </div>
+          {/* Móvil y tableta: buscador y accesos que no caben arriba */}
+          <div className="border-t border-border px-4 pb-2 pt-2 lg:hidden">
+            <form action="/guias" role="search">
+              <label className="relative block">
+                <span className="sr-only">{f.search}</span>
+                <Search size={17} className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-muted" aria-hidden />
+                <input type="search" name="q" maxLength={60} placeholder={f.search} className="input !min-h-11 !ps-9" />
+              </label>
+            </form>
+            <nav className="-mx-1 mt-2 flex gap-1 overflow-x-auto px-1 text-sm md:hidden" aria-label="Más secciones">
+              {[nav[1], nav[2], ...info].map((n) => (
+                <Link key={n.href} href={n.href} className="nav-link whitespace-nowrap">
                   {n.label}
                 </Link>
               ))}
             </nav>
-            <div className="ml-auto flex items-center gap-3 text-sm">
-              <LangSwitcher current={lang} />
-              <Link href="/descargar" className="btn-ghost px-3 py-1.5">
-                <Download size={16} aria-hidden />
-                {f.install}
-              </Link>
-            </div>
           </div>
-          <nav className="flex gap-4 overflow-x-auto border-t border-border px-4 py-2 text-sm sm:hidden" aria-label="Más secciones">
-            {nav
-              .filter((n) => ["/ayudas", "/videos", "/contactos"].includes(n.href))
-              .concat([{ href: "/documentos", label: f.docs }])
-              .map((n) => (
-                <Link key={n.href} href={n.href} className="whitespace-nowrap text-muted">
-                  {n.label}
-                </Link>
-              ))}
-          </nav>
         </header>
 
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6">{children}</main>
@@ -114,7 +157,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             <div>
               <p className="font-semibold">{f.explore}</p>
               <ul className="mt-2 space-y-1 text-muted">
-                {nav.map((n) => (
+                {[...nav, ...info.slice(1, 3)].map((n) => (
                   <li key={n.href}>
                     <Link href={n.href} className="hover:text-brand">
                       {n.label}
@@ -150,7 +193,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             </div>
           </div>
           <p className="mx-auto flex max-w-5xl items-start gap-2 border-t border-border px-4 py-4 text-xs text-muted">
-            <ShieldCheck size={16} className="mt-0.5 shrink-0 text-brand" aria-hidden />
+            <ShieldCheck size={16} className="mt-0.5 shrink-0 text-sage" aria-hidden />
             {t("disclaimer", lang)}
           </p>
         </footer>

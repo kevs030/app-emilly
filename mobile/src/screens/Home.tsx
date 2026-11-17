@@ -107,8 +107,8 @@ export function Home() {
 
         {/* Cuestionario inicial pendiente: se ofrece, nunca se impone. */}
         {!startDone(user?.id) && (
-          <Link to="/start" className="card flex items-center gap-3 bg-sage-soft">
-            <span className="icon-tile" style={{ background: "#ffffff" }}>
+          <Link to="/start" className="card flex items-center gap-3 border-gold/60 bg-gold-soft">
+            <span className="icon-tile" style={{ background: "var(--white)" }}>
               <Sparkles size={22} aria-hidden />
             </span>
             <span className="min-w-0 flex-1">
@@ -154,7 +154,7 @@ export function Home() {
         {/* Continuar donde lo dejaste: todo sale de datos guardados, nada es una estimación. */}
         {available && last && lastProgress && (
           <section className="card bg-sage-soft">
-            <p className="flex items-center gap-2 text-[14px] font-semibold text-[#3d5238]">
+            <p className="flex items-center gap-2 text-[14px] font-semibold text-sage-dark">
               <Sprout size={18} aria-hidden /> {t("welcomeBack")}
             </p>
             <p className="mt-2">

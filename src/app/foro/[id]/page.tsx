@@ -58,7 +58,7 @@ export default async function PostPage(props: PageProps<"/foro/[id]">) {
           {user?.id === post.author_id && (
             <form action={deletePost}>
               <input type="hidden" name="id" value={post.id} />
-              <button className="text-xs text-red-600">{l === "en" ? "Delete" : "Borrar"}</button>
+              <button className="text-xs text-danger">{l === "en" ? "Delete" : "Borrar"}</button>
             </form>
           )}
         </div>

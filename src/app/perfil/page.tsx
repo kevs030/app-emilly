@@ -60,7 +60,7 @@ export default async function ProfilePage() {
           <label className="flex items-center gap-1 text-xs">
             <input type="checkbox" required /> {en ? "I confirm" : "Confirmo"}
           </label>
-          <button className="rounded-lg border border-red-400 px-4 py-2 text-red-600">
+          <button className="rounded-lg border border-danger/50 px-4 py-2 text-danger">
             {en ? "Delete my account and data" : "Borrar mi cuenta y mis datos"}
           </button>
         </form>

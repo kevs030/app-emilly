@@ -111,11 +111,11 @@ export function Assistant() {
     <Screen title={t("tabAssistant")} help="assistant">
       <div className="flex flex-1 flex-col gap-4">
         <div className="flex items-start gap-2 rounded-2xl bg-sage-soft p-3 text-[14px]">
-          <Bot size={20} className="mt-0.5 shrink-0" aria-hidden />
+          <Bot size={20} className="mt-0.5 shrink-0 text-sage-dark" aria-hidden />
           <p className="min-w-0 flex-1">{t("asstNotice")}</p>
         </div>
         <div className="flex min-h-11 items-center gap-2">
-          <p className="min-w-0 flex-1 text-[14px] font-semibold text-brown" aria-live="polite">
+          <p className="min-w-0 flex-1 text-[14px] font-semibold text-sage-dark" aria-live="polite">
             {credits !== null && `${credits} ${t("creditsLeft")}`}
           </p>
           {!out && <RewardedAd onCredits={(c) => c !== null && setCredits(c)} />}
@@ -134,7 +134,7 @@ export function Assistant() {
             <div className="rise space-y-3">
               <p className="card">{t("asstHello")}</p>
               {(["ex1", "ex2"] as const).map((k) => (
-                <button key={k} type="button" className="block w-full rounded-2xl bg-beige px-4 py-3 text-start text-[15px] font-medium" onClick={() => ask(t(k))}>
+                <button key={k} type="button" className="block min-h-12 w-full rounded-2xl border border-line bg-white px-4 py-3 text-start text-[15px] font-medium text-terracotta-hover shadow-[var(--ap-shadow-card)]" onClick={() => ask(t(k))}>
                   {t(k)}
                 </button>
               ))}
@@ -142,11 +142,11 @@ export function Assistant() {
           )}
           {messages.map((m, i) =>
             m.role === "user" ? (
-              <p key={i} className="ms-auto max-w-[88%] whitespace-pre-wrap rounded-3xl rounded-ee-lg bg-terracotta-deep px-4 py-3 text-white">
+              <p key={i} className="ms-auto max-w-[88%] whitespace-pre-wrap rounded-[20px] rounded-ee-md bg-terracotta-deep px-4 py-3 text-white">
                 {m.content}
               </p>
             ) : (
-              <p key={i} className="card max-w-[92%] whitespace-pre-wrap rounded-es-lg text-[16px]">
+              <p key={i} className="card max-w-[92%] whitespace-pre-wrap rounded-es-md text-[16px]">
                 {m.content || "…"}
               </p>
             ),
@@ -184,7 +184,7 @@ export function Assistant() {
           </section>
         ) : (
           <form
-            className="sticky bottom-2 flex items-end gap-2 rounded-3xl bg-white p-2 shadow-lg"
+            className="sticky bottom-2 flex items-end gap-2 rounded-[20px] border border-line bg-white p-2 shadow-[var(--ap-shadow-raised)]"
             onSubmit={(e) => {
               e.preventDefault();
               ask(input.trim());
@@ -199,7 +199,7 @@ export function Assistant() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
             />
-            <button className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-terracotta-deep text-white disabled:opacity-50" disabled={busy || !input.trim()} aria-label={t("send")}>
+            <button className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[14px] bg-terracotta-deep text-white transition-colors active:bg-terracotta-hover disabled:opacity-50" disabled={busy || !input.trim()} aria-label={t("send")}>
               <Send size={20} className="rtl:-scale-x-100" aria-hidden />
             </button>
           </form>

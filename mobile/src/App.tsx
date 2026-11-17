@@ -101,12 +101,15 @@ function Private({ guestOk = false }: { guestOk?: boolean }) {
           </PersonalProvider>
         </main>
         {!bare && (
-          <nav className="safe-bottom border-t border-beige bg-white" aria-label="Principal">
+          <nav className="safe-bottom border-t border-line bg-white" aria-label="Principal">
             <ul className="mx-auto flex max-w-md">
               {tabs.map((tab) => (
                 <li key={tab.to} className="flex-1">
-                  <NavLink to={tab.to} end={tab.end} className={({ isActive }) => `flex min-h-14 flex-col items-center justify-center gap-0.5 pt-2 text-[12px] ${isActive ? "font-bold text-terracotta-deep" : "text-ink-soft"}`}>
-                    <tab.icon size={23} aria-hidden />
+                  <NavLink to={tab.to} end={tab.end} className={({ isActive }) => `group flex min-h-14 flex-col items-center justify-center gap-0.5 pt-1.5 text-[12px] ${isActive ? "font-bold text-terracotta-deep" : "font-medium text-ink-soft"}`}>
+                    {/* Pestaña activa: icono sobre una pastilla terracota suave */}
+                    <span className="flex h-8 w-14 items-center justify-center rounded-full transition-colors group-aria-[current=page]:bg-[var(--ap-terracotta-soft)]">
+                      <tab.icon size={22} aria-hidden />
+                    </span>
                     {tab.label}
                   </NavLink>
                 </li>

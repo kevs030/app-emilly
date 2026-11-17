@@ -191,7 +191,7 @@ export function Start() {
               {plan.map((slug, n) => (
                 <li key={slug}>
                   <Link to={`/guides/${slug}`} className="card flex items-center gap-3">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-sage-soft font-bold text-[#3d5238]">{n + 1}</span>
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-sage-soft font-bold text-sage-dark">{n + 1}</span>
                     <span className="min-w-0 flex-1 font-semibold">{c(getGuide(slug)!.title)}</span>
                     <ArrowRight size={20} className="rtl:rotate-180 shrink-0 text-terracotta" aria-hidden />
                   </Link>

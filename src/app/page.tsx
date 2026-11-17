@@ -71,14 +71,12 @@ export default async function Home() {
   return (
     <div className="space-y-12">
       <section className="hero -mx-4 -mt-6 px-4 py-12 sm:mx-0 sm:mt-0 sm:rounded-3xl sm:px-10 sm:py-16">
-        <span className="hero-blob" style={{ width: 220, height: 220, right: -40, top: -60, background: "#dce6d8" }} />
-        <span className="hero-blob" style={{ width: 180, height: 180, left: -50, bottom: -70, background: "#c77b59", animationDelay: "-5s" }} />
         <div className="relative max-w-2xl">
-          <p className="fade-up inline-flex rounded-full bg-white/15 px-3 py-1 text-xs font-medium backdrop-blur">{tr(H.kicker, lang)}</p>
+          <p className="fade-up hero-kicker">{tr(H.kicker, lang)}</p>
           <h1 className="fade-up mt-4 text-4xl font-bold leading-tight tracking-tight sm:text-5xl" style={{ animationDelay: "80ms" }}>
             {tr(H.title, lang)}
           </h1>
-          <p className="fade-up mt-4 text-lg text-white/90" style={{ animationDelay: "160ms" }}>
+          <p className="fade-up hero-sub mt-4 text-lg" style={{ animationDelay: "160ms" }}>
             {tr(H.sub, lang)}
           </p>
           <div className="fade-up mt-6 flex flex-wrap gap-3" style={{ animationDelay: "240ms" }}>
@@ -178,7 +176,7 @@ export default async function Home() {
       </section>
 
       <Reveal>
-        <section className="flex gap-3 rounded-2xl border border-accent/40 bg-warn-bg p-5 text-warn-fg">
+        <section className="flex gap-3 rounded-[20px] border border-accent/50 bg-warn-bg p-5 text-warn-fg">
           <ShieldAlert size={26} className="mt-0.5 shrink-0" aria-hidden />
           <div>
             <h2 className="font-bold">{tr(H.scamTitle, lang)}</h2>
@@ -210,9 +208,9 @@ export default async function Home() {
       </section>
 
       <Reveal>
-        <section className="hero rounded-3xl px-6 py-10 sm:px-10">
+        <section className="hero rounded-3xl border px-6 py-10 sm:px-10">
           <h2 className="text-2xl font-bold tracking-tight">{tr(H.appTitle, lang)}</h2>
-          <p className="mt-2 max-w-2xl text-white/90">{tr(H.appSub, lang)}</p>
+          <p className="hero-sub mt-2 max-w-2xl">{tr(H.appSub, lang)}</p>
           <Link href="/descargar" className="btn btn-hero mt-5">
             <Download size={18} aria-hidden /> {tr(H.download, lang)}
           </Link>
