@@ -282,6 +282,10 @@ body {
 .duo svg {
   fill: color-mix(in srgb, var(--ap-sage) 42%, var(--ap-surface));
 }
+/* Un rectángulo dibujado al final taparía los detalles del icono (p. ej. el carné de «Mi expediente») */
+.duo svg rect:not(:first-child) {
+  fill: none;
+}
 .hero-kicker {
   @apply inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-semibold;
   color: var(--sage-strong);

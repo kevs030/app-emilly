@@ -38,6 +38,7 @@ export const ro: Locale = {
   alreadyConfirmed: "Ți-ai confirmat deja e-mailul? Intră",
   apkUpdate: "Există o versiune nouă A Posto.",
   apkUpdateCta: "Descarcă",
+  popularGuides: "Cele mai căutate proceduri",
   back: "Înapoi",
   badLogin: "E-mail sau parolă greșită.",
   notConfirmed: "Încă nu ți-ai confirmat e-mailul. Deschide linkul pe care ți l-am trimis.",

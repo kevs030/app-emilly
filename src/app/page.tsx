@@ -3,7 +3,7 @@ import { ArrowRight, BadgeCheck, BookUser, CalendarCheck, Download, FileDown, Fi
 import { getLang } from "@/lib/lang";
 import { t, tr } from "@/lib/i18n";
 import { guides } from "@/content/guides";
-import { GuideIcon } from "@/components/Icons";
+import { GuideThumb } from "@/components/PageArt";
 import { Reveal } from "@/components/Reveal";
 import { centers } from "@/content/centers";
 import { AdSlot } from "@/components/AdSlot";
@@ -185,13 +185,15 @@ export default async function Home() {
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           {guides.map((g, i) => (
             <Reveal key={g.slug} delay={(i % 2) * 70}>
-              <Link href={`/guias/${g.slug}`} className="card card-link group flex h-full gap-3">
-                <GuideIcon slug={g.slug} />
-                <span className="min-w-0 flex-1">
-                  <span className="block font-semibold">{tr(g.title, lang)}</span>
-                  <span className="mt-1 line-clamp-2 block text-sm text-muted">{tr(g.summary, lang)}</span>
+              <Link href={`/guias/${g.slug}`} className="card card-link group flex h-full flex-col overflow-hidden !p-0">
+                <GuideThumb slug={g.slug} className="aspect-[16/7]" />
+                <span className="flex flex-1 gap-3 p-5">
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-semibold">{tr(g.title, lang)}</span>
+                    <span className="mt-1 line-clamp-2 block text-sm text-muted">{tr(g.summary, lang)}</span>
+                  </span>
+                  <ArrowRight size={18} className="mt-1 shrink-0 text-muted transition-transform group-hover:translate-x-1 group-hover:text-brand" aria-hidden />
                 </span>
-                <ArrowRight size={18} className="mt-1 shrink-0 text-muted transition-transform group-hover:translate-x-1 group-hover:text-brand" aria-hidden />
               </Link>
             </Reveal>
           ))}

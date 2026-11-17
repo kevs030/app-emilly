@@ -38,6 +38,7 @@ export const sq: Locale = {
   alreadyConfirmed: "E keni konfirmuar më parë email-in? Hyni",
   apkUpdate: "Ka një version të ri të A Posto.",
   apkUpdateCta: "Shkarko",
+  popularGuides: "Procedurat më të kërkuara",
   back: "Kthehu",
   badLogin: "Emaili ose fjalëkalimi nuk është i saktë.",
   notConfirmed: "Nuk e ke konfirmuar ende emailin. Hap lidhjen që të dërguam.",

@@ -38,6 +38,7 @@ export const ar: Locale = {
   alreadyConfirmed: "هل أكدت بريدك من قبل؟ ادخل",
   apkUpdate: "يتوفر إصدار جديد من A Posto.",
   apkUpdateCta: "تنزيل",
+  popularGuides: "الإجراءات الأكثر بحثًا",
   back: "رجوع",
   badLogin: "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
   notConfirmed: "لم تؤكّد بريدك الإلكتروني بعد. افتح الرابط الذي أرسلناه إليك.",

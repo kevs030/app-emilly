@@ -38,6 +38,7 @@ export const uk: Locale = {
   alreadyConfirmed: "Уже підтвердили пошту? Увійти",
   apkUpdate: "Доступна нова версія A Posto.",
   apkUpdateCta: "Завантажити",
+  popularGuides: "Найпопулярніші процедури",
   back: "Назад",
   badLogin: "Неправильна ел. пошта або пароль.",
   notConfirmed: "Ви ще не підтвердили ел. пошту. Відкрийте посилання, яке ми надіслали.",

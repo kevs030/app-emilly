@@ -79,6 +79,7 @@ const S = {
   alreadyConfirmed: { es: "¿Ya confirmaste tu correo antes? Entrar", it: "Hai già confermato l'email? Entra", en: "Already confirmed your email? Sign in" },
   apkUpdate: { es: "Hay una versión nueva de A Posto.", it: "C'è una nuova versione di A Posto.", en: "A new version of A Posto is available." },
   apkUpdateCta: { es: "Descargar", it: "Scarica", en: "Download" },
+  popularGuides: { es: "Trámites más buscados", it: "Pratiche più cercate", en: "Most searched procedures" },
   back: { es: "Volver", it: "Indietro", en: "Back" },
   badLogin: { es: "El correo o la contraseña no son correctos.", it: "Email o password non corretti.", en: "Wrong email or password." },
   notConfirmed: { es: "Aún no has confirmado tu correo. Abre el enlace que te enviamos.", it: "Non hai ancora confermato l'email. Apri il link che ti abbiamo inviato.", en: "You haven't confirmed your email yet. Open the link we sent you." },

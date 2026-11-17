@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { PageArt } from "@/components/PageArt";
+import { GuideThumb, PageArt } from "@/components/PageArt";
 import { SearchX } from "lucide-react";
 import { getLang } from "@/lib/lang";
 import { t, tr } from "@/lib/i18n";
 import { guides } from "@/content/guides";
-import { GuideIcon } from "@/components/Icons";
 import { AdSlot } from "@/components/AdSlot";
 
 const L = {
@@ -39,9 +38,9 @@ export default async function GuidesPage({ searchParams }: { searchParams: Promi
       {list.length ? (
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           {list.map((g) => (
-            <Link key={g.slug} href={`/guias/${g.slug}`} className="card card-link flex gap-3">
-              <GuideIcon slug={g.slug} />
-              <span>
+            <Link key={g.slug} href={`/guias/${g.slug}`} className="card card-link flex flex-col overflow-hidden !p-0">
+              <GuideThumb slug={g.slug} className="aspect-[16/7]" />
+              <span className="p-5">
                 <span className="block font-semibold">{tr(g.title, lang)}</span>
                 <span className="mt-1 block text-sm text-muted">{tr(g.summary, lang)}</span>
               </span>

@@ -220,6 +220,10 @@ body {
 .duo svg {
   fill: color-mix(in srgb, var(--ap-sage) 42%, var(--ap-surface));
 }
+/* Un rectángulo dibujado al final taparía los detalles del icono (p. ej. el carné de «Mi expediente») */
+.duo svg rect:not(:first-child) {
+  fill: none;
+}
 .duo svg :is(path, rect, circle)[fill="none"] {
   fill: none;
 }

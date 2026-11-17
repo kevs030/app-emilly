@@ -9,6 +9,7 @@ import type { StringKey } from "~/lib/strings";
 import { Alert, Field, Screen } from "~/ui/kit";
 import { AddReminder, ReminderRow } from "~/ui/Reminders";
 import { Landscape } from "~/ui/Illustration";
+import { GuidePhoto } from "~/ui/GuidePhoto";
 import { startDone } from "./Start";
 import { tourSeen } from "./Tour";
 import { SponsorBanner } from "~/ui/SponsorBanner";
@@ -29,6 +30,7 @@ function ProcedureCard({ p }: { p: Procedure }) {
   return (
     <Link to={`/guides/${p.guide_slug}`} className="card block">
       <span className="flex items-start gap-3">
+        <GuidePhoto slug={p.guide_slug} className="h-16 w-16 shrink-0 rounded-xl" />
         <span className="min-w-0 flex-1 font-semibold">{c(pr.guide.title)}</span>
         <ArrowRight size={20} className="rtl:rotate-180 mt-0.5 shrink-0 text-terracotta" aria-hidden />
       </span>
@@ -156,6 +158,26 @@ export function Home() {
           </ul>
         </nav>
 
+        {/* Trámites con foto: personas haciendo cada trámite. Se desliza de lado. */}
+        <section aria-labelledby="popular-title">
+          <h2 id="popular-title" className="mb-3 text-lg font-bold">
+            {t("popularGuides")}
+          </h2>
+          <ul className="-mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-2">
+            {guides.map((g) => (
+              <li key={g.slug} className="w-64 shrink-0 snap-start">
+                <Link to={`/guides/${g.slug}`} className="card flex h-full flex-col overflow-hidden !p-0">
+                  <GuidePhoto slug={g.slug} className="aspect-[16/9]" />
+                  <span className="flex flex-1 items-start gap-2 p-3">
+                    <span className="min-w-0 flex-1 text-[15px] font-semibold leading-snug">{c(g.title)}</span>
+                    <ArrowRight size={18} className="rtl:rotate-180 mt-0.5 shrink-0 text-terracotta" aria-hidden />
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+
         {!available && <p className="card text-ink-soft">{t("notReady")}</p>}
 
         <SponsorBanner placement="home" />
@@ -269,6 +291,7 @@ export function Home() {
               {recommended.map((slug) => (
                 <li key={slug}>
                   <Link to={`/guides/${slug}`} className="card flex items-center gap-3">
+                    <GuidePhoto slug={slug} className="h-16 w-16 shrink-0 rounded-xl" />
                     <span className="min-w-0 flex-1 font-semibold">{c(getGuide(slug)!.title)}</span>
                     <ArrowRight size={20} className="rtl:rotate-180 shrink-0 text-terracotta" aria-hidden />
                   </Link>

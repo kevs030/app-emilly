@@ -9,6 +9,7 @@ import { useLang } from "~/lib/lang";
 import { usePersonal } from "~/lib/personal";
 import { Alert, Screen } from "~/ui/kit";
 import { AddReminder, ReminderRow } from "~/ui/Reminders";
+import { GuidePhoto } from "~/ui/GuidePhoto";
 import { SponsorBanner } from "~/ui/SponsorBanner";
 
 /** Casilla grande para marcar un paso o documento como hecho. */
@@ -27,16 +28,6 @@ function Tick({ on, label, onClick }: { on: boolean; label: string; onClick: () 
   );
 }
 
-/** Foto de la oficina principal de cada trámite (las mismas que en la web). */
-const OFFICE_PHOTO: Record<string, string> = {
-  "permesso-di-soggiorno": "questura",
-  "codice-fiscale": "inps",
-  "sanidad-tessera-sanitaria": "sanidad",
-  "residencia-anagrafica": "comune",
-  "decreto-flussi": "patronato",
-  ciudadania: "comune",
-  "articolo-31": "questura",
-};
 
 export function Guides() {
   const { t, c } = useLang();
@@ -45,12 +36,15 @@ export function Guides() {
       <ul className="rise space-y-3">
         {guides.map((g) => (
           <li key={g.slug}>
-            <Link to={`/guides/${g.slug}`} className="card flex items-start gap-3">
-              <span className="min-w-0 flex-1">
-                <span className="block font-semibold">{c(g.title)}</span>
-                <span className="mt-1 line-clamp-2 block text-[15px] text-ink-soft">{c(g.summary)}</span>
+            <Link to={`/guides/${g.slug}`} className="card block overflow-hidden !p-0">
+              <GuidePhoto slug={g.slug} className="aspect-[16/7]" />
+              <span className="flex items-start gap-3 p-4">
+                <span className="min-w-0 flex-1">
+                  <span className="block font-semibold">{c(g.title)}</span>
+                  <span className="mt-1 line-clamp-2 block text-[15px] text-ink-soft">{c(g.summary)}</span>
+                </span>
+                <ArrowRight size={20} className="rtl:rotate-180 mt-1 shrink-0 text-terracotta" aria-hidden />
               </span>
-              <ArrowRight size={20} className="rtl:rotate-180 mt-1 shrink-0 text-terracotta" aria-hidden />
             </Link>
           </li>
         ))}
@@ -96,17 +90,7 @@ export function GuideDetail() {
     <Screen back>
       <article className="rise space-y-5">
         <header>
-          {OFFICE_PHOTO[guide.slug] && (
-            <img
-              src={`${import.meta.env.BASE_URL}centros/${OFFICE_PHOTO[guide.slug]}-960.webp`}
-              srcSet={`${import.meta.env.BASE_URL}centros/${OFFICE_PHOTO[guide.slug]}-640.webp 640w, ${import.meta.env.BASE_URL}centros/${OFFICE_PHOTO[guide.slug]}-960.webp 960w`}
-              sizes="(max-width: 480px) 100vw, 448px"
-              width={1344}
-              height={768}
-              alt=""
-              className="mb-4 aspect-[16/8] w-full rounded-[24px] border border-line object-cover"
-            />
-          )}
+          <GuidePhoto slug={guide.slug} eager className="mb-4 aspect-[16/8] rounded-[24px] border border-line" />
           <h1 className="text-[26px] font-bold leading-tight tracking-tight">{c(guide.title)}</h1>
           <p className="mt-2 text-ink-soft">{c(guide.summary)}</p>
           {contentFallback && <p className="mt-3 rounded-2xl bg-beige p-3 text-[14px]">{t("notTranslated")}</p>}

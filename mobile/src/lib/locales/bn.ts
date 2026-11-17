@@ -38,6 +38,7 @@ export const bn: Locale = {
   alreadyConfirmed: "আগেই ইমেইল নিশ্চিত করেছেন? প্রবেশ করুন",
   apkUpdate: "A Posto-র নতুন সংস্করণ এসেছে।",
   apkUpdateCta: "ডাউনলোড",
+  popularGuides: "সবচেয়ে বেশি খোঁজা প্রক্রিয়া",
   back: "ফিরে যান",
   badLogin: "ইমেইল বা পাসওয়ার্ড সঠিক নয়।",
   notConfirmed: "আপনি এখনো ইমেইল নিশ্চিত করেননি। আমাদের পাঠানো লিংকটি খুলুন।",
