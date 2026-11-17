@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:e2e": "node tests/e2e/fase1.cjs && node tests/e2e/fase2.cjs && node tests/e2e/fase3.cjs && node tests/e2e/fase4.cjs",
+    "test:e2e": "node tests/e2e/fase1.cjs && node tests/e2e/fase2.cjs && node tests/e2e/fase3.cjs && node tests/e2e/fase4.cjs && node tests/e2e/fase5.cjs",
     "sync": "npm run build && cap sync",
     "ios": "npm run sync && cap open ios",
     "android": "npm run sync && cap open android",

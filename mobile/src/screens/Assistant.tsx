@@ -2,6 +2,7 @@ import { Bot, Clapperboard, History, Package, Send, SquarePen } from "lucide-rea
 import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useAuth } from "~/auth/AuthProvider";
+import { RewardedAd } from "~/ui/RewardedAd";
 import { streamAI } from "~/lib/ai";
 import { useLang } from "~/lib/lang";
 import { supabase } from "~/lib/supabase";
@@ -117,6 +118,7 @@ export function Assistant() {
           <p className="min-w-0 flex-1 text-[14px] font-semibold text-brown" aria-live="polite">
             {credits !== null && `${credits} ${t("creditsLeft")}`}
           </p>
+          {!out && <RewardedAd onCredits={(c) => c !== null && setCredits(c)} />}
           {messages.length > 0 && (
             <button type="button" onClick={startNew} disabled={busy} className="flex min-h-11 items-center gap-1 rounded-full bg-beige px-3 text-[14px] font-medium">
               <SquarePen size={16} aria-hidden /> {t("chatNew")}
@@ -158,10 +160,17 @@ export function Assistant() {
           <section className="card space-y-3">
             <h2 className="text-lg font-bold">{t("noCreditsTitle")}</h2>
             <p className="text-[15px] text-ink-soft">{t("noCreditsBody")}</p>
+            <RewardedAd
+              variant="row"
+              onCredits={(c) => {
+                if (c !== null) setCredits(c);
+                setError("");
+              }}
+              fallback={<SoonRow icon={Clapperboard} label={t("adSoon")} soon={t("soon")} />}
+            />
             {(
               [
                 [Package, "packSoon"],
-                [Clapperboard, "adSoon"],
               ] as const
             ).map(([Icon, key]) => (
               <div key={key} className="flex items-center gap-3 rounded-2xl bg-cream p-3">
@@ -197,5 +206,17 @@ export function Assistant() {
         )}
       </div>
     </Screen>
+  );
+}
+
+function SoonRow({ icon: Icon, label, soon }: { icon: typeof Clapperboard; label: string; soon: string }) {
+  return (
+    <div className="flex items-center gap-3 rounded-2xl bg-cream p-3">
+      <span className="icon-tile">
+        <Icon size={20} aria-hidden />
+      </span>
+      <span className="min-w-0 flex-1 text-[15px] font-medium">{label}</span>
+      <span className="rounded-full bg-beige px-3 py-1 text-[12px] font-semibold">{soon}</span>
+    </div>
   );
 }

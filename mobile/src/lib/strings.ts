@@ -467,6 +467,20 @@ const S = {
   browseNoAccount: { es: "Ver las guías sin crear cuenta", it: "Vedi le guide senza account", en: "See the guides without an account" },
   guestGuideHint: { es: "Crea una cuenta gratis para marcar tus pasos, guardar tu progreso y recibir avisos de fechas.", it: "Crea un account gratis per segnare i passi, salvare i progressi e ricevere avvisi sulle scadenze.", en: "Create a free account to tick off your steps, save your progress and get date reminders." },
   situationLocal: { es: "Tu tipo de permiso, su caducidad y si tienes hijos se guardan solo en este teléfono, cifrados. No llegan a nuestro servidor.", it: "Il tipo di permesso, la scadenza e se hai figli restano solo su questo telefono, cifrati. Non arrivano al nostro server.", en: "Your permit type, its expiry and whether you have children stay only on this phone, encrypted. They never reach our server." },
+  // Publicidad y anuncio con recompensa
+  adLabel: { es: "Publicidad", it: "Pubblicità", en: "Advertisement" },
+  adLimit: { es: "Ya has usado los anuncios de hoy. Vuelve mañana para ganar más preguntas.", it: "Hai già usato gli annunci di oggi. Torna domani per ottenere altre domande.", en: "You've used today's ads. Come back tomorrow to earn more questions." },
+  adUnavailable: { es: "Ahora no hay anuncios disponibles. Inténtalo más tarde.", it: "Al momento non ci sono annunci disponibili. Riprova più tardi.", en: "No ads are available right now. Try again later." },
+  adWatch: { es: "Ver un anuncio y ganar 1 pregunta", it: "Guarda un annuncio e ottieni 1 domanda", en: "Watch an ad and earn 1 question" },
+  adWatchShort: { es: "+1 pregunta", it: "+1 domanda", en: "+1 question" },
+  adLeftToday: { es: "Te quedan {n} hoy", it: "Te ne restano {n} oggi", en: "{n} left today" },
+  adCountdown: { es: "Espera {n} s para ganar tu pregunta", it: "Attendi {n} s per ottenere la domanda", en: "Wait {n} s to earn your question" },
+  adWaiting: { es: "Tiempo del anuncio", it: "Tempo dell'annuncio", en: "Ad time" },
+  adClaim: { es: "Recibir mi pregunta", it: "Ricevi la mia domanda", en: "Get my question" },
+  adThanks: { es: "¡Tienes 1 pregunta más!", it: "Hai 1 domanda in più!", en: "You have 1 more question!" },
+  adThanksBody: { es: "Gracias por ver el anuncio: ayuda a que A Posto siga siendo gratis.", it: "Grazie per aver guardato l'annuncio: aiuta A Posto a restare gratuita.", en: "Thanks for watching: it helps keep A Posto free." },
+  adBackToChat: { es: "Volver al asistente", it: "Torna all'assistente", en: "Back to the assistant" },
+  close: { es: "Cerrar", it: "Chiudi", en: "Close" },
 } satisfies Record<string, { es: string; it?: string; en?: string }>;
 
 export type StringKey = keyof typeof S;

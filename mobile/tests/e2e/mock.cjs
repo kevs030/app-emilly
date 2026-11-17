@@ -30,7 +30,7 @@ async function makeApp(br, errs, opts) {
         return json(200, null); }
       if (u.pathname === '/rest/v1/ai_wallets') return json(200, { credits: 3 });
       const table = u.pathname.replace('/rest/v1/', '');
-      if (['documents', 'forum_posts', 'ai_conversations'].includes(table) && m === 'GET') return json(200, []);
+      if (['documents', 'forum_posts', 'ai_conversations', 'sponsors'].includes(table) && m === 'GET') return json(200, []);
       if (!(table in db)) return json(404, {});
       if (missing) return json(404, { code: 'PGRST205', message: 'Could not find the table' });
       if (m === 'GET') return json(200, db[table].filter(x => match(x, u)));
@@ -44,6 +44,8 @@ async function makeApp(br, errs, opts) {
       if (m === 'DELETE') { db[table] = db[table].filter(x => !match(x, u)); if (table === 'procedures') db.procedure_items = []; return r.fulfill({ status: 204, headers: cors }); }
     });
     await p.route('**/api/points*', r => r.fulfill({ status: 200, headers: { ...cors, 'content-type': 'application/json' }, body: JSON.stringify({ points: [[41.9, 12.49, 'Questura di Roma', 'Via di San Vitale 15']] }) }));
+    // Publicidad: por defecto no hay anuncios (fase 5 lo sobrescribe con los suyos).
+    await p.route('**/api/ads', r => r.request().method() === 'OPTIONS' ? r.fulfill({ status: 204, headers: cors }) : r.fulfill({ status: 200, headers: { ...cors, 'content-type': 'application/json' }, body: JSON.stringify({ available: false }) }));
     const login = async ({ tour = false } = {}) => { await p.goto((process.env.APP_ORIGIN || 'http://localhost:4173') + (process.env.APP_PREFIX || '') + '/auth?mode=signin'); await p.fill('input[type=email]', 'ana@example.com'); await p.fill('input[type=password]', 'Correcta12345'); await p.click('button.btn:has-text("Entrar")'); if (tour) return; await p.waitForSelector('text=Saltar'); await p.click('button:has-text("Saltar")'); await p.waitForSelector('text=Hola, Ana'); };
     return { p, db, rpc, login, ctx };
   };

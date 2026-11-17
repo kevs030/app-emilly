@@ -400,4 +400,18 @@ export const sq: Locale = {
   browseNoAccount: "Shikoni udhëzuesit pa llogari",
   guestGuideHint: "Krijoni një llogari falas për të shënuar hapat, për të ruajtur përparimin dhe për të marrë kujtesa për datat.",
   situationLocal: "Lloji i lejes, afati i saj dhe nëse keni fëmijë ruhen vetëm në këtë telefon, të enkriptuara. Nuk arrijnë në serverin tonë.",
+  // Publicidad y anuncio con recompensa
+  adLabel: "Reklamë",
+  adLimit: "I keni përdorur reklamat e sotme. Kthehuni nesër për pyetje të tjera.",
+  adUnavailable: "Tani nuk ka reklama. Provoni më vonë.",
+  adWatch: "Shikoni një reklamë dhe fitoni 1 pyetje",
+  adWatchShort: "+1 pyetje",
+  adLeftToday: "Ju kanë mbetur {n} sot",
+  adCountdown: "Prisni {n} s për të fituar pyetjen",
+  adWaiting: "Koha e reklamës",
+  adClaim: "Merr pyetjen time",
+  adThanks: "Keni edhe 1 pyetje!",
+  adThanksBody: "Faleminderit që e patë reklamën: ndihmon që A Posto të mbetet falas.",
+  adBackToChat: "Kthehu te asistenti",
+  close: "Mbyll",
 };

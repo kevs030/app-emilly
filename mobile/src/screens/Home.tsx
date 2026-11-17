@@ -10,6 +10,7 @@ import { Alert, Field, Screen } from "~/ui/kit";
 import { AddReminder, ReminderRow } from "~/ui/Reminders";
 import { startDone } from "./Start";
 import { tourSeen } from "./Tour";
+import { SponsorBanner } from "~/ui/SponsorBanner";
 
 function ProgressBar({ percent, label }: { percent: number; label: string }) {
   return (
@@ -147,6 +148,8 @@ export function Home() {
         </nav>
 
         {!available && <p className="card text-ink-soft">{t("notReady")}</p>}
+
+        <SponsorBanner placement="home" />
 
         {/* Continuar donde lo dejaste: todo sale de datos guardados, nada es una estimación. */}
         {available && last && lastProgress && (

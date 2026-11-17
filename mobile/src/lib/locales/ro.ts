@@ -400,4 +400,18 @@ export const ro: Locale = {
   browseNoAccount: "Vezi ghidurile fără cont",
   guestGuideHint: "Creează un cont gratuit ca să bifezi pașii, să-ți salvezi progresul și să primești mementouri.",
   situationLocal: "Tipul permisului, data expirării și dacă ai copii rămân doar pe acest telefon, criptate. Nu ajung pe serverul nostru.",
+  // Publicidad y anuncio con recompensa
+  adLabel: "Publicitate",
+  adLimit: "Ai folosit deja reclamele de azi. Revino mâine pentru alte întrebări.",
+  adUnavailable: "Nu sunt reclame disponibile acum. Încearcă mai târziu.",
+  adWatch: "Vezi o reclamă și primești 1 întrebare",
+  adWatchShort: "+1 întrebare",
+  adLeftToday: "Îți mai rămân {n} azi",
+  adCountdown: "Așteaptă {n} s ca să primești întrebarea",
+  adWaiting: "Durata reclamei",
+  adClaim: "Primește întrebarea",
+  adThanks: "Ai încă o întrebare!",
+  adThanksBody: "Mulțumim că ai văzut reclama: ajută ca A Posto să rămână gratuită.",
+  adBackToChat: "Înapoi la asistent",
+  close: "Închide",
 };

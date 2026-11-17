@@ -9,6 +9,7 @@ import { useLang } from "~/lib/lang";
 import { usePersonal } from "~/lib/personal";
 import { Alert, Screen } from "~/ui/kit";
 import { AddReminder, ReminderRow } from "~/ui/Reminders";
+import { SponsorBanner } from "~/ui/SponsorBanner";
 
 /** Casilla grande para marcar un paso o documento como hecho. */
 function Tick({ on, label, onClick }: { on: boolean; label: string; onClick: () => void }) {
@@ -43,6 +44,9 @@ export function Guides() {
           </li>
         ))}
       </ul>
+      <div className="mt-5">
+        <SponsorBanner placement="guias" />
+      </div>
     </Screen>
   );
 }

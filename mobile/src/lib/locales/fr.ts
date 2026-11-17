@@ -400,4 +400,18 @@ export const fr: Locale = {
   browseNoAccount: "Voir les guides sans compte",
   guestGuideHint: "Créez un compte gratuit pour cocher vos étapes, enregistrer votre progression et recevoir des rappels de dates.",
   situationLocal: "Votre type de titre de séjour, sa date d'expiration et le fait d'avoir des enfants restent uniquement sur ce téléphone, chiffrés. Ils n'arrivent pas sur notre serveur.",
+  // Publicidad y anuncio con recompensa
+  adLabel: "Publicité",
+  adLimit: "Vous avez utilisé les annonces du jour. Revenez demain pour gagner d'autres questions.",
+  adUnavailable: "Aucune annonce disponible pour le moment. Réessayez plus tard.",
+  adWatch: "Regarder une annonce et gagner 1 question",
+  adWatchShort: "+1 question",
+  adLeftToday: "Il vous en reste {n} aujourd'hui",
+  adCountdown: "Attendez {n} s pour gagner votre question",
+  adWaiting: "Durée de l'annonce",
+  adClaim: "Recevoir ma question",
+  adThanks: "Vous avez 1 question de plus !",
+  adThanksBody: "Merci d'avoir regardé l'annonce : cela aide A Posto à rester gratuit.",
+  adBackToChat: "Retour à l'assistant",
+  close: "Fermer",
 };

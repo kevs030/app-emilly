@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { bonuses } from "@/content/bonuses";
 import { useLang } from "~/lib/lang";
 import { Screen } from "~/ui/kit";
+import { SponsorBanner } from "~/ui/SponsorBanner";
 
 /** Ayudas públicas: el mismo contenido verificado de la web, con su fuente y fecha de revisión. */
 export function Benefits() {
@@ -70,6 +71,9 @@ export function Benefits() {
         ))}
       </ul>
       <p className="mt-4 text-[13px] text-ink-soft">{t("disclaimer")}</p>
+      <div className="mt-5">
+        <SponsorBanner placement="guias" />
+      </div>
     </Screen>
   );
 }
