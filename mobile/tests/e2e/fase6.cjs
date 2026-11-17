@@ -50,6 +50,17 @@ const PREFIX = process.env.APP_PREFIX || "";
   check("traducida (árabe)", (await p.locator("section.help-card h2").innerText()).includes("كيف يعمل"));
   await p.evaluate(() => localStorage.setItem("aposto:lang", "es"));
 
+  // Vídeo tutorial: en la guía de uso (paso 1) y en la portada, sin descargarse hasta reproducirlo
+  await p.goto(ORIGIN + PREFIX + "/tour"); await p.waitForSelector("h1");
+  const v = p.locator("video");
+  check("guía de uso: incluye el vídeo «Mira cómo se usa»", (await v.count()) === 1 && (await p.locator("text=Mira cómo se usa").count()) === 1);
+  check("vídeo: no se descarga hasta pulsar «reproducir»", (await v.getAttribute("preload")) === "none" && /\/video\/tutorial-es\.mp4$/.test(await v.getAttribute("src")));
+  check("vídeo: con imagen de portada y subtítulos", /tutorial-es\.jpg$/.test(await v.getAttribute("poster")) && (await p.locator('video track[kind="captions"]').count()) === 1);
+  const guest = await makeApp(br, errs);
+  await guest.p.goto(ORIGIN + PREFIX + "/welcome"); await guest.p.waitForSelector("#langs-title");
+  check("portada: el vídeo también se ve antes de crear cuenta", (await guest.p.locator("video").count()) === 1);
+  await guest.p.context().close();
+
   check("sin errores de JavaScript", errs.length === 0, errs.join(" | "));
   console.log(res.join("\n"));
   await br.close();

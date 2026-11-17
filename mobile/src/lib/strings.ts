@@ -524,6 +524,10 @@ const S = {
   help_profile_what: { es: "Tu cuenta: nombre, idioma, correo o celular y privacidad.", it: "Il tuo account: nome, lingua, email o cellulare e privacy.", en: "Your account: name, language, email or phone and privacy." },
   help_profile_how: { es: "Cambia el idioma, vuelve a ver la guía de uso, descarga tus datos o activa la huella en el teléfono.", it: "Cambia la lingua, rivedi la guida d'uso, scarica i tuoi dati o attiva l'impronta sul telefono.", en: "Change the language, see the user guide again, download your data or turn on fingerprint sign-in on your phone." },
   help_profile_imp: { es: "Puedes borrar tu cuenta y todos tus datos cuando quieras desde aquí.", it: "Da qui puoi eliminare l'account e tutti i tuoi dati quando vuoi.", en: "You can delete your account and all your data at any time from here." },
+  // Vídeo tutorial
+  tutorialTitle: { es: "Mira cómo se usa (1 minuto)", it: "Guarda come si usa (1 minuto)", en: "See how to use it (1 minute)" },
+  tutorialHint: { es: "Vídeo con voz y subtítulos. Solo se descarga si lo reproduces (unos 5 MB).", it: "Video con voce e sottotitoli. Si scarica solo se lo riproduci (circa 5 MB).", en: "Video with voice and subtitles. It only downloads if you play it (about 5 MB)." },
+  tutorialLangNote: { es: "Vídeo en español, con subtítulos.", it: "Video in spagnolo, con sottotitoli.", en: "Video in Spanish, with subtitles." },
 } satisfies Record<string, { es: string; it?: string; en?: string }>;
 
 export type StringKey = keyof typeof S;

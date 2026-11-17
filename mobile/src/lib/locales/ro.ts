@@ -457,4 +457,8 @@ export const ro: Locale = {
   help_profile_what: "Contul tău: nume, limbă, e-mail sau telefon și confidențialitate.",
   help_profile_how: "Schimbă limba, revezi ghidul de utilizare, descarcă-ți datele sau activează amprenta pe telefon.",
   help_profile_imp: "Îți poți șterge contul și toate datele oricând, de aici.",
+  // Vídeo tutorial
+  tutorialTitle: "Vezi cum se folosește (1 minut)",
+  tutorialHint: "Video cu voce și subtitrări. Se descarcă doar dacă îl pornești (circa 5 MB).",
+  tutorialLangNote: "Video în spaniolă, cu subtitrări.",
 };

@@ -22,6 +22,7 @@ const H = {
   popularSub: { es: "Cada guía incluye los formularios oficiales y la fecha de revisión.", en: "Each guide includes the official forms and the date it was checked.", it: "Ogni guida include i moduli ufficiali e la data di verifica." },
   tools: { es: "Todo lo que necesitas", en: "Everything you need", it: "Tutto ciò che ti serve" },
   how: { es: "Cómo funciona", en: "How it works", it: "Come funziona" },
+  video: { es: "Mira en 1 minuto cómo se usa la app.", en: "See how to use the app in 1 minute (video in Spanish with subtitles).", it: "Guarda in 1 minuto come si usa l'app (video in spagnolo con sottotitoli)." },
   scamTitle: { es: "Protégete de las estafas", en: "Protect yourself from scams", it: "Proteggiti dalle truffe" },
   scam: {
     es: "Nadie puede venderte un «contrato» del Decreto Flussi ni «acelerar» tu permiso por dinero. Los Patronatos ayudan gratis. A Posto nunca te pedirá dinero ni tus contraseñas.",
@@ -140,6 +141,13 @@ export default async function Home() {
 
       <section>
         <h2 className="text-2xl font-bold tracking-tight">{tr(H.how, lang)}</h2>
+        <figure className="mt-4 grid justify-items-center gap-2">
+          {/* No se descarga hasta que se pulsa «reproducir»: ahorra datos. */}
+          <video src="/video/tutorial-es.mp4" poster="/video/tutorial-es.jpg" controls playsInline preload="none" width={300} height={649} className="w-[min(300px,100%)] rounded-3xl border border-border bg-black shadow-sm">
+            <track kind="captions" src="/video/tutorial-es.vtt" srcLang="es" label="Español" />
+          </video>
+          <figcaption className="text-center text-sm text-muted">{tr(H.video, lang)}</figcaption>
+        </figure>
         <ol className="mt-4 grid gap-3 sm:grid-cols-3">
           {STEPS.map((s, i) => (
             <Reveal key={s.es} delay={i * 90}>

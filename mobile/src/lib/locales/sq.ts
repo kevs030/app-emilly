@@ -457,4 +457,8 @@ export const sq: Locale = {
   help_profile_what: "Llogaria juaj: emri, gjuha, emaili ose celulari dhe privatësia.",
   help_profile_how: "Ndryshoni gjuhën, rishikoni udhëzuesin e përdorimit, shkarkoni të dhënat ose aktivizoni gjurmën në telefon.",
   help_profile_imp: "Mund ta fshini llogarinë dhe të gjitha të dhënat kur të doni, nga këtu.",
+  // Vídeo tutorial
+  tutorialTitle: "Shikoni si përdoret (1 minutë)",
+  tutorialHint: "Video me zë dhe titra. Shkarkohet vetëm nëse e luani (rreth 5 MB).",
+  tutorialLangNote: "Video në spanjisht, me titra.",
 };

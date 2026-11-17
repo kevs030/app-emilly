@@ -44,6 +44,8 @@ async function makeApp(br, errs, opts) {
       if (m === 'DELETE') { db[table] = db[table].filter(x => !match(x, u)); if (table === 'procedures') db.procedure_items = []; return r.fulfill({ status: 204, headers: cors }); }
     });
     await p.route('**/api/points*', r => r.fulfill({ status: 200, headers: { ...cors, 'content-type': 'application/json' }, body: JSON.stringify({ points: [[41.9, 12.49, 'Questura di Roma', 'Via di San Vitale 15']] }) }));
+    // Sin la web delante (prueba de la app sola), la imagen del vídeo tutorial no existe: se simula.
+    if (!process.env.APP_PREFIX) await p.route('**/video/tutorial-es.*', r => r.fulfill({ status: 200, contentType: r.request().url().endsWith('.vtt') ? 'text/vtt' : 'image/jpeg', body: r.request().url().endsWith('.vtt') ? 'WEBVTT\n' : '' }));
     // Publicidad: por defecto no hay anuncios (fase 5 lo sobrescribe con los suyos).
     await p.route('**/api/ads', r => r.request().method() === 'OPTIONS' ? r.fulfill({ status: 204, headers: cors }) : r.fulfill({ status: 200, headers: { ...cors, 'content-type': 'application/json' }, body: JSON.stringify({ available: false }) }));
     const login = async ({ tour = false } = {}) => { await p.goto((process.env.APP_ORIGIN || 'http://localhost:4173') + (process.env.APP_PREFIX || '') + '/auth?mode=signin'); await p.fill('input[type=email]', 'ana@example.com'); await p.fill('input[type=password]', 'Correcta12345'); await p.click('button.btn:has-text("Entrar")'); if (tour) return; await p.waitForSelector('text=Saltar'); await p.click('button:has-text("Saltar")'); await p.waitForSelector('text=Hola, Ana'); };

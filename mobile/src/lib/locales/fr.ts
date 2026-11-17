@@ -457,4 +457,8 @@ export const fr: Locale = {
   help_profile_what: "Votre compte : nom, langue, e-mail ou téléphone et confidentialité.",
   help_profile_how: "Changez la langue, revoyez le guide d'utilisation, téléchargez vos données ou activez l'empreinte sur le téléphone.",
   help_profile_imp: "Vous pouvez supprimer votre compte et toutes vos données à tout moment depuis ici.",
+  // Vídeo tutorial
+  tutorialTitle: "Voyez comment l'utiliser (1 minute)",
+  tutorialHint: "Vidéo avec voix et sous-titres. Elle ne se télécharge que si vous la lancez (environ 5 Mo).",
+  tutorialLangNote: "Vidéo en espagnol, sous-titrée.",
 };
