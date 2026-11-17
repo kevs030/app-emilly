@@ -25,6 +25,7 @@ Permisos nuevos, complementos nativos (por ejemplo AdMob), el icono o el nombre 
 4. Publica. Las apps antiguas dejan de recibir paquetes y muestran «Hay una versión nueva de A Posto · Descargar».
 
 ## Importante
-- La compilación es idéntica en cualquier máquina (misma huella): por eso `mobile/src/styles.css` excluye
-  las carpetas `tests`, `android` e `ios` del análisis de estilos. No quitar esas líneas.
+- La huella se calcula sobre las FUENTES de la app (lista `SOURCES` en el script), no sobre el resultado compilado,
+  para que sea la misma en Vercel y en cualquier ordenador. Si la app empieza a usar otro archivo compartido de `src/`,
+  añádelo a `SOURCES`.
 - Las personas con la versión 1.0.1 o anterior deben instalar una vez la 1.1.0: es la primera con actualizaciones en vivo.

@@ -21,9 +21,14 @@ const files = walk(DIST)
   .filter((f) => f !== "live-version.json")
   .sort();
 
-// Huella del contenido: igual contenido ⇒ igual huella, en cualquier máquina.
+// Huella de las FUENTES de la app (no del resultado compilado): el compilador puede repartir el código en trozos
+// de forma distinta según la máquina, pero mismas fuentes ⇒ misma app ⇒ misma huella, en cualquier máquina.
+const SOURCES = ["mobile/src", "mobile/public", "mobile/index.html", "mobile/vite.config.ts", "mobile/package-lock.json", "src/content", "src/lib/i18n.ts", "src/lib/overpass.ts", "src/components/PrivacyContent.tsx", "src/styles/tokens.css"];
+const srcFiles = SOURCES.flatMap((p) => (statSync(p).isDirectory() ? walk(p) : [p])).map((f) => f.split("\\").join("/")).sort();
 const h = createHash("sha256");
-for (const f of files) h.update(f).update("\0").update(readFileSync(join(DIST, f))).update("\0");
+for (const f of srcFiles) h.update(f).update("\0").update(readFileSync(f)).update("\0");
+// Variables VITE_* (se incrustan en la app al compilar)
+for (const [k, v] of Object.entries(process.env).filter(([k]) => k.startsWith("VITE_")).sort()) h.update(`${k}=${v}\0`);
 const hash = h.digest("hex");
 writeFileSync(join(DIST, "live-version.json"), JSON.stringify({ hash }));
 
