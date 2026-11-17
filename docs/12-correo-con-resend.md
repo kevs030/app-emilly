@@ -6,6 +6,9 @@ miembros del equipo y muy pocos correos por hora.
 
 Nunca pegues claves en el chat ni en el repositorio: solo en las pantallas de Resend y Supabase.
 
+> **Dominio de A Posto: `apostoapp.app`** (comprado en Cloudflare). Subdominio de correo en Resend: `mail.apostoapp.app`.
+> Remitente: `no-reply@mail.apostoapp.app` · Nombre: `A Posto`.
+
 ---
 
 ## Paso 0 — Comprar un dominio propio (obligatorio para Resend)
@@ -48,7 +51,7 @@ reputación del correo no afecta al dominio principal.
 1. https://supabase.com/dashboard → proyecto de A Posto.
 2. Menú izquierdo **Authentication** → **Emails** → pestaña **SMTP Settings**.
 3. Activa **Enable Custom SMTP** y rellena:
-   - **Sender email:** `no-reply@mail.TU-DOMINIO`
+   - **Sender email:** `no-reply@mail.apostoapp.app`
    - **Sender name:** `A Posto`
    - **Host:** `smtp.resend.com`
    - **Port number:** `465`
@@ -93,7 +96,7 @@ Haz lo mismo en **Reset Password** cambiando el texto por «Crear una nueva cont
 ## Paso 7 — Probar
 
 1. Abre la app y crea una cuenta con un correo **que no sea del equipo** (por ejemplo, uno personal nuevo).
-2. Debe llegar un correo de `no-reply@mail.TU-DOMINIO` en menos de un minuto (mira también en Spam).
+2. Debe llegar un correo de `no-reply@mail.apostoapp.app` en menos de un minuto (mira también en Spam).
 3. Pulsa el botón: la cuenta queda confirmada y la app entra.
 4. Si no llega: Resend → **Emails** muestra cada envío y su error; Supabase →
    **Logs** → **Auth** muestra si Supabase intentó enviarlo.
