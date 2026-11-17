@@ -5,7 +5,7 @@ import { cpSync, existsSync, readFileSync, rmSync, writeFileSync } from "node:fs
 
 const run = (cmd, env = {}) => execSync(cmd, { cwd: "mobile", stdio: "inherit", env: { ...process.env, ...env } });
 
-if (!existsSync("mobile/node_modules/vite")) run("npm ci --no-audit --no-fund");
+if (!existsSync("mobile/node_modules/vite")) run("npm ci --include=dev --no-audit --no-fund");
 run("npx tsc --noEmit");
 run("npx vite build", { VITE_BASE: "/app/" });
 rmSync("public/app", { recursive: true, force: true });
