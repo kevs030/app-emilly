@@ -1,4 +1,4 @@
--- PENDIENTE — NO APLICAR SIN EL «SÍ» DEL PROPIETARIO.
+-- Aplicada en producción el 17-11-2026 con el visto bueno del propietario.
 -- A Posto — seguridad (auditoría del 17-11-2026). Se puede ejecutar más de una vez.
 -- No borra datos. Añade dos tablas y cambia una función.
 --

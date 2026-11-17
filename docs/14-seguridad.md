@@ -16,7 +16,7 @@ Revisado sobre el código, el historial de Git y la base de datos real (informe 
 | 8 | Bloquear manipulación de campos | ✅ | Permisos por columna: nadie puede cambiar `role` (hacerse administrador), ni sus créditos, ni campos internos. Las funciones especiales comprueban quién llama. |
 | 9 | Proteger cookies de sesión | ✅ | Cookies `Secure` + `SameSite=Lax` (patrón oficial de Supabase). No son `HttpOnly` porque el navegador las necesita; el riesgo de robo por scripts lo frena la política de contenido (CSP). |
 | 10 | Hashear contraseñas | ✅ 👤 | Supabase las guarda con bcrypt. 👤 Activar la **protección de contraseñas filtradas** (ver abajo). |
-| 11 | Rate limiting | ✅ ⏳ | Límites en todas las rutas del servidor. 🔧 Ahora compartidos entre todos los servidores de Vercel cuando apliques la migración `supabase/pendientes/0009_seguridad.sql`; hasta entonces, por servidor. |
+| 11 | Rate limiting | ✅ | Límites en todas las rutas del servidor, compartidos entre todos los servidores de Vercel (migración `supabase/migrations/0008_seguridad.sql`, aplicada el 17-11-2026). |
 | 12 | Protección contra bots | ⏳ 👤 | 🔧 CAPTCHA de Cloudflare Turnstile listo en registro, acceso, teléfono y recuperación (app y web), **apagado** hasta poner la clave. |
 | 13 | Validar inputs | ✅ | Todas las rutas del servidor validan con `zod` (tipos, longitudes, formatos); la base añade sus propias comprobaciones. |
 | 14 | Cerrar CORS | ✅ | Las rutas privadas solo responden a la app (lista cerrada de orígenes). Solo `/api/points` (datos públicos del mapa) está abierta. |
