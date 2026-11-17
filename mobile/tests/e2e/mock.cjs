@@ -6,8 +6,9 @@ const user = { id: 'u1', aud: 'authenticated', email: 'ana@example.com', phone: 
 const session = { access_token: jwt, token_type: 'bearer', expires_in: 36000, expires_at: Math.floor(Date.now() / 1000) + 36000, refresh_token: 'r1', user };
 const cors = { 'access-control-allow-origin': '*', 'access-control-allow-headers': '*', 'access-control-allow-methods': '*' };
 async function makeApp(br, errs, opts) {
-  const mk = async ({ missing = false } = {}) => {
-    const ctx = await br.newContext({ ...devices['iPhone 13'], locale: 'es-ES' });
+  const mk = async ({ missing = false, video = null, contextOptions = {} } = {}) => {
+    // video: { dir, size } graba la sesión (lo usa el vídeo de demostración, no las pruebas).
+    const ctx = await br.newContext({ ...devices['iPhone 13'], locale: 'es-ES', ...(video ? { recordVideo: video } : {}), ...contextOptions });
     const p = await ctx.newPage();
     p.on('pageerror', e => errs.push(String(e).slice(0, 200)));
     p.on('dialog', d => d.accept());
@@ -44,7 +45,7 @@ async function makeApp(br, errs, opts) {
     });
     await p.route('**/api/points*', r => r.fulfill({ status: 200, headers: { ...cors, 'content-type': 'application/json' }, body: JSON.stringify({ points: [[41.9, 12.49, 'Questura di Roma', 'Via di San Vitale 15']] }) }));
     const login = async ({ tour = false } = {}) => { await p.goto((process.env.APP_ORIGIN || 'http://localhost:4173') + (process.env.APP_PREFIX || '') + '/auth?mode=signin'); await p.fill('input[type=email]', 'ana@example.com'); await p.fill('input[type=password]', 'Correcta12345'); await p.click('button.btn:has-text("Entrar")'); if (tour) return; await p.waitForSelector('text=Saltar'); await p.click('button:has-text("Saltar")'); await p.waitForSelector('text=Hola, Ana'); };
-    return { p, db, rpc, login };
+    return { p, db, rpc, login, ctx };
   };
   return mk(opts);
 }
