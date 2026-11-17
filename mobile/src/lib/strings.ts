@@ -48,7 +48,7 @@ const S = {
   haveAccount: { es: "Ya tengo cuenta", it: "Ho già un account", en: "I already have an account" },
   free: { es: "Gratis. Sin tarjeta.", it: "Gratis. Senza carta.", en: "Free. No card needed." },
   email: { es: "Correo", it: "Email", en: "Email" },
-  phone: { es: "Teléfono", it: "Telefono", en: "Phone" },
+  phone: { es: "Celular", it: "Telefono", en: "Phone" },
   password: { es: "Contraseña", it: "Password", en: "Password" },
   newPassword: { es: "Nueva contraseña", it: "Nuova password", en: "New password" },
   signUp: { es: "Crear cuenta", it: "Crea account", en: "Create account" },
@@ -424,6 +424,23 @@ const S = {
   tourStart: { es: "Empezar", it: "Inizia", en: "Get started" },
   howItWorks: { es: "Cómo funciona", it: "Come funziona", en: "How it works" },
   langsAvailable: { es: "Disponible en 9 idiomas", it: "Disponibile in 9 lingue", en: "Available in 9 languages" },
+  // Portada, contraseña guardada y huella
+  welcomeTitle: { es: "¡Bienvenido/a!", it: "Benvenuto/a!", en: "Welcome!" },
+  peopleAlt: { es: "Ilustración: personas de distintos orígenes, juntas y de la mano, saludando en varios idiomas.", it: "Illustrazione: persone di origini diverse, insieme e mano nella mano, che salutano in varie lingue.", en: "Illustration: people from different backgrounds, together and holding hands, saying hello in several languages." },
+  pwSaveHint: { es: "Tu teléfono te ofrecerá guardar la contraseña para la próxima vez.", it: "Il telefono ti proporrà di salvare la password per la prossima volta.", en: "Your phone will offer to save the password for next time." },
+  cancel: { es: "Cancelar", it: "Annulla", en: "Cancel" },
+  bioReason: { es: "Confirma que eres tú para abrir A Posto", it: "Conferma che sei tu per aprire A Posto", en: "Confirm it's you to open A Posto" },
+  bioFailed: { es: "No se pudo comprobar tu huella. Inténtalo otra vez o usa el PIN del teléfono.", it: "Impossibile verificare l'impronta. Riprova o usa il PIN del telefono.", en: "We couldn't check your fingerprint. Try again or use your phone PIN." },
+  bioLockTitle: { es: "¡Bienvenido/a de nuevo!", it: "Bentornato/a!", en: "Welcome back!" },
+  bioLockBody: { es: "Usa tu huella o el desbloqueo del teléfono para entrar a tu cuenta.", it: "Usa l'impronta o lo sblocco del telefono per entrare nel tuo account.", en: "Use your fingerprint or phone unlock to open your account." },
+  bioUnlock: { es: "Entrar con huella", it: "Entra con l'impronta", en: "Sign in with fingerprint" },
+  bioOtherAccount: { es: "Usar otra cuenta", it: "Usa un altro account", en: "Use another account" },
+  bioOfferTitle: { es: "¿Entrar con tu huella?", it: "Entrare con l'impronta?", en: "Sign in with your fingerprint?" },
+  bioOfferBody: { es: "La próxima vez abrirás tu cuenta con la huella o la cara, sin escribir la contraseña. Tu huella no sale del teléfono.", it: "La prossima volta aprirai l'account con l'impronta o il volto, senza scrivere la password. L'impronta non lascia il telefono.", en: "Next time you'll open your account with your fingerprint or face, no password needed. Your fingerprint never leaves the phone." },
+  bioEnable: { es: "Sí, usar mi huella", it: "Sì, usa la mia impronta", en: "Yes, use my fingerprint" },
+  bioNotNow: { es: "Ahora no", it: "Non ora", en: "Not now" },
+  bioToggle: { es: "Entrar con huella", it: "Entra con l'impronta", en: "Sign in with fingerprint" },
+  bioToggleHint: { es: "Pide tu huella o tu cara al abrir la app en este teléfono.", it: "Chiede impronta o volto all'apertura dell'app su questo telefono.", en: "Asks for your fingerprint or face when opening the app on this phone." },
 } satisfies Record<string, { es: string; it?: string; en?: string }>;
 
 export type StringKey = keyof typeof S;

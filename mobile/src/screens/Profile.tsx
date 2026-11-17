@@ -1,6 +1,7 @@
 import { Mail, Smartphone } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { BiometricToggle } from "~/ui/AppLock";
 import { useAuth } from "~/auth/AuthProvider";
 import { removeAllFiles } from "~/lib/documents";
 import { useLang } from "~/lib/lang";
@@ -159,6 +160,8 @@ export function Profile() {
           {info && <Alert kind="ok">{info}</Alert>}
           {error && <Alert kind="error">{error}</Alert>}
         </section>
+
+        <BiometricToggle />
 
         <Link to="/tour" className="btn btn-secondary">
           {t("howItWorks")}

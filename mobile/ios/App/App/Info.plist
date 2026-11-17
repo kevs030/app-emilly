@@ -83,6 +83,8 @@
 	<string>A Posto usa la cámara para que fotografíes tus documentos y cartas.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>A Posto accede a tus fotos solo cuando eliges una imagen de un documento.</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>A Posto usa Face ID solo para abrir tu cuenta en este teléfono. Tu cara no sale del dispositivo.</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 </dict>

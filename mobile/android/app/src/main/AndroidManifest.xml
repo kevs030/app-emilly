@@ -45,4 +45,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- Avisos de citas: solo si la persona los activa. -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Entrar con la huella: el sistema muestra el diálogo; la huella no sale del teléfono. -->
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
 </manifest>

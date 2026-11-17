@@ -16,6 +16,7 @@ import { Notifications } from "~/screens/Notifications";
 import { OfficesMap } from "~/screens/OfficesMap";
 import { Scan } from "~/screens/Scan";
 import { Simulator } from "~/screens/Simulator";
+import { AppLock } from "~/ui/AppLock";
 import { NotifySync } from "~/ui/NotifySync";
 import { Auth } from "~/screens/Auth";
 import { Benefits } from "~/screens/Benefits";
@@ -64,33 +65,35 @@ function Private() {
     { to: "/profile", icon: UserRound, label: t("tabProfile"), end: false },
   ];
   return (
-    <div className="flex h-full flex-col">
-      {!online && (
-        <p className="safe-top flex items-center justify-center gap-2 bg-beige px-4 pb-2 text-[14px]" role="status">
-          <WifiOff size={16} aria-hidden /> {t("offline")}
-        </p>
-      )}
-      <main className="flex-1 overflow-y-auto">
-        <PersonalProvider>
-          <NotifySync />
-          <Outlet />
-        </PersonalProvider>
-      </main>
-      {!bare && (
-        <nav className="safe-bottom border-t border-beige bg-white" aria-label="Principal">
-          <ul className="mx-auto flex max-w-md">
-            {tabs.map((tab) => (
-              <li key={tab.to} className="flex-1">
-                <NavLink to={tab.to} end={tab.end} className={({ isActive }) => `flex min-h-14 flex-col items-center justify-center gap-0.5 pt-2 text-[12px] ${isActive ? "font-bold text-terracotta-deep" : "text-ink-soft"}`}>
-                  <tab.icon size={23} aria-hidden />
-                  {tab.label}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )}
-    </div>
+    <AppLock>
+      <div className="flex h-full flex-col">
+        {!online && (
+          <p className="safe-top flex items-center justify-center gap-2 bg-beige px-4 pb-2 text-[14px]" role="status">
+            <WifiOff size={16} aria-hidden /> {t("offline")}
+          </p>
+        )}
+        <main className="flex-1 overflow-y-auto">
+          <PersonalProvider>
+            <NotifySync />
+            <Outlet />
+          </PersonalProvider>
+        </main>
+        {!bare && (
+          <nav className="safe-bottom border-t border-beige bg-white" aria-label="Principal">
+            <ul className="mx-auto flex max-w-md">
+              {tabs.map((tab) => (
+                <li key={tab.to} className="flex-1">
+                  <NavLink to={tab.to} end={tab.end} className={({ isActive }) => `flex min-h-14 flex-col items-center justify-center gap-0.5 pt-2 text-[12px] ${isActive ? "font-bold text-terracotta-deep" : "text-ink-soft"}`}>
+                    <tab.icon size={23} aria-hidden />
+                    {tab.label}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
+      </div>
+    </AppLock>
   );
 }
 

@@ -1,9 +1,10 @@
-import { BellRing, Check, Languages, ListChecks, MapPin, MessageCircle, ScanText, ShieldCheck, type LucideIcon } from "lucide-react";
+import { BellRing, Check, ListChecks, MapPin, MessageCircle, ScanText, type LucideIcon } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "~/auth/AuthProvider";
 import { useLang } from "~/lib/lang";
 import { UI_LANGS, type StringKey, type UiLang } from "~/lib/strings";
+import { PeopleTogether, SceneAssistant, SceneDates, SceneGuides, ScenePrivacy } from "~/ui/People";
 
 /** Guarda en este dispositivo que la persona ya vio la guía de uso (una vez por cuenta). */
 const seenKey = (uid: string) => `aposto:tour:${uid}`;
@@ -25,22 +26,22 @@ function markSeen(uid: string | undefined) {
 }
 
 type Step = {
-  icon: LucideIcon;
+  scene: typeof PeopleTogether;
   title: StringKey;
   body: StringKey;
   items?: { icon: LucideIcon; text: StringKey; to: string }[];
 };
 
 const STEPS: Step[] = [
-  { icon: Languages, title: "tour1Title", body: "tour1Body" },
+  { scene: PeopleTogether, title: "tour1Title", body: "tour1Body" },
   {
-    icon: ListChecks,
+    scene: SceneGuides,
     title: "tour2Title",
     body: "tour2Body",
     items: [{ icon: ListChecks, text: "tour2Try", to: "/guides" }],
   },
   {
-    icon: MessageCircle,
+    scene: SceneAssistant,
     title: "tour3Title",
     body: "tour3Body",
     items: [
@@ -49,7 +50,7 @@ const STEPS: Step[] = [
     ],
   },
   {
-    icon: BellRing,
+    scene: SceneDates,
     title: "tour4Title",
     body: "tour4Body",
     items: [
@@ -57,7 +58,7 @@ const STEPS: Step[] = [
       { icon: MapPin, text: "tour4TryMap", to: "/map" },
     ],
   },
-  { icon: ShieldCheck, title: "tour5Title", body: "tour5Body" },
+  { scene: ScenePrivacy, title: "tour5Title", body: "tour5Body" },
 ];
 
 /** Guía de primer uso: qué hace la app y por dónde empezar. Se puede volver a abrir desde el perfil. */
@@ -93,9 +94,7 @@ export function Tour() {
       </div>
 
       <div key={i} className="rise flex flex-1 flex-col py-6">
-        <span className="icon-tile" style={{ width: 64, height: 64, borderRadius: 20 }}>
-          <step.icon size={32} aria-hidden />
-        </span>
+        <step.scene label={t(step.title)} />
         <h1 className="mt-5 text-[28px] font-bold leading-tight tracking-tight">{t(step.title)}</h1>
         <p className="mt-3 text-lg text-ink-soft">{t(step.body)}</p>
 

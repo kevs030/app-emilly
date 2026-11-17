@@ -11,7 +11,8 @@ let p;
   const errs = [];
   const res = [];
   const check = (name, ok, extra = "") => res.push(`${ok ? "OK   " : "FALLA"} ${name}${extra ? " — " + extra : ""}`);
-  const small = () => p.locator("a, button").evaluateAll((els) => els.filter((e) => { const r = e.getBoundingClientRect(); return r.width > 0 && (r.height < 44 || r.width < 44); }).map((e) => e.textContent.trim().slice(0, 30)));
+  // Los enlaces dentro de una frase (la casilla de aceptación) están exentos, como permite WCAG 2.5.8.
+  const small = () => p.locator("a, button").evaluateAll((els) => els.filter((e) => { const r = e.getBoundingClientRect(); return !e.closest("label") && r.width > 0 && (r.height < 44 || r.width < 44); }).map((e) => e.textContent.trim().slice(0, 30)));
   const app = await makeApp(br, errs);
   p = app.p;
   const { db, login } = app;
@@ -22,12 +23,28 @@ let p;
   const chips = await p.locator('section[aria-labelledby="langs-title"] button').allInnerTexts();
   check("bienvenida: muestra 9 idiomas", chips.length === 9, chips.join(", "));
   await p.click('section[aria-labelledby="langs-title"] button:has-text("Italiano")');
-  check("bienvenida: tocar «Italiano» cambia la pantalla al italiano", (await p.locator("h1").innerText()).includes("passo dopo passo"));
+  check("bienvenida: tocar «Italiano» cambia la pantalla al italiano", (await p.locator("h1").innerText()).includes("Benvenuto"));
   await p.click('section[aria-labelledby="langs-title"] button:has-text("العربية")');
   check("bienvenida: el árabe se muestra de derecha a izquierda", (await p.evaluate(() => document.documentElement.dir)) === "rtl");
   await p.click('section[aria-labelledby="langs-title"] button:has-text("Español")');
   check("bienvenida: botones de 44 px o más", (await small()).length === 0, (await small()).join(" | "));
   check("bienvenida: sin desbordamiento horizontal", await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
+
+  // Portada: bienvenida arriba y, debajo, la tarjeta para crear cuenta o entrar
+  check("portada: dice «¡Bienvenido/a!»", (await p.locator("h1").innerText()) === "¡Bienvenido/a!");
+  check("portada: ilustración con descripción para lectores de pantalla", (await p.locator('svg.ppl[role="img"]').getAttribute("aria-label")).includes("personas"));
+  check("portada: formulario de registro visible sin pasar a otra pantalla", (await p.locator('input[type=email]').count()) === 1 && (await p.locator('input[type=password]').count()) === 1);
+  check("portada: correo y contraseña preparados para que el teléfono guarde la contraseña", (await p.locator('input[type=email]').getAttribute("autocomplete")) === "username" && (await p.locator('input[type=password]').getAttribute("autocomplete")) === "new-password");
+  check("portada: aviso de que el teléfono ofrecerá guardar la contraseña", (await p.locator("text=guardar la contraseña").count()) === 1);
+  await p.click('button[aria-pressed]:has-text("Entrar")');
+  check("portada: «Entrar» cambia a acceso (contraseña actual y «Olvidé mi contraseña»)", (await p.locator('input[type=password]').getAttribute("autocomplete")) === "current-password" && (await p.locator("text=Olvidé mi contraseña").count()) === 1);
+  await p.click('[role=tab]:has-text("Celular")');
+  check("portada: opción de entrar con el número de celular", (await p.locator('[role=tab][aria-selected="true"]').innerText()).includes("Celular"));
+  await p.click('[role=tab]:has-text("Correo")');
+  check("portada: botones de 44 px o más", (await small()).length === 0, (await small()).join(" | "));
+  check("portada: sin desbordamiento horizontal", await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
+  await p.goto(ORIGIN + PREFIX + "/"); await p.waitForURL(/\/welcome$/);
+  check("sin cuenta no se puede entrar al resto de la app", path() === "/welcome");
 
   // Primera vez que se entra: se abre la guía
   await login({ tour: true });
@@ -41,6 +58,7 @@ let p;
   await p.click('ul[aria-label] button:has-text("Español")'); await p.waitForTimeout(300);
   check("guía: botones de 44 px o más", (await small()).length === 0, (await small()).join(" | "));
 
+  check("guía: cada paso tiene su ilustración", (await p.locator("svg.ppl").count()) === 1);
   const titles = [];
   for (let n = 0; n < 4; n++) { await p.click('button.btn:has-text("Siguiente")'); await p.waitForTimeout(150); titles.push(await p.locator("h1").innerText()); }
   check("guía: 5 pasos con título", titles.length === 4 && titles.every((x) => x.length > 0), titles.join(" | "));
@@ -54,6 +72,9 @@ let p;
   check("«Empezar» lleva al inicio", path() === "/");
   await p.goto(ORIGIN + PREFIX + "/"); await p.waitForSelector("text=Hola, Ana");
   check("la guía no vuelve a abrirse sola", path() === "/");
+
+  await p.goto(ORIGIN + PREFIX + "/profile"); await p.waitForSelector("text=Cómo funciona");
+  check("en el navegador no se ofrece la huella (solo existe en el teléfono)", (await p.locator('[role=switch]').count()) === 0);
 
   // Se puede volver a abrir desde el perfil, y «Saltar» funciona
   await p.goto(ORIGIN + PREFIX + "/profile"); await p.click('a:has-text("Cómo funciona")');

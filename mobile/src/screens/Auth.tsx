@@ -10,13 +10,29 @@ import { PhoneCode } from "./PhoneCode";
 
 type Step = "form" | "email-sent" | "phone-code";
 
-/** Registro y acceso. Dos caminos independientes: correo + contraseña, o teléfono + código SMS. */
+export type AuthMode = "signup" | "signin";
+
+/** Pantalla propia de acceso (/auth): la misma tarjeta que la portada, con botón de volver. */
 export function Auth() {
+  const { t } = useLang();
+  const [params, setParams] = useSearchParams();
+  const mode: AuthMode = params.get("mode") === "signin" ? "signin" : "signup";
+  return (
+    <Screen back title={mode === "signup" ? t("signUp") : t("signIn")}>
+      <AuthForm mode={mode} setMode={(m) => setParams({ mode: m })} />
+    </Screen>
+  );
+}
+
+/**
+ * Registro y acceso. Dos caminos independientes: correo + contraseña, o teléfono + código SMS.
+ * Al crear la cuenta, el correo o el número se verifican antes de poder entrar.
+ * Los campos llevan `autocomplete` para que el teléfono o el navegador ofrezcan guardar la contraseña.
+ */
+export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode; setMode: (m: AuthMode) => void; hideSwitch?: boolean }) {
   const { t } = useLang();
   const { phoneLoginEnabled } = useAuth();
   const navigate = useNavigate();
-  const [params, setParams] = useSearchParams();
-  const mode = params.get("mode") === "signin" ? "signin" : "signup";
   const [method, setMethod] = useState<"email" | "phone">("email");
   const [step, setStep] = useState<Step>("form");
   const [email, setEmail] = useState("");
@@ -83,139 +99,141 @@ export function Auth() {
 
   if (step === "email-sent") {
     return (
-      <Screen back>
-        <div className="rise space-y-4">
-          <span className="icon-tile">
-            <Mail size={22} aria-hidden />
-          </span>
-          <h1 className="text-2xl font-bold">{t("checkEmailTitle")}</h1>
-          <p className="text-ink-soft">{t("checkEmailBody")}</p>
-          <p className="font-semibold">{email}</p>
-          {error && <Alert kind="error">{error}</Alert>}
-          {info && <Alert kind="ok">{info}</Alert>}
-          <button type="button" className="btn btn-secondary" onClick={resendEmail}>
-            {t("resend")}
-          </button>
-          <button type="button" className="btn btn-quiet" onClick={() => setStep("form")}>
-            {t("back")}
-          </button>
-        </div>
-      </Screen>
+      <div className="rise space-y-4">
+        <span className="icon-tile">
+          <Mail size={22} aria-hidden />
+        </span>
+        <h1 className="text-2xl font-bold">{t("checkEmailTitle")}</h1>
+        <p className="text-ink-soft">{t("checkEmailBody")}</p>
+        <p className="font-semibold">{email}</p>
+        {error && <Alert kind="error">{error}</Alert>}
+        {info && <Alert kind="ok">{info}</Alert>}
+        <button type="button" className="btn btn-secondary" onClick={resendEmail}>
+          {t("resend")}
+        </button>
+        <button type="button" className="btn btn-quiet" onClick={() => setStep("form")}>
+          {t("back")}
+        </button>
+      </div>
     );
   }
 
   if (step === "phone-code" && phone) {
-    return (
-      <Screen>
-        <PhoneCode phone={phone} type="sms" resend={sendSms} onBack={() => setStep("form")} onDone={() => navigate("/", { replace: true })} />
-      </Screen>
-    );
+    return <PhoneCode phone={phone} type="sms" resend={sendSms} onBack={() => setStep("form")} onDone={() => navigate("/", { replace: true })} />;
   }
 
   return (
-    <Screen back title={mode === "signup" ? t("signUp") : t("signIn")}>
-      <div className="rise space-y-5">
-        <div className="segmented" role="tablist">
-          {(["email", "phone"] as const).map((m) => (
-            <button
-              key={m}
-              type="button"
-              role="tab"
-              aria-selected={method === m}
-              onClick={() => {
-                setMethod(m);
-                setError("");
-              }}
-            >
-              {m === "email" ? <Mail size={18} aria-hidden /> : <Smartphone size={18} aria-hidden />}
-              {t(m)}
-            </button>
-          ))}
-        </div>
+    <div className="rise space-y-5">
+      <div className="segmented" role="tablist">
+        {(["email", "phone"] as const).map((m) => (
+          <button
+            key={m}
+            type="button"
+            role="tab"
+            aria-selected={method === m}
+            onClick={() => {
+              setMethod(m);
+              setError("");
+            }}
+          >
+            {m === "email" ? <Mail size={18} aria-hidden /> : <Smartphone size={18} aria-hidden />}
+            {t(m)}
+          </button>
+        ))}
+      </div>
 
-        {method === "email" ? (
-          <form onSubmit={submitEmail} className="space-y-4" noValidate>
-            <Field label={t("email")} type="email" autoComplete="email" inputMode="email" autoCapitalize="none" required value={email} onChange={(e) => setEmail(e.target.value)} />
-            <PasswordField label={t("password")} autoComplete={mode === "signup" ? "new-password" : "current-password"} required value={password} onChange={(e) => setPassword(e.target.value)} />
-            {mode === "signup" && (
-              <>
-                <ul className="space-y-1 text-[15px]" aria-live="polite">
-                  {(
-                    [
-                      ["short", "pwShort"],
-                      ["letters", "pwLetters"],
-                      ["digits", "pwDigits"],
-                      ["symbols", "pwSymbols"],
-                    ] as const
-                  ).map(([issue, key]) => {
-                    const ok = password.length > 0 && !issues.includes(issue);
-                    return (
-                      <li key={issue} className={`flex items-center gap-2 ${ok ? "text-[#3d5238]" : "text-ink-soft"}`}>
-                        <Check size={16} className={ok ? "opacity-100" : "opacity-30"} aria-hidden /> {t(key)}
-                      </li>
-                    );
-                  })}
-                </ul>
-                <label className="flex items-start gap-3 text-[15px]">
-                  <input type="checkbox" required className="mt-1 h-5 w-5 accent-[#A65D3D]" />{" "}
-                  <span>
-                    {t("age")}{" "}
-                    <Link to="/privacy" className="font-semibold text-brown underline">
-                      {t("privacyPolicy")}
-                    </Link>
-                  </span>
-                </label>
-              </>
-            )}
-            {error && <Alert kind="error">{error}</Alert>}
-            <button className="btn" disabled={busy || !email || !password || (mode === "signup" && issues.length > 0)}>
-              {busy ? "…" : mode === "signup" ? t("signUp") : t("signIn")}
-            </button>
-            {mode === "signin" && (
-              <Link to="/reset" className="btn btn-quiet">
-                {t("forgot")}
-              </Link>
-            )}
-          </form>
-        ) : !phoneLoginEnabled ? (
-          <Alert kind="ok">{t("phoneOff")}</Alert>
-        ) : (
-          <form onSubmit={submitPhone} className="space-y-4" noValidate>
-            <div>
-              <label className="field-label" htmlFor="dial">
-                {t("country")}
-              </label>
-              <select id="dial" className="input" value={dial} onChange={(e) => setDial(e.target.value)}>
-                {COUNTRIES.map((c) => (
-                  <option key={c.code} value={c.dial}>
-                    {c.name} ({c.dial})
-                  </option>
-                ))}
-              </select>
-            </div>
-            <Field label={t("phoneNumber")} type="tel" inputMode="tel" autoComplete="tel-national" required value={national} onChange={(e) => setNational(e.target.value)} />
-            {mode === "signup" && (
+      {method === "email" ? (
+        <form onSubmit={submitEmail} className="space-y-4" noValidate>
+          <Field label={t("email")} type="email" autoComplete="username" inputMode="email" autoCapitalize="none" required value={email} onChange={(e) => setEmail(e.target.value)} />
+          <PasswordField label={t("password")} autoComplete={mode === "signup" ? "new-password" : "current-password"} required value={password} onChange={(e) => setPassword(e.target.value)} />
+          <p className="hint -mt-2">{t("pwSaveHint")}</p>
+          {mode === "signup" && (
+            <>
+              <ul className="space-y-1 text-[15px]" aria-live="polite">
+                {(
+                  [
+                    ["short", "pwShort"],
+                    ["letters", "pwLetters"],
+                    ["digits", "pwDigits"],
+                    ["symbols", "pwSymbols"],
+                  ] as const
+                ).map(([issue, key]) => {
+                  const ok = password.length > 0 && !issues.includes(issue);
+                  return (
+                    <li key={issue} className={`flex items-center gap-2 ${ok ? "text-[#3d5238]" : "text-ink-soft"}`}>
+                      <Check size={16} className={ok ? "opacity-100" : "opacity-30"} aria-hidden /> {t(key)}
+                    </li>
+                  );
+                })}
+              </ul>
               <label className="flex items-start gap-3 text-[15px]">
                 <input type="checkbox" required className="mt-1 h-5 w-5 accent-[#A65D3D]" />{" "}
-                  <span>
-                    {t("age")}{" "}
-                    <Link to="/privacy" className="font-semibold text-brown underline">
-                      {t("privacyPolicy")}
-                    </Link>
-                  </span>
+                <span>
+                  {t("age")}{" "}
+                  <Link to="/privacy" className="font-semibold text-brown underline">
+                    {t("privacyPolicy")}
+                  </Link>
+                </span>
               </label>
-            )}
-            {error && <Alert kind="error">{error}</Alert>}
-            <button className="btn" disabled={busy || !national}>
-              {busy ? "…" : t("sendCode")}
-            </button>
-          </form>
-        )}
+            </>
+          )}
+          {error && <Alert kind="error">{error}</Alert>}
+          <button className="btn" disabled={busy || !email || !password || (mode === "signup" && issues.length > 0)}>
+            {busy ? "…" : mode === "signup" ? t("signUp") : t("signIn")}
+          </button>
+          {mode === "signin" && (
+            <Link to="/reset" className="btn btn-quiet">
+              {t("forgot")}
+            </Link>
+          )}
+        </form>
+      ) : !phoneLoginEnabled ? (
+        <Alert kind="ok">{t("phoneOff")}</Alert>
+      ) : (
+        <form onSubmit={submitPhone} className="space-y-4" noValidate>
+          <div>
+            <label className="field-label" htmlFor="dial">
+              {t("country")}
+            </label>
+            <select id="dial" className="input" value={dial} onChange={(e) => setDial(e.target.value)}>
+              {COUNTRIES.map((c) => (
+                <option key={c.code} value={c.dial}>
+                  {c.name} ({c.dial})
+                </option>
+              ))}
+            </select>
+          </div>
+          <Field label={t("phoneNumber")} type="tel" inputMode="tel" autoComplete="tel-national" required value={national} onChange={(e) => setNational(e.target.value)} />
+          {mode === "signup" && (
+            <label className="flex items-start gap-3 text-[15px]">
+              <input type="checkbox" required className="mt-1 h-5 w-5 accent-[#A65D3D]" />{" "}
+              <span>
+                {t("age")}{" "}
+                <Link to="/privacy" className="font-semibold text-brown underline">
+                  {t("privacyPolicy")}
+                </Link>
+              </span>
+            </label>
+          )}
+          {error && <Alert kind="error">{error}</Alert>}
+          <button className="btn" disabled={busy || !national}>
+            {busy ? "…" : t("sendCode")}
+          </button>
+        </form>
+      )}
 
-        <button type="button" className="btn btn-quiet" onClick={() => setParams({ mode: mode === "signup" ? "signin" : "signup" })}>
+      {!hideSwitch && (
+        <button
+          type="button"
+          className="btn btn-quiet"
+          onClick={() => {
+            setMode(mode === "signup" ? "signin" : "signup");
+            setError("");
+          }}
+        >
           {mode === "signup" ? t("toSignIn") : t("toSignUp")}
         </button>
-      </div>
-    </Screen>
+      )}
+    </div>
   );
 }
