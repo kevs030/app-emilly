@@ -1,0 +1,170 @@
+{
+  "schema_version": 1,
+  "generated_on": "2026-11-17",
+  "notes": "Datos para la base de A Posto. 'static' = cómo funciona un trámite (cambia poco). 'dynamic' = cifras y fechas que cambian (revisar con la frecuencia indicada). confidence: 'official' = fuente de la administración italiana o la UE; 'secondary' = estudio legal, sindicato o prensa, hay que confirmar con la fuente oficial antes de publicarlo como dato firme. Nada de esto es asesoramiento legal.",
+  "scopes": {
+    "national": "Toda Italia",
+    "region": "Código ISTAT de región, p. ej. 'region:03' (Lombardia), 'region:12' (Lazio)",
+    "comune": "Código catastral del municipio, p. ej. 'comune:F205' (Milano), 'comune:H501' (Roma)"
+  },
+  "static": [
+    {
+      "id": "permesso.kit_postale",
+      "topic": "permesso_di_soggiorno",
+      "scope": "national",
+      "summary": {
+        "es": "La mayoría de permisos se piden o renuevan con el kit postal (sobre amarillo), que se recoge gratis en una oficina de correos con 'Sportello Amico'. Se puede rellenar gratis con ayuda de un Patronato o de los municipios que ofrecen el servicio. Después la Questura da cita para huellas y recogida.",
+        "it": "La maggior parte dei permessi si chiede o rinnova con il kit postale (busta gialla), che si ritira gratis negli uffici postali 'Sportello Amico'. Si può compilare gratis con un Patronato o nei Comuni che offrono il servizio. Poi la Questura convoca per impronte e ritiro.",
+        "en": "Most permits are requested or renewed with the postal kit (yellow envelope), picked up free at a 'Sportello Amico' post office. A Patronato, or a municipality that offers the service, can help fill it in for free. The Questura then gives an appointment for fingerprints and collection."
+      },
+      "sources": [
+        { "title": "Poste Italiane: rilascio e rinnovo permesso di soggiorno", "url": "https://www.poste.it/prodotti/guida-rilascio-e-rinnovo-permesso-di-soggiorno.html", "official": true },
+        { "title": "Polizia di Stato: documenti per il kit postale (PDF)", "url": "https://questure.poliziadistato.it/statics/05/documenti_per_rilascio_permessi_di_soggiorno_da_richiedere_con_kit_postale.pdf?lang=it", "official": true }
+      ],
+      "last_verified": "2026-11-17",
+      "confidence": "official",
+      "app_guide": "permesso-di-soggiorno"
+    },
+    {
+      "id": "patronato.gratuidad",
+      "topic": "servicios_gratuitos",
+      "scope": "national",
+      "summary": {
+        "es": "Los Patronati (INCA-CGIL, ACLI, INAS-CISL, ITAL-UIL, EPASA-ITACO y otros) se financian con fondos públicos (ley 152/2001) y suelen tramitar gratis los permisos de residencia. Algunos servicios concretos pueden tener una tarifa dentro de los límites legales: pregunta antes.",
+        "it": "I Patronati sono finanziati con fondi pubblici (legge 152/2001) e di norma gestiscono gratis le pratiche di soggiorno. Alcuni servizi specifici possono avere una tariffa entro i limiti di legge: chiedi prima.",
+        "en": "Patronati are publicly funded (law 152/2001) and usually handle residence-permit paperwork free of charge. Some specific services may carry a fee within legal limits: ask first."
+      },
+      "sources": [
+        { "title": "EPASA-ITACO: opuscolo migrazioni (PDF)", "url": "https://adcives.epasa-itaco.it/opuscoli_pdf/opuscolo_migrazioni.pdf", "official": false },
+        { "title": "Money.it: il patronato si paga?", "url": "https://www.money.it/il-patronato-si-paga", "official": false }
+      ],
+      "last_verified": "2026-11-17",
+      "confidence": "secondary",
+      "todo": "Confirmar con una fuente del Ministero del Lavoro qué servicios son siempre gratuitos. Falta fuente sobre CAF e ISEE."
+    },
+    {
+      "id": "salud.stp_eni",
+      "topic": "sanidad",
+      "scope": "national",
+      "summary": {
+        "es": "Sin permiso de residencia, una persona de fuera de la UE puede pedir el código STP: da acceso a cuidados urgentes y esenciales, vale en toda Italia y dura 6 meses (renovable). Las personas de la UE sin cobertura y en necesidad reciben el código ENI. Ir a la sanidad NO provoca ninguna denuncia a las autoridades (art. 35 del Texto Único de Inmigración), salvo los casos de denuncia obligatoria que valen también para los italianos. No todo es gratis ni anónimo.",
+        "it": "Senza permesso, lo straniero extra-UE può avere il codice STP: cure urgenti ed essenziali, valido in tutta Italia, durata 6 mesi rinnovabile. Il cittadino UE non iscritto al SSN e indigente riceve il codice ENI. L'accesso alle cure NON comporta segnalazione (art. 35 TU Immigrazione), salvo referto obbligatorio come per i cittadini italiani. Non tutto è gratuito o anonimo.",
+        "en": "Without a permit, a non-EU national can get an STP code: urgent and essential care, valid nationwide, 6 months, renewable. EU citizens without cover and in need get an ENI code. Using health services does NOT trigger any report to the authorities (art. 35 Consolidated Immigration Act), except mandatory reports that apply to Italians too. Not everything is free or anonymous."
+      },
+      "sources": [
+        { "title": "ASL Roma 1: assistenza sanitaria ai cittadini non comunitari", "url": "https://www.aslroma1.it/assistenza-sanitaria-ai-cittadini-extracomunitari", "official": true },
+        { "title": "Regione Liguria (Alisa): assistenza stranieri", "url": "https://www.alisa.liguria.it/organizzazione/direzione-sanitaria/assistenza-stranieri-in-italia.html", "official": true },
+        { "title": "Regione Veneto: indicazioni normativa assistenza stranieri (PDF)", "url": "https://salute.regione.veneto.it/contents/2024-12/Normativaassistenzasanitariastranieri.pdf?VersionId=TawG656zX.y56HzjNFpvCfHFOVp6W73h", "official": true }
+      ],
+      "last_verified": "2026-11-17",
+      "confidence": "official",
+      "regional_variation": "Cada ASL tiene su ventanilla (a menudo 'Centro ISI'). Guardar dirección y horario por comune.",
+      "app_guide": "sanidad-tessera-sanitaria"
+    },
+    {
+      "id": "banca.conto_di_base",
+      "topic": "banca",
+      "scope": "national",
+      "summary": {
+        "es": "Si vives legalmente en Italia o en la UE, tienes DERECHO a un 'conto di base' (cuenta básica), aunque tu documento de residencia sea provisional: la Banca d'Italia acepta, por ejemplo, el recibo de la solicitud del permiso y el código fiscal provisional. Es gratis (sin impuesto de timbre) si tu ISEE es inferior a 11.600 €. Incluye a personas sin domicilio fijo y solicitantes de asilo. No aplica a quien ya tiene una cuenta en Italia ni a quien no reside legalmente. Si te la niegan, puedes reclamar ante el Arbitro Bancario Finanziario.",
+        "it": "Chi soggiorna legalmente ha DIRITTO al conto di base, indipendentemente dal titolo di soggiorno: Banca d'Italia cita la ricevuta della domanda di permesso e il codice fiscale provvisorio. Gratuito (senza imposta di bollo) con ISEE sotto 11.600 €. Vale anche per senza fissa dimora e richiedenti asilo. Escluso chi ha già un conto in Italia o non soggiorna legalmente. In caso di rifiuto: Arbitro Bancario Finanziario.",
+        "en": "If you live legally in Italy or the EU you have the RIGHT to a basic account ('conto di base') whatever your permit document: Banca d'Italia mentions the permit-application receipt and the provisional tax code. Free (no stamp duty) with ISEE under €11,600. Includes homeless people and asylum seekers. Not for people who already have an Italian account or who are not legally resident. If refused: Arbitro Bancario Finanziario."
+      },
+      "sources": [
+        { "title": "Banca d'Italia (Economia per tutti): il conto di base", "url": "https://economiapertutti.bancaditalia.it/notizie-e-rubriche/notizie/il-conto-di-base-a-chi-rivolto-e-quando-pu-essere-gratuito/", "official": true },
+        { "title": "Banca d'Italia: orientamenti di Vigilanza sul conto di base (PDF)", "url": "https://www.bancaditalia.it/compiti/vigilanza/normativa/orientamenti-vigilanza/Conto-di-pagamento-con-caratteristiche-di-base-Orientamenti-di-Vigilanza-sul-comportamento-degli-intermediari.pdf", "official": true },
+        { "title": "CIR: nuovi orientamenti Banca d'Italia (settembre 2026)", "url": "https://cir-rifugiati.org/2026/09/18/conto-di-base-nuovi-orientamenti-della-banca-ditalia-per-rimuovere-gli-ostacoli-allaccesso", "official": false }
+      ],
+      "last_verified": "2026-11-17",
+      "confidence": "official",
+      "app_guide": null,
+      "todo": "No existe guía en la app. Candidata a guía nueva."
+    },
+    {
+      "id": "familia.ricongiungimento_plazo",
+      "topic": "familia",
+      "scope": "national",
+      "summary": {
+        "es": "Reagrupación familiar: desde el DL 146/2025 (en vigor desde el 4-10-2025, convertido en ley el 26-11-2025), la Prefectura tiene hasta 150 días para dar el 'nulla osta' (antes eran 90).",
+        "it": "Ricongiungimento familiare: con il DL 146/2025 (in vigore dal 4-10-2025, convertito il 26-11-2025) il termine per il nulla osta sale a 150 giorni (prima 90).",
+        "en": "Family reunification: under DL 146/2025 (in force since 4 Oct 2025, converted into law on 26 Nov 2025) the Prefecture has up to 150 days to issue the 'nulla osta' (previously 90)."
+      },
+      "sources": [
+        { "title": "Prefettura di Chieti: ricongiungimento familiare", "url": "https://prefettura.interno.gov.it/it/prefetture/chieti/ricongiungimento-familiare", "official": true },
+        { "title": "Integrazione Migranti: convertito il DL 146/2025", "url": "https://integrazionemigranti.gov.it/it-it/Ricerca-news/Dettaglio-news/id/4510/Convertito-il-DL-1462025-flussi-e-immigrazione-ecco-cosa-prevede", "official": true }
+      ],
+      "last_verified": "2026-11-17",
+      "confidence": "official",
+      "app_guide": null,
+      "todo": "Verificar en la Gazzetta Ufficiale los requisitos de vivienda e ingresos tras la conversión antes de crear la guía."
+    },
+    {
+      "id": "cittadinanza.naturalizzazione",
+      "topic": "ciudadania",
+      "scope": "national",
+      "summary": {
+        "es": "Naturalización por residencia (fuera de la UE): regla general de 10 años de residencia legal, italiano nivel B1, ingresos mínimos (8.263,31 € anuales para una persona sola según fuentes secundarias) y sin antecedentes penales. La ley 74/2025 cambió sobre todo la ciudadanía por descendencia (ius sanguinis), no la naturalización por residencia.",
+        "it": "Naturalizzazione per residenza (extra-UE): regola generale 10 anni di residenza legale, italiano B1, reddito minimo (8.263,31 € per il solo richiedente secondo fonti secondarie), fedina penale pulita. La legge 74/2025 ha cambiato soprattutto lo ius sanguinis.",
+        "en": "Naturalisation by residence (non-EU): general rule of 10 years' legal residence, B1 Italian, minimum income (€8,263.31 a year for a single applicant per secondary sources) and a clean record. Law 74/2025 mainly changed citizenship by descent, not naturalisation."
+      },
+      "sources": [
+        { "title": "Patronato ACLI: le nuove regole della riforma", "url": "https://www.patronato.acli.it/cittadinanza-italiana/", "official": false },
+        { "title": "Edotto: decreto cittadinanza, testo coordinato", "url": "https://www.edotto.com/articolo/decreto-cittadinanza-legge-conversione-e-testo-coordinato-in-gu", "official": false }
+      ],
+      "last_verified": "2026-11-17",
+      "confidence": "secondary",
+      "app_guide": "ciudadania",
+      "todo": "Confirmar el umbral de ingresos en el portal del Ministero dell'Interno."
+    },
+    {
+      "id": "flussi.procedimiento",
+      "topic": "trabajo",
+      "scope": "national",
+      "summary": {
+        "es": "Decreto Flussi 2026-2028: la solicitud la presenta el EMPLEADOR en Italia, nunca el trabajador. Hay una fase de precompilación y luego días de envío ('click day') por sector. Los datos personales se limitan: un empleador privado sin intermediarios puede presentar como máximo tres solicitudes. Desconfía de quien te cobre por 'conseguirte un cupo'.",
+        "it": "Decreto Flussi 2026-2028: la domanda la presenta il DATORE DI LAVORO in Italia, mai il lavoratore. C'è una fase di precompilazione e poi i click day per settore. Il datore privato senza intermediari può presentare al massimo tre domande. Diffida di chi chiede soldi per 'una quota'.",
+        "en": "Decreto Flussi 2026-2028: the EMPLOYER in Italy applies, never the worker. There is a pre-filling phase, then sector 'click days'. A private employer without intermediaries can file at most three applications. Be wary of anyone charging you to 'get a quota'."
+      },
+      "sources": [
+        { "title": "Ministero del Lavoro: Flussi 2026-2028", "url": "https://www.lavoro.gov.it/priorita/pagine/flussi-2026-2028-pubblicato-il-decreto-da-oltre-497mila-ingressi", "official": true },
+        { "title": "Ministero dell'Interno: indicazioni operative istanze 2026 (PDF)", "url": "https://prefettura.interno.gov.it/sites/default/files/48/2026-01/indicazioni-operative-istanze-decreto-flussi-2026.pdf", "official": true }
+      ],
+      "last_verified": "2026-11-17",
+      "confidence": "official",
+      "app_guide": "decreto-flussi"
+    }
+  ],
+  "dynamic": [
+    { "id": "fee.marca_da_bollo_permesso", "kind": "fee", "value": 16.0, "unit": "EUR", "applies_to": "Solicitud de permiso con kit postal", "exemptions": "Menores de 14 años, solicitantes de asilo/protección internacional, actualización, conversión y duplicado (según fuentes secundarias)", "valid_from": null, "review_every_days": 90, "confidence": "secondary", "sources": ["https://www.ssconsform.it/2026/03/17/costi-permesso-di-soggiorno-2026/", "https://klaro.legal/it-it/immigrazione/permesso-di-soggiorno"], "last_verified": "2026-11-17" },
+    { "id": "fee.bollettino_pse", "kind": "fee", "value": 30.46, "unit": "EUR", "applies_to": "Coste del permiso electrónico (recibo postal)", "review_every_days": 90, "confidence": "secondary", "sources": ["https://www.ssconsform.it/2026/03/17/costi-permesso-di-soggiorno-2026/", "https://immigrafacile.it/rinnovo-permesso-di-soggiorno/"], "last_verified": "2026-11-17" },
+    { "id": "fee.contributo_permesso", "kind": "fee", "value": { "hasta_1_ano": 40.0, "de_1_a_2_anos": 50.0, "lungo_periodo_ue": 100.0 }, "unit": "EUR", "applies_to": "Contribución según duración del permiso (se suma al recibo de 30,46 €)", "review_every_days": 90, "confidence": "secondary", "sources": ["https://www.ssconsform.it/2026/03/17/costi-permesso-di-soggiorno-2026/", "https://visu-info.com/blog/rinnovo-permesso-di-soggiorno-2026-documenti-costi-116-176-e-cosa-fare-se-e-scaduto"], "last_verified": "2026-11-17", "app_consistency": "Coincide con la guía 'permesso-di-soggiorno' (70,46 € / 80,46 €)." },
+    { "id": "fee.envio_kit_postal", "kind": "fee", "value": 30.0, "unit": "EUR", "applies_to": "Envío del kit en la oficina de correos", "review_every_days": 90, "confidence": "secondary", "sources": ["https://www.ssconsform.it/2026/03/17/costi-permesso-di-soggiorno-2026/"], "last_verified": "2026-11-17" },
+    { "id": "fee.total_permesso_estimado", "kind": "fee", "value": { "min": 116.46, "max": 176.46 }, "unit": "EUR", "applies_to": "Total orientativo (recibo + contribución + envío + timbre)", "derived_from": ["fee.bollettino_pse", "fee.contributo_permesso", "fee.envio_kit_postal", "fee.marca_da_bollo_permesso"], "review_every_days": 90, "confidence": "secondary", "last_verified": "2026-11-17" },
+    { "id": "quota.flussi_2026_2028_total", "kind": "quota", "value": 497550, "unit": "ingresos", "valid_from": "2026-01-01", "valid_to": "2028-12-31", "review_every_days": 180, "confidence": "official", "sources": ["https://www.lavoro.gov.it/priorita/pagine/flussi-2026-2028-pubblicato-il-decreto-da-oltre-497mila-ingressi"], "last_verified": "2026-11-11" },
+    { "id": "quota.flussi_assistenza_familiare_fuori_quota", "kind": "quota", "value": 10000, "unit": "ingresos al año", "valid_from": "2026-01-01", "valid_to": "2028-12-31", "applies_to": "Asistencia familiar (fuera de cupo), prorrogada por el DL 146/2025", "review_every_days": 180, "confidence": "official", "sources": ["https://integrazionemigranti.gov.it/it-it/Ricerca-news/Dettaglio-news/id/4510/Convertito-il-DL-1462025-flussi-e-immigrazione-ecco-cosa-prevede"], "last_verified": "2026-11-17" },
+    {
+      "id": "date.flussi_click_days_2026",
+      "kind": "date",
+      "status": "past",
+      "value": [
+        { "date": "2026-01-12T09:00:00+01:00", "sector": "Estacional agrícola" },
+        { "date": "2026-02-09T09:00:00+01:00", "sector": "Estacional turismo y hostelería" },
+        { "date": "2026-02-16T09:00:00+01:00", "sector": "No estacional (modelo B2020)" },
+        { "date": "2026-02-18T09:00:00+01:00", "sector": "Asistencia familiar (modelo A-bis)" }
+      ],
+      "deadline": "2026-12-31",
+      "notes": "Las solicitudes se pueden enviar hasta el 31-12-2026, pero los cupos suelen agotarse en los primeros minutos.",
+      "review_every_days": 30,
+      "confidence": "official",
+      "sources": ["https://prefettura.interno.gov.it/sites/default/files/48/2026-01/indicazioni-operative-istanze-decreto-flussi-2026.pdf", "https://www.terredemilia.confcooperative.it/Opportunit%C3%A0/Circolari/decreto-flussi-2026-date-presentazione-domande"],
+      "last_verified": "2026-11-17"
+    },
+    { "id": "date.flussi_click_days_2027", "kind": "date", "status": "pending_official", "value": null, "notes": "La circular 8047/2025 prevé click days en 2027 y 2028, pero no se han encontrado las fechas publicadas. Vigilar el portal del Ministero dell'Interno (Sportello Unico) y la próxima circular.", "review_every_days": 7, "confidence": "official", "sources": ["https://www.avvocatofrancescolombardini.it/circolare-decreto-flussi/"], "last_verified": "2026-11-17" },
+    { "id": "deadline.ricongiungimento_nulla_osta", "kind": "deadline", "value": 150, "unit": "días", "previous_value": 90, "valid_from": "2025-10-04", "review_every_days": 180, "confidence": "official", "sources": ["https://prefettura.interno.gov.it/it/prefetture/chieti/ricongiungimento-familiare"], "last_verified": "2026-11-17" },
+    { "id": "threshold.conto_di_base_isee_gratis", "kind": "threshold", "value": 11600, "unit": "EUR (ISEE)", "review_every_days": 365, "confidence": "official", "sources": ["https://economiapertutti.bancaditalia.it/notizie-e-rubriche/notizie/il-conto-di-base-a-chi-rivolto-e-quando-pu-essere-gratuito/"], "last_verified": "2026-11-17" },
+    { "id": "deadline.bancaditalia_conto_di_base_adeguamento", "kind": "deadline", "value": "2026-11-30", "applies_to": "Plazo para que bancos y Poste se adapten a las orientaciones de la Banca d'Italia del 5-8-2026", "review_every_days": 30, "confidence": "secondary", "sources": ["https://reimmigrazione.com/2026/09/23/banca-ditalia-conto-di-base-anche-con-documenti-non-ordinari-la-permanenza-richiede-accesso-finanziario-effettivo/"], "last_verified": "2026-11-17" },
+    { "id": "threshold.cittadinanza_reddito_minimo", "kind": "threshold", "value": 8263.31, "unit": "EUR/año (solicitante solo)", "review_every_days": 365, "confidence": "secondary", "sources": ["https://www.patronato.acli.it/cittadinanza-italiana/"], "last_verified": "2026-11-17" },
+    { "id": "deadline.cittadinanza_riacquisto", "kind": "deadline", "value": { "from": "2025-07-01", "to": "2027-12-31" }, "applies_to": "Ventana para que ex ciudadanos italianos recuperen la ciudadanía con declaración (ley 74/2025)", "review_every_days": 180, "confidence": "secondary", "sources": ["https://www.edotto.com/articolo/decreto-cittadinanza-legge-conversione-e-testo-coordinato-in-gu"], "last_verified": "2026-11-17" },
+    { "id": "compliance.ai_act_art50", "kind": "deadline", "value": "2026-08-02", "applies_to": "El asistente debe dejar claro que es una IA (ya cumplido en la app: aviso 'Hablas con una inteligencia artificial')", "review_every_days": 365, "confidence": "secondary", "sources": ["https://www.milanofinanza.it/news/ai-act-dal-2-agosto-2026-entrano-in-vigore-gli-obblighi-di-trasparenza-per-i-chatbot-ecco-cosa-202607311152178104"], "last_verified": "2026-11-17" }
+  ]
+}
