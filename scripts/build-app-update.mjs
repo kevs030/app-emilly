@@ -27,19 +27,9 @@ const SOURCES = ["mobile/src", "mobile/public", "mobile/index.html", "mobile/vit
 const srcFiles = SOURCES.flatMap((p) => (statSync(p).isDirectory() ? walk(p) : [p])).map((f) => f.split("\\").join("/")).sort();
 const h = createHash("sha256");
 for (const f of srcFiles) h.update(f).update("\0").update(readFileSync(f)).update("\0");
-// Variables VITE_* (se incrustan en la app al compilar)
-for (const [k, v] of Object.entries(process.env).filter(([k]) => k.startsWith("VITE_")).sort()) h.update(`${k}=${v}\0`);
+// Variables VITE_* que usa la app (se incrustan al compilar). Las que añade Vercel (VITE_VERCEL_*) no se usan y no cuentan.
+for (const [k, v] of Object.entries(process.env).filter(([k]) => k.startsWith("VITE_") && !k.startsWith("VITE_VERCEL_")).sort()) h.update(`${k}=${v}\0`);
 const hash = h.digest("hex");
-// Diagnóstico (sin contenido): cuántos archivos y huella de cada carpeta, y NOMBRES de variables VITE_*.
-const perSource = Object.fromEntries(
-  SOURCES.map((p) => {
-    const hh = createHash("sha256");
-    const fs2 = srcFiles.filter((f) => f === p || f.startsWith(p + "/"));
-    for (const f of fs2) hh.update(f).update("\0").update(readFileSync(f)).update("\0");
-    return [p, `${fs2.length}:${hh.digest("hex").slice(0, 10)}`];
-  }),
-);
-const viteVars = Object.keys(process.env).filter((k) => k.startsWith("VITE_")).sort();
 writeFileSync(join(DIST, "live-version.json"), JSON.stringify({ hash }));
 
 const entries = {};
@@ -62,6 +52,6 @@ if (existsSync("mobile/android/app/build.gradle")) {
 }
 writeFileSync(
   join(OUT, "latest.json"),
-  JSON.stringify({ hash, url: `/app-update/${name}`, checksum, minNative, apk: { versionCode, versionName, url: "/descargar" }, sources: perSource, viteVars }, null, 2),
+  JSON.stringify({ hash, url: `/app-update/${name}`, checksum, minNative, apk: { versionCode, versionName, url: "/descargar" } }, null, 2),
 );
 console.log(`Paquete de actualización ${hash.slice(0, 12)} (${(zip.length / 1048576).toFixed(1)} MB), mínimo nativo ${minNative}`);
