@@ -78,7 +78,7 @@
 		</dict>
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>A Posto usa tu ubicación solo para mostrarte las oficinas más cercanas en el mapa. No se guarda.</string>
+	<string>A Posto usa tu ubicación solo en este teléfono para ordenar las oficinas por cercanía. No se guarda ni se envía.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>A Posto usa la cámara para que fotografíes tus documentos y cartas.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

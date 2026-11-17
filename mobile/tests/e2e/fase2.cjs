@@ -169,11 +169,16 @@ const ANSWER = "[1] Qué es\nCarta del INPS sobre el Assegno Unico.\n[2] Qué pi
   await p.screenshot({ path: "tests/e2e/out-simulador.png", fullPage: true });
 
   // ── Mapa ──
-  await go("/map", "text=Questura di Roma");
-  check("mapa: lista las oficinas más cercanas con distancia", (await p.locator("li.card").count()) === 2 && (await p.locator("li.card").first().innerText()).includes("km"));
-  await p.fill('input[placeholder^="Ciudad"]', "Milano"); await p.click('button[aria-label="Buscar"]'); await p.waitForTimeout(900);
-  check("mapa: al buscar Milano, la primera es la de Milano", (await p.locator("li.card").first().innerText()).includes("Milano"));
-  check("mapa: «Cómo llegar» enlaza a la ruta", (await p.locator("li.card a").first().getAttribute("href")).startsWith("https://www.google.com/maps/dir/?api=1&destination=45.4642,9.19"));
+  await go("/map", "text=Cerca de mí");
+  check("mapa: sin mapa dentro de la app (más ligera)", (await p.locator(".leaflet-container").count()) === 0);
+  check("mapa: antes de elegir ubicación, pide «Cerca de mí» o la ciudad", (await p.locator("li.card").count()) === 0 && (await p.locator("text=escribe tu ciudad para ver").count()) === 1);
+  await p.fill('input[placeholder^="Ciudad"]', "Milano"); await p.click('button[aria-label="Buscar"]'); await p.waitForSelector("li.card");
+  check("mapa: al buscar Milano, lista por distancia y la primera es la de Milano", (await p.locator("li.card").first().innerText()).includes("Milano") && (await p.locator("li.card").first().innerText()).includes("km"));
+  check("mapa: «Cómo llegar» abre la ruta en Google Maps", (await p.locator('li.card a:has-text("Cómo llegar")').first().getAttribute("href")).startsWith("https://www.google.com/maps/dir/?api=1&destination=45.4642,9.19"));
+  check("mapa: «Verlas todas» abre la búsqueda en el mapa del teléfono", (await p.locator('a:has-text("Verlas todas en el mapa del teléfono")').getAttribute("href")).startsWith("https://www.google.com/maps/search/Questura/@"));
+  await p.context().grantPermissions(["geolocation"]); await p.context().setGeolocation({ latitude: 41.9, longitude: 12.5 });
+  await p.click('button:has-text("Cerca de mí")'); await p.waitForFunction(() => /cercanas$/.test(document.querySelector("section[aria-live] h2")?.textContent?.trim() ?? ""));
+  check("mapa: con la ubicación del teléfono, la primera es la de Roma", (await p.locator("li.card").first().innerText()).includes("Roma"));
   await p.screenshot({ path: "tests/e2e/out-mapa.png" });
 
   // ── Comunidad ──
