@@ -8,6 +8,7 @@ import { usePersonal, type Procedure } from "~/lib/personal";
 import type { StringKey } from "~/lib/strings";
 import { Alert, Field, Screen } from "~/ui/kit";
 import { AddReminder, ReminderRow } from "~/ui/Reminders";
+import { startDone } from "./Start";
 import { tourSeen } from "./Tour";
 
 function ProgressBar({ percent, label }: { percent: number; label: string }) {
@@ -101,6 +102,20 @@ export function Home() {
               {t("save")}
             </button>
           </form>
+        )}
+
+        {/* Cuestionario inicial pendiente: se ofrece, nunca se impone. */}
+        {!startDone(user?.id) && (
+          <Link to="/start" className="card flex items-center gap-3 bg-sage-soft">
+            <span className="icon-tile" style={{ background: "#ffffff" }}>
+              <Sparkles size={22} aria-hidden />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block font-semibold">{t("startCard")}</span>
+              <span className="block text-[14px] text-ink-soft">{t("startCardHint")}</span>
+            </span>
+            <ArrowRight size={20} className="rtl:rotate-180 shrink-0 text-terracotta" aria-hidden />
+          </Link>
         )}
 
         {/* Buscador y accesos: cada uno lleva a una pantalla que existe y funciona. */}

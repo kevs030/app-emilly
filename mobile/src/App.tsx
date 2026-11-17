@@ -26,6 +26,7 @@ import { NewPassword, ResetPassword } from "~/screens/Password";
 import { Privacy } from "~/screens/Privacy";
 import { Profile } from "~/screens/Profile";
 import { Search } from "~/screens/Search";
+import { Start } from "~/screens/Start";
 import { Tour } from "~/screens/Tour";
 import { Welcome } from "~/screens/Welcome";
 
@@ -54,7 +55,8 @@ function Private() {
   const { ready, session, profile } = useAuth();
   const { t } = useLang();
   const online = useOnline();
-  const bare = useLocation().pathname === "/tour"; // la guía de uso ocupa toda la pantalla
+  const path = useLocation().pathname;
+  const bare = path === "/tour" || path === "/start"; // guía de uso y cuestionario a pantalla completa
   useSessionTracking(Boolean(session && profile?.consent_analytics));
   if (!ready) return <Splash />;
   if (!session) return <Navigate to="/welcome" replace />;
@@ -121,6 +123,7 @@ export function App() {
             <Route element={<Private />}>
               <Route path="/" element={<Home />} />
               <Route path="/tour" element={<Tour />} />
+              <Route path="/start" element={<Start />} />
               <Route path="/guides" element={<Guides />} />
               <Route path="/guides/:slug" element={<GuideDetail />} />
               <Route path="/search" element={<Search />} />

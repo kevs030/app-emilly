@@ -68,10 +68,43 @@ let p;
   const links = await p.locator("a.card").evaluateAll((a) => a.map((x) => x.getAttribute("href")));
   check("guía: los accesos del paso llevan a pantallas reales", links.length === 2 && links.every((h) => /\/(appointments|map)$/.test(h)), links.join(", "));
   await p.click('button.btn:has-text("Siguiente")'); await p.click('button.btn:has-text("Empezar")');
-  await p.waitForSelector("text=Hola, Ana");
-  check("«Empezar» lleva al inicio", path() === "/");
+  await p.waitForSelector("text=Cuéntanos tu situación");
+  check("«Empezar» abre el cuestionario de situación", path() === "/start");
+  check("cuestionario: a pantalla completa y con ilustración", (await p.locator('nav[aria-label="Principal"]').count()) === 0 && (await p.locator("svg.ppl").count()) === 1);
+
+  // «Ahora no»: se aplaza, el inicio lo ofrece con una tarjeta
+  await p.click('button:has-text("Ahora no")'); await p.waitForSelector("text=Hola, Ana");
+  check("«Ahora no» lleva al inicio", path() === "/");
   await p.goto(ORIGIN + PREFIX + "/"); await p.waitForSelector("text=Hola, Ana");
   check("la guía no vuelve a abrirse sola", path() === "/");
+  await p.evaluate(() => Object.keys(localStorage).filter((k) => k.startsWith("aposto:start:")).forEach((k) => localStorage.removeItem(k)));
+  await p.goto(ORIGIN + PREFIX + "/"); await p.waitForSelector("text=Hola, Ana");
+  check("inicio: tarjeta para completar la situación", (await p.locator('a[href$="/start"]').count()) === 1);
+
+  // Cuestionario completo
+  await p.click('a[href$="/start"]'); await p.click('button.btn:has-text("Empezar")');
+  check("pregunta 1 de 4: qué necesita resolver", (await p.locator("legend").innerText()).includes("resolver"));
+  await p.click('button[aria-pressed]:has-text("Codice fiscale"), button[aria-pressed]:has-text("Código fiscal")');
+  check("se pueden marcar varias opciones", (await p.locator('button[aria-pressed="true"]').count()) === 1);
+  await p.click('button.btn:has-text("Siguiente")');
+  await p.click('button[aria-pressed]:has-text("Lavoro")');
+  const soon = new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10);
+  await p.fill("input[type=date]", soon);
+  await p.click('button.btn:has-text("Siguiente")');
+  await p.click('button[aria-pressed]:has-text("Sí")');
+  check("pregunta 4: dónde vive", (await p.locator("legend").innerText()).includes("vives"));
+  await p.fill('input[autocomplete="address-level2"]', "Torino"); await p.fill('input[autocomplete="country-name"]', "Perú");
+  check("cuestionario: botones de 44 px o más", (await small()).length === 0, (await small()).join(" | "));
+  await p.click('button.btn:has-text("Ver mi plan")'); await p.waitForSelector("text=Tu plan para empezar");
+  const plan = await p.locator("ol a").evaluateAll((a) => a.map((x) => x.getAttribute("href")));
+  check("plan: el permiso que vence pronto va primero", /permesso-di-soggiorno$/.test(plan[0] || ""), plan.join(", "));
+  check("plan: incluye lo que eligió", plan.some((h) => /codice-fiscale$/.test(h)));
+  check("plan: con hijos ofrece las ayudas para familias", plan.some((h) => /\/benefits$/.test(h)));
+  check("respuestas guardadas en el perfil", db.profile.permit_type === "lavoro" && db.profile.permit_expiry === soon && db.profile.has_children === true && db.profile.city === "Torino" && db.profile.country_of_origin === "Perú", JSON.stringify(db.profile));
+  check("guías recomendadas guardadas como «Para ti»", ["permesso-di-soggiorno", "codice-fiscale"].every((s) => db.user_facts.some((f) => f.key === "interest" && f.value === s)), JSON.stringify(db.user_facts));
+  await p.click('button.btn:has-text("Ir al inicio")'); await p.waitForSelector("text=Hola, Ana");
+  check("inicio: ya no muestra la tarjeta del cuestionario", (await p.locator('a[href$="/start"]').count()) === 0);
+  check("inicio: «Para ti» muestra el plan", (await p.locator("h2:has-text('Para ti')").count()) === 1);
 
   await p.goto(ORIGIN + PREFIX + "/profile"); await p.waitForSelector("text=Cómo funciona");
   check("en el navegador no se ofrece la huella (solo existe en el teléfono)", (await p.locator('[role=switch]').count()) === 0);

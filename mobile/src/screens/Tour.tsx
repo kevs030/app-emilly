@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "~/auth/AuthProvider";
 import { useLang } from "~/lib/lang";
 import { UI_LANGS, type StringKey, type UiLang } from "~/lib/strings";
+import { startDone } from "./Start";
 import { PeopleTogether, SceneAssistant, SceneDates, SceneGuides, ScenePrivacy } from "~/ui/People";
 
 /** Guarda en este dispositivo que la persona ya vio la guía de uso (una vez por cuenta). */
@@ -144,7 +145,7 @@ export function Tour() {
               {t("back")}
             </button>
           )}
-          <button type="button" className="btn flex-1" onClick={() => (last ? finish() : setI(i + 1))}>
+          <button type="button" className="btn flex-1" onClick={() => (last ? finish(startDone(user?.id) ? "/" : "/start") : setI(i + 1))}>
             {last ? t("tourStart") : t("tourNext")}
           </button>
         </div>

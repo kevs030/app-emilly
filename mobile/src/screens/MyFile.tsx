@@ -10,7 +10,7 @@ import { Alert, Field, Screen } from "~/ui/kit";
 import { Switch } from "~/ui/Switch";
 
 // Los permisos se muestran con su nombre oficial en italiano, como aparece en la tarjeta.
-const PERMITS: [string, string | null][] = [
+export const PERMITS: [string, string | null][] = [
   ["lavoro", "Lavoro"],
   ["famiglia", "Famiglia"],
   ["studio", "Studio"],

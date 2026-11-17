@@ -441,6 +441,26 @@ const S = {
   bioNotNow: { es: "Ahora no", it: "Non ora", en: "Not now" },
   bioToggle: { es: "Entrar con huella", it: "Entra con l'impronta", en: "Sign in with fingerprint" },
   bioToggleHint: { es: "Pide tu huella o tu cara al abrir la app en este teléfono.", it: "Chiede impronta o volto all'apertura dell'app su questo telefono.", en: "Asks for your fingerprint or face when opening the app on this phone." },
+  // Cuestionario inicial (/start)
+  question: { es: "Pregunta", it: "Domanda", en: "Question" },
+  skipQuestion: { es: "Saltar", it: "Salta", en: "Skip" },
+  startTitle: { es: "Cuéntanos tu situación", it: "Raccontaci la tua situazione", en: "Tell us about your situation" },
+  startBody: { es: "4 preguntas rápidas para decirte por dónde empezar. Todas son opcionales y puedes cambiarlas cuando quieras en «Mi expediente».", it: "4 domande veloci per dirti da dove iniziare. Sono tutte facoltative e puoi cambiarle quando vuoi in «Il mio fascicolo».", en: "4 quick questions so we can tell you where to start. All are optional and you can change them anytime in “My file”." },
+  startGo: { es: "Empezar", it: "Inizia", en: "Start" },
+  startLater: { es: "Ahora no", it: "Non ora", en: "Not now" },
+  qGoals: { es: "¿Qué necesitas resolver?", it: "Cosa devi risolvere?", en: "What do you need to sort out?" },
+  qGoalsHint: { es: "Puedes elegir varias.", it: "Puoi sceglierne più di una.", en: "You can choose several." },
+  qPermit: { es: "¿Qué permiso de residencia tienes?", it: "Che permesso di soggiorno hai?", en: "What residence permit do you have?" },
+  qExpiryHint: { es: "Si la pones, te avisamos antes de que caduque.", it: "Se la inserisci, ti avvisiamo prima della scadenza.", en: "If you add it, we'll remind you before it expires." },
+  qPlace: { es: "¿Dónde vives?", it: "Dove vivi?", en: "Where do you live?" },
+  planTitle: { es: "Tu plan para empezar", it: "Il tuo piano per iniziare", en: "Your plan to get started" },
+  planBody: { es: "Según tus respuestas, este es el orden que te recomendamos. Lo tienes también en el inicio, en «Para ti».", it: "In base alle tue risposte, ecco l'ordine che ti consigliamo. Lo trovi anche nella home, in «Per te».", en: "Based on your answers, this is the order we recommend. You'll also find it on the home screen, under “For you”." },
+  planBenefits: { es: "Ayudas para familias con hijos", it: "Aiuti per famiglie con figli", en: "Benefits for families with children" },
+  planEdit: { es: "Puedes cambiar tus respuestas en Perfil → Mi expediente.", it: "Puoi cambiare le risposte in Profilo → Il mio fascicolo.", en: "You can change your answers in Profile → My file." },
+  planSee: { es: "Ver mi plan", it: "Vedi il mio piano", en: "See my plan" },
+  planHome: { es: "Ir al inicio", it: "Vai alla home", en: "Go to home" },
+  startCard: { es: "Cuéntanos tu situación", it: "Raccontaci la tua situazione", en: "Tell us about your situation" },
+  startCardHint: { es: "4 preguntas y te decimos por dónde empezar.", it: "4 domande e ti diciamo da dove iniziare.", en: "4 questions and we'll tell you where to start." },
 } satisfies Record<string, { es: string; it?: string; en?: string }>;
 
 export type StringKey = keyof typeof S;
