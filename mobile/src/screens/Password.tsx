@@ -5,6 +5,7 @@ import { useLang } from "~/lib/lang";
 import { redirectUrl, supabase } from "~/lib/supabase";
 import { isEmail, passwordIssues } from "~/lib/validation";
 import { Alert, Field, PasswordField, Screen } from "~/ui/kit";
+import { useCaptcha } from "~/ui/Captcha";
 
 /** Pedir el enlace de recuperación. La respuesta es la misma exista o no la cuenta. */
 export function ResetPassword() {
@@ -13,13 +14,15 @@ export function ResetPassword() {
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
+  const captcha = useCaptcha();
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
     if (!isEmail(email)) return setError(t("invalidEmail"));
     setBusy(true);
-    const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: redirectUrl("/new-password") });
+    const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: redirectUrl("/new-password"), captchaToken: captcha.token });
+    captcha.reset();
     setBusy(false);
     if (error?.status === 429) return setError(t("tooMany"));
     setSent(true);
@@ -32,7 +35,8 @@ export function ResetPassword() {
         <Field label={t("email")} type="email" autoComplete="email" inputMode="email" autoCapitalize="none" required value={email} onChange={(e) => setEmail(e.target.value)} />
         {error && <Alert kind="error">{error}</Alert>}
         {sent && <Alert kind="ok">{t("resetSent")}</Alert>}
-        <button className="btn" disabled={busy || !email}>
+        {captcha.node}
+        <button className="btn" disabled={busy || !captcha.ready || !email}>
           {busy ? "…" : t("resetSend")}
         </button>
       </form>

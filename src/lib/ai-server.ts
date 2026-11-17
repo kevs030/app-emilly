@@ -29,6 +29,28 @@ export function aiErrorCode(err: unknown): string {
   return `local_${String(e?.name ?? "Error")}${e?.code ? `_${String(e.code)}` : ""}`.replace(/[^A-Za-z0-9_]/g, "").slice(0, 60);
 }
 
+/**
+ * Tope de gasto global: como máximo AI_DAILY_QUESTION_LIMIT preguntas (asistente + lector) en 24 h
+ * entre todas las cuentas (por defecto 1000). Protege la factura si alguien crea muchas cuentas para
+ * gastar las preguntas de regalo. Necesita la clave de servidor; sin ella, el tope por cuenta (créditos) sigue activo.
+ * Complementa el límite de gasto mensual que se pone en la consola de Anthropic.
+ */
+export async function aiBudgetOk(): Promise<boolean> {
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!serviceKey) return true;
+  const limit = Number(process.env.AI_DAILY_QUESTION_LIMIT) || 1000;
+  try {
+    const admin = createSupabase(SUPABASE_URL, serviceKey, { auth: { persistSession: false, autoRefreshToken: false } });
+    const since = new Date(Date.now() - 24 * 3600 * 1000).toISOString();
+    const { count, error } = await admin.from("ai_credit_ledger").select("id", { count: "exact", head: true }).eq("reason", "question").gte("created_at", since);
+    if (error) throw error;
+    return (count ?? 0) < limit;
+  } catch (e) {
+    console.error("ai_budget_check_failed", e);
+    return true; // si la comprobación falla, no se bloquea a las personas: el tope por cuenta sigue activo
+  }
+}
+
 let lastCheck: { at: number; status: string } | null = null;
 
 /** Comprueba, sin gastar nada, que la clave es válida y que el modelo está disponible. Se repite como mucho cada minuto. */
@@ -103,7 +125,7 @@ type StreamInput = {
 export function streamAnswer({ userId, headers, remaining, system, messages, effort = "medium" }: StreamInput): Response {
   const stream = anthropic.messages.stream({
     model: AI_MODEL,
-    max_tokens: 16000,
+    max_tokens: 8000, // tope de longitud (y de coste) de cada respuesta
     thinking: { type: "adaptive" },
     output_config: { effort },
     system,

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { adsConfigured, claimable, DAILY_LIMIT, grantReward, newToken, pickSponsor, readToken, REWARD_SECONDS, rewardsLeft } from "@/lib/ads-server";
 import { authenticate, cors } from "@/lib/ai-server";
-import { rateLimit } from "@/lib/rate-limit";
+import { rateLimitShared } from "@/lib/rate-limit";
 
 /**
  * Anuncio con recompensa: ver un anuncio propio durante REWARD_SECONDS segundos = 1 pregunta al asistente.
@@ -27,7 +27,7 @@ export async function POST(req: Request) {
   }
   const auth = await authenticate(req);
   if (!auth) return json({ error: "login_required" }, 401);
-  if (!rateLimit(`ads:${auth.userId}`, 20, 60_000)) return json({ error: "rate_limited" }, 429);
+  if (!(await rateLimitShared(`ads:${auth.userId}`, 20, 60_000))) return json({ error: "rate_limited" }, 429);
   // Sin la clave de servidor no se pueden dar premios: la app oculta el botón.
   if (!adsConfigured()) return json({ available: false, reason: "not_configured" });
 

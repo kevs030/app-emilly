@@ -6,6 +6,7 @@ import { useLang } from "~/lib/lang";
 import { redirectUrl, supabase } from "~/lib/supabase";
 import { COUNTRIES, isEmail, passwordIssues, toE164 } from "~/lib/validation";
 import { Alert, Field, PasswordField, Screen } from "~/ui/kit";
+import { useCaptcha } from "~/ui/Captcha";
 import { PhoneCode } from "./PhoneCode";
 
 type Step = "form" | "email-sent" | "phone-code";
@@ -44,6 +45,7 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
   const [info, setInfo] = useState("");
 
   const issues = passwordIssues(password);
+  const captcha = useCaptcha();
   const phone = toE164(dial, national);
 
   function fail(message: string | undefined, status?: number) {
@@ -60,13 +62,15 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
     setBusy(true);
     if (mode === "signup") {
       if (issues.length) return setBusy(false);
-      const { error } = await supabase.auth.signUp({ email: email.trim(), password, options: { emailRedirectTo: redirectUrl("/") } });
+      const { error } = await supabase.auth.signUp({ email: email.trim(), password, options: { emailRedirectTo: redirectUrl("/"), captchaToken: captcha.token } });
+      captcha.reset();
       setBusy(false);
       // Misma respuesta exista o no la cuenta: así nadie puede averiguar qué correos están registrados.
       if (error && error.status !== 422) return fail(error.message, error.status);
       setStep("email-sent");
     } else {
-      const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+      const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password, options: { captchaToken: captcha.token } });
+      captcha.reset();
       setBusy(false);
       if (error) return fail(error.message, error.status);
       navigate("/", { replace: true });
@@ -75,7 +79,8 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
 
   async function sendSms(): Promise<boolean> {
     if (!phone) return false;
-    const { error } = await supabase.auth.signInWithOtp({ phone, options: { shouldCreateUser: true } });
+    const { error } = await supabase.auth.signInWithOtp({ phone, options: { shouldCreateUser: true, captchaToken: captcha.token } });
+    captcha.reset();
     if (error) fail(error.message, error.status);
     return !error;
   }
@@ -178,7 +183,8 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
             </>
           )}
           {error && <Alert kind="error">{error}</Alert>}
-          <button className="btn" disabled={busy || !email || !password || (mode === "signup" && issues.length > 0)}>
+          {captcha.node}
+          <button className="btn" disabled={busy || !captcha.ready || !email || !password || (mode === "signup" && issues.length > 0)}>
             {busy ? "…" : mode === "signup" ? t("signUp") : t("signIn")}
           </button>
           {mode === "signin" && (
@@ -216,7 +222,8 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
             </label>
           )}
           {error && <Alert kind="error">{error}</Alert>}
-          <button className="btn" disabled={busy || !national}>
+          {captcha.node}
+          <button className="btn" disabled={busy || !captcha.ready || !national}>
             {busy ? "…" : t("sendCode")}
           </button>
         </form>

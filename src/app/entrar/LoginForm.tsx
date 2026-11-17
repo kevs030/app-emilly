@@ -4,6 +4,7 @@ import { Mail, Smartphone } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { useCaptcha } from "@/components/Captcha";
 
 const L = {
   es: {
@@ -80,6 +81,7 @@ export function LoginForm({ lang, linkError, phoneEnabled }: { lang: "es" | "en"
   const [error, setError] = useState(linkError ? s.linkErr : "");
 
   const phone = id.replace(/[\s()-]/g, "");
+  const captcha = useCaptcha(lang);
 
   async function send(e: React.FormEvent) {
     e.preventDefault();
@@ -88,8 +90,9 @@ export function LoginForm({ lang, linkError, phoneEnabled }: { lang: "es" | "en"
     const supabase = createClient();
     const { error } =
       mode === "email"
-        ? await supabase.auth.signInWithOtp({ email: id.trim(), options: { shouldCreateUser: true, emailRedirectTo: `${window.location.origin}/auth/confirm` } })
-        : await supabase.auth.signInWithOtp({ phone, options: { shouldCreateUser: true } });
+        ? await supabase.auth.signInWithOtp({ email: id.trim(), options: { shouldCreateUser: true, emailRedirectTo: `${window.location.origin}/auth/confirm`, captchaToken: captcha.token } })
+        : await supabase.auth.signInWithOtp({ phone, options: { shouldCreateUser: true, captchaToken: captcha.token } });
+    captcha.reset();
     setBusy(false);
     if (error) setError(s.err);
     else setStep("sent");
@@ -157,7 +160,8 @@ export function LoginForm({ lang, linkError, phoneEnabled }: { lang: "es" | "en"
               <label className="flex items-center gap-2 text-sm">
                 <input type="checkbox" required /> {s.age}
               </label>
-              <button className="btn w-full" disabled={busy}>
+              {captcha.node}
+              <button className="btn w-full" disabled={busy || !captcha.ready}>
                 {busy ? "…" : mode === "email" ? s.sendLink : s.sendCode}
               </button>
             </>

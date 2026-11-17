@@ -1,5 +1,5 @@
 import { MIRRORS, overpassBody, toPoints, type OsmElement } from "@/lib/overpass";
-import { rateLimit } from "@/lib/rate-limit";
+import { rateLimitShared } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -15,7 +15,7 @@ export async function GET(req: Request) {
   if (!body) return Response.json({ error: "unknown_category" }, { status: 400 });
 
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  if (!rateLimit(`points:${ip}`, 30, 60_000)) return Response.json({ error: "rate_limited" }, { status: 429 });
+  if (!(await rateLimitShared(`points:${ip}`, 30, 60_000))) return Response.json({ error: "rate_limited" }, { status: 429 });
 
   const tried: string[] = [];
   for (const mirror of MIRRORS) {
@@ -46,5 +46,6 @@ export async function GET(req: Request) {
       tried.push(`${host}:${(e as Error).name}`);
     }
   }
-  return Response.json({ error: "unavailable", tried }, { status: 502, headers: { "Cache-Control": "no-store", "Access-Control-Allow-Origin": "*" } });
+  console.error("points_unavailable", cat, tried.join(" ")); // el detalle queda en el registro del servidor, no en la respuesta
+  return Response.json({ error: "unavailable" }, { status: 502, headers: { "Cache-Control": "no-store", "Access-Control-Allow-Origin": "*" } });
 }

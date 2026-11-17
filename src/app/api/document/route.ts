@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { aiKeyPresent, authenticate, cors, streamAnswer } from "@/lib/ai-server";
-import { rateLimit } from "@/lib/rate-limit";
+import { aiBudgetOk, aiKeyPresent, authenticate, cors, streamAnswer } from "@/lib/ai-server";
+import { rateLimitShared } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
@@ -51,9 +51,10 @@ export async function POST(req: Request) {
 
   const auth = await authenticate(req);
   if (!auth) return json({ error: "login_required" }, 401);
-  if (!rateLimit(`document:${auth.userId}`, 6, 60_000)) return json({ error: "rate_limited" }, 429);
+  if (!(await rateLimitShared(`document:${auth.userId}`, 6, 60_000))) return json({ error: "rate_limited" }, 429);
   if (!aiKeyPresent()) return json({ error: "not_ready", reason: "ai_key_missing" }, 503);
 
+  if (!(await aiBudgetOk())) return json({ error: "not_ready", reason: "daily_budget" }, 503);
   const spend = await auth.supabase.rpc("spend_ai_credit");
   if (spend.error) return json({ error: "not_ready", reason: "credits_db" }, 503);
   const remaining = spend.data as number;
