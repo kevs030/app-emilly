@@ -44,6 +44,8 @@ const T = {
     apkCta: "Descargar APK",
     apkVersion: "Versión",
     apkHash: "Huella SHA-256 del archivo (para comprobar que es auténtico):",
+    apkCheck: "Comprobar que el archivo es auténtico (opcional)",
+    apkCheckBody: "No hace falta para instalar la app. Este código es la «huella» del archivo oficial: si alguien modifica el archivo, la huella cambia. Sirve para que personas o asociaciones comprueben que su copia es la original.",
     apkSteps: ["Descarga el archivo desde esta página.", "Ábrelo. Android te pedirá permitir la instalación desde tu navegador: acepta solo para esta instalación.", "Pulsa «Instalar»."],
     apkWarn: "Descarga el APK solo desde esta página. No instales copias que te envíen por WhatsApp, Telegram u otras webs.",
     apkSoon: "El archivo se está preparando. Vuelve en unos días.",
@@ -88,6 +90,8 @@ const T = {
     apkCta: "Scarica APK",
     apkVersion: "Versione",
     apkHash: "Impronta SHA-256 del file (per verificare che sia autentico):",
+    apkCheck: "Verifica che il file sia autentico (facoltativo)",
+    apkCheckBody: "Non serve per installare l'app. Questo codice è l'«impronta» del file ufficiale: se qualcuno modifica il file, l'impronta cambia. Serve a persone o associazioni per verificare che la loro copia sia quella originale.",
     apkSteps: ["Scarica il file da questa pagina.", "Aprilo. Android chiederà di consentire l'installazione dal browser: accetta solo per questa installazione.", "Tocca «Installa»."],
     apkWarn: "Scarica l'APK solo da questa pagina. Non installare copie ricevute su WhatsApp, Telegram o altri siti.",
     apkSoon: "Il file è in preparazione. Torna tra qualche giorno.",
@@ -132,6 +136,8 @@ const T = {
     apkCta: "Download APK",
     apkVersion: "Version",
     apkHash: "SHA-256 fingerprint of the file (to check it is authentic):",
+    apkCheck: "Check that the file is authentic (optional)",
+    apkCheckBody: "You do not need this to install the app. This code is the “fingerprint” of the official file: if anyone changes the file, the fingerprint changes. It lets people or organisations check that their copy is the original.",
     apkSteps: ["Download the file from this page.", "Open it. Android will ask to allow installing from your browser: accept only for this install.", "Tap “Install”."],
     apkWarn: "Download the APK only from this page. Do not install copies sent over WhatsApp, Telegram or other websites.",
     apkSoon: "The file is being prepared. Please come back in a few days.",
@@ -311,10 +317,15 @@ export default async function DownloadPage({ searchParams }: { searchParams: Pro
               ))}
             </ol>
             {APP.apkSha256 && (
-              <p className="mt-4 text-xs text-muted">
-                {s.apkHash}
-                <code className="mt-1 block break-all rounded-lg bg-background p-2 font-mono text-[11px] text-foreground">{APP.apkSha256}</code>
-              </p>
+              /* Plegado: solo para quien quiera comprobar el archivo; la mayoría no lo necesita */
+              <details className="mt-4 rounded-xl border border-border bg-background p-3 text-sm">
+                <summary className="flex min-h-11 cursor-pointer items-center gap-2 font-medium text-brand">
+                  <ShieldCheck size={18} aria-hidden /> {s.apkCheck}
+                </summary>
+                <p className="mt-2 text-muted">{s.apkCheckBody}</p>
+                <p className="mt-3 text-xs text-muted">{s.apkHash}</p>
+                <code className="mt-1 block break-all rounded-lg bg-card p-2 font-mono text-[11px] text-foreground">{APP.apkSha256}</code>
+              </details>
             )}
           </>
         ) : (
