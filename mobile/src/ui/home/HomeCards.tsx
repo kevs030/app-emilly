@@ -1,7 +1,8 @@
 import { ArrowRight, Briefcase, Landmark, Quote } from "lucide-react";
 import { Link } from "react-router-dom";
 import { CS } from "~/content/modules/consulates";
-import { MQ, QUOTES, quoteIndexFor, WORK } from "~/content/modules/motivation";
+import { MQ, QUOTES, quoteIndexFor } from "~/content/modules/motivation";
+import { WK } from "~/content/modules/work";
 import { useT9 } from "~/ui/modules/ModuleBlocks";
 
 /** Frase de ánimo del día (cambia a medianoche). */
@@ -35,21 +36,21 @@ export function ConsulateCard() {
   );
 }
 
-/** «Trabajo y beneficios laborales»: sección en preparación (sin botones que no hagan nada). */
-export function WorkSoon() {
+/** Acceso a «Trabajo y beneficios laborales». */
+export function WorkCard() {
   const { x } = useT9();
   return (
-    <section className="card space-y-2" aria-labelledby="work-title" data-testid="work-soon">
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="icon-tile shrink-0">
-          <Briefcase size={22} aria-hidden />
+    <Link to="/work" className="card flex items-center gap-3" data-testid="work-card">
+      <span className="icon-tile shrink-0">
+        <Briefcase size={22} aria-hidden />
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="flex flex-wrap items-center gap-2 font-semibold">
+          {x(WK.title)} <span className="tag !bg-gold-soft !text-terracotta-hover">{x(WK.isNew)}</span>
         </span>
-        <h2 id="work-title" className="min-w-0 flex-1 text-lg font-bold">
-          {x(WORK.title)}
-        </h2>
-      </div>
-      <span className="tag !bg-gold-soft !text-terracotta-hover">{x(WORK.badge)}</span>
-      <p className="text-[15px] text-ink-soft">{x(WORK.body)}</p>
-    </section>
+        <span className="block text-[14px] text-ink-soft">{x(WK.sub)}</span>
+      </span>
+      <ArrowRight size={20} className="rtl:rotate-180 shrink-0 text-terracotta" aria-hidden />
+    </Link>
   );
 }

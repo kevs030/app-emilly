@@ -14,7 +14,7 @@ const PDF = Buffer.from("%PDF-1.4\n1 0 obj << /Type /Catalog /Pages 2 0 R >> end
   const errs = [];
   const res = [];
   const check = (name, ok, extra = "") => res.push(`${ok ? "OK   " : "FALLA"} ${name}${extra ? " — " + extra : ""}`);
-  const { p, login } = await makeApp(br, errs);
+  const { p, login } = await makeApp(br, errs, { contextOptions: { acceptDownloads: true } });
   const tiles = [];
   await p.route("https://tile.openstreetmap.org/**", (r) => { tiles.push(r.request().url()); r.fulfill({ status: 200, contentType: "image/png", body: PNG }); });
   const go = async (u) => { await p.goto(ORIGIN + PREFIX + u); await p.waitForSelector("h1, h2"); const b = p.locator('button:has-text("Entendido")'); if (await b.count()) await b.first().click(); };
@@ -28,8 +28,7 @@ const PDF = Buffer.from("%PDF-1.4\n1 0 obj << /Type /Catalog /Pages 2 0 R >> end
   // ── Inicio ──
   const quote = await p.locator('[data-testid="daily-quote"]').innerText();
   check("inicio: frase del día visible", quote.includes("Frase del día") && quote.length > 30);
-  const work = await p.locator('[data-testid="work-soon"]').innerText();
-  check("inicio: Trabajo y beneficios con «En desarrollo / Próximamente» y el mensaje literal", work.includes("En desarrollo / Próximamente") && work.includes("Estamos trabajando en este apartado para que puedas recibir ayuda, guías y consejos prácticos sobre tus derechos laborales, nómina (busta paga), vacaciones, TFR y beneficios al trabajar con contrato en Italia."));
+  check("inicio: acceso a Trabajo y beneficios (Nuevo)", (await p.locator('[data-testid="work-card"]').innerText()).includes("Nuevo"));
   check("inicio: siguen los 12 accesos", (await p.locator('nav[aria-label="Accesos"] li').count()) === 12);
   const ig = p.locator('[data-testid="integration-guide"]');
   check("guía: 5 puntos y progreso 0 de 5", (await ig.locator("li > button[aria-expanded]").count()) === 5 && (await p.locator('[data-testid="ig-count"]').innerText()).startsWith("0 de 5"));
@@ -75,6 +74,18 @@ const PDF = Buffer.from("%PDF-1.4\n1 0 obj << /Type /Catalog /Pages 2 0 R >> end
   await p.evaluate(() => localStorage.setItem("aposto:lang", "ar")); await p.reload(); await p.waitForSelector("h1");
   check("consulado: en árabe, de derecha a izquierda y nombres de país traducidos", (await p.evaluate(() => document.documentElement.dir)) === "rtl" && (await p.locator("h1").innerText()).includes("قنصليتي"));
   await p.evaluate(() => localStorage.setItem("aposto:lang", "es"));
+
+  // ── Trabajo y beneficios ──
+  await go("/"); await p.click('[data-testid="work-card"]'); await p.waitForURL(/\/work$/); await p.waitForSelector('[data-testid="work-nero"]');
+  check("trabajo: 10 temas", (await p.locator('li[data-testid^="work-"]').count()) === 10);
+  await p.locator('[data-testid="work-naspi"] button').first().click();
+  const naspi = await p.locator('[data-testid="work-naspi"]').innerText();
+  check("trabajo: NASpI con 13 semanas, 68 días y máximo 24 meses", naspi.includes("13 semanas") && naspi.includes("68 días") && naspi.includes("24 meses"));
+  const [dl] = await Promise.all([p.waitForEvent("download", { timeout: 20000 }).catch(() => null), p.locator('[data-testid="work-naspi"] button', { hasText: "Resumen en PDF" }).click()]);
+  check("trabajo: el tema se descarga en PDF", Boolean(dl) && /\.pdf$/.test(dl.suggestedFilename()));
+  await p.fill('[data-testid="tfr-gross"]', "27000"); await p.fill('[data-testid="tfr-years"]', "3");
+  check("trabajo: calculadora de TFR (27.000 € × 3 años ≈ 6.000 €)", /6[.\s\u00a0]?000/.test(await p.locator('[data-testid="tfr-result"]').innerText()));
+  check("trabajo: glosario de la nómina y línea antitrata", (await p.locator("dt", { hasText: "Netto in busta" }).count()) === 1 && (await p.locator('a[href="tel:800290290"]').count()) === 1);
 
   // ── Perfil: foto ──
   await go("/profile");

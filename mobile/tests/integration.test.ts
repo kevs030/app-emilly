@@ -7,6 +7,7 @@ import { MQ, PROFILE_X, QUOTES, quoteIndexFor, WORK } from "../src/content/modul
 import { planQuotes } from "../src/lib/dailyQuote";
 import { QUOTE_ID_BASE } from "../src/lib/notify";
 import { cropBox } from "../src/lib/avatar";
+import { PAYSLIP, tfrEstimate, TOPICS, WK, WORK_HELP } from "../src/content/modules/work";
 
 const LANGS = UI_LANGS.map((l) => l.code);
 function texts(x: unknown, out: Record<string, string>[] = []): Record<string, string>[] {
@@ -19,7 +20,7 @@ function texts(x: unknown, out: Record<string, string>[] = []): Record<string, s
 }
 
 describe("guía de integración, consulados y frases en 9 idiomas", () => {
-  const all = texts([IG, HOSP, SPID, CPIA, ISEE, ISEE_LINKS, BANK, BANKS, CS, MQ, WORK, PROFILE_X, QUOTES]);
+  const all = texts([IG, HOSP, SPID, CPIA, ISEE, ISEE_LINKS, BANK, BANKS, CS, MQ, WORK, PROFILE_X, QUOTES, WK, TOPICS, PAYSLIP, WORK_HELP]);
   it("ningún texto vacío en ningún idioma", () => {
     expect(all.length).toBeGreaterThan(150);
     expect(all.flatMap((t) => LANGS.filter((l) => !t[l]?.trim()).map((l) => `${l}: ${t.es.slice(0, 40)}`))).toEqual([]);
@@ -82,5 +83,22 @@ describe("recorte del avatar", () => {
     expect(b.left).toBeLessThanOrEqual(0);
     expect(b.left + b.sw).toBeGreaterThanOrEqual(260);
     expect(b.top).toBe(0);
+  });
+});
+
+describe("trabajo y beneficios", () => {
+  it("10 temas con resumen y puntos; enlaces https", () => {
+    expect(TOPICS).toHaveLength(10);
+    for (const t of TOPICS) {
+      expect(t.points.length).toBeGreaterThanOrEqual(3);
+      for (const l of t.links ?? []) expect(l.url).toMatch(/^https:\/\//);
+    }
+    for (const h of WORK_HELP) expect(h.url).toMatch(/^https:\/\//);
+  });
+  it("TFR aproximado = sueldo anual ÷ 13,5 por año", () => {
+    expect(tfrEstimate(27000, 1)).toBe(2000);
+    expect(tfrEstimate(27000, 3)).toBe(6000);
+    expect(tfrEstimate(0, 3)).toBe(0);
+    expect(tfrEstimate(NaN, 3)).toBe(0);
   });
 });

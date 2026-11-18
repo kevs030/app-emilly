@@ -23,6 +23,7 @@ import { NotifySync } from "~/ui/NotifySync";
 import { Auth } from "~/screens/Auth";
 import { Benefits } from "~/screens/Benefits";
 import { Consulates } from "~/screens/Consulates";
+import { Work } from "~/screens/Work";
 import { GuideDetail, Guides } from "~/screens/Guides";
 import { Home } from "~/screens/Home";
 import { NewPassword, ResetPassword } from "~/screens/Password";
@@ -162,6 +163,7 @@ export function App() {
               <Route path="/simulator" element={<Simulator />} />
               <Route path="/map" element={<OfficesMap />} />
               <Route path="/consulates" element={<Consulates />} />
+              <Route path="/work" element={<Work />} />
             </Route>
             <Route element={<Private />}>
               <Route path="/" element={<Home />} />

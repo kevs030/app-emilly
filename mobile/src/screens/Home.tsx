@@ -15,7 +15,7 @@ import { tourSeen } from "./Tour";
 import { SponsorBanner } from "~/ui/SponsorBanner";
 import { AvatarCircle } from "~/ui/profile/AvatarPicker";
 import { IntegrationGuide } from "~/ui/home/IntegrationGuide";
-import { ConsulateCard, DailyQuote, WorkSoon } from "~/ui/home/HomeCards";
+import { ConsulateCard, DailyQuote, WorkCard } from "~/ui/home/HomeCards";
 
 function ProgressBar({ percent, label }: { percent: number; label: string }) {
   return (
@@ -185,7 +185,7 @@ export function Home() {
 
         <IntegrationGuide />
         <ConsulateCard />
-        <WorkSoon />
+        <WorkCard />
 
         {!available && <p className="card text-ink-soft">{t("notReady")}</p>}
 
