@@ -6,6 +6,7 @@ import { useLang } from "~/lib/lang";
 import type { StringKey } from "~/lib/strings";
 import { API_URL } from "~/lib/supabase";
 import { Alert, Screen } from "~/ui/kit";
+import { ConsulateCard } from "~/ui/home/HomeCards";
 
 const CATEGORIES = [
   { id: "questura", color: "#a65337", name: "Questura" },
@@ -153,6 +154,9 @@ export function OfficesMap() {
 
   return (
     <Screen title={t("offices")} back help="map">
+      <div className="mb-4">
+        <ConsulateCard />
+      </div>
       <button type="button" className="btn" onClick={nearMe} disabled={locating} aria-busy={locating}>
         <LocateFixed size={20} aria-hidden /> {locating ? t("loading") : t("mapNearMe")}
       </button>

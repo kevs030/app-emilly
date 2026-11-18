@@ -36,7 +36,7 @@ export function PdfButton({ make, label, filename }: { make: () => PdfDoc; label
   );
 }
 
-function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: ReactNode }) {
+export function Modal({ title, onClose, children }: { title: string; onClose: () => void; children: ReactNode }) {
   const { x } = useT9();
   useEffect(() => {
     const k = (e: KeyboardEvent) => e.key === "Escape" && onClose();

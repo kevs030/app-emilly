@@ -11,6 +11,9 @@ import { redirectUrl, supabase } from "~/lib/supabase";
 import { COUNTRIES, isEmail, toE164 } from "~/lib/validation";
 import { Alert, Field, Screen } from "~/ui/kit";
 import { PhoneCode } from "./PhoneCode";
+import { AvatarPicker } from "~/ui/profile/AvatarPicker";
+import { PdfVault } from "~/ui/profile/PdfVault";
+import { QuoteSettings } from "~/ui/profile/QuoteSettings";
 
 export function Profile() {
   const { t, lang, setLang } = useLang();
@@ -97,6 +100,7 @@ export function Profile() {
   return (
     <Screen title={t("profile")} help="profile">
       <div className="rise space-y-5">
+        <AvatarPicker initial={profile?.display_name?.trim()[0]} />
         <form onSubmit={save} className="card space-y-4">
           <Field label={t("name")} hint={t("askNameHint")} maxLength={40} value={name} onChange={(e) => setName(e.target.value)} />
           <div>
@@ -163,6 +167,8 @@ export function Profile() {
           {error && <Alert kind="error">{error}</Alert>}
         </section>
 
+        <PdfVault />
+        <QuoteSettings />
         <BiometricToggle />
 
         <Link to="/tour" className="btn btn-secondary">

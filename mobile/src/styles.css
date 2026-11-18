@@ -307,3 +307,23 @@ body {
     transition: none !important;
   }
 }
+
+/* Marcador destacado del mapa de consulados: gota terracota con punto blanco */
+.consulate-pin {
+  display: block;
+  width: 44px;
+  height: 44px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  background: var(--terracotta-deep);
+  border: 3px solid var(--white);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.35);
+}
+.consulate-pin > span {
+  display: block;
+  width: 14px;
+  height: 14px;
+  margin: 12px;
+  border-radius: 50%;
+  background: var(--white);
+}

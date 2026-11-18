@@ -95,7 +95,7 @@ export async function listDocuments(userId: string): Promise<Doc[] | null> {
   }
 }
 
-export async function addDocument(userId: string, file: Blob, mime: string, fields: { title: string; kind: DocKind; expires_on: string | null; analysis?: string; analysis_lang?: string; created_at?: string; legacy_id?: number }): Promise<Doc | null> {
+export async function addDocument(userId: string, file: Blob, mime: string, fields: { title: string; kind: DocKind; expires_on: string | null; note?: string; analysis?: string; analysis_lang?: string; created_at?: string; legacy_id?: number }): Promise<Doc | null> {
   if (!MIMES.has(mime) || file.size > MAX_BYTES || file.size === 0) return null;
   try {
     const { iv, data } = await encrypt(userId, file);
@@ -107,7 +107,7 @@ export async function addDocument(userId: string, file: Blob, mime: string, fiel
       mime,
       size_bytes: file.size,
       expires_on: fields.expires_on,
-      note: null,
+      note: fields.note ?? null,
       analysis: fields.analysis?.slice(0, 20000) ?? null,
       analysis_lang: fields.analysis ? (fields.analysis_lang ?? "es") : null,
       created_at: fields.created_at ?? new Date().toISOString(),

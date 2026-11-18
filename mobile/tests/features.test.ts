@@ -61,7 +61,7 @@ describe("avisos de citas", () => {
   });
   it("respeta el máximo de avisos pendientes del sistema", () => {
     const many = Array.from({ length: 80 }, (_, i) => rem(i + 1, "2026-12-20"));
-    expect(planNotifications(many, { enabled: true, daysBefore: 1, showTitle: false }, now)).toHaveLength(60);
+    expect(planNotifications(many, { enabled: true, daysBefore: 1, showTitle: false }, now)).toHaveLength(48);
   });
 });
 

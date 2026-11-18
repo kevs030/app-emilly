@@ -110,7 +110,7 @@ let p;
   check("inicio: «Para ti» muestra el plan", (await p.locator("h2:has-text('Para ti')").count()) === 1);
 
   await p.goto(ORIGIN + PREFIX + "/profile"); await p.waitForSelector("text=Cómo funciona");
-  check("en el navegador no se ofrece la huella (solo existe en el teléfono)", (await p.locator('[role=switch]').count()) === 0);
+  check("en el navegador no se ofrece la huella (solo existe en el teléfono)", (await p.locator('[role=switch]:not(section[aria-labelledby=quote-settings] *)').count()) === 0);
 
   // Se puede volver a abrir desde el perfil, y «Saltar» funciona
   await p.goto(ORIGIN + PREFIX + "/profile"); await p.click('a:has-text("Cómo funciona")');

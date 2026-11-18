@@ -1,5 +1,8 @@
 import { isNative } from "./supabase";
 
+/** Los avisos de citas usan ids por debajo de este número; las frases del día, desde aquí. */
+export const QUOTE_ID_BASE = 2_100_000_000;
+
 export type NotifySettings = { enabled: boolean; daysBefore: number; showTitle: boolean };
 export const DEFAULT_NOTIFY: NotifySettings = { enabled: false, daysBefore: 1, showTitle: false };
 const KEY = "aposto:notify";
@@ -37,7 +40,7 @@ export function planNotifications(reminders: Rem[], settings: NotifySettings, no
       if (at.getTime() > now.getTime()) out.push({ id: (r.id % 100_000_000) * 10 + slot, at, reminderId: r.id, title: r.title, daysLeft: days });
     });
   }
-  return out.sort((a, b) => a.at.getTime() - b.at.getTime()).slice(0, 60); // iOS admite 64 avisos pendientes
+  return out.sort((a, b) => a.at.getTime() - b.at.getTime()).slice(0, 48); // iOS admite 64 avisos pendientes: 48 citas + 14 frases del día
 }
 
 export type NotifyTexts = { title: string; today: string; soon: string };
@@ -55,7 +58,9 @@ export async function syncNotifications(reminders: Rem[], settings: NotifySettin
   if (!isNative) return 0;
   const { LocalNotifications } = await import("@capacitor/local-notifications");
   const pending = await LocalNotifications.getPending();
-  if (pending.notifications.length) await LocalNotifications.cancel({ notifications: pending.notifications.map((n) => ({ id: n.id })) });
+  // Solo se tocan los avisos de citas; las frases del día (ids desde QUOTE_ID_BASE) se gestionan aparte.
+  const mine = pending.notifications.filter((n) => n.id < QUOTE_ID_BASE);
+  if (mine.length) await LocalNotifications.cancel({ notifications: mine.map((n) => ({ id: n.id })) });
   const plan = planNotifications(reminders, settings, new Date());
   if (!plan.length) return 0;
   if ((await LocalNotifications.checkPermissions()).display !== "granted") return 0;

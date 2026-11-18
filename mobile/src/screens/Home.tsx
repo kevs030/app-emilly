@@ -13,6 +13,9 @@ import { GuidePhoto } from "~/ui/GuidePhoto";
 import { startDone } from "./Start";
 import { tourSeen } from "./Tour";
 import { SponsorBanner } from "~/ui/SponsorBanner";
+import { AvatarCircle } from "~/ui/profile/AvatarPicker";
+import { IntegrationGuide } from "~/ui/home/IntegrationGuide";
+import { ConsulateCard, DailyQuote, WorkSoon } from "~/ui/home/HomeCards";
 
 function ProgressBar({ percent, label }: { percent: number; label: string }) {
   return (
@@ -96,14 +99,16 @@ export function Home() {
     <Screen>
       <div className="rise space-y-6">
         <header className="flex items-center gap-3 pt-2">
-          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-gold bg-gold-soft text-xl font-bold text-terracotta-hover" aria-hidden>
-            {(profile?.display_name?.trim()[0] ?? "").toUpperCase() || <UserRound size={24} />}
-          </span>
+          <Link to="/profile" aria-label={t("tabProfile")} className="shrink-0 rounded-full">
+            <AvatarCircle size={48} initial={profile?.display_name?.trim()[0]} />
+          </Link>
           <h1 className="min-w-0 flex-1 text-[26px] font-bold leading-tight tracking-tight">{profile?.display_name ? `${t("hello")}, ${profile.display_name}` : t("helloNoName")}</h1>
           <Link to="/notifications" aria-label={t("notifications")} className="-me-2 flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-terracotta-deep">
             <BellRing size={24} aria-hidden />
           </Link>
         </header>
+
+        <DailyQuote />
 
         {/* Perfil gradual: solo pedimos el nombre, y solo si falta. */}
         {profile && !profile.display_name && (
@@ -177,6 +182,10 @@ export function Home() {
             ))}
           </ul>
         </section>
+
+        <IntegrationGuide />
+        <ConsulateCard />
+        <WorkSoon />
 
         {!available && <p className="card text-ink-soft">{t("notReady")}</p>}
 
