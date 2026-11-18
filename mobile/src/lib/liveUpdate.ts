@@ -44,6 +44,9 @@ async function ownHash(): Promise<string> {
   }
 }
 
+/** Paquete ya descargado y listo: se aplica en cuanto la persona sale de la app (no tiene que cerrarla del todo). */
+let ready: string | null = null;
+
 let checking = false;
 let lastCheck = 0;
 async function check() {
@@ -66,7 +69,8 @@ async function check() {
     const { bundles } = await CapacitorUpdater.list();
     let bundle = bundles.find((b) => b.version === m.hash && b.status === "success");
     if (!bundle) bundle = await CapacitorUpdater.download({ url: new URL(m.url, API_URL).toString(), version: m.hash, checksum: m.checksum });
-    await CapacitorUpdater.next({ id: bundle.id }); // se aplica al volver a abrir la app
+    await CapacitorUpdater.next({ id: bundle.id }); // por si el sistema cierra la app: se aplica al volver a abrirla
+    ready = bundle.id;
     // Limpieza: borra paquetes viejos que ya no se usarán (deja el actual y el próximo).
     const current = (await CapacitorUpdater.current()).bundle.id;
     for (const b of bundles) if (b.id !== current && b.id !== bundle.id && b.id !== "builtin") await CapacitorUpdater.delete({ id: b.id }).catch(() => {});
@@ -83,4 +87,9 @@ export function initLiveUpdates() {
   void CapacitorUpdater.notifyAppReady().catch(() => {});
   void check();
   void App.addListener("resume", () => void check());
+  // Al salir de la app (botón de inicio, otra app), si hay un paquete listo se aplica en ese momento:
+  // al volver, la persona ya ve la versión nueva sin tener que cerrar la app del todo.
+  void App.addListener("pause", () => {
+    if (ready) void CapacitorUpdater.set({ id: ready }).catch(() => {});
+  });
 }

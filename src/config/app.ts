@@ -19,9 +19,9 @@ export const APP = {
   /** Nombre con el que se guarda el archivo al descargarlo. */
   apkFileName: "A-Posto.apk",
   /** Versión del APK publicado, por ejemplo "1.0.0". */
-  apkVersion: "1.1.0",
+  apkVersion: "1.2.0",
   /** Huella SHA-256 del APK, para que cualquiera pueda comprobar que el archivo es auténtico. */
-  apkSha256: "0e883edc872aa1dece44dccae07040b7db09deb7707d44d933d6579d8c04a07c",
+  apkSha256: "008947715197237baf770bccec0dc2f9b9879b9eac6fa19b25553d9d65c1ec6a",
 
   // ── Responsable de los datos (obligatorio por el RGPD y por las tiendas) ──
   /** Nombre de la persona o empresa responsable. */
