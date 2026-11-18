@@ -10,6 +10,7 @@ import { usePersonal } from "~/lib/personal";
 import { Alert, Screen } from "~/ui/kit";
 import { AddReminder, ReminderRow } from "~/ui/Reminders";
 import { GuidePhoto } from "~/ui/GuidePhoto";
+import { GuideExtras } from "~/ui/modules/GuideExtras";
 import { SponsorBanner } from "~/ui/SponsorBanner";
 
 /** Casilla grande para marcar un paso o documento como hecho. */
@@ -134,6 +135,9 @@ export function GuideDetail() {
             {tracking && <p className="mt-1 text-[14px] text-ink-soft">{t("tickHint")}</p>}
           </section>
         )}
+
+        {/* Tessera sanitaria, Codice fiscale y Art. 31: requisitos, citas por ciudad, formularios y vídeo en el idioma elegido */}
+        <GuideExtras slug={guide.slug} />
 
         <section className="card">
           <h2 className="flex items-center gap-2 text-lg font-bold">

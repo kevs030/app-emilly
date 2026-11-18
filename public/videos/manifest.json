@@ -1,0 +1,47 @@
+{
+  "es": {
+    "tessera-sanitaria": false,
+    "codice-fiscale": false,
+    "articolo-31": false
+  },
+  "it": {
+    "tessera-sanitaria": false,
+    "codice-fiscale": false,
+    "articolo-31": false
+  },
+  "en": {
+    "tessera-sanitaria": false,
+    "codice-fiscale": false,
+    "articolo-31": false
+  },
+  "fr": {
+    "tessera-sanitaria": false,
+    "codice-fiscale": false,
+    "articolo-31": false
+  },
+  "ar": {
+    "tessera-sanitaria": false,
+    "codice-fiscale": false,
+    "articolo-31": false
+  },
+  "ro": {
+    "tessera-sanitaria": false,
+    "codice-fiscale": false,
+    "articolo-31": false
+  },
+  "sq": {
+    "tessera-sanitaria": false,
+    "codice-fiscale": false,
+    "articolo-31": false
+  },
+  "uk": {
+    "tessera-sanitaria": false,
+    "codice-fiscale": false,
+    "articolo-31": false
+  },
+  "bn": {
+    "tessera-sanitaria": false,
+    "codice-fiscale": false,
+    "articolo-31": false
+  }
+}

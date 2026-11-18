@@ -169,9 +169,9 @@ export const guides: Guide[] = [
       {
         title: { es: "Prepara los documentos", en: "Prepare documents", it: "Prepara i documenti" },
         body: {
-          es: "Necesitas el permiso (o el recibo), el código fiscal y el certificado de residencia o de domicilio.",
-          en: "You need your permit (or receipt), your tax code and a residence or domicile certificate.",
-          it: "Servono permesso (o ricevuta), codice fiscale e certificato di residenza o domicilio.",
+          es: "Necesitas el permesso di soggiorno (o el recibo de la solicitud o renovación), el codice fiscale, tu documento (pasaporte o Carta d'Identità) y una prueba de dónde vives: residencia o, si no la tienes, la Dichiarazione di Ospitalità.",
+          en: "You need your permesso di soggiorno (or the application/renewal receipt), your codice fiscale, your ID (passport or Carta d'Identità) and proof of where you live: residence or, if you have none, the Dichiarazione di Ospitalità.",
+          it: "Servono permesso di soggiorno (o ricevuta della richiesta o del rinnovo), codice fiscale, documento (passaporto o Carta d'Identità) e prova di dove abiti: residenza oppure, se non ce l'hai, la Dichiarazione di Ospitalità.",
         },
       },
       {
@@ -192,10 +192,10 @@ export const guides: Guide[] = [
       },
     ],
     documents: [
-      { es: "Permiso de residencia o recibo", en: "Residence permit or receipt", it: "Permesso o ricevuta" },
-      { es: "Código fiscal", en: "Tax code", it: "Codice fiscale" },
-      { es: "Certificado de residencia o domicilio", en: "Residence or domicile certificate", it: "Certificato di residenza o domicilio" },
-      { es: "Documento de identidad", en: "ID document", it: "Documento d'identità" },
+      { es: "Permesso di soggiorno o recibo de la solicitud/renovación", en: "Permesso di soggiorno or application/renewal receipt", it: "Permesso di soggiorno o ricevuta della richiesta/rinnovo" },
+      { es: "Codice fiscale", en: "Codice fiscale (tax code)", it: "Codice fiscale" },
+      { es: "Pasaporte o Carta d'Identità", en: "Passport or Carta d'Identità", it: "Passaporto o Carta d'Identità" },
+      { es: "Certificado de residencia o Dichiarazione di Ospitalità (declaración de hospitalidad)", en: "Residence certificate or Dichiarazione di Ospitalità (hospitality declaration)", it: "Certificato di residenza o Dichiarazione di Ospitalità" },
     ],
     warnings: [
       {

@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "node scripts/build-app-update.mjs && next build",
     "build:app-update": "node scripts/build-app-update.mjs",
+    "gen:video-scripts": "tsx scripts/gen-video-scripts.ts",
     "build:app": "node scripts/build-app.mjs",
     "start": "next start",
     "lint": "eslint",
