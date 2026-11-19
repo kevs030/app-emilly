@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BadgeCheck, Bell, Bot, CheckCircle2, Download, FileCheck2, Languages, ListChecks, Lock, ShieldCheck, Smartphone, Trash2 } from "lucide-react";
+import { BadgeCheck, Bell, Bot, CheckCircle2, Download, FileCheck2, Languages, ListChecks, Lock, ShieldCheck, Smartphone, Trash2, TriangleAlert } from "lucide-react";
 import { APP } from "@/config/app";
 import { Logo } from "@/components/Icons";
 import { Reveal } from "@/components/Reveal";
@@ -52,6 +52,7 @@ const T = {
     apkHint: "Al descargar, toca «Abrir» y activa «Permitir desde esta fuente» si tu teléfono lo solicita.",
     iosSoon: "La versión para iPhone llegará al App Store. Mientras tanto, en la web puedes consultar todas las guías, las ayudas y el mapa de oficinas.",
     confirmed: "Tu correo está confirmado. Abre la app A Posto en tu teléfono y entra con tu correo y tu contraseña.",
+    expired: "Este enlace ya no sirve: caducó o ya se había usado. Si ya confirmaste tu correo, abre la app y entra con tu correo y contraseña. Si no, en la app pulsa «Entrar», escribe tu correo y contraseña y toca «Reenviar el correo de confirmación». Abre solo el último correo que te llegue.",
     apkMain: "Descargar para Android",
     privacy: "Política de privacidad",
     del: "Eliminar mi cuenta",
@@ -98,6 +99,7 @@ const T = {
     apkHint: "Dopo il download, tocca «Apri» e attiva «Consenti da questa fonte» se il telefono lo chiede.",
     iosSoon: "La versione per iPhone arriverà sull'App Store. Nel frattempo, sul sito trovi tutte le guide, i bonus e la mappa degli uffici.",
     confirmed: "La tua email è confermata. Apri l'app A Posto sul telefono ed entra con email e password.",
+    expired: "Questo link non è più valido: è scaduto o è già stato usato. Se hai già confermato l'email, apri l'app ed entra con email e password. Altrimenti, nell'app tocca «Accedi», scrivi email e password e tocca «Invia di nuovo l'email di conferma». Apri solo l'ultima email ricevuta.",
     apkMain: "Scarica per Android",
     privacy: "Informativa sulla privacy",
     del: "Elimina il mio account",
@@ -144,6 +146,7 @@ const T = {
     apkHint: "After downloading, tap “Open” and turn on “Allow from this source” if your phone asks.",
     iosSoon: "The iPhone version is coming to the App Store. Meanwhile, the website has all the guides, benefits and the office map.",
     confirmed: "Your email is confirmed. Open the A Posto app on your phone and sign in with your email and password.",
+    expired: "This link no longer works: it expired or was already used. If you already confirmed your email, open the app and sign in with your email and password. If not, in the app tap “Sign in”, enter your email and password and tap “Resend the confirmation email”. Open only the latest email you receive.",
     apkMain: "Download for Android",
     privacy: "Privacy policy",
     del: "Delete my account",
@@ -197,10 +200,17 @@ function PhoneMockup() {
 
 export default async function DownloadPage({ searchParams }: { searchParams: Promise<{ confirmado?: string }> }) {
   const s = T[await getLang()];
-  const confirmed = (await searchParams).confirmado === "1";
+  const state = (await searchParams).confirmado;
+  const confirmed = state === "1";
+  const expired = state === "caducado";
   const apk = Boolean(process.env.NEXT_PUBLIC_APK_AVAILABLE);
   return (
     <div className="space-y-12">
+      {expired && (
+        <p role="alert" className="flex items-start gap-2 rounded-2xl border border-border bg-card p-4 font-medium">
+          <TriangleAlert size={22} className="mt-0.5 shrink-0 text-brand" aria-hidden /> {s.expired}
+        </p>
+      )}
       {confirmed && (
         <p role="status" className="flex items-start gap-2 rounded-2xl bg-brand-soft p-4 font-medium">
           <CheckCircle2 size={22} className="mt-0.5 shrink-0 text-brand" aria-hidden /> {s.confirmed}

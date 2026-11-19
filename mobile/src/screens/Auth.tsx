@@ -44,6 +44,7 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [info, setInfo] = useState("");
+  const [needsConfirm, setNeedsConfirm] = useState(false);
   // Espera antes de poder pedir otro correo (Supabase admite uno cada 60 s)
   const [wait, setWait] = useState(0);
   useEffect(() => {
@@ -59,7 +60,11 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
 
   function fail(message: string | undefined, status?: number) {
     if (status === 429 || /rate limit|too many/i.test(message ?? "")) return setError(t("tooMany"));
-    if (/not confirmed/i.test(message ?? "")) return setError(t("notConfirmed"));
+    // Cuenta sin confirmar: se ofrece reenviar el correo (registrarse otra vez gastaría los enlaces anteriores).
+    if (/not confirmed/i.test(message ?? "")) {
+      setNeedsConfirm(true);
+      return setError(t("notConfirmed"));
+    }
     if (/invalid login/i.test(message ?? "")) return setError(t("badLogin"));
     setError(t("generic"));
   }
@@ -67,6 +72,7 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
   async function submitEmail(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+    setNeedsConfirm(false);
     if (!isEmail(email)) return setError(t("invalidEmail"));
     setBusy(true);
     if (mode === "signup") {
@@ -131,6 +137,7 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
           <p>• {t("notArrived1")}</p>
           <p className="break-words">• {t("notArrived2")}</p>
           <p>• {t("notArrived3")}</p>
+          <p className="font-semibold">• {t("notArrived4")}</p>
         </section>
         <button type="button" className="btn btn-secondary" onClick={resendEmail} disabled={wait > 0}>
           {wait > 0 ? `${t("resendIn")} ${wait} s` : t("resend")}
@@ -222,6 +229,20 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
             </>
           )}
           {error && <Alert kind="error">{error}</Alert>}
+          {needsConfirm && (
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={async () => {
+                setError("");
+                setNeedsConfirm(false);
+                await resendEmail();
+                setStep("email-sent");
+              }}
+            >
+              {t("resendConfirm")}
+            </button>
+          )}
           {captcha.node}
           <button className="btn" disabled={busy || !captcha.ready || !email || !password || (mode === "signup" && issues.length > 0)}>
             {busy ? "…" : mode === "signup" ? t("signUp") : t("signIn")}

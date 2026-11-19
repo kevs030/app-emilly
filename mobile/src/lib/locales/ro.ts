@@ -34,6 +34,8 @@ export const ro: Locale = {
   notArrived1: "Caută în Spam, Nedorite, Promoții sau „Toate”.",
   notArrived2: "Expeditorul este „A Posto” <no-reply@mail.apostoapp.app>. Poate dura până la 2 minute.",
   notArrived3: "Dacă e în Spam, marchează-l „Nu este spam”: următoarele vor ajunge în inbox.",
+  notArrived4: "Folosește doar ultimul e-mail primit: când ceri unul nou, cele vechi nu mai funcționează.",
+  resendConfirm: "Retrimite e-mailul de confirmare",
   wrongEmail: "Greșit scris? Corectează e-mailul",
   alreadyConfirmed: "Ți-ai confirmat deja e-mailul? Intră",
   apkUpdate: "Există o versiune nouă A Posto.",

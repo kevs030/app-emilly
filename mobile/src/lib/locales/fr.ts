@@ -34,6 +34,8 @@ export const fr: Locale = {
   notArrived1: "Regardez dans Spam, Courrier indésirable, Promotions ou « Tous les messages ».",
   notArrived2: "L'expéditeur est « A Posto » <no-reply@mail.apostoapp.app>. Cela peut prendre jusqu'à 2 minutes.",
   notArrived3: "S'il est dans les spams, marquez-le « Non spam » : les suivants arriveront dans la boîte de réception.",
+  notArrived4: "Utilisez uniquement le dernier e-mail reçu : quand vous en demandez un nouveau, les précédents ne fonctionnent plus.",
+  resendConfirm: "Renvoyer l'e-mail de confirmation",
   wrongEmail: "Faute de frappe ? Corriger l'adresse",
   alreadyConfirmed: "Adresse déjà confirmée ? Se connecter",
   apkUpdate: "Une nouvelle version d'A Posto est disponible.",

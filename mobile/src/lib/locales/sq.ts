@@ -34,6 +34,8 @@ export const sq: Locale = {
   notArrived1: "Shikoni te Spam, Të padëshiruara, Promocione ose «Të gjitha».",
   notArrived2: "Dërguesi është «A Posto» <no-reply@mail.apostoapp.app>. Mund të zgjasë deri në 2 minuta.",
   notArrived3: "Nëse e gjeni te Spam, shënojeni «Nuk është spam»: të tjerat do të vijnë në kutinë hyrëse.",
+  notArrived4: "Përdorni vetëm email-in e fundit që ju vjen: kur kërkoni një të ri, të mëparshmit nuk funksionojnë më.",
+  resendConfirm: "Ridërgo email-in e konfirmimit",
   wrongEmail: "E shkruar gabim? Korrigjo email-in",
   alreadyConfirmed: "E keni konfirmuar më parë email-in? Hyni",
   apkUpdate: "Ka një version të ri të A Posto.",

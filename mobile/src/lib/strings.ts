@@ -75,6 +75,8 @@ const S = {
   notArrived1: { es: "Mira en Spam, Correo no deseado, Promociones o «Todos».", it: "Guarda in Spam, Posta indesiderata, Promozioni o «Tutti».", en: "Look in Spam, Junk, Promotions or “All mail”." },
   notArrived2: { es: "El remitente es «A Posto» <no-reply@mail.apostoapp.app>. Puede tardar hasta 2 minutos.", it: "Il mittente è «A Posto» <no-reply@mail.apostoapp.app>. Può richiedere fino a 2 minuti.", en: "The sender is “A Posto” <no-reply@mail.apostoapp.app>. It can take up to 2 minutes." },
   notArrived3: { es: "Si lo encuentras en Spam, márcalo como «No es spam»: los siguientes llegarán a tu bandeja.", it: "Se lo trovi nello spam, segnalo come «Non è spam»: i prossimi arriveranno in posta in arrivo.", en: "If it is in Spam, mark it “Not spam”: the next ones will reach your inbox." },
+  notArrived4: { es: "Usa solo el último correo que te llegue: al pedir uno nuevo, los anteriores dejan de funcionar.", it: "Usa solo l'ultima email ricevuta: quando ne chiedi una nuova, le precedenti non funzionano più.", en: "Use only the latest email you receive: when you request a new one, the earlier ones stop working." },
+  resendConfirm: { es: "Reenviar el correo de confirmación", it: "Invia di nuovo l'email di conferma", en: "Resend the confirmation email" },
   wrongEmail: { es: "¿Está mal escrito? Corregir el correo", it: "È scritta male? Correggi l'email", en: "Typo? Fix the email" },
   alreadyConfirmed: { es: "¿Ya confirmaste tu correo antes? Entrar", it: "Hai già confermato l'email? Entra", en: "Already confirmed your email? Sign in" },
   apkUpdate: { es: "Hay una versión nueva de A Posto.", it: "C'è una nuova versione di A Posto.", en: "A new version of A Posto is available." },
