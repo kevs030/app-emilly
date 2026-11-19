@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { createClient, supabaseConfigured } from "@/lib/supabase/server";
 import { deleteContent, deleteSponsor, dismissReports, setHidden, toggleSponsor } from "./actions";
 import { SponsorForm } from "./SponsorForm";
+import { AdminLogin } from "./AdminLogin";
 
 export const metadata: Metadata = { title: "Administración", robots: { index: false, follow: false } };
 
@@ -12,12 +13,15 @@ type Report = { id: number; post_id: number | null; comment_id: number | null; r
 type Item = { kind: "post" | "comment"; id: number; postId: number; title: string; body: string; author: string; hidden: boolean; reasons: string[] };
 
 /**
- * Panel privado. Quien no sea admin (o no haya iniciado sesión) recibe un 404,
+ * Panel privado. Sin sesión se muestra el acceso; con una cuenta que no es admin, un 404,
  * igual que si la página no existiera. La base de datos vuelve a comprobar cada operación.
  */
 export default async function AdminPage() {
   if (!supabaseConfigured()) notFound();
   const supabase = await createClient();
+  // Sin sesión: formulario para entrar aquí mismo. Con sesión pero sin permiso: «no existe».
+  const { data: auth } = await supabase.auth.getUser();
+  if (!auth.user) return <AdminLogin />;
   const { data: isAdmin } = await supabase.rpc("is_admin");
   if (isAdmin !== true) notFound();
 
