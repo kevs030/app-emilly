@@ -21,7 +21,7 @@ export function GuidePhoto({ slug, className = "", eager = false }: { slug: stri
       alt=""
       loading={eager ? "eager" : "lazy"}
       decoding="async"
-      className={`block w-full bg-beige object-cover ${className}`}
+      className={`block bg-beige object-cover ${/(^|\s)w-/.test(className) ? "" : "w-full "}${className}`}
     />
   );
 }

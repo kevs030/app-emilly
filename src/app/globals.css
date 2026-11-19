@@ -210,12 +210,6 @@ body {
   color: var(--foreground);
   background: var(--background-alt);
 }
-.nav-menu summary::-webkit-details-marker {
-  display: none;
-}
-.nav-menu:not([open]) > ul {
-  display: none;
-}
 
 /* ── Portada: fondo claro, sin degradados fuertes ── */
 .hero {

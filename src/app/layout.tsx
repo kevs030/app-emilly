@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import Link from "next/link";
-import { ChevronDown, Download, Search, ShieldCheck } from "lucide-react";
+import { Download, Search, ShieldCheck } from "lucide-react";
 import "./globals.css";
 import { getLang } from "@/lib/lang";
 import { t, tr } from "@/lib/i18n";
@@ -10,6 +10,7 @@ import { LangSwitcher } from "@/components/LangSwitcher";
 import { BottomNav } from "@/components/BottomNav";
 import { Logo } from "@/components/Icons";
 import { ServiceWorker } from "@/components/ServiceWorker";
+import { NavMenus } from "@/components/NavMenus";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 
@@ -110,23 +111,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
               <Logo /> A Posto
             </Link>
             <nav className="hidden items-center gap-1 text-[15px] md:flex" aria-label="Secciones">
-              {/* Menús desplegables sin JavaScript, accesibles con teclado */}
-              {[...menus, { label: f.info, items: info }].map((m) => (
-                <details key={m.label} className="nav-menu relative">
-                  <summary className="nav-link flex cursor-pointer list-none items-center gap-1">
-                    {m.label} <ChevronDown size={16} aria-hidden />
-                  </summary>
-                  <ul className="card absolute start-0 top-full z-10 mt-2 w-64 space-y-0.5 !p-2">
-                    {m.items.map((n) => (
-                      <li key={n.href}>
-                        <Link href={n.href} className="nav-link block">
-                          {n.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </details>
-              ))}
+              {/* Un solo menú abierto a la vez */}
+              <NavMenus menus={[...menus, { label: f.info, items: info }]} />
             </nav>
             <form action="/guias" role="search" className="ml-auto hidden lg:block">
               <label className="relative block">
