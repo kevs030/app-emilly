@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient, supabaseConfigured } from "@/lib/supabase/server";
-import { deleteContent, deleteSponsor, dismissReports, setHidden, toggleSponsor } from "./actions";
+import { adminSignOut, deleteContent, deleteSponsor, dismissReports, setHidden, toggleSponsor } from "./actions";
 import { SponsorForm } from "./SponsorForm";
 import { AdminLogin } from "./AdminLogin";
 
@@ -13,8 +13,8 @@ type Report = { id: number; post_id: number | null; comment_id: number | null; r
 type Item = { kind: "post" | "comment"; id: number; postId: number; title: string; body: string; author: string; hidden: boolean; reasons: string[] };
 
 /**
- * Panel privado. Sin sesión se muestra el acceso; con una cuenta que no es admin, un 404,
- * igual que si la página no existiera. La base de datos vuelve a comprobar cada operación.
+ * Panel privado. Sin sesión se muestra el acceso; con una cuenta sin permiso, un aviso para cambiar de cuenta.
+ * Las cifras y acciones solo se cargan para administración. La base de datos vuelve a comprobar cada operación.
  */
 export default async function AdminPage() {
   if (!supabaseConfigured()) notFound();
@@ -23,7 +23,20 @@ export default async function AdminPage() {
   const { data: auth } = await supabase.auth.getUser();
   if (!auth.user) return <AdminLogin />;
   const { data: isAdmin } = await supabase.rpc("is_admin");
-  if (isAdmin !== true) notFound();
+  if (isAdmin !== true) {
+    // Con una cuenta sin permiso: se dice con qué cuenta se entró y se ofrece cambiar de cuenta.
+    return (
+      <div className="mx-auto max-w-sm space-y-4 py-8">
+        <h1 className="text-2xl font-bold tracking-tight">Esta cuenta no es de administración</h1>
+        <p className="text-sm text-muted">
+          Has entrado como <strong className="break-all">{auth.user.email ?? auth.user.phone}</strong>. Cierra la sesión y entra con la cuenta de administración.
+        </p>
+        <form action={adminSignOut}>
+          <button className="btn w-full">Cerrar sesión y cambiar de cuenta</button>
+        </form>
+      </div>
+    );
+  }
 
   const [{ data: statsData }, { data: reportsData }, { data: sponsors }] = await Promise.all([
     supabase.rpc("admin_stats"),

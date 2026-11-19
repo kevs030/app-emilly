@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 
@@ -77,4 +78,11 @@ export async function deleteSponsor(form: FormData) {
   const supabase = await staff("admin");
   await supabase.from("sponsors").delete().eq("id", id);
   revalidatePath("/admin");
+}
+
+/** Cerrar la sesión actual para entrar con la cuenta de administración. */
+export async function adminSignOut() {
+  const supabase = await createClient();
+  await supabase.auth.signOut();
+  redirect("/admin");
 }
