@@ -503,6 +503,168 @@ export const guides: Guide[] = [
     ],
     lastVerified: "2026-11-12",
   },
+  {
+    slug: "derechos-trabajo-en-negro",
+    icon: "⚖️",
+    category: "trabajo",
+    title: {
+      es: "Trabajaste en negro: también te corresponden la tredicesima y el TFR",
+      en: "You worked off the books: you are still owed the 13th-month pay and TFR",
+      it: "Hai lavorato in nero: tredicesima e TFR ti spettano lo stesso",
+    },
+    summary: {
+      es: "Aunque no hubiera contrato ni alta en el INPS, el trabajo que hiciste da derecho a salario, tredicesima, vacaciones, TFR y cotizaciones (art. 2126 del Código Civil). Vale también para colf, badanti y acompañantes de personas mayores, aunque el trabajo no fuera físicamente pesado.",
+      en: "Even with no contract and no INPS registration, the work you did entitles you to pay, 13th-month pay, holidays, TFR (severance) and contributions (art. 2126 of the Civil Code). This also applies to domestic workers, carers and companions of elderly people, even if the work was not physically heavy.",
+      it: "Anche senza contratto e senza comunicazione all'INPS, il lavoro prestato dà diritto a retribuzione, tredicesima, ferie, TFR e contributi (art. 2126 c.c.). Vale anche per colf, badanti e assistenti di compagnia, anche se il lavoro non era fisicamente pesante.",
+    },
+    steps: [
+      {
+        title: { es: "Ten claro que la ley te protege", en: "Know that the law protects you", it: "Sappi che la legge ti tutela" },
+        body: {
+          es: "El art. 2126 del Código Civil dice que, aunque el contrato falte o sea irregular, el trabajo ya hecho produce todos sus efectos: por ese periodo te corresponde todo como si hubieras estado en regla. No haberte dado de alta era obligación del empleador, no tuya, y no puede servirle de excusa para no pagarte. Lo que cuenta son los hechos: si trabajabas de forma continua, siguiendo las indicaciones de la familia y a cambio de un pago, eras trabajador subordinado (art. 2094).",
+          en: "Art. 2126 of the Civil Code says that, even if the contract is missing or irregular, work already done has full effect: for that period you are owed everything as if you had been registered. Registering you was the employer's duty, not yours, and it cannot be an excuse not to pay you. What counts are the facts: if you worked regularly, following the family's instructions and for pay, you were an employee (art. 2094).",
+          it: "L'art. 2126 c.c. stabilisce che, anche se il contratto manca o è irregolare, il lavoro prestato produce tutti i suoi effetti: per quel periodo ti spetta tutto come se fossi stato in regola. La regolarizzazione era un obbligo del datore di lavoro e non può diventare un motivo per non pagarti. Contano i fatti: lavoro continuativo, secondo le indicazioni della famiglia e dietro compenso = lavoro subordinato (art. 2094 c.c.).",
+        },
+      },
+      {
+        title: { es: "Calcula lo que te corresponde", en: "Work out what you are owed", it: "Calcola quanto ti spetta" },
+        body: {
+          es: "En el trabajo doméstico se aplica el convenio colectivo nacional (CCNL lavoro domestico). La tredicesima es una paga extra al año: un mes de sueldo que se acumula mes a mes y se paga en diciembre o, en proporción, al terminar. El TFR (liquidación) es, por cada año, el sueldo anual dividido entre 13,5, revalorizado. Si vivías en la casa, en el cálculo entra también el valor de la comida y el alojamiento. Un sindicato o Patronato te hace el cálculo gratis con los mínimos de cada año.",
+          en: "For domestic work, the national collective agreement applies (CCNL lavoro domestico). The 13th-month pay (tredicesima) is one extra month's pay a year, built up month by month and paid in December or, pro rata, when the job ends. TFR (severance) is, for each year, the annual pay divided by 13.5, revalued. If you lived in, the value of board and lodging also counts. A trade union or Patronato will do the calculation for free using each year's minimum rates.",
+          it: "Nel lavoro domestico si applica il CCNL lavoro domestico. La tredicesima matura mese per mese e si paga a dicembre o, in proporzione, alla cessazione. Il TFR è, per ogni anno, la retribuzione annua divisa per 13,5, rivalutata. Per i conviventi conta anche il valore convenzionale di vitto e alloggio. Un sindacato o un Patronato fa il calcolo gratis con i minimi di ogni anno.",
+        },
+      },
+      {
+        title: { es: "Junta las pruebas antes de reclamar", en: "Gather evidence before you claim", it: "Raccogli le prove prima di chiedere" },
+        body: {
+          es: "Sin contrato, tienes que demostrar que la relación existió. Vale cualquier medio: mensajes de WhatsApp con la familia (sobre todo los que hablan de horarios, tareas o del sueldo), transferencias o recibos, fotos y testigos (vecinos, médicos, enfermeras, farmacia). Guarda copias en otro sitio antes de reclamar, por si la relación con la familia se rompe.",
+          en: "Without a contract, you must prove the job existed. Any evidence counts: WhatsApp messages with the family (especially about hours, tasks or pay), bank transfers or receipts, photos and witnesses (neighbours, doctors, nurses, pharmacy). Save copies somewhere else before you claim, in case the relationship with the family breaks down.",
+          it: "Senza contratto devi provare il rapporto. Vale ogni mezzo: messaggi con la famiglia (soprattutto su orari, mansioni o paga), bonifici o ricevute, foto e testimoni (vicini, medici, infermieri, farmacia). Salva delle copie altrove prima di chiedere.",
+        },
+      },
+      {
+        title: { es: "Pide ayuda gratis a un sindicato o Patronato", en: "Get free help from a union or Patronato", it: "Chiedi aiuto gratuito a un sindacato o Patronato" },
+        body: {
+          es: "Los sindicatos que firman el convenio doméstico (Filcams-CGIL, Fisascat-CISL, UILTuCS, Federcolf) y los Patronatos revisan tu caso, calculan los importes y te acompañan. Si no tienes permiso de residencia en regla, cuéntaselo antes de reclamar: los derechos del art. 2126 existen igualmente, pero conviene preparar bien los pasos.",
+          en: "The unions that sign the domestic work agreement (Filcams-CGIL, Fisascat-CISL, UILTuCS, Federcolf) and Patronati review your case, calculate the amounts and support you. If your residence permit is not in order, tell them before you claim: your art. 2126 rights still exist, but the steps need careful preparation.",
+          it: "I sindacati firmatari del CCNL domestico (Filcams-CGIL, Fisascat-CISL, UILTuCS, Federcolf) e i Patronati valutano il caso, calcolano gli importi e ti accompagnano. Se il tuo permesso non è in regola, dillo prima di agire: i diritti dell'art. 2126 restano, ma i passi vanno preparati bene.",
+        },
+      },
+      {
+        title: { es: "Envía una reclamación formal por escrito", en: "Send a formal written claim", it: "Invia una richiesta formale scritta" },
+        body: {
+          es: "Una carta (messa in mora) por carta certificada con acuse de recibo o PEC, con las leyes y los importes, pidiendo el pago en un plazo (por ejemplo, 15 días). Además de pedir el dinero, interrumpe la prescripción (art. 2943 del Código Civil). Mantén un tono tranquilo y deja abierta la posibilidad de un acuerdo.",
+          en: "A letter (messa in mora) by recorded delivery or PEC, citing the laws and amounts and asking for payment within a deadline (for example, 15 days). Besides claiming the money, it interrupts the limitation period (art. 2943 of the Civil Code). Keep a calm tone and leave the door open to an agreement.",
+          it: "Una lettera di messa in mora (raccomandata A/R o PEC) con norme e importi, chiedendo il pagamento entro un termine (per esempio 15 giorni). Interrompe anche la prescrizione (art. 2943 c.c.). Tono calmo e disponibilità a un accordo.",
+        },
+      },
+      {
+        title: { es: "Si no pagan: conciliación o juez", en: "If they don't pay: conciliation or court", it: "Se non pagano: conciliazione o giudice" },
+        body: {
+          es: "Con el sindicato puedes pedir un intento de conciliación ante el Ispettorato Territoriale del Lavoro (art. 410 del Código de Procedimiento Civil). Si no hay acuerdo, se va al Juez Laboral, que también puede ordenar que se paguen las cotizaciones al INPS.",
+          en: "With the union you can request a conciliation attempt at the Ispettorato Territoriale del Lavoro (art. 410 of the Code of Civil Procedure). If there is no agreement, the case goes to the Labour Court, which can also order the INPS contributions to be paid.",
+          it: "Con il sindacato si può chiedere il tentativo di conciliazione presso l'Ispettorato Territoriale del Lavoro (art. 410 c.p.c.). In mancanza di accordo si va dal Giudice del Lavoro, anche per la regolarizzazione contributiva.",
+        },
+      },
+    ],
+    documents: [
+      { es: "Mensajes con la familia (horarios, tareas, pagos)", en: "Messages with the family (hours, tasks, payments)", it: "Messaggi con la famiglia (orari, mansioni, pagamenti)" },
+      { es: "Transferencias, recibos o anotaciones de los pagos", en: "Bank transfers, receipts or notes of payments", it: "Bonifici, ricevute o annotazioni dei pagamenti" },
+      { es: "Nombres y contacto de testigos", en: "Names and contact details of witnesses", it: "Nomi e recapiti dei testimoni" },
+      { es: "Fechas de inicio y fin, horas por semana y si vivías en la casa", en: "Start and end dates, weekly hours and whether you lived in", it: "Date di inizio e fine, ore settimanali, convivenza sì/no" },
+      { es: "Si los hay: certificados de salud o invalidez de la persona asistida (definen el nivel del contrato)", en: "If available: health or disability certificates of the person cared for (they set the pay level)", it: "Se disponibili: certificati sanitari o di invalidità della persona assistita (determinano il livello)" },
+      { es: "Tu documento de identidad y código fiscal", en: "Your ID and tax code", it: "Documento d'identità e codice fiscale" },
+    ],
+    costs: {
+      es: "Sindicatos y Patronatos orientan gratis o con una cuota de afiliación baja. Si hay que ir a juicio y tienes pocos ingresos, puedes pedir abogado gratuito (patrocinio a spese dello Stato).",
+      en: "Unions and Patronati advise for free or for a small membership fee. If it goes to court and you are on a low income, you can ask for free legal aid (patrocinio a spese dello Stato).",
+      it: "Sindacati e Patronati orientano gratis o con una quota associativa. In giudizio, con reddito basso, si può chiedere il patrocinio a spese dello Stato.",
+    },
+    extra: {
+      title: {
+        es: "Las leyes que te protegen (para enseñarlas al empleador)",
+        en: "The laws that protect you (to show the employer)",
+        it: "Le norme che ti tutelano (da mostrare al datore di lavoro)",
+      },
+      items: [
+        {
+          es: "Art. 2126 del Código Civil: el trabajo hecho sin contrato o con contrato irregular da los mismos derechos que uno regular por todo el periodo trabajado. Es la ley clave para el trabajo en negro.",
+          en: "Art. 2126 Civil Code: work done without a contract, or under an irregular one, gives the same rights as a regular job for the whole period worked. It is the key law for off-the-books work.",
+          it: "Art. 2126 c.c.: il lavoro prestato senza contratto o con contratto irregolare dà gli stessi diritti di un rapporto regolare per tutto il periodo lavorato. È la norma chiave per il lavoro in nero.",
+        },
+        {
+          es: "Art. 2094 del Código Civil: eres trabajador subordinado si trabajas bajo la dirección de otro y a cambio de un pago. No hace falta papel firmado.",
+          en: "Art. 2094 Civil Code: you are an employee if you work under someone else's direction and for pay. No signed paper is needed.",
+          it: "Art. 2094 c.c.: è subordinato chi lavora alle dipendenze e sotto la direzione altrui. Non serve un contratto firmato.",
+        },
+        {
+          es: "Art. 2120 del Código Civil: el TFR corresponde «en todo caso» de fin de la relación laboral subordinada.",
+          en: "Art. 2120 Civil Code: TFR is owed “in every case” when an employment relationship ends.",
+          it: "Art. 2120 c.c.: il TFR spetta «in ogni caso di cessazione» del rapporto di lavoro subordinato.",
+        },
+        {
+          es: "Art. 36 de la Constitución: todo trabajador tiene derecho a un salario proporcionado a su trabajo y suficiente para una vida digna. Los mínimos del convenio colectivo son la referencia.",
+          en: "Art. 36 of the Constitution: every worker is entitled to pay proportionate to their work and enough for a dignified life. The collective agreement's minimums are the benchmark.",
+          it: "Art. 36 Cost.: retribuzione proporzionata alla quantità e qualità del lavoro e sufficiente a un'esistenza libera e dignitosa. I minimi del CCNL sono il parametro.",
+        },
+        {
+          es: "Convenio colectivo del trabajo doméstico (CCNL, renovado el 28 de octubre de 2025) y Ley 339/1958: reconocen 13 pagas al año (12 + tredicesima) y el TFR a colf, badanti y asistentes familiares.",
+          en: "Domestic work collective agreement (CCNL, renewed on 28 October 2025) and Law 339/1958: they grant 13 monthly payments a year (12 + tredicesima) and TFR to domestic workers and carers.",
+          it: "CCNL lavoro domestico (rinnovo del 28 ottobre 2025) e Legge 339/1958: 13 mensilità annue (12 + tredicesima) e TFR per colf, badanti e assistenti familiari.",
+        },
+        {
+          es: "«No hacías trabajo pesado» no es un argumento válido: tredicesima y TFR no dependen del esfuerzo físico. El tipo de tarea solo cambia el nivel del contrato (y el importe), nunca el derecho. El convenio clasifica la asistencia según el estado de la persona atendida (autosuficiente o no), no según la fuerza que haga falta.",
+          en: "“The work wasn't heavy” is not a valid argument: tredicesima and TFR do not depend on physical effort. The type of task only changes the pay level (and the amount), never the right itself. The agreement grades care work by the condition of the person cared for (self-sufficient or not), not by the strength required.",
+          it: "«Non facevi lavori pesanti» non è un argomento valido: tredicesima e TFR non dipendono dalla fatica fisica. Le mansioni incidono solo sul livello (e sull'importo), mai sul diritto. Il CCNL inquadra l'assistenza in base alle condizioni della persona assistita, non allo sforzo fisico.",
+        },
+        {
+          es: "Estar disponible para emergencias también es trabajo. El propio convenio paga la «presenza notturna» (quedarse en la casa para intervenir si hace falta) y la «assistenza notturna» (espera con intervenciones discontinuas). La ley define el tiempo de trabajo como el tiempo en que estás «a disposición del empleador» (art. 1 del D.Lgs. 66/2003), y el Tribunal de Justicia de la UE confirmó que la disponibilidad con fuertes límites cuenta como trabajo (caso Matzak, C-518/15). Quien acompaña a una persona mayor y está pendiente de caídas, malestares o cualquier imprevisto está trabajando, aunque no haga esfuerzo físico.",
+          en: "Being available for emergencies is also work. The agreement itself pays for “presenza notturna” (staying in the home to step in if needed) and “assistenza notturna” (waiting with occasional interventions). The law defines working time as time when you are “at the employer's disposal” (art. 1, Legislative Decree 66/2003), and the EU Court of Justice confirmed that heavily restricted stand-by time counts as work (Matzak, C-518/15). Someone who keeps an elderly person company and watches out for falls, illness or anything unexpected is working, even without physical effort.",
+          it: "Anche la disponibilità per le emergenze è lavoro. Il CCNL retribuisce la «presenza notturna» (restare in casa per intervenire in caso di necessità) e l'«assistenza notturna» (attesa con interventi discontinui). L'art. 1 del D.Lgs. 66/2003 definisce orario di lavoro il periodo in cui si è «a disposizione del datore di lavoro» e la Corte di Giustizia UE (causa C-518/15, Matzak) ha confermato che la reperibilità con forti vincoli è orario di lavoro. Chi fa compagnia a una persona anziana ed è pronto a intervenire per cadute, malori o imprevisti sta lavorando, anche senza sforzo fisico.",
+        },
+      ],
+    },
+    warnings: [
+      {
+        es: "Plazos: los créditos salariales y el TFR prescriben a los 5 años (art. 2948 del Código Civil), contados desde el fin de la relación laboral (Casación, sentencia 26246/2022). Para la tredicesima existe además una presunción de pago de 3 años (art. 2956), que se cae si el empleador admite que no pagó. No esperes.",
+        en: "Deadlines: pay claims and TFR expire after 5 years (art. 2948 Civil Code), counted from the end of the job (Court of Cassation, ruling 26246/2022). For the tredicesima there is also a 3-year presumption of payment (art. 2956), which falls if the employer admits not paying. Don't wait.",
+        it: "Prescrizione: crediti retributivi e TFR si prescrivono in 5 anni (art. 2948 c.c.), dalla cessazione del rapporto (Cass. 26246/2022). Per la tredicesima c'è anche la prescrizione presuntiva triennale (art. 2956 c.c.), che cade se il datore ammette di non aver pagato.",
+      },
+      {
+        es: "No firmes ningún papel tipo «recibí todo y no reclamo nada más» fuera de una sede oficial (sindicato, Ispettorato del Lavoro). Una renuncia firmada en privado se puede impugnar solo dentro de 6 meses (art. 2113 del Código Civil).",
+        en: "Do not sign any paper saying “I received everything and will claim nothing more” outside an official setting (union, Labour Inspectorate). A waiver signed privately can only be challenged within 6 months (art. 2113 Civil Code).",
+        it: "Non firmare rinunce o quietanze «a saldo» fuori da una sede protetta (sindacato, Ispettorato). Una rinuncia firmata in privato si impugna solo entro 6 mesi (art. 2113 c.c.).",
+      },
+      {
+        es: "El empleador puede negar la relación, decir que trabajaste menos horas o que el sueldo ya lo incluía todo. Quien dice haber pagado tiene que probarlo, pero las horas y la duración las tienes que demostrar tú: por eso las pruebas son lo más importante.",
+        en: "The employer may deny the job, say you worked fewer hours or that the pay already included everything. Whoever claims to have paid must prove it, but you must prove the hours and duration: that is why evidence matters most.",
+        it: "Il datore può negare il rapporto, ridurre le ore o sostenere che la paga comprendeva tutto. Chi afferma di aver pagato deve provarlo, ma ore e durata le devi provare tu: le prove sono decisive.",
+      },
+      {
+        es: "Si cobrabas una ayuda pública (por ejemplo el Assegno di Inclusione) mientras trabajabas en negro, coméntalo con el sindicato antes de reclamar: puede tener consecuencias.",
+        en: "If you were receiving a public benefit (such as the Assegno di Inclusione) while working off the books, discuss it with the union before claiming: it may have consequences.",
+        it: "Se percepivi una prestazione pubblica (per esempio l'Assegno di Inclusione) mentre lavoravi in nero, parlane con il sindacato prima di agire.",
+      },
+      {
+        es: "Esta guía resume la ley; no sustituye a un abogado laboralista o a un sindicato, que deben revisar tu caso concreto.",
+        en: "This guide summarises the law; it does not replace an employment lawyer or a union, who should review your specific case.",
+        it: "Questa guida riassume la normativa e non sostituisce un avvocato giuslavorista o un sindacato.",
+      },
+    ],
+    sources: [
+      { title: "Normattiva: Código Civil, art. 2126 (trabajo sin contrato o irregular)", url: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:regio.decreto:1942-03-16;262~art2126", official: true },
+      { title: "Normattiva: Código Civil, art. 2094 (trabajador subordinado)", url: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:regio.decreto:1942-03-16;262~art2094", official: true },
+      { title: "Normattiva: Código Civil, art. 2120 (TFR)", url: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:regio.decreto:1942-03-16;262~art2120", official: true },
+      { title: "Normattiva: Código Civil, art. 2948 (prescripción de 5 años)", url: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:regio.decreto:1942-03-16;262~art2948", official: true },
+      { title: "Senado: Constitución, art. 36 (salario justo)", url: "https://www.senato.it/istituzione/la-costituzione/parte-i/titolo-iii/articolo-36", official: true },
+      { title: "Normattiva: Ley 339/1958 (trabajo doméstico)", url: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:1958-04-02;339", official: true },
+      { title: "Normattiva: D.Lgs. 66/2003, art. 1 (tiempo de trabajo)", url: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:2003-04-08;66~art1", official: true },
+      { title: "Ministerio de Trabajo: lavoro domestico, convenio y salarios mínimos 2026", url: "https://lavoro.gov.it/taxonomy/term/136", official: true },
+      { title: "Ispettorato Nazionale del Lavoro: nota 1959/2022 (prescripción desde el fin de la relación, Cass. 26246/2022)", url: "https://portist-int.ispettorato.gov.it/files/2023/01/INL-nota-30-settembre-2022-prescrizione-crediti-da-lavoro.pdf", official: true },
+      { title: "EUR-Lex: Tribunal de Justicia UE, caso Matzak C-518/15 (disponibilidad = tiempo de trabajo)", url: "https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX:62015CJ0518", official: true },
+    ],
+    lastVerified: "2026-11-21",
+  },
 ];
 
 export function getGuide(slug: string): Guide | undefined {
