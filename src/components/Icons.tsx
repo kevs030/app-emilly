@@ -1,4 +1,4 @@
-import { Baby, Briefcase, FileText, Flag, Hash, HeartPulse, Home, IdCard, type LucideIcon } from "lucide-react";
+import { Baby, Briefcase, FileText, Flag, Hash, HeartPulse, Home, IdCard, Scale, type LucideIcon } from "lucide-react";
 
 const BY_SLUG: Record<string, LucideIcon> = {
   "permesso-di-soggiorno": IdCard,
@@ -8,6 +8,7 @@ const BY_SLUG: Record<string, LucideIcon> = {
   "decreto-flussi": Briefcase,
   ciudadania: Flag,
   "articolo-31": Baby,
+  "derechos-trabajo-en-negro": Scale,
 };
 
 export function GuideIcon({ slug, size = 22 }: { slug: string; size?: number }) {
