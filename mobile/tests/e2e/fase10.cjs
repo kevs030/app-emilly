@@ -14,6 +14,7 @@ const cors = { "access-control-allow-origin": "*", "access-control-allow-headers
   const res = [];
   const check = (n, ok, x = "") => res.push(`${ok ? "OK   " : "FALLA"} ${n}${x ? " — " + x : ""}`);
   const errs = [];
+  let failRecover = false;
   const calls = { recover: [], verify: [], signup: 0, user: 0 };
   const mk = async (dev) => {
     const ctx = await br.newContext({ ...dev, locale: "es-ES" });
@@ -25,6 +26,7 @@ const cors = { "access-control-allow-origin": "*", "access-control-allow-headers
       const json = (status, body) => r.fulfill({ status, headers: { ...cors, "content-type": "application/json" }, body: JSON.stringify(body) });
       if (u.pathname === "/auth/v1/settings") return json(200, { external: { email: true, phone: false } });
       if (u.pathname === "/auth/v1/signup") { calls.signup++; return json(200, { ...user, identities: [{}] }); }
+      if (u.pathname === "/auth/v1/recover" && failRecover) return json(500, { code: 500, msg: "Error sending recovery email" });
       if (u.pathname === "/auth/v1/recover") { calls.recover.push({ redirect: u.searchParams.get("redirect_to"), body: req.postDataJSON() }); return json(200, {}); }
       if (u.pathname === "/auth/v1/verify") {
         const b = req.postDataJSON(); calls.verify.push(b);
@@ -65,6 +67,12 @@ const cors = { "access-control-allow-origin": "*", "access-control-allow-headers
   check("tras cerrar sesión: la portada muestra «Entrar» (no «Crear cuenta»)", (await p.locator('button[aria-pressed="true"]', { hasText: "Entrar" }).count()) === 1);
   check("tras cerrar sesión: el correo ya está escrito", (await p.inputValue("input[type=email]")) === "ana@example.com");
   check("la contraseña nunca se guarda en el teléfono", !(await p.evaluate(() => JSON.stringify(localStorage))).includes("Correcta12345"));
+  // 4) «Olvidé mi contraseña» con el servidor fallando: debe avisar, no decir «enviado»
+  failRecover = true;
+  const q = await mk(devices["Pixel 7"]);
+  await q.goto(ORIGIN + PREFIX + "/reset"); await q.fill("input[type=email]", "ana@example.com");
+  await q.locator("button.btn", { hasText: "Enviar" }).click(); await q.waitForTimeout(1500);
+  check("recuperar con fallo del servidor: avisa del error y NO dice «enviado»", (await q.locator(".alert-error").count()) === 1 && (await q.locator("text=¿Te llegó un código?").count()) === 0);
   check("sin errores de JavaScript", errs.length === 0, errs.join(" | "));
   console.log(res.join("\n"));
   await br.close();

@@ -28,6 +28,8 @@ export function ResetPassword() {
     captcha.reset();
     setBusy(false);
     if (error?.status === 429) return setError(t("tooMany"));
+    // Antes, cualquier otro fallo (sin conexión, error del servidor) se daba por «enviado» y el correo nunca llegaba.
+    if (error) return setError(navigator.onLine === false || !error.status ? t("offline") : t("generic"));
     setSent(true);
   }
 
