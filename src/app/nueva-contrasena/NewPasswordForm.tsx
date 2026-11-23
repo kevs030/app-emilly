@@ -16,6 +16,11 @@ const L = {
     show: "Mostrar contraseña",
     hide: "Ocultar contraseña",
     checking: "Comprobando el enlace…",
+    codeTitle: "¿Tienes el código de 6 números del correo? Úsalo aquí:",
+    email: "Tu correo",
+    code: "Código de 6 números",
+    verify: "Comprobar el código",
+    codeWrong: "El código no es correcto o ya caducó. Pide un correo nuevo y usa el código del último.",
     expired: "Este enlace ya no sirve: caducó o ya se usó. En la app, pulsa «Entrar» → «¿Olvidaste tu contraseña?» y pide otro. Abre solo el último correo.",
     done: "¡Listo! Tu contraseña está cambiada. Abre la app A Posto y entra con tu correo y la contraseña nueva.",
     error: "No se pudo guardar. Revisa que cumpla las reglas o pide un enlace nuevo.",
@@ -29,6 +34,11 @@ const L = {
     show: "Mostra password",
     hide: "Nascondi password",
     checking: "Controllo del link…",
+    codeTitle: "Hai il codice di 6 cifre dell'email? Usalo qui:",
+    email: "La tua email",
+    code: "Codice di 6 cifre",
+    verify: "Verifica il codice",
+    codeWrong: "Il codice non è corretto o è scaduto. Chiedi una nuova email e usa il codice dell'ultima.",
     expired: "Questo link non è più valido: è scaduto o è già stato usato. Nell'app tocca «Accedi» → «Password dimenticata?» e chiedine un altro. Apri solo l'ultima email.",
     done: "Fatto! La password è cambiata. Apri l'app A Posto ed entra con la tua email e la nuova password.",
     error: "Impossibile salvare. Controlla le regole o chiedi un nuovo link.",
@@ -42,6 +52,11 @@ const L = {
     show: "Show password",
     hide: "Hide password",
     checking: "Checking the link…",
+    codeTitle: "Do you have the 6-digit code from the email? Use it here:",
+    email: "Your email",
+    code: "6-digit code",
+    verify: "Check the code",
+    codeWrong: "The code is wrong or expired. Request a new email and use the code from the latest one.",
     expired: "This link no longer works: it expired or was already used. In the app tap “Sign in” → “Forgot your password?” and request another. Open only the latest email.",
     done: "Done! Your password has been changed. Open the A Posto app and sign in with your email and the new password.",
     error: "Couldn't save. Check the rules or request a new link.",
@@ -62,6 +77,8 @@ export function NewPasswordForm({ lang }: { lang: Lang }) {
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState("");
+  const [email, setEmail] = useState("");
+  const [code, setCode] = useState("");
   const ok = checks(password);
 
   useEffect(() => {
@@ -75,6 +92,22 @@ export function NewPasswordForm({ lang }: { lang: Lang }) {
     // Siempre asíncrono: primero se comprueba el enlace con Supabase y después se muestra el resultado.
     void (valid ? supabase.auth.setSession({ access_token: access!, refresh_token: refresh! }) : Promise.resolve({ error: true })).then(({ error }) => setState(error ? "expired" : "ready"));
   }, [supabase]);
+
+  /** Sin enlace (o enlace gastado): el código de 6 cifras del correo abre la misma sesión para cambiar la contraseña. */
+  async function verifyCode(e: React.FormEvent) {
+    e.preventDefault();
+    setError("");
+    const token = code.replace(/\D/g, "");
+    if (!email.trim() || token.length < 6) return setError(s.codeWrong);
+    setState("saving");
+    const { error } = await supabase.auth.verifyOtp({ email: email.trim(), token, type: "recovery" });
+    if (error) {
+      setState("expired");
+      return setError(s.codeWrong);
+    }
+    setError("");
+    setState("ready");
+  }
 
   async function save(e: React.FormEvent) {
     e.preventDefault();
@@ -97,9 +130,28 @@ export function NewPasswordForm({ lang }: { lang: Lang }) {
       </h1>
       {state === "checking" && <p className="text-muted">{s.checking}</p>}
       {state === "expired" && (
-        <p role="alert" className="flex items-start gap-2 rounded-2xl border border-border bg-card p-4 font-medium">
-          <TriangleAlert size={22} className="mt-0.5 shrink-0 text-brand" aria-hidden /> {s.expired}
-        </p>
+        <>
+          <p role="alert" className="flex items-start gap-2 rounded-2xl border border-border bg-card p-4 font-medium">
+            <TriangleAlert size={22} className="mt-0.5 shrink-0 text-brand" aria-hidden /> {s.expired}
+          </p>
+          <form onSubmit={verifyCode} className="card space-y-3" data-testid="np-code-form">
+            <p className="font-semibold">{s.codeTitle}</p>
+            <label className="block">
+              <span className="mb-1 block text-sm font-semibold">{s.email}</span>
+              <input className="input w-full" type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+            </label>
+            <label className="block">
+              <span className="mb-1 block text-sm font-semibold">{s.code}</span>
+              <input className="input w-full text-center text-2xl tracking-[0.4em]" inputMode="numeric" autoComplete="one-time-code" maxLength={8} required value={code} onChange={(e) => setCode(e.target.value)} />
+            </label>
+            {error && (
+              <p role="alert" className="text-sm font-medium text-red-700">
+                {error}
+              </p>
+            )}
+            <button className="btn w-full">{s.verify}</button>
+          </form>
+        </>
       )}
       {state === "done" && (
         <p role="status" className="flex items-start gap-2 rounded-2xl bg-brand-soft p-4 font-medium">
