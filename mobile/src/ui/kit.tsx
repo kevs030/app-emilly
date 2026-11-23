@@ -8,13 +8,11 @@ import { Illustration } from "./Illustration";
 /** Piezas comunes del sistema de diseño. Las pantallas se construyen con estas, no con estilos sueltos. */
 
 export function Logo({ size = 44 }: { size?: number }) {
-  // Casa de A Posto: el mismo dibujo que en la web (public/logo-aposto.svg).
+  // Casa con ✓ de A Posto: el mismo dibujo que en la web (public/logo-aposto.svg).
   return (
     <svg width={size} height={size} viewBox="0 0 64 64" role="img" aria-label="A Posto">
-      <rect x="41" y="11" width="7" height="13" rx="2" fill="#A65337" />
-      <path d="M15.5 28v23.5a4 4 0 0 0 4 4h25a4 4 0 0 0 4-4V28" fill="none" stroke="#A65337" strokeWidth="6" strokeLinejoin="round" />
-      <path d="M25.5 55.5V43a6.5 6.5 0 0 1 13 0v12.5z" fill="#D9A65E" />
-      <path d="M8 31 32 10l24 21" fill="none" stroke="#A65337" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M10 30 32 12l22 18v20a5 5 0 0 1-5 5H15a5 5 0 0 1-5-5z" fill="#A65337" stroke="#A65337" strokeWidth="3" strokeLinejoin="round" />
+      <path d="M22 35.5l7 7 13.5-14" fill="none" stroke="#fff" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
