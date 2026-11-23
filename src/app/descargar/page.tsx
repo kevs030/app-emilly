@@ -36,8 +36,9 @@ const T = {
       ["Independiente", "A Posto no es una web del Gobierno ni de una agencia. Es información general, no asesoramiento legal."],
     ],
     iosTitle: "Instalar en iPhone o iPad",
+    iosOpen: "Abrir A Posto para iPhone",
     iosBody: "En iPhone no existen archivos de instalación como en Android: Apple solo permite instalar apps desde el App Store o añadiéndolas a la pantalla de inicio. Mientras llega la versión del App Store, puedes tener A Posto con su icono en un minuto:",
-    iosSteps: ["Abre esta página en Safari.", "Pulsa el botón Compartir: el cuadrado con una flecha hacia arriba.", "Baja y pulsa «Añadir a pantalla de inicio».", "Pulsa «Añadir». El icono de A Posto aparecerá junto a tus otras apps."],
+    iosSteps: ["En el iPhone, abre apostoapp.app/app en Safari (botón de abajo).", "Pulsa el botón Compartir: el cuadrado con una flecha hacia arriba.", "Baja y pulsa «Añadir a pantalla de inicio».", "Pulsa «Añadir». El icono de A Posto aparecerá junto a tus otras apps."],
     iosNote: "Es gratis, no pide permisos y se actualiza sola. Si no ves la opción, comprueba que estás en Safari y no dentro de Instagram, Facebook o WhatsApp.",
     apkTitle: "Descarga directa para Android (APK)",
     apkBody: "Mientras llega a Google Play, instala el archivo oficial firmado por A Posto. Es la app completa: funciona por sí sola, sin abrir la web.",
@@ -83,8 +84,9 @@ const T = {
       ["Indipendente", "A Posto non è un sito del Governo né di un'agenzia. Sono informazioni generali, non consulenza legale."],
     ],
     iosTitle: "Installare su iPhone o iPad",
+    iosOpen: "Apri A Posto per iPhone",
     iosBody: "Su iPhone non esistono file di installazione come su Android: Apple permette di installare le app solo dall'App Store o aggiungendole alla schermata Home. In attesa della versione App Store, puoi avere A Posto con la sua icona in un minuto:",
-    iosSteps: ["Apri questa pagina in Safari.", "Tocca il pulsante Condividi: il quadrato con la freccia verso l'alto.", "Scorri e tocca «Aggiungi alla schermata Home».", "Tocca «Aggiungi». L'icona di A Posto apparirà accanto alle altre app."],
+    iosSteps: ["Sull'iPhone apri apostoapp.app/app in Safari (pulsante qui sotto).", "Tocca il pulsante Condividi: il quadrato con la freccia verso l'alto.", "Scorri e tocca «Aggiungi alla schermata Home».", "Tocca «Aggiungi». L'icona di A Posto apparirà accanto alle altre app."],
     iosNote: "È gratis, non chiede permessi e si aggiorna da sola. Se non vedi l'opzione, controlla di essere in Safari e non dentro Instagram, Facebook o WhatsApp.",
     apkTitle: "Download diretto per Android (APK)",
     apkBody: "In attesa di Google Play, installa il file ufficiale firmato da A Posto. È l'app completa: funziona da sola, senza aprire il sito.",
@@ -130,8 +132,9 @@ const T = {
       ["Independent", "A Posto is not a government or agency website. It is general information, not legal advice."],
     ],
     iosTitle: "Install on iPhone or iPad",
+    iosOpen: "Open A Posto for iPhone",
     iosBody: "iPhones have no install files like Android: Apple only allows installing apps from the App Store or by adding them to the Home Screen. Until the App Store version arrives, you can have A Posto with its icon in a minute:",
-    iosSteps: ["Open this page in Safari.", "Tap the Share button: the square with an arrow pointing up.", "Scroll down and tap “Add to Home Screen”.", "Tap “Add”. The A Posto icon will appear next to your other apps."],
+    iosSteps: ["On the iPhone, open apostoapp.app/app in Safari (button below).", "Tap the Share button: the square with an arrow pointing up.", "Scroll down and tap “Add to Home Screen”.", "Tap “Add”. The A Posto icon will appear next to your other apps."],
     iosNote: "It is free, asks for no permissions and updates itself. If you do not see the option, check that you are in Safari and not inside Instagram, Facebook or WhatsApp.",
     apkTitle: "Direct download for Android (APK)",
     apkBody: "Until it reaches Google Play, install the official file signed by A Posto. It is the full app: it works on its own, without opening the website.",
@@ -302,7 +305,15 @@ export default async function DownloadPage({ searchParams }: { searchParams: Pro
         <h2 className="flex items-center gap-2 text-xl font-bold">
           <Smartphone size={22} className="text-brand" aria-hidden /> {s.iosTitle}
         </h2>
-        <p className="mt-2 text-sm text-muted">{s.iosSoon}</p>
+        <a href="/app" className="btn mt-4" data-testid="ios-open">
+          <Smartphone size={18} aria-hidden /> {s.iosOpen}
+        </a>
+        <ol className="mt-4 list-decimal space-y-1.5 ps-5 text-sm">
+          {s.iosSteps.map((x) => (
+            <li key={x}>{x}</li>
+          ))}
+        </ol>
+        <p className="mt-3 text-sm text-muted">{s.iosNote}</p>
       </section>
 
       <section id="apk" className="card">

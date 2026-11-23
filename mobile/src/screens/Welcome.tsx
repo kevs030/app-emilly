@@ -8,6 +8,7 @@ import { Illustration, Landscape } from "~/ui/Illustration";
 import { Logo } from "~/ui/kit";
 import { TutorialVideo } from "~/ui/TutorialVideo";
 import { AuthForm, type AuthMode } from "./Auth";
+import { IosInstallHint } from "~/ui/IosInstallHint";
 
 /**
  * Portada: lo primero que ve quien abre la app sin haber entrado.
@@ -30,6 +31,10 @@ export function Welcome() {
             </option>
           ))}
         </select>
+      </div>
+
+      <div className="mt-3">
+        <IosInstallHint />
       </div>
 
       <header className="rise pt-2 text-center">

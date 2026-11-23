@@ -4,13 +4,18 @@
  */
 const SLUGS = new Set(["permesso-di-soggiorno", "codice-fiscale", "sanidad-tessera-sanitaria", "residencia-anagrafica", "decreto-flussi", "ciudadania", "articolo-31"]);
 
+// Guías sin foto propia: usan la del trámite más cercano.
+const ALIAS: Record<string, string> = { "art-35-sanidad-sin-papeles": "sanidad-tessera-sanitaria", "carta-identita-elettronica": "residencia-anagrafica", "permesso-ue-lungo-periodo": "permesso-di-soggiorno" };
+const photoOf = (slug: string) => (SLUGS.has(slug) ? slug : ALIAS[slug]);
+
 export function hasGuidePhoto(slug: string) {
-  return SLUGS.has(slug);
+  return Boolean(photoOf(slug));
 }
 
 export function GuidePhoto({ slug, className = "", eager = false }: { slug: string; className?: string; eager?: boolean }) {
-  if (!SLUGS.has(slug)) return null;
-  const base = `${import.meta.env.BASE_URL}tramites/${slug}`;
+  const photo = photoOf(slug);
+  if (!photo) return null;
+  const base = `${import.meta.env.BASE_URL}tramites/${photo}`;
   return (
     <img
       src={`${base}-960.webp`}

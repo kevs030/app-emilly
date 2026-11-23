@@ -38,12 +38,17 @@ export const GUIDE_ART: Record<string, ArtName> = {
   "decreto-flussi": "t-decreto-flussi",
   ciudadania: "t-ciudadania",
   "articolo-31": "t-articolo-31",
+  // Guías sin foto propia: usan la del trámite más cercano.
+  "art-35-sanidad-sin-papeles": "t-sanidad-tessera-sanitaria",
+  "carta-identita-elettronica": "t-residencia-anagrafica",
+  "permesso-ue-lungo-periodo": "t-permesso-di-soggiorno",
 };
 
 /** Miniatura de un trámite para tarjetas (sin bordes propios). */
 export function GuideThumb({ slug, className = "" }: { slug: string; className?: string }) {
-  if (!GUIDE_ART[slug]) return null;
-  const base = `/tramites/${slug}`;
+  const art = GUIDE_ART[slug];
+  if (!art) return null;
+  const base = `/tramites/${art.slice(2)}`;
   return (
     // eslint-disable-next-line @next/next/no-img-element -- WebP ya optimizados en dos tamaños
     <img src={`${base}-640.webp`} srcSet={`${base}-640.webp 640w, ${base}-960.webp 960w`} sizes="(min-width: 640px) 50vw, 100vw" width={1344} height={768} alt="" loading="lazy" decoding="async" className={`block w-full object-cover ${className}`} />

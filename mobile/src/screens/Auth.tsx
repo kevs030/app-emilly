@@ -6,6 +6,7 @@ import { useAuth } from "~/auth/AuthProvider";
 import { useLang } from "~/lib/lang";
 import { redirectUrl, supabase } from "~/lib/supabase";
 import { COUNTRIES, isEmail, passwordIssues, toE164 } from "~/lib/validation";
+import { EmailCode } from "~/ui/EmailCode";
 import { Alert, Field, PasswordField, Screen } from "~/ui/kit";
 import { useCaptcha } from "~/ui/Captcha";
 import { PhoneCode } from "./PhoneCode";
@@ -128,6 +129,7 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
         <h1 className="text-2xl font-bold">{t("checkEmailTitle")}</h1>
         <p className="text-ink-soft">{t("checkEmailBody")}</p>
         <p className="break-all rounded-xl border border-line bg-white px-4 py-3 text-lg font-semibold">{email}</p>
+        <EmailCode email={email} kind="signup" onDone={() => navigate("/", { replace: true })} />
         {error && <Alert kind="error">{error}</Alert>}
         {info && <Alert kind="ok">{info}</Alert>}
         <section className="alert alert-info space-y-1.5" aria-labelledby="not-arrived">

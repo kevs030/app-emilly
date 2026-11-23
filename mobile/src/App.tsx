@@ -20,6 +20,7 @@ import { Scan } from "~/screens/Scan";
 import { Simulator } from "~/screens/Simulator";
 import { AppLock } from "~/ui/AppLock";
 import { NotifySync } from "~/ui/NotifySync";
+import { isRecovering } from "~/ui/EmailCode";
 import { Auth } from "~/screens/Auth";
 import { Benefits } from "~/screens/Benefits";
 import { Consulates } from "~/screens/Consulates";
@@ -138,7 +139,7 @@ function Private({ guestOk = false }: { guestOk?: boolean }) {
 function Public() {
   const { ready, session } = useAuth();
   if (!ready) return <Splash />;
-  if (session) return <Navigate to="/" replace />;
+  if (session) return <Navigate to={isRecovering() ? "/new-password" : "/"} replace />;
   return <Outlet />;
 }
 

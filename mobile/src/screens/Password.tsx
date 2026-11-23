@@ -2,7 +2,8 @@ import { Check } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLang } from "~/lib/lang";
-import { redirectUrl, supabase } from "~/lib/supabase";
+import { RECOVERY_URL, recoveryClient, supabase } from "~/lib/supabase";
+import { clearRecovering, EmailCode } from "~/ui/EmailCode";
 import { isEmail, passwordIssues } from "~/lib/validation";
 import { Alert, Field, PasswordField, Screen } from "~/ui/kit";
 import { useCaptcha } from "~/ui/Captcha";
@@ -10,6 +11,7 @@ import { useCaptcha } from "~/ui/Captcha";
 /** Pedir el enlace de recuperación. La respuesta es la misma exista o no la cuenta. */
 export function ResetPassword() {
   const { t } = useLang();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
@@ -21,7 +23,8 @@ export function ResetPassword() {
     setError("");
     if (!isEmail(email)) return setError(t("invalidEmail"));
     setBusy(true);
-    const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: redirectUrl("/new-password"), captchaToken: captcha.token });
+    // El botón del correo abre una página de la web (funciona en Safari y Chrome); el código se escribe aquí.
+    const { error } = await recoveryClient().auth.resetPasswordForEmail(email.trim(), { redirectTo: RECOVERY_URL, captchaToken: captcha.token });
     captcha.reset();
     setBusy(false);
     if (error?.status === 429) return setError(t("tooMany"));
@@ -32,6 +35,7 @@ export function ResetPassword() {
     <Screen back title={t("resetTitle")}>
       <form onSubmit={submit} className="rise space-y-4" noValidate>
         <p className="text-ink-soft">{t("resetBody")}</p>
+        <p className="hint">{t("resetHow")}</p>
         <Field label={t("email")} type="email" autoComplete="email" inputMode="email" autoCapitalize="none" required value={email} onChange={(e) => setEmail(e.target.value)} />
         {error && <Alert kind="error">{error}</Alert>}
         {sent && <Alert kind="ok">{t("resetSent")}</Alert>}
@@ -40,6 +44,11 @@ export function ResetPassword() {
           {busy ? "…" : t("resetSend")}
         </button>
       </form>
+      {sent && (
+        <div className="mt-5">
+          <EmailCode email={email} kind="recovery" onDone={() => navigate("/new-password", { replace: true })} />
+        </div>
+      )}
     </Screen>
   );
 }
@@ -61,6 +70,7 @@ export function NewPassword() {
     const { error } = await supabase.auth.updateUser({ password });
     setBusy(false);
     if (error) return setError(error.status === 429 ? t("tooMany") : t("generic"));
+    clearRecovering();
     navigate("/", { replace: true });
   }
 

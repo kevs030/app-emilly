@@ -503,6 +503,206 @@ export const guides: Guide[] = [
     ],
     lastVerified: "2026-11-12",
   },
+  {
+    slug: "art-35-sanidad-sin-papeles",
+    icon: "🩺",
+    category: "salud",
+    title: {
+      es: "Ir al médico sin permiso de residencia (código STP, art. 35)",
+      en: "Seeing a doctor without a residence permit (STP code, art. 35)",
+      it: "Curarsi senza permesso di soggiorno (codice STP, art. 35)",
+    },
+    summary: {
+      es: "Aunque no tengas papeles, en Italia tienes derecho a la atención médica urgente y esencial, al embarazo y parto, a las vacunas y a la atención de tus hijos. Con el código STP te atienden en la sanidad pública y el médico no puede denunciarte a la policía.",
+      en: "Even without papers, in Italy you have the right to urgent and essential healthcare, pregnancy and birth care, vaccinations and care for your children. With the STP code the public health service treats you and the doctor cannot report you to the police.",
+      it: "Anche senza permesso di soggiorno hai diritto alle cure urgenti ed essenziali, alla tutela della gravidanza, alle vaccinazioni e alle cure per i figli. Con il codice STP accedi al servizio sanitario pubblico e il medico non può segnalarti alla polizia.",
+    },
+    steps: [
+      {
+        title: { es: "Si es una urgencia, ve directamente", en: "In an emergency, go straight there", it: "In caso di urgenza vai subito" },
+        body: {
+          es: "En una urgencia ve a Urgencias (Pronto Soccorso) o llama al 112/118. Te atienden aunque no tengas ningún documento; el código STP se puede hacer allí mismo.",
+          en: "In an emergency go to A&E (Pronto Soccorso) or call 112/118. They treat you even without any document; the STP code can be issued there.",
+          it: "In caso di urgenza vai al Pronto Soccorso o chiama il 112/118. Vieni curato anche senza documenti; il codice STP può essere rilasciato lì.",
+        },
+      },
+      {
+        title: { es: "Pide el código STP en la ASL", en: "Ask for the STP code at the ASL", it: "Chiedi il codice STP all'ASL" },
+        body: {
+          es: "Para visitas que no son urgentes, ve a la oficina de la ASL de tu zona (en algunas regiones hay ambulatorios específicos, como los «ISI»). Da tus datos (o los que tengas): puedes no llevar documento. Te dan una tarjeta con el código STP, anónima, válida 6 meses y renovable.",
+          en: "For non-urgent visits go to your local ASL office (some regions have dedicated clinics, such as “ISI”). Give your details (or whatever you have): you may have no document. You get a card with the STP code, anonymous, valid for 6 months and renewable.",
+          it: "Per le visite non urgenti rivolgiti all'ASL di zona (in alcune regioni ci sono ambulatori dedicati, come gli ISI). Fornisci i tuoi dati anche senza documento: ricevi il tesserino STP, anonimo, valido 6 mesi e rinnovabile.",
+        },
+      },
+      {
+        title: { es: "Si no tienes dinero, firma la declaración", en: "If you have no money, sign the declaration", it: "Se non hai risorse, firma la dichiarazione" },
+        body: {
+          es: "Si no tienes recursos económicos, firmas una declaración de indigencia y las prestaciones son gratuitas, salvo el ticket que pagan también los italianos (y del que se puede estar exento).",
+          en: "If you have no financial means, you sign a declaration of indigence and care is free, except for the ticket that Italians also pay (from which you can be exempt).",
+          it: "Se sei privo di risorse firmi la dichiarazione di indigenza: le prestazioni sono gratuite, salvo il ticket a parità con i cittadini italiani.",
+        },
+      },
+      {
+        title: { es: "Qué cubre", en: "What it covers", it: "Cosa copre" },
+        body: {
+          es: "Visitas y hospital para curas urgentes o esenciales, también tratamientos continuados; embarazo y parto; salud de los menores; vacunas; prevención y tratamiento de enfermedades infecciosas.",
+          en: "Doctor visits and hospital care for urgent or essential treatment, including ongoing treatment; pregnancy and birth; children's health; vaccinations; prevention and treatment of infectious diseases.",
+          it: "Cure ambulatoriali e ospedaliere urgenti o essenziali, anche continuative; gravidanza e parto; salute dei minori; vaccinazioni; prevenzione e cura delle malattie infettive.",
+        },
+      },
+    ],
+    documents: [
+      { es: "Ningún documento es obligatorio. Si tienes pasaporte u otro documento, llévalo.", en: "No document is mandatory. If you have a passport or another document, bring it.", it: "Nessun documento è obbligatorio. Se hai il passaporto o un altro documento, portalo." },
+      { es: "Recetas o informes médicos anteriores, si los tienes.", en: "Previous prescriptions or medical reports, if you have them.", it: "Ricette o referti precedenti, se li hai." },
+    ],
+    costs: { es: "Gratis si no tienes recursos (declaración de indigencia); el ticket, como para los italianos.", en: "Free if you have no means (declaration of indigence); the ticket, as for Italians.", it: "Gratis se privo di risorse; il ticket come per i cittadini italiani." },
+    warnings: [
+      { es: "Ir al médico no supone ninguna denuncia: la ley prohíbe avisar a la policía, salvo los informes obligatorios que el médico debe hacer igual que con un italiano (por ejemplo, heridas por un delito).", en: "Seeing a doctor does not lead to any report: the law forbids notifying the police, except the mandatory reports a doctor must make just as for an Italian (for example, injuries from a crime).", it: "Rivolgersi al medico non comporta segnalazioni: la legge lo vieta, salvo i casi di referto obbligatorio come per i cittadini italiani." },
+      { es: "Cada región organiza el servicio a su manera: si te mudas, pregunta en la ASL nueva.", en: "Each region organises the service its own way: if you move, ask at the new ASL.", it: "Ogni regione organizza il servizio a modo suo: se cambi regione chiedi alla nuova ASL." },
+    ],
+    sources: [
+      { title: "Art. 35 del Testo Unico de Inmigración (Brocardi)", url: "https://brocardi.it/testo-unico-immigrazione/titolo-v/capo-i/art35.html", official: false },
+      { title: "D.Lgs. 286/1998, texto consolidado (Ministerio de Asuntos Exteriores)", url: "https://www.esteri.it/wp-content/uploads/2025/12/286_1998.pdf", official: true },
+      { title: "Portal Integrazione Migranti: código STP", url: "https://www.integrazionemigranti.gov.it/AnteprimaPDF.aspx?id=1835", official: true },
+    ],
+    lastVerified: "2026-11-23",
+  },
+  {
+    slug: "carta-identita-elettronica",
+    icon: "🪪",
+    category: "documentos",
+    title: {
+      es: "Sacar la carta de identidad electrónica (CIE) siendo extranjero",
+      en: "Getting the electronic identity card (CIE) as a foreigner",
+      it: "Carta d'identità elettronica (CIE) per cittadini stranieri",
+    },
+    summary: {
+      es: "Si eres residente en un Comune y tienes permiso de residencia, puedes pedir la CIE. Sirve como documento de identidad en Italia y, sobre todo, para activar el SPID y entrar en INPS, sanidad o el Comune desde el móvil.",
+      en: "If you are registered as a resident in a Comune and have a residence permit, you can apply for the CIE. It works as an ID in Italy and, above all, lets you activate SPID and log in to INPS, healthcare or the Comune from your phone.",
+      it: "Se sei residente in un Comune e hai il permesso di soggiorno puoi chiedere la CIE. Vale come documento d'identità in Italia e soprattutto permette di attivare lo SPID e accedere ai servizi online.",
+    },
+    steps: [
+      {
+        title: { es: "Primero, la residencia", en: "First, residence registration", it: "Prima la residenza" },
+        body: {
+          es: "La CIE la da el Comune donde estás inscrito como residente. Si aún no lo estás, empieza por la guía de la residencia.",
+          en: "The CIE is issued by the Comune where you are registered as a resident. If you aren't yet, start with the residence guide.",
+          it: "La CIE è rilasciata dal Comune di residenza. Se non sei ancora iscritto, inizia dalla guida sulla residenza.",
+        },
+      },
+      {
+        title: { es: "Pide cita", en: "Book an appointment", it: "Prenota" },
+        body: {
+          es: "Reserva en la agenda del Ministerio del Interior (prenotazionicie.interno.gov.it) o en la web de tu Comune. En algunos Comuni se puede ir sin cita en ciertos días.",
+          en: "Book on the Ministry of the Interior's calendar (prenotazionicie.interno.gov.it) or on your Comune's website. Some Comuni accept walk-ins on certain days.",
+          it: "Prenota sull'agenda del Ministero dell'Interno (prenotazionicie.interno.gov.it) o sul sito del Comune.",
+        },
+      },
+      {
+        title: { es: "Ve con tus documentos", en: "Go with your documents", it: "Presentati con i documenti" },
+        body: {
+          es: "En la oficina comprueban tu permiso, te toman las huellas y la foto (o entregas una foto de carnet reciente) y pagas. Te dan la primera mitad del PIN y del PUK: guárdala.",
+          en: "At the office they check your permit, take your fingerprints and photo (or you hand in a recent passport photo) and you pay. You get the first half of the PIN and PUK: keep it safe.",
+          it: "Allo sportello verificano il permesso, rilevano le impronte e la foto e paghi. Ricevi la prima metà di PIN e PUK: conservala.",
+        },
+      },
+      {
+        title: { es: "Recibe la tarjeta y activa el SPID", en: "Receive the card and activate SPID", it: "Ricevi la carta e attiva lo SPID" },
+        body: {
+          es: "La tarjeta llega por correo en unos días, con la segunda mitad del PIN. Con la CIE y su PIN puedes activar el SPID o usar la app CieID para entrar en los servicios públicos en línea.",
+          en: "The card arrives by post within days, with the second half of the PIN. With the CIE and its PIN you can activate SPID or use the CieID app to log in to public services online.",
+          it: "La carta arriva per posta in pochi giorni con la seconda metà del PIN. Con CIE e PIN puoi attivare lo SPID o usare l'app CieID.",
+        },
+      },
+    ],
+    documents: [
+      { es: "Permiso de residencia válido (o el recibo de la renovación con el permiso anterior)", en: "Valid residence permit (or the renewal receipt with the previous permit)", it: "Permesso di soggiorno valido (o ricevuta del rinnovo con il permesso precedente)" },
+      { es: "Pasaporte", en: "Passport", it: "Passaporto" },
+      { es: "Codice fiscale o tessera sanitaria", en: "Codice fiscale or health card", it: "Codice fiscale o tessera sanitaria" },
+      { es: "Una foto de carnet reciente, si tu Comune la pide", en: "A recent passport photo, if your Comune asks for it", it: "Una fototessera recente, se il Comune la richiede" },
+    ],
+    costs: { es: "Unos 22 € (16,79 € del Ministerio más los derechos del Comune, que varían).", en: "About €22 (€16.79 for the Ministry plus the Comune's fees, which vary).", it: "Circa 22 € (16,79 € al Ministero più i diritti comunali, variabili)." },
+    warnings: [
+      { es: "Para viajar fuera de Italia sigue usando tu pasaporte y tu permiso de residencia.", en: "To travel outside Italy keep using your passport and residence permit.", it: "Per viaggiare all'estero continua a usare passaporto e permesso di soggiorno." },
+    ],
+    sources: [
+      { title: "Carta d'Identità Elettronica: web oficial del Ministerio del Interior", url: "https://www.cartaidentita.interno.gov.it/", official: true },
+      { title: "Agenda CIE: reservar cita", url: "https://www.prenotazionicie.interno.gov.it/", official: true },
+      { title: "Agenda Digitale: qué es la CIE y cuánto cuesta", url: "https://agendadigitale.eu/cittadinanza-digitale/carta-didentita-elettronica-a-cosa-serve-quanto-costa-e-come-ottenerla", official: false },
+    ],
+    lastVerified: "2026-11-23",
+  },
+  {
+    slug: "permesso-ue-lungo-periodo",
+    icon: "🏠",
+    category: "documentos",
+    title: {
+      es: "Permiso UE de larga duración (el «permiso indefinido»)",
+      en: "EU long-term residence permit (the “permanent permit”)",
+      it: "Permesso UE per soggiornanti di lungo periodo",
+    },
+    summary: {
+      es: "Después de 5 años con permiso en Italia puedes pedir el permiso UE de larga duración: no caduca, no tienes que renovarlo cada año o dos y te da acceso a más ayudas. Hace falta un ingreso mínimo y, en general, aprobar un examen de italiano nivel A2.",
+      en: "After 5 years with a permit in Italy you can apply for the EU long-term permit: it does not expire, you don't renew it every year or two, and it gives access to more benefits. You need a minimum income and, in general, to pass an A2 Italian test.",
+      it: "Dopo 5 anni di soggiorno regolare puoi chiedere il permesso UE per soggiornanti di lungo periodo: è a tempo indeterminato e dà accesso a più prestazioni. Servono un reddito minimo e, in genere, il test di italiano A2.",
+    },
+    steps: [
+      {
+        title: { es: "Comprueba los requisitos", en: "Check the requirements", it: "Verifica i requisiti" },
+        body: {
+          es: "Al menos 5 años de residencia legal en Italia con permiso; ingresos del último año al menos iguales al assegno sociale anual (más alto si incluyes a tu familia); y, si incluyes familiares, una vivienda adecuada. Algunos permisos (por ejemplo, de estudio) no cuentan.",
+          en: "At least 5 years of legal residence in Italy with a permit; last year's income at least equal to the annual assegno sociale (higher if you include family); and, if you include family members, suitable housing. Some permits (for example, study) don't count.",
+          it: "Almeno 5 anni di soggiorno regolare; reddito non inferiore all'importo annuo dell'assegno sociale (maggiore con i familiari); alloggio idoneo se chiedi anche per i familiari. Alcuni permessi (ad esempio per studio) non danno diritto.",
+        },
+      },
+      {
+        title: { es: "Aprueba el test de italiano A2", en: "Pass the A2 Italian test", it: "Supera il test di italiano A2" },
+        body: {
+          es: "Se pide en línea en la web del Ministerio del Interior (testitaliano.interno.gov.it) y la Prefectura te cita. No lo necesitas si ya tienes un certificado A2 o superior (por ejemplo, de un CPIA) o un título de estudios en Italia.",
+          en: "Apply online on the Ministry of the Interior's website (testitaliano.interno.gov.it) and the Prefettura calls you in. You don't need it if you already have an A2 or higher certificate (for example, from a CPIA) or a school qualification from Italy.",
+          it: "Si richiede online su testitaliano.interno.gov.it e la Prefettura convoca. Non serve se hai già una certificazione A2 o superiore (ad esempio di un CPIA) o un titolo di studio italiano.",
+        },
+      },
+      {
+        title: { es: "Envía el kit amarillo desde Correos", en: "Send the yellow kit from the post office", it: "Spedisci il kit giallo dalla Posta" },
+        body: {
+          es: "Recoge el kit en una oficina de Poste Italiane con «Sportello Amico», rellénalo (puede ayudarte gratis un Patronato) y envíalo desde allí con las copias de los documentos. Guarda el recibo: vale como prueba de que lo pediste.",
+          en: "Collect the kit at a Poste Italiane office with “Sportello Amico”, fill it in (a Patronato can help for free) and send it from there with copies of your documents. Keep the receipt: it proves you applied.",
+          it: "Ritira il kit in un ufficio postale con Sportello Amico, compilalo (un Patronato può aiutarti gratis) e spediscilo con le copie dei documenti. Conserva la ricevuta.",
+        },
+      },
+      {
+        title: { es: "Cita en la Questura", en: "Questura appointment", it: "Appuntamento in Questura" },
+        body: {
+          es: "Te llega la cita en el recibo o por SMS: vas con los originales, te toman las huellas y después recoges la tarjeta.",
+          en: "You get the appointment on the receipt or by SMS: you bring the originals, they take your fingerprints and later you collect the card.",
+          it: "La convocazione arriva con la ricevuta o via SMS: porti gli originali, rilevano le impronte e poi ritiri la carta.",
+        },
+      },
+    ],
+    documents: [
+      { es: "Pasaporte y permiso de residencia actual", en: "Passport and current residence permit", it: "Passaporto e permesso di soggiorno attuale" },
+      { es: "Declaración de la renta (CU o 730) del último año y nóminas recientes", en: "Last year's tax return (CU or 730) and recent payslips", it: "Dichiarazione dei redditi (CU o 730) e buste paga recenti" },
+      { es: "Certificado de residencia y, si incluyes familia, certificado de vivienda adecuada (idoneità alloggiativa)", en: "Residence certificate and, if you include family, housing suitability certificate (idoneità alloggiativa)", it: "Certificato di residenza e, con i familiari, idoneità alloggiativa" },
+      { es: "Certificado del test A2 (o el documento que te exime)", en: "A2 test certificate (or the document that exempts you)", it: "Certificazione A2 o documento di esenzione" },
+    ],
+    costs: {
+      es: "Unos 175 € en total según la Questura de Treviso (2024): contribución de 100 €, sello de 16 €, 30,46 € de la tarjeta y unos 30 € del envío. Confirma los importes en el kit.",
+      en: "About €175 in total according to the Treviso Questura (2024): €100 contribution, €16 revenue stamp, €30.46 for the card and about €30 for postage. Check the amounts in the kit.",
+      it: "Circa 175 € secondo la Questura di Treviso (2024): contributo 100 €, marca da bollo 16 €, 30,46 € per la card e circa 30 € di spedizione. Verifica gli importi nel kit.",
+    },
+    warnings: [
+      { es: "El permiso no caduca, pero la tarjeta hay que actualizarla con el tiempo (como un documento de identidad).", en: "The permit does not expire, but the card must be updated over time (like an ID document).", it: "Il permesso è a tempo indeterminato, ma il documento va aggiornato periodicamente." },
+      { es: "No es lo mismo que la ciudadanía: para la ciudadanía por residencia hacen falta, en general, 10 años.", en: "It is not the same as citizenship: citizenship by residence generally requires 10 years.", it: "Non è la cittadinanza: per quella per residenza servono in genere 10 anni." },
+    ],
+    sources: [
+      { title: "Art. 9 del Testo Unico de Inmigración (Brocardi)", url: "https://brocardi.it/testo-unico-immigrazione/titolo-ii/capo-i/art9.html", official: false },
+      { title: "Questura de Treviso: guía del permiso UE de larga duración (2024)", url: "https://questure.poliziadistato.it/statics/12/8_permesso_soggiorno_ue_-soggiornanti_-lungo_periodo_maggio_24.pdf?lang=it", official: true },
+      { title: "Test de italiano A2 (Ministerio del Interior)", url: "https://testitaliano.interno.gov.it/", official: true },
+      { title: "ASGI: ficha del permiso UE de larga duración", url: "https://asgi.it/wp-content/uploads/2024/02/PERMESSO-DI-SOGGIORNO-UE-PER-SOGGIORNANTI-DI-LUNGO-PERIODO_feb24.pdf", official: false },
+    ],
+    lastVerified: "2026-11-23",
+  },
 ];
 
 export function getGuide(slug: string): Guide | undefined {

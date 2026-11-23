@@ -3,7 +3,9 @@ import { GuideThumb, PageArt } from "@/components/PageArt";
 import { SearchX } from "lucide-react";
 import { getLang } from "@/lib/lang";
 import { t, tr } from "@/lib/i18n";
-import { guides } from "@/content/guides";
+import { getGuide, guides } from "@/content/guides";
+import { STAGES } from "@/content/journey";
+import type { Guide, Lang } from "@/content/types";
 import { AdSlot } from "@/components/AdSlot";
 
 const L = {
@@ -11,6 +13,18 @@ const L = {
   none: { es: "No encontramos trámites con esas palabras. Prueba con otra, por ejemplo «permiso», «sanidad» o «código fiscal».", en: "No procedures match those words. Try another, for example “permit”, “health” or “tax code”.", it: "Nessuna pratica con queste parole. Prova con un'altra, per esempio «permesso», «sanità» o «codice fiscale»." },
   all: { es: "Ver todos los trámites", en: "See all procedures", it: "Vedi tutte le pratiche" },
 };
+
+function GuideCard({ g, lang }: { g: Guide; lang: Lang }) {
+  return (
+    <Link href={`/guias/${g.slug}`} className="card card-link flex flex-col overflow-hidden !p-0">
+      <GuideThumb slug={g.slug} className="aspect-[16/7]" />
+      <span className="p-5">
+        <span className="block font-semibold">{tr(g.title, lang)}</span>
+        <span className="mt-1 block text-sm text-muted">{tr(g.summary, lang)}</span>
+      </span>
+    </Link>
+  );
+}
 
 /** Sin mayúsculas ni tildes: «Código» y «codigo» coinciden. */
 const norm = (s: string) => s.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
@@ -35,16 +49,25 @@ export default async function GuidesPage({ searchParams }: { searchParams: Promi
           {tr(L.results, lang)} «{q}»: {list.length}
         </p>
       )}
-      {list.length ? (
+      {!q ? (
+        // Sin búsqueda: los trámites ordenados por el momento del viaje (lo que más urge, primero).
+        STAGES.map((st) => (
+          <section key={st.id} className="mt-8" aria-labelledby={`st-${st.id}`}>
+            <h2 id={`st-${st.id}`} className="text-2xl font-bold tracking-tight">
+              {tr(st.title, lang)}
+            </h2>
+            <p className="mt-1 text-muted">{tr(st.pain, lang)}</p>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {st.slugs.map((slug) => getGuide(slug)).filter((g) => g !== undefined).map((g) => (
+                <GuideCard key={g.slug} g={g} lang={lang} />
+              ))}
+            </div>
+          </section>
+        ))
+      ) : list.length ? (
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
           {list.map((g) => (
-            <Link key={g.slug} href={`/guias/${g.slug}`} className="card card-link flex flex-col overflow-hidden !p-0">
-              <GuideThumb slug={g.slug} className="aspect-[16/7]" />
-              <span className="p-5">
-                <span className="block font-semibold">{tr(g.title, lang)}</span>
-                <span className="mt-1 block text-sm text-muted">{tr(g.summary, lang)}</span>
-              </span>
-            </Link>
+            <GuideCard key={g.slug} g={g} lang={lang} />
           ))}
         </div>
       ) : (

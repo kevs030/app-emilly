@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { ArrowRight, BadgeCheck, BookUser, CalendarCheck, Download, FileDown, FileText, HandCoins, Lock, MapPin, PlayCircle, ShieldAlert, Video, Wallet } from "lucide-react";
+import { ArrowRight, BadgeCheck, BookUser, CalendarCheck, Compass, Download, FileDown, FileText, Gift, HandCoins, Lock, MapPin, PlayCircle, ShieldAlert, UserRoundCheck, Video, Wallet } from "lucide-react";
 import { getLang } from "@/lib/lang";
 import { t, tr } from "@/lib/i18n";
-import { guides } from "@/content/guides";
+import { getGuide, guides } from "@/content/guides";
+import { STAGES } from "@/content/journey";
+import { RoadmapQuiz } from "@/components/RoadmapQuiz";
 import { GuideThumb } from "@/components/PageArt";
 import { Reveal } from "@/components/Reveal";
 import { centers } from "@/content/centers";
@@ -17,6 +19,14 @@ const H = {
     it: "Permesso di soggiorno, codice fiscale, sanità, bonus e altro: cosa fare, quali documenti portare e dove andare.",
   },
   downloadShort: { es: "Descargar la app", en: "Download the app", it: "Scarica l'app" },
+  explore: { es: "Explorar trámites gratis", en: "Explore procedures for free", it: "Esplora le pratiche gratis" },
+  trustLabel: { es: "Por qué confiar", en: "Why trust us", it: "Perché fidarsi" },
+  stages: { es: "¿En qué momento estás?", en: "Where are you in your journey?", it: "A che punto sei?" },
+  stagesSub: {
+    es: "Los trámites ordenados según tu momento en Italia. Cada guía tiene los pasos, los documentos y los formularios oficiales.",
+    en: "Procedures ordered by your moment in Italy. Each guide has the steps, documents and official forms.",
+    it: "Le pratiche ordinate secondo il tuo momento in Italia. Ogni guida ha passi, documenti e moduli ufficiali.",
+  },
   heroAlt: { es: "Una pareja sonríe en una plaza de Milán, con el Duomo detrás.", en: "A couple smiling in a square in Milan, with the Duomo behind them.", it: "Una coppia sorride in una piazza di Milano, con il Duomo alle spalle." },
   download: { es: "Descargar la app para Android", en: "Download the Android app", it: "Scarica l'app per Android" },
   guides: { es: "Ver los trámites", en: "See the procedures", it: "Vedi le pratiche" },
@@ -47,6 +57,12 @@ const H = {
   },
 };
 
+const HERO_TRUST = [
+  { icon: Gift, es: "100% gratuito", en: "100% free", it: "100% gratuito" },
+  { icon: UserRoundCheck, es: "Sin registro obligatorio", en: "No sign-up required", it: "Senza registrazione obbligatoria" },
+  { icon: BadgeCheck, es: "Fuentes oficiales", en: "Official sources", it: "Fonti ufficiali" },
+] as const;
+
 const TRUST = [
   { icon: BadgeCheck, es: "Fuentes oficiales", en: "Official sources", it: "Fonti ufficiali", d: { es: "Cada dato enlaza a INPS, Polizia di Stato o al Ministerio.", en: "Every fact links to INPS, Polizia di Stato or the Ministry.", it: "Ogni dato rimanda a INPS, Polizia di Stato o Ministero." } },
   { icon: CalendarCheck, es: "Revisado cada semana", en: "Checked every week", it: "Verificato ogni settimana", d: { es: "Verás la fecha de la última revisión en cada guía.", en: "You'll see the last check date on every guide.", it: "Trovi la data dell'ultima verifica in ogni guida." } },
@@ -55,13 +71,14 @@ const TRUST = [
 ] as const;
 
 const STEPS = [
-  { es: "Descarga la app", en: "Download the app", it: "Scarica l'app", d: { es: "Instálala en tu Android y cuéntale tu situación en 4 preguntas.", en: "Install it on your Android and tell it your situation in 4 questions.", it: "Installala sul tuo Android e racconta la tua situazione in 4 domande." } },
+  { es: "Descarga la app", en: "Download the app", it: "Scarica l'app", d: { es: "Instálala en tu Android o añádela a tu iPhone desde Safari, gratis.", en: "Install it on Android or add it to your iPhone from Safari, for free.", it: "Installala su Android o aggiungila all'iPhone da Safari, gratis." } },
   { es: "Sigue los pasos", en: "Follow the steps", it: "Segui i passaggi", d: { es: "Descarga el formulario oficial, reúne los documentos y mira dónde está tu oficina.", en: "Download the official form, gather the documents and find your office.", it: "Scarica il modulo ufficiale e trova il tuo ufficio." } },
   { es: "Resuelve tus dudas", en: "Get answers", it: "Risolvi i dubbi", d: { es: "Pregunta al asistente de la app con tus palabras, o a la comunidad.", en: "Ask the app's assistant in your own words, or the community.", it: "Chiedi all'assistente dell'app con parole tue, o alla comunità." } },
 ] as const;
 
 export default async function Home() {
   const lang = await getLang();
+  const guideInfo = Object.fromEntries(guides.map((g) => [g.slug, { title: tr(g.title, lang), summary: tr(g.summary, lang) }]));
   const tools = [
     { href: "/guias", icon: FileText, label: t("navGuides", lang) },
     { href: "/mapa", icon: MapPin, label: t("navMap", lang) },
@@ -80,14 +97,21 @@ export default async function Home() {
             <p className="fade-up hero-sub mt-5 max-w-xl text-lg" style={{ animationDelay: "80ms" }}>
               {tr(H.sub, lang)}
             </p>
-            <div className="fade-up mt-7 flex flex-col items-start gap-3" style={{ animationDelay: "160ms" }}>
-              <Link href="/descargar" className="btn btn-hero">
-                <Download size={18} aria-hidden /> {tr(H.download, lang)}
-              </Link>
-              <Link href="/guias" className="btn btn-hero-outline">
-                <FileText size={18} aria-hidden /> {tr(H.guides, lang)}
+            <div className="fade-up mt-7 flex flex-col gap-3 sm:flex-row sm:items-center" style={{ animationDelay: "160ms" }}>
+              <a href="#hoja-de-ruta" className="btn btn-hero sm:w-auto" data-testid="hero-primary">
+                <Compass size={18} aria-hidden /> {tr(H.explore, lang)}
+              </a>
+              <Link href="/descargar" className="btn btn-hero-outline sm:w-auto" data-testid="hero-secondary">
+                <Download size={18} aria-hidden /> {tr(H.downloadShort, lang)}
               </Link>
             </div>
+            <ul className="fade-up mt-4 flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-muted" style={{ animationDelay: "220ms" }} aria-label={tr(H.trustLabel, lang)} data-testid="hero-trust">
+              {HERO_TRUST.map((x) => (
+                <li key={x.es} className="flex items-center gap-1.5">
+                  <x.icon size={15} className="shrink-0 text-brand" aria-hidden /> {x[lang]}
+                </li>
+              ))}
+            </ul>
           </div>
           <div className="hero-photo relative h-72 sm:h-96 md:h-full md:min-h-[460px]">
             <img
@@ -107,6 +131,8 @@ export default async function Home() {
           <path d="M0 40 C 200 0, 400 70, 650 30 S 1050 10, 1200 35 V60 H0 Z" />
         </svg>
       </section>
+
+      <RoadmapQuiz lang={lang} guides={guideInfo} />
 
       <section className="grid gap-4 lg:grid-cols-[1.25fr_1fr]">
         <ul className="grid grid-cols-3 gap-3">
@@ -179,27 +205,36 @@ export default async function Home() {
         </details>
       </section>
 
-      <section>
-        <h2 className="text-2xl font-bold tracking-tight">{tr(H.popular, lang)}</h2>
-        <p className="mt-1 text-muted">{tr(H.popularSub, lang)}</p>
-        <div className="mt-4 grid gap-3 sm:grid-cols-2">
-          {guides.map((g, i) => (
-            <Reveal key={g.slug} delay={(i % 2) * 70}>
-              <Link href={`/guias/${g.slug}`} className="card card-link group flex h-full flex-col overflow-hidden !p-0">
-                <GuideThumb slug={g.slug} className="aspect-[16/7]" />
-                <span className="flex flex-1 gap-3 p-5">
-                  <span className="min-w-0 flex-1">
-                    <span className="block font-semibold">{tr(g.title, lang)}</span>
-                    <span className="mt-1 line-clamp-2 block text-sm text-muted">{tr(g.summary, lang)}</span>
-                  </span>
-                  <ArrowRight size={18} className="mt-1 shrink-0 text-muted transition-transform group-hover:translate-x-1 group-hover:text-brand" aria-hidden />
-                </span>
-              </Link>
+      <section aria-labelledby="stages-title">
+        <h2 id="stages-title" className="text-2xl font-bold tracking-tight">{tr(H.stages, lang)}</h2>
+        <p className="mt-1 text-muted">{tr(H.stagesSub, lang)}</p>
+        <div className="mt-4 grid gap-4 lg:grid-cols-3">
+          {STAGES.map((st, i) => (
+            <Reveal key={st.id} delay={i * 70}>
+              <section className="card h-full" aria-labelledby={`stage-${st.id}`} data-testid={`stage-${st.id}`}>
+                <h3 id={`stage-${st.id}`} className="text-lg font-bold">
+                  {tr(st.title, lang)}
+                </h3>
+                <p className="mt-1 text-sm text-muted">{tr(st.pain, lang)}</p>
+                <ul className="mt-3 space-y-2">
+                  {st.slugs.map((slug) => {
+                    const g = getGuide(slug);
+                    return g ? (
+                      <li key={slug}>
+                        <Link href={`/guias/${slug}`} className="group flex min-h-11 items-center gap-3 rounded-xl border border-border bg-background p-2 pe-3 hover:border-brand">
+                          <GuideThumb slug={slug} className="!h-12 !w-16 shrink-0 rounded-lg" />
+                          <span className="min-w-0 flex-1 text-sm font-semibold leading-snug">{tr(g.title, lang)}</span>
+                          <ArrowRight size={16} className="shrink-0 text-muted group-hover:text-brand rtl:rotate-180" aria-hidden />
+                        </Link>
+                      </li>
+                    ) : null;
+                  })}
+                </ul>
+              </section>
             </Reveal>
           ))}
         </div>
       </section>
-
 
       <section aria-labelledby="centers-title">
         <h2 id="centers-title" className="text-2xl font-bold tracking-tight">{tr(H.centers, lang)}</h2>

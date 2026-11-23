@@ -33,3 +33,15 @@ export const openedFromEmailLink = !isNative && typeof window !== "undefined" &&
 export function redirectUrl(path = ""): string {
   return isNative ? `${APP_SCHEME}://auth${path}` : `${window.location.origin}${import.meta.env.BASE_URL.replace(/\/$/, "")}${path}`;
 }
+
+/** Página de la web donde se crea la contraseña nueva: funciona en Safari y Chrome sin la app instalada. */
+export const RECOVERY_URL = "https://www.apostoapp.app/nueva-contrasena";
+
+/**
+ * Cliente solo para pedir el correo de «cambiar contraseña». Usa el flujo «implícito»: el enlace del correo trae
+ * la sesión consigo y la web la usa directamente. Con el flujo normal (PKCE) el enlace solo funcionaría en el
+ * mismo navegador o app que lo pidió, y en el iPhone o en otro navegador se quedaba en blanco.
+ */
+export function recoveryClient() {
+  return createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { flowType: "implicit", persistSession: false, autoRefreshToken: false, detectSessionInUrl: false } });
+}

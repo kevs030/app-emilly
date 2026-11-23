@@ -14,6 +14,7 @@ import { startDone } from "./Start";
 import { tourSeen } from "./Tour";
 import { SponsorBanner } from "~/ui/SponsorBanner";
 import { AvatarCircle } from "~/ui/profile/AvatarPicker";
+import { IosInstallHint } from "~/ui/IosInstallHint";
 import { IntegrationGuide } from "~/ui/home/IntegrationGuide";
 import { ConsulateCard, DailyQuote, WorkCard } from "~/ui/home/HomeCards";
 
@@ -108,6 +109,7 @@ export function Home() {
           </Link>
         </header>
 
+        <IosInstallHint />
         <DailyQuote />
 
         {/* Perfil gradual: solo pedimos el nombre, y solo si falta. */}

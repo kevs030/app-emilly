@@ -40,12 +40,20 @@ const nextConfig: NextConfig = {
       },
     },
   },
-  // La app es independiente (se instala en el teléfono); la web solo informa y ofrece la descarga.
-  // Las direcciones de la antigua app dentro de la web llevan a la página de descarga. Son temporales (307)
-  // para poder volver atrás sin que los navegadores las recuerden.
+  // La web solo informa: las funciones personales viven en la app. En /app/ se sirve la app completa para
+  // instalarla en el iPhone («Añadir a pantalla de inicio») mientras no esté en el App Store.
+  // Las direcciones antiguas de la web con funciones personales llevan a la página de descarga (307, temporales).
   async redirects() {
-    const toDownload = ["/app", "/app/:path*", "/entrar", "/perfil", "/asistente", "/foro", "/foro/:path*"];
+    const toDownload = ["/entrar", "/perfil", "/asistente", "/foro", "/foro/:path*"];
     return toDownload.map((source) => ({ source, destination: "/descargar", permanent: false }));
+  },
+  // La app de /app/ es una SPA: cualquier ruta suya (/app/guides, /app/profile…) carga su index.html.
+  // Los archivos que existen (/app/assets/…) se sirven antes que esta regla.
+  async rewrites() {
+    return { beforeFiles: [], afterFiles: [
+        { source: "/app", destination: "/app/index.html" },
+        { source: "/app/:path*", destination: "/app/index.html" },
+      ], fallback: [] };
   },
   async headers() {
     return [

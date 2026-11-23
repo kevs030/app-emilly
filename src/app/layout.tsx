@@ -11,12 +11,15 @@ import { BottomNav } from "@/components/BottomNav";
 import { Logo } from "@/components/Icons";
 import { ServiceWorker } from "@/components/ServiceWorker";
 import { NavMenus } from "@/components/NavMenus";
+import { AuthHashRedirect } from "@/components/AuthHashRedirect";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: { default: "A Posto — Guía para migrantes en Italia", template: "%s · A Posto" },
-  description: "Trámites, ayudas, mapas, videos y comunidad para personas migrantes en Italia. Información gratuita con fuentes oficiales.",
+  metadataBase: new URL("https://www.apostoapp.app"),
+  title: { default: "A Posto — Trámites en Italia para migrantes, paso a paso", template: "%s · A Posto" },
+  description: "Codice fiscale, tessera sanitaria, residencia, permesso di soggiorno, Decreto Flussi, art. 31, permiso UE de larga duración y ciudadanía: qué hacer, qué documentos llevar y adónde ir. Gratis, con fuentes oficiales.",
+  openGraph: { siteName: "A Posto", type: "website", locale: "es_ES" },
   applicationName: "A Posto",
   appleWebApp: { capable: true, title: "A Posto", statusBarStyle: "default" },
   icons: { icon: [{ url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" }], apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }] },
@@ -105,6 +108,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang={lang} className={`${geistSans.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-sans">
+        <AuthHashRedirect />
         <header className="sticky top-0 z-[1000] border-b border-border bg-background/95 backdrop-blur">
           <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-2.5">
             <Link href="/" className="flex shrink-0 items-center gap-2 text-lg font-bold tracking-tight">
