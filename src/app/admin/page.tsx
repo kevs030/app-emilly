@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient, supabaseConfigured } from "@/lib/supabase/server";
 import { adminSignOut, deleteContent, deleteSponsor, dismissReports, setHidden, toggleSponsor } from "./actions";
@@ -51,12 +50,16 @@ export default async function AdminPage() {
     );
   }
 
-  const [{ data: statsData }, { data: reportsData }, { data: sponsors }, { data: usageData }] = await Promise.all([
+  const [{ data: statsData }, { data: reportsData }, { data: sponsors }, { data: usageData }, { data: forumData }] = await Promise.all([
     supabase.rpc("admin_stats"),
     supabase.from("forum_reports").select("id, post_id, comment_id, reason, created_at").order("created_at", { ascending: false }).limit(200),
     supabase.from("sponsors").select("id, title, body, cta, url, placement, active, clicks, created_at").order("created_at", { ascending: false }),
     supabase.rpc("admin_usage"),
+    // Encargado del foro: todas las preguntas recientes con su número de respuestas.
+    supabase.from("forum_posts").select("id, title, body, author_name, category, hidden, created_at, forum_comments(count)").order("created_at", { ascending: false }).limit(40),
   ]);
+  const forum = ((forumData ?? []) as { id: number; title: string; body: string; author_name: string; category: string; hidden: boolean; created_at: string; forum_comments?: { count: number }[] }[]).map(({ forum_comments, ...p }) => ({ ...p, answers: forum_comments?.[0]?.count ?? 0 }));
+  const unanswered = forum.filter((p) => p.answers === 0 && !p.hidden).length;
   const usage = usageData as Usage | null;
   const stats = statsData as Stats | null;
   const reports = (reportsData ?? []) as Report[];
@@ -101,6 +104,39 @@ export default async function AdminPage() {
 
       {usage && <UsagePanel u={usage} />}
 
+      <section data-testid="admin-forum">
+        <h2 className="text-xl font-semibold">
+          Foro: preguntas recientes{" "}
+          {unanswered > 0 && <span className="ms-2 rounded-full bg-danger px-2.5 py-0.5 text-sm font-bold text-white">{unanswered} sin respuesta</span>}
+        </h2>
+        <p className="mt-1 text-sm text-muted">Para responder, abre la app → Comunidad. Las que nadie ha respondido aparecen primero marcadas en rojo.</p>
+        {forum.length === 0 ? (
+          <p className="mt-2 text-sm text-muted">Todavía no hay preguntas.</p>
+        ) : (
+          <ul className="mt-3 space-y-3">
+            {[...forum].sort((a, b) => Number(a.answers > 0) - Number(b.answers > 0)).map((p) => (
+              <li key={p.id} className={`card ${p.answers === 0 && !p.hidden ? "border-danger" : ""}`}>
+                <p className="text-xs text-muted">
+                  {new Date(p.created_at).toLocaleString("es-ES", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })} · {p.author_name} · {p.category} ·{" "}
+                  {p.answers === 0 ? <strong className="text-danger">SIN RESPUESTA</strong> : `${p.answers} respuesta(s)`}
+                  {p.hidden && " · OCULTA"}
+                </p>
+                <p className="mt-1 font-semibold">{p.title}</p>
+                <p className="mt-1 line-clamp-3 whitespace-pre-wrap text-sm">{p.body}</p>
+                <div className="mt-3 flex flex-wrap gap-2 text-sm">
+                  <form action={setHidden}>
+                    <input type="hidden" name="kind" value="post" />
+                    <input type="hidden" name="id" value={p.id} />
+                    <input type="hidden" name="hidden" value={String(!p.hidden)} />
+                    <button className="btn-ghost py-1.5">{p.hidden ? "Volver a mostrar" : "Ocultar"}</button>
+                  </form>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
       <section>
         <h2 className="text-xl font-semibold">Denuncias del foro</h2>
         {items.length === 0 ? (
@@ -110,10 +146,7 @@ export default async function AdminPage() {
             {items.map((it) => (
               <li key={`${it.kind}-${it.id}`} className="card">
                 <p className="text-xs text-muted">
-                  {it.kind === "post" ? "Pregunta" : "Comentario"} de {it.author} · {it.reasons.length} denuncia(s) · {it.hidden ? "OCULTO" : "visible"} ·{" "}
-                  <Link href={`/foro/${it.postId}`} className="underline">
-                    ver en el foro
-                  </Link>
+                  {it.kind === "post" ? "Pregunta" : "Comentario"} de {it.author} · {it.reasons.length} denuncia(s) · {it.hidden ? "OCULTO" : "visible"} · pregunta n.º {it.postId} (verla en la app → Comunidad)
                 </p>
                 {it.kind === "post" && <p className="mt-1 font-semibold">{it.title}</p>}
                 <p className="mt-1 line-clamp-4 whitespace-pre-wrap text-sm">{it.body}</p>

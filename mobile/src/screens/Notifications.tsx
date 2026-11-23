@@ -1,4 +1,5 @@
-import { BellRing, CalendarDays, FileText, IdCard } from "lucide-react";
+import { BellRing, CalendarDays, FileText, IdCard, MessageCircleReply } from "lucide-react";
+import { useForumActivity } from "~/lib/forumActivity";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "~/auth/AuthProvider";
@@ -24,6 +25,7 @@ export function Notifications() {
   const [docs, setDocs] = useState<Doc[]>([]);
   const [settings, setSettings] = useState<NotifySettings>(loadNotify);
   const [denied, setDenied] = useState(false);
+  const forum = useForumActivity(user?.id);
 
   useEffect(() => {
     if (user) void listDocuments(user.id).then((d) => setDocs(d ?? []));
@@ -52,6 +54,28 @@ export function Notifications() {
 
   return (
     <Screen title={t("notifications")} back help="notifications">
+      {forum && forum.replies.length > 0 && (
+        <section className="mb-6" data-testid="notif-replies">
+          <h2 className="mb-3 text-lg font-bold">{t("community")}</h2>
+          <ul className="space-y-3">
+            {forum.replies.map((r) => (
+              <li key={`${r.post_id}-${r.created_at}`}>
+                <Link to={`/community/${r.post_id}`} className="card flex items-start gap-3">
+                  <span className="icon-tile shrink-0">
+                    <MessageCircleReply size={20} aria-hidden />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-semibold">{t("commNewReplies")}</span>
+                    <span className="block text-[14px] text-ink-soft break-words">
+                      {r.author_name} {t("commReplyFrom")}: «{r.title}»
+                    </span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
       <section>
         <h2 className="mb-3 text-lg font-bold">{t("notifUpcoming")}</h2>
         {!available && <p className="card text-ink-soft">{t("notReady")}</p>}

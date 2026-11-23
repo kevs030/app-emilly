@@ -2,6 +2,7 @@ import { ArrowRight, Flag, MessageSquarePlus, ShieldAlert, Trash2 } from "lucide
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "~/auth/AuthProvider";
+import { markPostsSeen, markRepliesSeen, useForumActivity } from "~/lib/forumActivity";
 import { createComment, createPost, deleteComment, deletePost, FORUM_CATEGORIES, getPost, listPosts, report, type Comment, type ForumCategory, type Post } from "~/lib/forum";
 import { useLang } from "~/lib/lang";
 import { CONTENT_LANG, type StringKey } from "~/lib/strings";
@@ -22,8 +23,16 @@ function Rules() {
 /** Comunidad: preguntas y respuestas entre personas. Lo que se publica es visible para todos. */
 export function Community() {
   const { t, lang } = useLang();
+  const { user } = useAuth();
   const [filter, setFilter] = useState<ForumCategory | "">("");
   const [posts, setPosts] = useState<Post[] | null | undefined>(undefined);
+  const activity = useForumActivity(user?.id);
+  const answers = new Map((activity?.latest ?? []).map((p) => [p.id, p.answers]));
+  const unanswered = (activity?.latest ?? []).filter((p) => p.answers === 0 && p.author_id !== user?.id).slice(0, 3);
+  // Al abrir la Comunidad, las preguntas nuevas pasan a «vistas» (se apaga el punto rojo).
+  useEffect(() => {
+    if (user) markPostsSeen(user.id);
+  }, [user]);
 
   useEffect(() => {
     let alive = true;
@@ -39,6 +48,37 @@ export function Community() {
       <Link to="/community/new" className="btn mt-4">
         <MessageSquarePlus size={20} aria-hidden /> {t("forumAsk")}
       </Link>
+      {activity?.replies.length ? (
+        <ul className="mt-4 space-y-2" data-testid="community-replies">
+          {activity.replies.slice(0, 3).map((r) => (
+            <li key={`${r.post_id}-${r.created_at}`}>
+              <Link to={`/community/${r.post_id}`} className="block rounded-2xl bg-sage-soft p-3">
+                <span className="block font-semibold">{t("commNewReplies")}</span>
+                <span className="block text-[14px] text-ink-soft break-words">
+                  {r.author_name} {t("commReplyFrom")}: «{r.title}»
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+      {unanswered.length > 0 && (
+        <section className="mt-4 rounded-2xl border border-gold/60 bg-gold-soft p-3" aria-labelledby="help-title" data-testid="community-help">
+          <h2 id="help-title" className="font-bold">
+            {t("commHelpTitle")}
+          </h2>
+          <ul className="mt-2 space-y-1">
+            {unanswered.map((p) => (
+              <li key={p.id}>
+                <Link to={`/community/${p.id}`} className="flex min-h-11 items-center gap-2 font-medium underline-offset-2 hover:underline">
+                  <span className="min-w-0 flex-1 break-words">{p.title}</span>
+                  <span className="shrink-0 text-[13px] font-bold text-terracotta-deep">{t("commHelpCta")} →</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
       <div className="mt-4">
         <label className="field-label" htmlFor="forum-cat">
           {t("forumTopic")}
@@ -66,6 +106,12 @@ export function Community() {
                   <span className="mt-0.5 line-clamp-2 block text-[14px] text-ink-soft break-words">{p.body}</span>
                   <span className="mt-1 block text-[13px] text-ink-soft">
                     {p.author_name} · {new Date(p.created_at).toLocaleDateString(lang, { day: "numeric", month: "short" })}
+                    {answers.has(p.id) &&
+                      (answers.get(p.id) === 0 ? (
+                        <strong className="ms-2 rounded-full bg-gold-soft px-2 py-0.5 text-terracotta-deep">{t("commNoAnswer")}</strong>
+                      ) : (
+                        <span aria-label={`${answers.get(p.id)} ${t("forumAnswers").toLowerCase()}`}> · 💬 {answers.get(p.id)}</span>
+                      ))}
                   </span>
                 </span>
                 <ArrowRight size={20} className="mt-1 shrink-0 text-terracotta rtl:rotate-180" aria-hidden />
@@ -180,6 +226,11 @@ export function CommunityPost() {
   const [error, setError] = useState<StringKey | "">("");
 
   const reload = useCallback(async () => setData(Number.isInteger(id) ? await getPost(id) : null), [id]);
+  // Si es mi pregunta, al abrirla las respuestas nuevas pasan a «vistas».
+  const mine = Boolean(user && data && data.post.author_id === user.id);
+  useEffect(() => {
+    if (mine && user) markRepliesSeen(user.id);
+  }, [mine, user]);
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- carga inicial
     reload();

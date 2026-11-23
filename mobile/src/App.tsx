@@ -1,4 +1,5 @@
-import { FileText, HandCoins, House, LogIn, MapPin, MessageCircle, UserRound, WifiOff } from "lucide-react";
+import { FileText, HandCoins, House, LogIn, MapPin, MessageCircle, UserRound, UsersRound, WifiOff } from "lucide-react";
+import { forumBadge, useForumActivity } from "~/lib/forumActivity";
 import { useEffect, useState } from "react";
 import { useApkUpdate } from "~/lib/liveUpdate";
 import { API_URL } from "~/lib/supabase";
@@ -69,10 +70,13 @@ function Private({ guestOk = false }: { guestOk?: boolean }) {
   const bare = path === "/tour" || path === "/start"; // guía de uso y cuestionario a pantalla completa
   useSessionTracking(Boolean(session && profile?.consent_analytics));
   useScreenTracking(Boolean(session && profile?.consent_analytics));
+  // Punto rojo en «Comunidad»: preguntas nuevas y respuestas a mis preguntas.
+  const forum = useForumActivity(session?.user.id);
   const apk = useApkUpdate();
   if (!ready) return <Splash />;
   if (!session && !guestOk) return <Navigate to="/welcome" replace />;
   const guest = !session;
+  const badge = forumBadge(forum);
   const tabs = guest
     ? [
         { to: "/guides", icon: FileText, label: t("tabGuides"), end: false },
@@ -83,6 +87,7 @@ function Private({ guestOk = false }: { guestOk?: boolean }) {
     : [
         { to: "/", icon: House, label: t("tabHome"), end: true },
         { to: "/guides", icon: FileText, label: t("tabGuides"), end: false },
+        { to: "/community", icon: UsersRound, label: t("community"), end: false },
         { to: "/assistant", icon: MessageCircle, label: t("tabAssistant"), end: false },
         { to: "/profile", icon: UserRound, label: t("tabProfile"), end: false },
       ];
@@ -122,8 +127,13 @@ function Private({ guestOk = false }: { guestOk?: boolean }) {
               {tabs.map((tab) => (
                 <li key={tab.to} className="flex-1">
                   <NavLink to={tab.to} end={tab.end} className={({ isActive }) => `group flex min-h-14 flex-col items-center justify-center gap-0.5 pt-1.5 text-[12px] ${isActive ? "font-bold text-terracotta-deep" : "font-medium text-ink-soft"}`}>
-                    <span className="flex h-8 items-center justify-center">
+                    <span className="relative flex h-8 items-center justify-center">
                       <tab.icon size={24} strokeWidth={2} aria-hidden />
+                      {tab.to === "/community" && badge > 0 && (
+                        <span className="absolute -end-2.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-terracotta-deep px-1 text-[11px] font-bold text-white" data-testid="community-badge" aria-label={`${badge}`}>
+                          {badge > 9 ? "9+" : badge}
+                        </span>
+                      )}
                     </span>
                     {tab.label}
                   </NavLink>

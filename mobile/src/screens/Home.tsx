@@ -17,6 +17,7 @@ import { AvatarCircle } from "~/ui/profile/AvatarPicker";
 import { IosInstallHint } from "~/ui/IosInstallHint";
 import { StatsConsent } from "~/ui/StatsConsent";
 import { IntegrationGuide } from "~/ui/home/IntegrationGuide";
+import { CommunityCard } from "~/ui/home/CommunityCard";
 import { ConsulateCard, DailyQuote, WorkCard } from "~/ui/home/HomeCards";
 
 function ProgressBar({ percent, label }: { percent: number; label: string }) {
@@ -166,6 +167,9 @@ export function Home() {
             })}
           </ul>
         </nav>
+
+        {/* Comunidad bien visible: respuestas a tus preguntas, últimas preguntas y «Sin respuesta: ayuda». */}
+        <CommunityCard />
 
         {/* Trámites con foto: personas haciendo cada trámite. Se desliza de lado. */}
         <section aria-labelledby="popular-title">
