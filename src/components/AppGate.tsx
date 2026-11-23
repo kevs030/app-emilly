@@ -11,7 +11,7 @@ const L = {
   c: { es: "Recordatorios de citas y plazos", en: "Reminders for appointments and deadlines", it: "Promemoria di appuntamenti e scadenze" },
   d: { es: "Tus documentos y PDFs guardados, también sin internet", en: "Your documents and PDFs saved, even offline", it: "Documenti e PDF salvati, anche senza internet" },
   android: { es: "Descargar para Android", en: "Download for Android", it: "Scarica per Android" },
-  iphone: { es: "Abrir en iPhone", en: "Open on iPhone", it: "Apri su iPhone" },
+  iphone: { es: "Instalar en iPhone", en: "Install on iPhone", it: "Installa su iPhone" },
   free: { es: "Gratis · En 9 idiomas · Tus documentos solo en tu teléfono", en: "Free · In 9 languages · Your documents only on your phone", it: "Gratis · In 9 lingue · I tuoi documenti solo sul telefono" },
 };
 
@@ -37,7 +37,7 @@ export function AppGate({ lang, remaining, id }: { lang: Lang; remaining?: numbe
         <Link href="/descargar#apk" className="btn !w-auto !border-white !bg-white !text-[var(--ap-sage-dark)]">
           <Download size={18} aria-hidden /> {tr(L.android, lang)}
         </Link>
-        <a href="/app" className="btn btn-hero-outline !w-auto !border-white !bg-transparent !text-white">
+        <a href="/descargar#iphone" className="btn btn-hero-outline !w-auto !border-white !bg-transparent !text-white">
           <Smartphone size={18} aria-hidden /> {tr(L.iphone, lang)}
         </a>
       </div>

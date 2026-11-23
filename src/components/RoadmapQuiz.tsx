@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Check, Copy, Download, Map, RotateCcw, Share, Smartphone } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Copy, Download, Map, RotateCcw, Smartphone } from "lucide-react";
 import { useState } from "react";
 import type { Lang } from "@/content/types";
 import { roadmap, type Answers, type Device, type Goal, type Situation } from "@/content/journey";
@@ -53,11 +53,11 @@ const T = {
   },
   androidCta: { es: "Descargar gratis para Android", en: "Download free for Android", it: "Scarica gratis per Android" },
   iphoneText: {
-    es: "Guarda A Posto en tu iPhone sin descargar nada: ábrela en Safari, pulsa el icono de Compartir y elige «Añadir a pantalla de inicio» para tener tu ruta siempre a mano.",
-    en: "Keep A Posto on your iPhone without downloading anything: open it in Safari, tap the Share icon and choose “Add to Home Screen” to have your roadmap always at hand.",
-    it: "Tieni A Posto sull'iPhone senza scaricare nulla: aprila in Safari, tocca l'icona Condividi e scegli «Aggiungi alla schermata Home» per avere sempre a portata di mano la tua tabella di marcia.",
+    es: "Lleva esta ruta en tu iPhone: instala A Posto gratis con nuestro instalador y tendrás su icono en la pantalla de inicio, como cualquier app.",
+    en: "Take this roadmap on your iPhone: install A Posto for free with our installer and you'll have its icon on your Home Screen, like any app.",
+    it: "Porta questa tabella di marcia sull'iPhone: installa A Posto gratis con il nostro installer e avrai l'icona nella schermata Home, come qualsiasi app.",
   },
-  iphoneCta: { es: "Abrir A Posto en Safari", en: "Open A Posto in Safari", it: "Apri A Posto in Safari" },
+  iphoneCta: { es: "Instalar en iPhone", en: "Install on iPhone", it: "Installa su iPhone" },
   computerText: {
     es: "Lleva esta ruta en tu móvil: abre este enlace en tu teléfono e instala A Posto gratis para marcar avances y recibir recordatorios.",
     en: "Take this roadmap on your phone: open this link on your phone and install A Posto for free to track progress and get reminders.",
@@ -164,9 +164,9 @@ export function RoadmapQuiz({ lang, guides }: { lang: Lang; guides: Record<strin
                   </Link>
                 )}
                 {a.device === "iphone" && (
-                  <a href="/app" className="btn !border-white !bg-white !text-[var(--ap-sage-dark)]">
-                    <Share size={18} aria-hidden /> {T.iphoneCta[lang]}
-                  </a>
+                  <Link href="/descargar#iphone" className="btn !border-white !bg-white !text-[var(--ap-sage-dark)]">
+                    <Download size={18} aria-hidden /> {T.iphoneCta[lang]}
+                  </Link>
                 )}
                 {a.device === "computer" && (
                   <>

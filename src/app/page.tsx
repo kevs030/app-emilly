@@ -70,7 +70,7 @@ const H = {
     it: "Disponibile per Android e iPhone (da Safari). In spagnolo, italiano, inglese, francese, arabo, rumeno, albanese, ucraino e bengalese.",
   },
   android: { es: "Descargar para Android", en: "Download for Android", it: "Scarica per Android" },
-  iphone: { es: "Usar en iPhone", en: "Use on iPhone", it: "Usa su iPhone" },
+  iphone: { es: "Instalar en iPhone", en: "Install on iPhone", it: "Installa su iPhone" },
   quizAlt: { es: "Personas de distintos países en una plaza italiana", en: "People from different countries in an Italian square", it: "Persone di diversi Paesi in una piazza italiana" },
   appShot: { es: "Pantalla de inicio de la app A Posto", en: "A Posto app home screen", it: "Schermata iniziale dell'app A Posto" },
 } satisfies Record<string, L10n>;
@@ -176,7 +176,7 @@ function DownloadButtons({ lang, light = false }: { lang: Lang; light?: boolean 
       <Link href="/descargar#apk" className={`btn sm:!w-auto ${light ? "!border-white !bg-white !text-[var(--ap-sage-dark)]" : ""}`}>
         <Download size={18} aria-hidden /> {tr(H.android, lang)}
       </Link>
-      <a href="/app" className={`btn btn-hero-outline sm:!w-auto ${light ? "!border-white !bg-transparent !text-white" : ""}`}>
+      <a href="/descargar#iphone" className={`btn btn-hero-outline sm:!w-auto ${light ? "!border-white !bg-transparent !text-white" : ""}`}>
         <Smartphone size={18} aria-hidden /> {tr(H.iphone, lang)}
       </a>
     </div>

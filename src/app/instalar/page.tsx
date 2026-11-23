@@ -6,8 +6,8 @@ const T = {
     intro: "Es gratis, no ocupa casi espacio y se abre como cualquier app, con su icono en la pantalla de inicio.",
     android: "Android (Chrome)",
     androidSteps: ["Abre esta página en Chrome.", "Pulsa los tres puntitos ⋮ arriba a la derecha.", "Pulsa «Instalar app» o «Añadir a pantalla de inicio».", "Confirma con «Instalar»."],
-    iphone: "iPhone (Safari)",
-    iphoneSteps: ["Abre esta página en Safari.", "Pulsa el botón Compartir (el cuadrado con la flecha hacia arriba).", "Baja y pulsa «Añadir a pantalla de inicio».", "Pulsa «Añadir»."],
+    iphone: "iPhone",
+    iphoneSteps: ["En Safari, abre apostoapp.app/descargar y pulsa «Descargar el instalador para iPhone».", "Pulsa «Permitir».", "Abre Ajustes → «Perfil descargado» → «Instalar».", "Escribe el código de tu iPhone."],
     done: "Listo: verás el icono de A Posto junto a tus otras apps.",
   },
   en: {
@@ -15,8 +15,8 @@ const T = {
     intro: "It's free, takes almost no space and opens like any app, with its icon on your home screen.",
     android: "Android (Chrome)",
     androidSteps: ["Open this page in Chrome.", "Tap the three dots ⋮ at the top right.", "Tap “Install app” or “Add to Home screen”.", "Confirm with “Install”."],
-    iphone: "iPhone (Safari)",
-    iphoneSteps: ["Open this page in Safari.", "Tap the Share button (square with an up arrow).", "Scroll down and tap “Add to Home Screen”.", "Tap “Add”."],
+    iphone: "iPhone",
+    iphoneSteps: ["In Safari, open apostoapp.app/descargar and tap “Download the iPhone installer”.", "Tap “Allow”.", "Open Settings → “Profile Downloaded” → “Install”.", "Enter your iPhone passcode."],
     done: "Done: you'll see the A Posto icon next to your other apps.",
   },
   it: {
@@ -24,8 +24,8 @@ const T = {
     intro: "È gratis, occupa pochissimo spazio e si apre come qualsiasi app.",
     android: "Android (Chrome)",
     androidSteps: ["Apri questa pagina in Chrome.", "Tocca i tre puntini ⋮ in alto a destra.", "Tocca «Installa app» o «Aggiungi a schermata Home».", "Conferma con «Installa»."],
-    iphone: "iPhone (Safari)",
-    iphoneSteps: ["Apri questa pagina in Safari.", "Tocca il pulsante Condividi (quadrato con freccia).", "Tocca «Aggiungi alla schermata Home».", "Tocca «Aggiungi»."],
+    iphone: "iPhone",
+    iphoneSteps: ["In Safari apri apostoapp.app/descargar e tocca «Scarica l'installer per iPhone».", "Tocca «Consenti».", "Apri Impostazioni → «Profilo scaricato» → «Installa».", "Inserisci il codice del tuo iPhone."],
     done: "Fatto: vedrai l'icona di A Posto tra le tue app.",
   },
 };
