@@ -1,14 +1,23 @@
 import { PlayCircle } from "lucide-react";
+import { useState } from "react";
 import { useLang } from "~/lib/lang";
 import { API_URL } from "~/lib/supabase";
 
 /**
  * Vídeo «Cómo se usa A Posto» (1 min, voz y subtítulos en español).
  * Vive en la web (/video/…) y no se descarga hasta que la persona pulsa «reproducir»: ahorra datos.
+ * Ya no aparece al entrar (portada ni guía de inicio): está en Perfil, detrás de un botón.
  */
-export function TutorialVideo({ className = "" }: { className?: string }) {
+export function TutorialVideo({ className = "", collapsed = false }: { className?: string; collapsed?: boolean }) {
   const { t, lang } = useLang();
+  const [open, setOpen] = useState(!collapsed);
   const base = `${API_URL}/video/tutorial-es`;
+  if (!open)
+    return (
+      <button type="button" className={`btn btn-secondary ${className}`} onClick={() => setOpen(true)} data-testid="tutorial-open">
+        <PlayCircle size={18} aria-hidden /> {t("tutorialTitle")}
+      </button>
+    );
   return (
     <figure className={`card space-y-3 ${className}`}>
       <figcaption className="flex items-start gap-3">

@@ -15,6 +15,7 @@ import { PhoneCode } from "./PhoneCode";
 import { AvatarPicker } from "~/ui/profile/AvatarPicker";
 import { PdfVault } from "~/ui/profile/PdfVault";
 import { QuoteSettings } from "~/ui/profile/QuoteSettings";
+import { TutorialVideo } from "~/ui/TutorialVideo";
 
 export function Profile() {
   const { t, lang, setLang } = useLang();
@@ -175,6 +176,7 @@ export function Profile() {
         <Link to="/tour" className="btn btn-secondary">
           {t("howItWorks")}
         </Link>
+        <TutorialVideo collapsed />
         <Link to="/data" className="btn btn-secondary">
           {t("myData")}
         </Link>

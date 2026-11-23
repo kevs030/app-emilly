@@ -6,7 +6,6 @@ import { useLang } from "~/lib/lang";
 import { UI_LANGS, type StringKey, type UiLang } from "~/lib/strings";
 import { startDone } from "./Start";
 import { Illustration, type IllustrationName } from "~/ui/Illustration";
-import { TutorialVideo } from "~/ui/TutorialVideo";
 
 /** Guarda en este dispositivo que la persona ya vio la guía de uso (una vez por cuenta). */
 const seenKey = (uid: string) => `aposto:tour:${uid}`;
@@ -117,8 +116,6 @@ export function Tour() {
             ))}
           </ul>
         )}
-        {i === 0 && <TutorialVideo className="mt-6" />}
-
         {step.items && (
           <ul className="mt-6 space-y-3">
             {step.items.map((it) => (

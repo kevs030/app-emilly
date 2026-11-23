@@ -6,7 +6,6 @@ import { openedFromEmailLink } from "~/lib/supabase";
 import { UI_LANGS, type UiLang } from "~/lib/strings";
 import { Illustration, Landscape } from "~/ui/Illustration";
 import { Logo } from "~/ui/kit";
-import { TutorialVideo } from "~/ui/TutorialVideo";
 import { AuthForm, type AuthMode } from "./Auth";
 import { IosInstallHint } from "~/ui/IosInstallHint";
 
@@ -69,8 +68,6 @@ export function Welcome() {
       <Link to="/guides" className="btn btn-secondary mt-4">
         <BookOpen size={20} aria-hidden /> {t("browseNoAccount")}
       </Link>
-
-      <TutorialVideo className="mt-6" />
 
       <section className="mt-6" aria-labelledby="langs-title">
         <h2 id="langs-title" className="flex items-center gap-2 text-[15px] font-semibold text-ink-soft">
