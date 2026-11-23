@@ -43,6 +43,9 @@ const H = {
     en: "Procedures ordered by your moment in Italy. Read what each one is about and follow it step by step in the app.",
     it: "Le pratiche ordinate secondo il tuo momento in Italia. Leggi di cosa si tratta e seguila passo dopo passo nell'app.",
   },
+  videosEyebrow: { es: "Vídeos", en: "Videos", it: "Video" },
+  videosTitle: { es: "Mira cómo se hace, en 30 segundos", en: "See how it's done, in 30 seconds", it: "Guarda come si fa, in 30 secondi" },
+  videosSub: { es: "Grabados dentro de la app, paso a paso. Funcionan sin sonido.", en: "Recorded inside the app, step by step. They work without sound.", it: "Registrati nell'app, passo dopo passo. Funzionano senza audio." },
   allGuides: { es: "Ver todos los trámites", en: "See all procedures", it: "Vedi tutte le pratiche" },
   howEyebrow: { es: "Cómo empezar", en: "How to start", it: "Come iniziare" },
   how: { es: "Empieza en 3 pasos", en: "Start in 3 steps", it: "Inizia in 3 passi" },
@@ -68,6 +71,7 @@ const H = {
   },
   android: { es: "Descargar para Android", en: "Download for Android", it: "Scarica per Android" },
   iphone: { es: "Usar en iPhone", en: "Use on iPhone", it: "Usa su iPhone" },
+  quizAlt: { es: "Personas de distintos países en una plaza italiana", en: "People from different countries in an Italian square", it: "Persone di diversi Paesi in una piazza italiana" },
   appShot: { es: "Pantalla de inicio de la app A Posto", en: "A Posto app home screen", it: "Schermata iniziale dell'app A Posto" },
 } satisfies Record<string, L10n>;
 
@@ -138,6 +142,19 @@ const FEATURES: Feature[] = [
   },
 ];
 
+const VIDEOS = [
+  {
+    file: "guia-codice-fiscale",
+    title: { es: "Cómo pedir el código fiscal en Italia", en: "How to get the tax code (codice fiscale) in Italy", it: "Come richiedere il codice fiscale" },
+    sub: { es: "Qué es, qué llevar, marcar tus pasos y el formulario AA4/8 explicado.", en: "What it is, what to bring, ticking your steps and the AA4/8 form explained.", it: "Cos'è, cosa portare, segnare i passi e il modulo AA4/8 spiegato." },
+  },
+  {
+    file: "primer-mes-en-italia",
+    title: { es: "Tu primer mes en Italia", en: "Your first month in Italy", it: "Il tuo primo mese in Italia" },
+    sub: { es: "Guía de integración, tu consulado más cercano y tus documentos seguros.", en: "Integration guide, your nearest consulate and your documents kept safe.", it: "Guida all'integrazione, il consolato più vicino e i documenti al sicuro." },
+  },
+] as const;
+
 const STEPS = [
   { es: "Descarga la app", en: "Download the app", it: "Scarica l'app", d: { es: "Gratis en Android, o añádela a tu iPhone desde Safari.", en: "Free on Android, or add it to your iPhone from Safari.", it: "Gratis su Android, o aggiungila all'iPhone da Safari." } },
   { es: "Cuéntale tu situación", en: "Tell it your situation", it: "Racconta la tua situazione", d: { es: "4 preguntas y te dice por dónde empezar.", en: "4 questions and it tells you where to start.", it: "4 domande e ti dice da dove iniziare." } },
@@ -202,6 +219,29 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* ── Vídeos: cómo se hacen los trámites con la app ── */}
+      <section aria-labelledby="videos-title" data-testid="home-videos">
+        <div className="text-center">
+          <p className="eyebrow">{tr(H.videosEyebrow, lang)}</p>
+          <h2 id="videos-title" className="mt-2 text-3xl font-bold tracking-tight">
+            {tr(H.videosTitle, lang)}
+          </h2>
+          <p className="mt-2 text-muted">{tr(H.videosSub, lang)}</p>
+        </div>
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
+          {VIDEOS.map((v) => (
+            <figure key={v.file} className="overflow-hidden rounded-2xl border border-border bg-white shadow-[var(--shadow)]">
+              {/* Sin sonido: todo se explica con textos grandes. No se descarga hasta que se pulsa «reproducir». */}
+              <video src={`/video/${v.file}.mp4`} poster={`/video/${v.file}.jpg`} controls playsInline preload="none" width={1280} height={720} className="aspect-video w-full bg-[var(--background-alt)]" />
+              <figcaption className="p-4">
+                <p className="font-semibold">{tr(v.title, lang)}</p>
+                <p className="text-sm text-muted">{tr(v.sub, lang)}</p>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
       {/* ── Fuentes oficiales ── */}
       <section className="-mt-10 text-center" aria-label={tr(H.sources, lang)}>
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">{tr(H.sources, lang)}</p>
@@ -247,7 +287,9 @@ export default async function Home() {
       </section>
 
       {/* ── Cuestionario: prueba gratis en la web ── */}
-      <div className="mx-auto max-w-3xl">
+      <div className="grid items-start gap-8 lg:grid-cols-[1fr_1.6fr]">
+        {/* eslint-disable-next-line @next/next/no-img-element -- ilustración WebP ya optimizada */}
+        <img src="/ill/bienvenida-960.webp" srcSet="/ill/bienvenida-640.webp 640w, /ill/bienvenida-960.webp 960w" sizes="(min-width: 1024px) 35vw, 100vw" width={960} height={549} alt={tr(H.quizAlt, lang)} loading="lazy" className="hidden w-full rounded-2xl border border-border lg:block lg:sticky lg:top-24" />
         <RoadmapQuiz lang={lang} guides={guideInfo} />
       </div>
 
@@ -299,6 +341,8 @@ export default async function Home() {
             {tr(H.how, lang)}
           </h2>
         </div>
+        {/* eslint-disable-next-line @next/next/no-img-element -- ilustración WebP ya optimizada */}
+        <img src="/ill/tramites-960.webp" srcSet="/ill/tramites-640.webp 640w, /ill/tramites-960.webp 960w" sizes="(min-width: 768px) 720px, 100vw" width={960} height={549} alt="" loading="lazy" className="mx-auto mt-8 w-full max-w-3xl rounded-2xl border border-border" />
         <ol className="mt-10 grid gap-6 md:grid-cols-3">
           {STEPS.map((s, i) => (
             <li key={s.es} className="card text-center">

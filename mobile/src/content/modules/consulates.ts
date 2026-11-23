@@ -34,6 +34,16 @@ export const CONSULATES: Consulate[] = [
   { id: "bd-milano", country: "BD", city: "Milano", name: "Consolato Generale del Bangladesh", address: "Via Giambellino 7, 20146 Milano", lat: 45.45169, lon: 9.1524, poi: false, phone: "+39 02 8706 8580", web: "https://bcgmilan.portal.gov.bd" },
   { id: "ph-milano", country: "PH", city: "Milano", name: "Consolato Generale delle Filippine", address: "Viale Stelvio 71 (angolo Via Bernina 18), 20159 Milano", lat: 45.49544, lon: 9.18152, poi: false, phone: "+39 02 6682 5232", web: "https://milanpcg.dfa.gov.ph", booking: "https://milanpcg.dfa.gov.ph" },
   { id: "ve-milano", country: "VE", city: "Milano", name: "Consolato Generale del Venezuela", address: "Corso Europa 5, 20122 Milano", lat: 45.46411, lon: 9.1957, poi: true, phone: "+39 02 7600 6293" },
+  // Añadidos el 24-11-2026. Web oficial: India, Pakistán y Perú (Génova). El resto, de directorios que coinciden entre sí.
+  { id: "pe-genova", country: "PE", city: "Genova", name: "Consolato Generale del Perù", address: "Piazza della Vittoria 15, 16121 Genova", lat: 44.40225, lon: 8.94372, poi: false, phone: "+39 010 0996340", web: "https://www.gob.pe/institucion/consulado-del-peru-en-genova", booking: "https://www.gob.pe/institucion/consulado-del-peru-en-genova" },
+  { id: "ec-genova", country: "EC", city: "Genova", name: "Consolato Generale dell'Ecuador", address: "Via Antonio Cecchi 4, 16129 Genova", lat: 44.39834, lon: 8.94565, poi: false, phone: "+39 010 868 0502" },
+  { id: "ma-roma", country: "MA", city: "Roma", name: "Ambasciata del Regno del Marocco (sezione consolare)", address: "Via Lazzaro Spallanzani 8/10, 00161 Roma", lat: 41.91237, lon: 12.51085, poi: false, phone: "+39 06 4402524" },
+  { id: "ma-torino", country: "MA", city: "Torino", name: "Consolato Generale del Regno del Marocco", address: "Via Belfiore 27, Torino", lat: 45.05471, lon: 7.67871, poi: false, phone: "+39 011 650 6482" },
+  { id: "ma-bologna", country: "MA", city: "Bologna", name: "Consolato Generale del Regno del Marocco", address: "Via Caduti di Amola 30, 40132 Bologna", lat: 44.51166, lon: 11.2793, poi: false, phone: "+39 051 531199" },
+  { id: "ma-verona", country: "MA", city: "Verona", name: "Consolato Generale del Regno del Marocco", address: "Via Evangelista Torricelli 49, 37136 Verona", lat: 45.41269, lon: 10.95358, poi: false, phone: "+39 045 862 0858" },
+  { id: "in-milano", country: "IN", city: "Milano", name: "Consulate General of India", address: "Piazza Paolo Ferrari 8, 20121 Milano", lat: 45.46698, lon: 9.18843, poi: true, phone: "+39 02 8057691", web: "https://www.cgimilan.gov.in" },
+  { id: "pk-milano", country: "PK", city: "Milano", name: "Consulate General of Pakistan", address: "Via Privata Gadames 123, 20151 Milano", lat: 45.50166, lon: 9.12241, poi: false, phone: "+39 02 6670 3271", web: "https://mofa.gov.pk/milan" },
+  { id: "sn-milano", country: "SN", city: "Milano", name: "Consulat Général du Sénégal", address: "Viale Legioni Romane 5, 20147 Milano", lat: 45.4588, lon: 9.12655, poi: false, phone: "+39 02 4154 0073" },
 ];
 
 /** Ciudades italianas para el filtro «dónde vives» (centro aproximado, para ordenar por distancia). */

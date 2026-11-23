@@ -52,7 +52,8 @@ describe("consulados", () => {
     const fromRoma = findConsulates("PE", "Roma");
     expect(fromRoma[0].id).toBe("pe-roma");
     expect(fromRoma[0].local).toBe(true);
-    expect(findConsulates("PE", "Torino")[0].id).toBe("pe-milano");
+    expect(findConsulates("PE", "Torino")[0].id).toBe("pe-genova"); // Génova queda más cerca de Turín que Milán
+    expect(findConsulates("PE", "Milano")[0].id).toBe("pe-milano");
     expect(findConsulates("PE", "Napoli")[0].id).toBe("pe-roma");
     expect(IT_CITIES.length).toBeGreaterThan(10);
   });

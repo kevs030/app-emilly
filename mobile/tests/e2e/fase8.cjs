@@ -57,7 +57,7 @@ const PDF = Buffer.from("%PDF-1.4\n1 0 obj << /Type /Catalog /Pages 2 0 R >> end
   await p.click('[data-testid="consulate-card"]'); await p.waitForURL(/\/consulates$/);
   await p.selectOption('[data-testid="cs-country"]', "PE");
   await p.selectOption('[data-testid="cs-city"]', "Torino");
-  check("consulado: Perú desde Turín → Milán primero, con distancia", (await p.locator('[data-testid="cs-results"] > li').first().getAttribute("data-testid")) === "cs-pe-milano" && (await p.locator('[data-testid="cs-pe-milano"]').innerText()).includes("km de tu ciudad"));
+  check("consulado: Perú desde Turín → Génova primero (el más cercano), con distancia", (await p.locator('[data-testid="cs-results"] > li').first().getAttribute("data-testid")) === "cs-pe-genova" && (await p.locator('[data-testid="cs-pe-genova"]').innerText()).includes("km de tu ciudad"));
   await p.selectOption('[data-testid="cs-city"]', "Roma");
   const roma = p.locator('[data-testid="cs-pe-roma"]');
   check("consulado: Perú en Roma → «En tu ciudad», dirección, teléfono y citas", (await roma.innerText()).includes("En tu ciudad") && (await roma.innerText()).includes("Via Sibari 4") && (await roma.locator('a[href="tel:+39068848063"]').count()) === 1 && (await roma.locator('a[href^="https://www.gob.pe/"]').count()) === 1);
