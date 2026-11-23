@@ -38,7 +38,12 @@ const T = {
     iosTitle: "Instalar en iPhone o iPad",
     iosOpen: "Abrir A Posto para iPhone",
     iosBody: "En iPhone no existen archivos de instalación como en Android: Apple solo permite instalar apps desde el App Store o añadiéndolas a la pantalla de inicio. Mientras llega la versión del App Store, puedes tener A Posto con su icono en un minuto:",
-    iosSteps: ["En el iPhone, abre apostoapp.app/app en Safari (botón de abajo).", "Pulsa el botón Compartir: el cuadrado con una flecha hacia arriba.", "Baja y pulsa «Añadir a pantalla de inicio».", "Pulsa «Añadir». El icono de A Posto aparecerá junto a tus otras apps."],
+    iosSteps: ["En el iPhone, abre apostoapp.app/app en Safari (botón «Abrir A Posto para iPhone»).", "Pulsa el botón Compartir: el cuadrado con una flecha hacia arriba.", "Baja y pulsa «Añadir a pantalla de inicio».", "Pulsa «Añadir». El icono de A Posto aparecerá junto a tus otras apps."],
+    iosProfileBtn: "Descargar el instalador para iPhone",
+    iosProfileIntro: "La forma más fácil: un instalador que pone el icono de A Posto en tu pantalla de inicio. Ábrelo en Safari.",
+    iosProfileSteps: ["Pulsa «Descargar el instalador» y luego «Permitir». Safari descarga el instalador.", "Abre Ajustes: arriba verás «Perfil descargado». Púlsalo.", "Pulsa «Instalar» (arriba a la derecha) y escribe el código de tu iPhone.", "Listo: el icono de A Posto aparece en tu pantalla de inicio."],
+    iosProfileNote: "Verás «No verificado»: es normal, porque no pagamos a Apple por firmarlo. El instalador solo añade el icono: no instala nada más, no pide permisos y no controla tu teléfono. Para quitarlo: Ajustes → General → VPN y gestión de dispositivos → A Posto → Eliminar perfil.",
+    iosOr: "O sin instalador, desde Safari:",
     iosNote: "Es gratis, no pide permisos y se actualiza sola. Si no ves la opción, comprueba que estás en Safari y no dentro de Instagram, Facebook o WhatsApp.",
     apkTitle: "Descarga directa para Android (APK)",
     apkBody: "Mientras llega a Google Play, instala el archivo oficial firmado por A Posto. Es la app completa: funciona por sí sola, sin abrir la web.",
@@ -86,7 +91,12 @@ const T = {
     iosTitle: "Installare su iPhone o iPad",
     iosOpen: "Apri A Posto per iPhone",
     iosBody: "Su iPhone non esistono file di installazione come su Android: Apple permette di installare le app solo dall'App Store o aggiungendole alla schermata Home. In attesa della versione App Store, puoi avere A Posto con la sua icona in un minuto:",
-    iosSteps: ["Sull'iPhone apri apostoapp.app/app in Safari (pulsante qui sotto).", "Tocca il pulsante Condividi: il quadrato con la freccia verso l'alto.", "Scorri e tocca «Aggiungi alla schermata Home».", "Tocca «Aggiungi». L'icona di A Posto apparirà accanto alle altre app."],
+    iosSteps: ["Sull'iPhone apri apostoapp.app/app in Safari (pulsante «Apri A Posto per iPhone»).", "Tocca il pulsante Condividi: il quadrato con la freccia verso l'alto.", "Scorri e tocca «Aggiungi alla schermata Home».", "Tocca «Aggiungi». L'icona di A Posto apparirà accanto alle altre app."],
+    iosProfileBtn: "Scarica l'installer per iPhone",
+    iosProfileIntro: "Il modo più facile: un installer che mette l'icona di A Posto nella schermata Home. Aprilo in Safari.",
+    iosProfileSteps: ["Tocca «Scarica l'installer» e poi «Consenti». Safari scarica l'installer.", "Apri Impostazioni: in alto vedrai «Profilo scaricato». Toccalo.", "Tocca «Installa» (in alto a destra) e inserisci il codice del tuo iPhone.", "Fatto: l'icona di A Posto appare nella schermata Home."],
+    iosProfileNote: "Vedrai «Non verificato»: è normale, perché non paghiamo Apple per firmarlo. L'installer aggiunge solo l'icona: non installa altro, non chiede permessi e non controlla il telefono. Per toglierlo: Impostazioni → Generali → VPN e gestione dispositivo → A Posto → Rimuovi profilo.",
+    iosOr: "Oppure senza installer, da Safari:",
     iosNote: "È gratis, non chiede permessi e si aggiorna da sola. Se non vedi l'opzione, controlla di essere in Safari e non dentro Instagram, Facebook o WhatsApp.",
     apkTitle: "Download diretto per Android (APK)",
     apkBody: "In attesa di Google Play, installa il file ufficiale firmato da A Posto. È l'app completa: funziona da sola, senza aprire il sito.",
@@ -134,7 +144,12 @@ const T = {
     iosTitle: "Install on iPhone or iPad",
     iosOpen: "Open A Posto for iPhone",
     iosBody: "iPhones have no install files like Android: Apple only allows installing apps from the App Store or by adding them to the Home Screen. Until the App Store version arrives, you can have A Posto with its icon in a minute:",
-    iosSteps: ["On the iPhone, open apostoapp.app/app in Safari (button below).", "Tap the Share button: the square with an arrow pointing up.", "Scroll down and tap “Add to Home Screen”.", "Tap “Add”. The A Posto icon will appear next to your other apps."],
+    iosSteps: ["On the iPhone, open apostoapp.app/app in Safari (“Open A Posto for iPhone” button).", "Tap the Share button: the square with an arrow pointing up.", "Scroll down and tap “Add to Home Screen”.", "Tap “Add”. The A Posto icon will appear next to your other apps."],
+    iosProfileBtn: "Download the iPhone installer",
+    iosProfileIntro: "The easiest way: an installer that puts the A Posto icon on your Home Screen. Open it in Safari.",
+    iosProfileSteps: ["Tap “Download the installer”, then “Allow”. Safari downloads the installer.", "Open Settings: at the top you will see “Profile Downloaded”. Tap it.", "Tap “Install” (top right) and enter your iPhone passcode.", "Done: the A Posto icon appears on your Home Screen."],
+    iosProfileNote: "You will see “Not Verified”: that is normal, because we don't pay Apple to sign it. The installer only adds the icon: it installs nothing else, asks for no permissions and does not control your phone. To remove it: Settings → General → VPN & Device Management → A Posto → Remove Profile.",
+    iosOr: "Or without the installer, from Safari:",
     iosNote: "It is free, asks for no permissions and updates itself. If you do not see the option, check that you are in Safari and not inside Instagram, Facebook or WhatsApp.",
     apkTitle: "Direct download for Android (APK)",
     apkBody: "Until it reaches Google Play, install the official file signed by A Posto. It is the full app: it works on its own, without opening the website.",
@@ -305,7 +320,20 @@ export default async function DownloadPage({ searchParams }: { searchParams: Pro
         <h2 className="flex items-center gap-2 text-xl font-bold">
           <Smartphone size={22} className="text-brand" aria-hidden /> {s.iosTitle}
         </h2>
-        <a href="/app" className="btn mt-4" data-testid="ios-open">
+        <p className="mt-2 text-sm">{s.iosProfileIntro}</p>
+        <a href="/a-posto.mobileconfig" className="btn mt-4" data-testid="ios-profile">
+          <Download size={18} aria-hidden /> {s.iosProfileBtn}
+        </a>
+        <ol className="mt-4 list-decimal space-y-1.5 ps-5 text-sm">
+          {s.iosProfileSteps.map((x) => (
+            <li key={x}>{x}</li>
+          ))}
+        </ol>
+        <p className="mt-3 rounded-xl bg-[var(--background-alt)] p-3 text-sm text-muted" data-testid="ios-profile-note">
+          {s.iosProfileNote}
+        </p>
+        <h3 className="mt-6 font-semibold">{s.iosOr}</h3>
+        <a href="/app" className="btn-ghost mt-3 inline-flex" data-testid="ios-open">
           <Smartphone size={18} aria-hidden /> {s.iosOpen}
         </a>
         <ol className="mt-4 list-decimal space-y-1.5 ps-5 text-sm">
