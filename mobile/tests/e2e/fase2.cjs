@@ -77,7 +77,8 @@ const ANSWER = "[1] Qué es\nCarta del INPS sobre el Assegno Unico.\n[2] Qué pi
   check("cada acceso abre una pantalla con título", opened === 12, `${opened}/12`);
   await go("/", 'nav[aria-label="Accesos"]');
   const small = await p.locator("a, button").evaluateAll((els) => els.filter((e) => { const r = e.getBoundingClientRect(); return r.width > 0 && (r.height < 44 || r.width < 44); }).map((e) => e.textContent.trim().slice(0, 25)));
-  check("inicio: botones ≥ 44 px y sin desbordamiento", small.length === 0 && (await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)), small.join(" | "));
+  const overflow = await p.evaluate(() => { const W = window.innerWidth; if (document.documentElement.scrollWidth <= W) return ""; const o = []; for (const e of document.querySelectorAll("body *")) { const b = e.getBoundingClientRect(); if (b.right > W + 1 && b.width > 0 && !e.closest("[class*=overflow-x]")) o.push(e.tagName + "." + String(e.className).slice(0, 40) + " «" + (e.textContent || "").trim().slice(0, 30) + "»"); } return `ancho ${document.documentElement.scrollWidth}>${W}: ` + o.slice(0, 3).join(" | "); });
+  check("inicio: botones ≥ 44 px y sin desbordamiento", small.length === 0 && !overflow, [small.join(" | "), overflow].filter(Boolean).join(" · "));
   await p.screenshot({ path: "tests/e2e/out-inicio2.png", fullPage: true });
 
   // ── Mis documentos ──
@@ -174,8 +175,8 @@ const ANSWER = "[1] Qué es\nCarta del INPS sobre el Assegno Unico.\n[2] Qué pi
   check("mapa: antes de elegir ubicación, pide «Cerca de mí» o la ciudad", (await p.locator("li.card").count()) === 0 && (await p.locator("text=escribe tu ciudad para ver").count()) === 1);
   await p.fill('input[placeholder^="Ciudad"]', "Milano"); await p.click('button[aria-label="Buscar"]'); await p.waitForSelector("li.card");
   check("mapa: al buscar Milano, lista por distancia y la primera es la de Milano", (await p.locator("li.card").first().innerText()).includes("Milano") && (await p.locator("li.card").first().innerText()).includes("km"));
-  check("mapa: «Cómo llegar» abre la ruta en Google Maps", (await p.locator('li.card a:has-text("Cómo llegar")').first().getAttribute("href")).startsWith("https://www.google.com/maps/dir/?api=1&destination=45.4642,9.19"));
-  check("mapa: «Verlas todas» abre la búsqueda en el mapa del teléfono", (await p.locator('a:has-text("Verlas todas en el mapa del teléfono")').getAttribute("href")).startsWith("https://www.google.com/maps/search/Questura/@"));
+  check("mapa: «Cómo llegar» abre la app de mapas del teléfono (iPhone: Mapas de Apple) con la ruta", (await p.locator('li.card a:has-text("Cómo llegar")').first().getAttribute("href")).startsWith("https://maps.apple.com/?daddr=45.4642,9.19"));
+  check("mapa: «Verlas todas» abre la búsqueda en el mapa del teléfono", (await p.locator('a:has-text("Verlas todas en el mapa del teléfono")').getAttribute("href")).startsWith("https://maps.apple.com/?q=Questura&sll="));
   await p.context().grantPermissions(["geolocation"]); await p.context().setGeolocation({ latitude: 41.9, longitude: 12.5 });
   await p.click('button:has-text("Cerca de mí")'); await p.waitForFunction(() => /cercanas$/.test(document.querySelector("section[aria-live] h2")?.textContent?.trim() ?? ""));
   check("mapa: con la ubicación del teléfono, la primera es la de Roma", (await p.locator("li.card").first().innerText()).includes("Roma"));

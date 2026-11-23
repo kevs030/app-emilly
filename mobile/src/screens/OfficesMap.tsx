@@ -1,8 +1,8 @@
-import { Capacitor } from "@capacitor/core";
 import { ExternalLink, LocateFixed, Navigation, Search } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { MIRRORS, overpassBody, toPoints, type OsmElement, type Point } from "@/lib/overpass";
 import { useLang } from "~/lib/lang";
+import { directionsUrl, mapLink, searchUrl } from "~/lib/maps";
 import type { StringKey } from "~/lib/strings";
 import { API_URL } from "~/lib/supabase";
 import { Alert, Screen } from "~/ui/kit";
@@ -58,19 +58,9 @@ async function loadCategory(cat: CatId): Promise<Point[]> {
   return points;
 }
 
-/** En iPhone se abre Mapas de Apple; en Android y en el navegador, Google Maps (abre su app si está instalada). */
-const apple = Capacitor.getPlatform() === "ios";
-export function directionsUrl(lat: number, lon: number): string {
-  return apple ? `https://maps.apple.com/?daddr=${lat},${lon}` : `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`;
-}
-export function searchUrl(query: string, at: [number, number]): string {
-  const q = encodeURIComponent(query);
-  return apple ? `https://maps.apple.com/?q=${q}&sll=${at[0]},${at[1]}` : `https://www.google.com/maps/search/${q}/@${at[0]},${at[1]},13z`;
-}
-
 /**
  * Oficinas cercanas, sin mapa dentro de la app (más ligera): la lista se ordena por distancia y cada oficina
- * se abre en Google Maps o Mapas del teléfono. Datos de OpenStreetMap.
+ * se abre en la app de mapas del teléfono (Android: la predeterminada; iPhone: Mapas). Datos de OpenStreetMap.
  * La ubicación solo se usa en el dispositivo para calcular distancias: no se guarda ni se envía.
  */
 export function OfficesMap() {
@@ -192,13 +182,13 @@ export function OfficesMap() {
                   <span className="block font-medium break-words">{p[2]}</span>
                   {p[3] && <span className="block text-[14px] text-ink-soft break-words">{p[3]}</span>}
                   <span className="block text-[13px] text-ink-soft">{d < 10 ? d.toFixed(1) : Math.round(d)} km</span>
-                  <a href={directionsUrl(p[0], p[1])} target="_blank" rel="noopener noreferrer" className="btn btn-secondary mt-2 min-h-11 py-2 text-[15px]">
+                  <a {...mapLink(directionsUrl(p[0], p[1], p[2]))} className="btn btn-secondary mt-2 min-h-11 py-2 text-[15px]" data-testid="office-directions">
                     <Navigation size={18} aria-hidden /> {t("mapDirections")}
                   </a>
                 </li>
               ))}
             </ul>
-            <a href={searchUrl(label, here)} target="_blank" rel="noopener noreferrer" className="mt-3 flex min-h-11 items-center justify-center gap-2 font-medium text-brown underline">
+            <a {...mapLink(searchUrl(label, here))} data-testid="office-search-all" className="mt-3 flex min-h-11 items-center justify-center gap-2 font-medium text-brown underline">
               <ExternalLink size={18} aria-hidden /> {t("mapOpenAll")}
             </a>
             <p className="mt-3 text-[13px] text-ink-soft">{t("mapSource")}</p>

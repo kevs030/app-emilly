@@ -61,14 +61,8 @@ const PDF = Buffer.from("%PDF-1.4\n1 0 obj << /Type /Catalog /Pages 2 0 R >> end
   await p.selectOption('[data-testid="cs-city"]', "Roma");
   const roma = p.locator('[data-testid="cs-pe-roma"]');
   check("consulado: Perú en Roma → «En tu ciudad», dirección, teléfono y citas", (await roma.innerText()).includes("En tu ciudad") && (await roma.innerText()).includes("Via Sibari 4") && (await roma.locator('a[href="tel:+39068848063"]').count()) === 1 && (await roma.locator('a[href^="https://www.gob.pe/"]').count()) === 1);
-  await roma.locator("button", { hasText: "Ver en el mapa" }).click();
-  const dlg = p.locator('[role="dialog"]');
-  await dlg.locator(".leaflet-marker-icon").waitFor({ timeout: 10000 });
-  const center = await dlg.locator('[data-testid="consulate-map"]').evaluate((el) => ({ lat: el.dataset.lat, lon: el.dataset.lon }));
-  check("mapa: se abre centrado en las coordenadas exactas con marcador destacado", center.lat === "41.8821" && center.lon === "12.50313" && (await dlg.locator(".consulate-pin").count()) === 1 && tiles.some((u) => /\/17\//.test(u)), `${tiles.length} teselas`);
-  const nav = await dlg.locator("a", { hasText: "Cómo llegar" }).getAttribute("href");
-  check("mapa: botón de navegación externa a esas coordenadas", nav.includes("41.8821,12.50313"));
-  await dlg.locator('button[aria-label="Cerrar"]').click();
+  const mapsHref = await roma.locator('[data-testid="cs-open-maps"]').getAttribute("href");
+  check("mapa: «Abrir en tu app de mapas» abre la app de mapas del teléfono en las coordenadas exactas (sin mini mapa)", (await roma.locator('[data-testid="cs-open-maps"]').innerText()).includes("Abrir en tu app de mapas") && mapsHref.includes("41.8821,12.50313") && (await p.locator('[role="dialog"]').count()) === 0, mapsHref);
   await p.selectOption('[data-testid="cs-country"]', "other");
   check("consulado: «Otro país» explica qué hacer", (await p.locator("text=Todavía no tenemos datos comprobados").count()) === 1);
   await p.evaluate(() => localStorage.setItem("aposto:lang", "ar")); await p.reload(); await p.waitForSelector("h1");

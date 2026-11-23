@@ -1,10 +1,11 @@
 import { Navigation } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { CS, type Consulate } from "~/content/modules/consulates";
-import { directionsUrl } from "~/screens/OfficesMap";
+import { directionsUrl } from "~/lib/maps";
 import { Modal, useT9 } from "~/ui/modules/ModuleBlocks";
 
 /**
+ * YA NO SE USA: «Ver en el mapa» abre ahora la app de mapas del teléfono (~/lib/maps). Se conserva hasta que se autorice borrarlo.
  * Mapa centrado en las coordenadas exactas del consulado, con un marcador destacado.
  * Leaflet se carga solo al abrir el mapa (no pesa en el arranque). Teselas de OpenStreetMap.
  */

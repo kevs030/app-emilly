@@ -1,7 +1,7 @@
 import { CalendarCheck, ExternalLink, Landmark, Map, MapPin, Phone } from "lucide-react";
 import { useMemo, useState } from "react";
-import { COUNTRIES, CS, findConsulates, IT_CITIES, type Consulate } from "~/content/modules/consulates";
-import { ConsulateMap } from "~/ui/ConsulateMap";
+import { COUNTRIES, CS, findConsulates, IT_CITIES } from "~/content/modules/consulates";
+import { mapLink, placeUrl } from "~/lib/maps";
 import { Screen } from "~/ui/kit";
 import { useT9 } from "~/ui/modules/ModuleBlocks";
 
@@ -30,7 +30,6 @@ export function Consulates() {
   const { x, lang } = useT9();
   const name = useMemo(() => countryNamer(lang), [lang]);
   const [sel, setSel] = useState<Sel>(load);
-  const [map, setMap] = useState<Consulate | null>(null);
   const update = (patch: Partial<Sel>) => {
     const next = { ...sel, ...patch };
     setSel(next);
@@ -109,9 +108,9 @@ export function Consulates() {
                   </a>
                 )}
                 <div className="grid gap-2 pt-1">
-                  <button type="button" className="btn" onClick={() => setMap(c)}>
+                  <a {...mapLink(placeUrl(c.lat, c.lon, c.name))} className="btn" data-testid="cs-open-maps">
                     <Map size={18} aria-hidden /> {x(CS.map)}
-                  </button>
+                  </a>
                   {c.booking && (
                     <a href={c.booking} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
                       <CalendarCheck size={18} aria-hidden /> {x(CS.booking)}
@@ -131,7 +130,6 @@ export function Consulates() {
         {sel.country && <p className="alert alert-info text-[14px]">{x(CS.verify)}</p>}
         <p className="hint">© OpenStreetMap</p>
       </div>
-      {map && <ConsulateMap c={map} onClose={() => setMap(null)} />}
     </Screen>
   );
 }
