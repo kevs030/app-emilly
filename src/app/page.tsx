@@ -44,8 +44,8 @@ const H = {
     it: "Le pratiche ordinate secondo il tuo momento in Italia. Leggi di cosa si tratta e seguila passo dopo passo nell'app.",
   },
   videosEyebrow: { es: "Vídeos", en: "Videos", it: "Video" },
-  videosTitle: { es: "Mira cómo se hace, en 30 segundos", en: "See how it's done, in 30 seconds", it: "Guarda come si fa, in 30 secondi" },
-  videosSub: { es: "Grabados dentro de la app, paso a paso. Funcionan sin sonido.", en: "Recorded inside the app, step by step. They work without sound.", it: "Registrati nell'app, passo dopo passo. Funzionano senza audio." },
+  videosTitle: { es: "Mira cómo se hace, en menos de un minuto", en: "See how it's done, in under a minute", it: "Guarda come si fa, in meno di un minuto" },
+  videosSub: { es: "Grabados dentro de la app, paso a paso, con voz en español. También se entienden sin sonido.", en: "Recorded inside the app, step by step, with Spanish narration. They also work without sound.", it: "Registrati nell'app, passo dopo passo, con voce in spagnolo. Si capiscono anche senza audio." },
   allGuides: { es: "Ver todos los trámites", en: "See all procedures", it: "Vedi tutte le pratiche" },
   howEyebrow: { es: "Cómo empezar", en: "How to start", it: "Come iniziare" },
   how: { es: "Empieza en 3 pasos", en: "Start in 3 steps", it: "Inizia in 3 passi" },
@@ -231,7 +231,7 @@ export default async function Home() {
         <div className="mt-8 grid gap-6 md:grid-cols-2">
           {VIDEOS.map((v) => (
             <figure key={v.file} className="overflow-hidden rounded-2xl border border-border bg-white shadow-[var(--shadow)]">
-              {/* Sin sonido: todo se explica con textos grandes. No se descarga hasta que se pulsa «reproducir». */}
+              {/* Con voz en español y textos grandes (se entiende también sin sonido). No se descarga hasta que se pulsa «reproducir». */}
               <video src={`/video/${v.file}.mp4`} poster={`/video/${v.file}.jpg`} controls playsInline preload="none" width={1280} height={720} className="aspect-video w-full bg-[var(--background-alt)]" />
               <figcaption className="p-4">
                 <p className="font-semibold">{tr(v.title, lang)}</p>
