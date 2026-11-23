@@ -1,14 +1,15 @@
 @import "tailwindcss";
 @import "../styles/tokens.css";
 
-/* Los nombres de siempre de la web apuntan a la identidad compartida (src/styles/tokens.css). */
+/* La WEB es una página de producto: fondo blanco, superficies limpias y sombras muy suaves.
+   Usa los colores de marca de la app (src/styles/tokens.css) pero no su fondo crema, para no parecer la app. */
 :root {
-  --background: var(--ap-cream);
-  --background-alt: var(--ap-beige);
+  --background: #ffffff;
+  --background-alt: #f8f6f3;
   --foreground: var(--ap-ink);
-  --card: var(--ap-surface);
+  --card: #ffffff;
   --muted: var(--ap-ink-soft);
-  --border: var(--ap-border);
+  --border: #ebe6df;
   --brand: var(--ap-terracotta);
   --brand-strong: var(--ap-terracotta-hover);
   --brand-soft: var(--ap-sage-soft);
@@ -19,32 +20,8 @@
   --warn-bg: var(--ap-info);
   --warn-fg: var(--ap-info-ink);
   --danger: var(--ap-danger);
-  --shadow: var(--ap-shadow-card);
-  --shadow-raised: var(--ap-shadow-raised);
-}
-
-/* Modo oscuro del sistema: la misma identidad en tonos de noche mediterránea. */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #1f1b18;
-    --background-alt: #2a2420;
-    --foreground: #f3ece2;
-    --card: #2a2521;
-    --muted: #c2b6a9;
-    --border: #3d3630;
-    --brand: #e0957a;
-    --brand-strong: #ecae97;
-    --brand-soft: #2f3529;
-    --on-brand: #2a1a12;
-    --sage: #a8b59b;
-    --sage-strong: #c3cfb7;
-    --accent: #d9a65e;
-    --warn-bg: #3a2e20;
-    --warn-fg: #f1d3a8;
-    --danger: #ff9a8a;
-    --shadow: 0 4px 14px rgb(0 0 0 / 0.35);
-    --shadow-raised: 0 10px 24px rgb(0 0 0 / 0.45);
-  }
+  --shadow: 0 1px 2px rgb(48 43 39 / 0.04), 0 2px 8px rgb(48 43 39 / 0.04);
+  --shadow-raised: 0 12px 32px rgb(48 43 39 / 0.1);
 }
 
 @theme inline {
@@ -86,7 +63,7 @@ body {
 /* ── Componentes ── */
 .card {
   @apply border border-border bg-card p-5;
-  border-radius: var(--ap-radius-card);
+  border-radius: 16px;
   box-shadow: var(--shadow);
 }
 .card-link {
@@ -398,4 +375,42 @@ body {
 .leaflet-container {
   z-index: 0;
   font-family: inherit;
+}
+
+/* ── Página de producto (web) ── */
+/* Marco de teléfono para las capturas de la app */
+.phone-frame {
+  position: relative;
+  width: min(280px, 72vw);
+  aspect-ratio: 600 / 1022;
+  border-radius: 40px;
+  border: 10px solid #1f1b18;
+  background: #1f1b18;
+  box-shadow: 0 30px 60px -20px rgb(48 43 39 / 0.35), 0 0 0 1px rgb(255 255 255 / 0.05) inset;
+  overflow: hidden;
+}
+.phone-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 30px;
+}
+/* Portada: blanco con un halo cálido muy suave detrás del teléfono */
+.landing-hero {
+  position: relative;
+  background:
+    radial-gradient(60% 70% at 85% 35%, color-mix(in srgb, var(--ap-terracotta) 9%, transparent), transparent 70%),
+    radial-gradient(40% 50% at 70% 90%, color-mix(in srgb, var(--ap-gold) 12%, transparent), transparent 70%),
+    #fff;
+}
+/* Banda gris clara a todo lo ancho, para alternar secciones */
+.band {
+  background: var(--background-alt);
+  border-block: 1px solid var(--border);
+}
+.eyebrow {
+  @apply text-xs font-bold uppercase tracking-[0.14em];
+  color: var(--brand);
 }

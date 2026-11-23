@@ -8,7 +8,7 @@ import { getLang } from "@/lib/lang";
 import { t, tr } from "@/lib/i18n";
 import { guides } from "@/content/guides";
 import { LangSwitcher } from "@/components/LangSwitcher";
-import { BottomNav } from "@/components/BottomNav";
+import { MobileMenu } from "@/components/MobileMenu";
 import { Logo } from "@/components/Icons";
 import { ServiceWorker } from "@/components/ServiceWorker";
 import { NavMenus } from "@/components/NavMenus";
@@ -46,6 +46,8 @@ const FOOT = {
     searchShort: "Buscar…",
     offices: "Oficinas",
     privacy: "Privacidad",
+    menu: "Menú",
+    close: "Cerrar",
   },
   en: {
     about: "A Posto is an independent project. It is not a government or institutional website, and it will never ask you for money for a procedure.",
@@ -60,6 +62,8 @@ const FOOT = {
     searchShort: "Search…",
     offices: "Offices",
     privacy: "Privacy",
+    menu: "Menu",
+    close: "Close",
   },
   it: {
     about: "A Posto è un progetto indipendente. Non è un sito del Governo né di un'istituzione e non ti chiederà mai denaro per una pratica.",
@@ -74,6 +78,8 @@ const FOOT = {
     searchShort: "Cerca…",
     offices: "Uffici",
     privacy: "Privacy",
+    menu: "Menu",
+    close: "Chiudi",
   },
 };
 
@@ -110,8 +116,8 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     <html lang={lang} className={`${geistSans.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col font-sans">
         <AuthHashRedirect />
-        <header className="sticky top-0 z-[1000] border-b border-border bg-background/95 backdrop-blur">
-          <div className="mx-auto flex max-w-5xl items-center gap-3 px-4 py-2.5">
+        <header className="sticky top-0 z-[1000] border-b border-border bg-white/90 backdrop-blur">
+          <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-3">
             <Link href="/" className="flex shrink-0 items-center gap-2 text-lg font-bold tracking-tight">
               <Logo /> A Posto
             </Link>
@@ -128,35 +134,18 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             </form>
             <div className="ml-auto flex items-center gap-2 text-sm lg:ml-0">
               <LangSwitcher current={lang} />
-              <span className="md:hidden">
-                <Link href="/descargar" aria-label={f.install} className="btn !min-h-10 whitespace-nowrap !px-3.5 text-sm">
-                  <Download size={16} aria-hidden />
-                </Link>
-              </span>
+              <Link href="/descargar" className="btn !min-h-10 !w-auto whitespace-nowrap !px-4 text-sm" data-testid="header-download">
+                <Download size={16} aria-hidden /> <span className="hidden sm:inline">{f.install}</span>
+                <span className="sm:hidden">App</span>
+              </Link>
+              <MobileMenu groups={[...menus, { label: f.info, items: info }]} searchLabel={f.search} menuLabel={f.menu} closeLabel={f.close} />
             </div>
-          </div>
-          {/* Móvil y tableta: buscador y accesos que no caben arriba */}
-          <div className="border-t border-border px-4 pb-2 pt-2 lg:hidden">
-            <form action="/guias" role="search">
-              <label className="relative block">
-                <span className="sr-only">{f.search}</span>
-                <Search size={17} className="pointer-events-none absolute start-3 top-1/2 -translate-y-1/2 text-muted" aria-hidden />
-                <input type="search" name="q" maxLength={60} placeholder={f.search} className="input !min-h-11 !ps-9" />
-              </label>
-            </form>
-            <nav className="-mx-1 mt-2 flex gap-1 overflow-x-auto px-1 text-sm md:hidden" aria-label="Más secciones">
-              {[nav[1], nav[2], ...info].map((n) => (
-                <Link key={n.href} href={n.href} className="nav-link whitespace-nowrap">
-                  {n.label}
-                </Link>
-              ))}
-            </nav>
           </div>
         </header>
 
-        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6">{children}</main>
+        <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">{children}</main>
 
-        <footer className="border-t border-border bg-card pb-24 sm:pb-0">
+        <footer className="border-t border-border bg-[var(--background-alt)]">
           <div className="mx-auto grid max-w-5xl gap-6 px-4 py-8 text-sm sm:grid-cols-3">
             <div>
               <p className="flex items-center gap-2 font-bold">
@@ -212,7 +201,6 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             {t("disclaimer", lang)}
           </p>
         </footer>
-        <BottomNav lang={lang} />
         <ServiceWorker />
       </body>
     </html>
