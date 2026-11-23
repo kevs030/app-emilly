@@ -7,6 +7,7 @@ import { AuthProvider, useAuth } from "~/auth/AuthProvider";
 import { LangProvider, useLang } from "~/lib/lang";
 import { PersonalProvider } from "~/lib/personal";
 import { useSessionTracking } from "~/lib/useSessionTracking";
+import { useScreenTracking } from "~/lib/useScreenTracking";
 import { MyData } from "~/screens/MyData";
 import { Appointments } from "~/screens/Appointments";
 import { Assistant } from "~/screens/Assistant";
@@ -67,6 +68,7 @@ function Private({ guestOk = false }: { guestOk?: boolean }) {
   const path = useLocation().pathname;
   const bare = path === "/tour" || path === "/start"; // guía de uso y cuestionario a pantalla completa
   useSessionTracking(Boolean(session && profile?.consent_analytics));
+  useScreenTracking(Boolean(session && profile?.consent_analytics));
   const apk = useApkUpdate();
   if (!ready) return <Splash />;
   if (!session && !guestOk) return <Navigate to="/welcome" replace />;

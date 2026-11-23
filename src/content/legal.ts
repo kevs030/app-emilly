@@ -5,7 +5,7 @@ import type { L10n } from "./types";
  * BORRADOR: debe revisarlo un profesional de protección de datos antes del lanzamiento.
  * Si cambia el tratamiento de datos en el código, hay que actualizar este texto y su fecha.
  */
-export const PRIVACY_UPDATED = "2026-11-17";
+export const PRIVACY_UPDATED = "2026-11-24";
 
 export const privacyIntro: L10n = {
   es: "A Posto te ayuda con tus trámites en Italia. Aquí explicamos, en claro, qué datos guardamos, para qué y cómo puedes borrarlos.",
@@ -68,9 +68,9 @@ export const privacySections: { title: L10n; items: L10n[] }[] = [
         en: "Location: only if you tap “Near me” on the map. It is used on your device to centre the map and is not stored.",
       },
       {
-        es: "Estadísticas de uso: solo si las activas. Contamos tus sesiones y el tiempo de uso activo. Nunca lo que escribes. Si las desactivas, se borran.",
-        it: "Statistiche di utilizzo: solo se le attivi. Contiamo le sessioni e il tempo di uso attivo. Mai ciò che scrivi. Se le disattivi, vengono cancellate.",
-        en: "Usage statistics: only if you turn them on. We count your sessions and active time. Never what you type. Turning them off deletes them.",
+        es: "Estadísticas de uso: solo si las activas. Contamos tus sesiones, el tiempo de uso activo, qué pantallas abres y qué trámites empiezas o terminas, y las vemos solo en totales para mejorar la app. Nunca lo que escribes ni tus documentos. Si las desactivas, se borran.",
+        it: "Statistiche di utilizzo: solo se le attivi. Contiamo sessioni, tempo di uso attivo, schermate aperte e pratiche iniziate o concluse, e le guardiamo solo in totale per migliorare l'app. Mai ciò che scrivi né i tuoi documenti. Se le disattivi, vengono cancellate.",
+        en: "Usage statistics: only if you turn them on. We count your sessions, active time, which screens you open and which procedures you start or finish, and look at them only as totals to improve the app. Never what you type or your documents. Turning them off deletes them.",
       },
       {
         es: "Foro (solo en la web): tu nombre público y lo que publiques, que es visible para los demás.",
