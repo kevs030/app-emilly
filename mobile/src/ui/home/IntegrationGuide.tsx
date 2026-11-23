@@ -3,7 +3,7 @@ import { useState, type ReactNode } from "react";
 import { useAuth } from "~/auth/AuthProvider";
 import { BANK, BANKS, CPIA, CPIA_CARDS, CPIA_SEARCH_URL, HOSP, HOSP_FORM_URL, IG, ISEE, ISEE_LINKS, questuraUrl, SPID, SPID_URL } from "~/content/modules/integration";
 import type { T9 } from "~/content/modules/types";
-import { useT9 } from "~/ui/modules/ModuleBlocks";
+import { SectionVideo, useT9 } from "~/ui/modules/ModuleBlocks";
 
 type Item = { id: string; icon: typeof House; title: T9; body: () => ReactNode };
 const ITEMS_IDS = ["hosp", "spid", "cpia", "isee", "bank"] as const;
@@ -218,6 +218,7 @@ export function IntegrationGuide() {
         </h2>
         <p className="mt-1 text-[15px] text-ink-soft">{x(IG.sub)}</p>
       </div>
+      <SectionVideo section="integracion" compact />
       <div>
         <div className="progress" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-label={x(IG.title)}>
           <span style={{ width: `${pct}%` }} />

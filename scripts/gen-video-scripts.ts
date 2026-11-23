@@ -14,7 +14,8 @@ const LANGS = ["es", "it", "en", "fr", "ar", "ro", "sq", "uk", "bn"] as const;
 const NAMES: Record<(typeof LANGS)[number], string> = { es: "Español", it: "Italiano", en: "English", fr: "Français", ar: "العربية", ro: "Română", sq: "Shqip", uk: "Українська", bn: "বাংলা" };
 type Scene = { visual: string; say: T9[] };
 
-const SCENES: Record<VideoSection, Scene[]> = {
+// «integracion» se graba dentro de la app (sin guion por idioma).
+const SCENES: Partial<Record<VideoSection, Scene[]>> = {
   "tessera-sanitaria": [
     { visual: "Foto del trámite (public/tramites/sanidad-tessera-sanitaria-960.webp) + título", say: [SECTION_TITLE["tessera-sanitaria"]] },
     { visual: "Lista de documentos apareciendo uno a uno", say: [T.reqTitle, ...REQUIREMENTS] },

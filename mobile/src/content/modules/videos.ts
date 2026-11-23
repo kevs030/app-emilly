@@ -6,7 +6,7 @@ import type { T9 } from "./types";
  * /videos/manifest.json dice cuáles existen; si falta, la app muestra un aviso y los pasos escritos.
  * Guiones para grabarlos o generarlos con IA: /scripts-videos/<idioma>/<sección>.md (npm run gen:video-scripts).
  */
-export type VideoSection = "tessera-sanitaria" | "codice-fiscale" | "articolo-31";
+export type VideoSection = "tessera-sanitaria" | "codice-fiscale" | "articolo-31" | "integracion";
 
 export const VIDEO_FOR_GUIDE: Record<string, VideoSection> = {
   "sanidad-tessera-sanitaria": "tessera-sanitaria",
@@ -15,6 +15,8 @@ export const VIDEO_FOR_GUIDE: Record<string, VideoSection> = {
 };
 
 export const V = {
+  watch: { es: "Ver el vídeo paso a paso", it: "Guarda il video passo dopo passo", en: "Watch the step-by-step video", fr: "Voir la vidéo pas à pas", ar: "شاهد الفيديو خطوة بخطوة", ro: "Vezi videoclipul pas cu pas", sq: "Shiko videon hap pas hapi", uk: "Дивитися відео крок за кроком", bn: "ধাপে ধাপে ভিডিও দেখুন" },
+  hide: { es: "Ocultar el vídeo", it: "Nascondi il video", en: "Hide the video", fr: "Masquer la vidéo", ar: "إخفاء الفيديو", ro: "Ascunde videoclipul", sq: "Fshih videon", uk: "Сховати відео", bn: "ভিডিও লুকান" },
   title: { es: "Vídeo paso a paso", it: "Video passo dopo passo", en: "Step-by-step video", fr: "Vidéo pas à pas", ar: "فيديو خطوة بخطوة", ro: "Video pas cu pas", sq: "Video hap pas hapi", uk: "Відео крок за кроком", bn: "ধাপে ধাপে ভিডিও" },
   soon: {
     es: "El vídeo en tu idioma está en preparación. Mientras tanto, sigue los pasos escritos de esta página.",
@@ -31,6 +33,7 @@ export const V = {
 
 /** Títulos de cada vídeo y cierre común (también los usan los guiones de /scripts-videos). */
 export const SECTION_TITLE: Record<VideoSection, T9> = {
+  integracion: { es: "Tu primer mes en Italia", it: "Il tuo primo mese in Italia", en: "Your first month in Italy", fr: "Votre premier mois en Italie", ar: "شهرك الأول في إيطاليا", ro: "Prima ta lună în Italia", sq: "Muaji juaj i parë në Itali", uk: "Ваш перший місяць в Італії", bn: "ইতালিতে আপনার প্রথম মাস" },
   "tessera-sanitaria": { es: "Cómo conseguir la tarjeta sanitaria", it: "Come ottenere la tessera sanitaria", en: "How to get your health card", fr: "Comment obtenir la carte sanitaire", ar: "كيف تحصل على البطاقة الصحية", ro: "Cum obții cardul de sănătate", sq: "Si të merrni kartën shëndetësore", uk: "Як отримати медичну картку", bn: "কীভাবে স্বাস্থ্য কার্ড পাবেন" },
   "codice-fiscale": { es: "Cómo pedir el codice fiscale", it: "Come chiedere il codice fiscale", en: "How to get your codice fiscale", fr: "Comment demander le codice fiscale", ar: "كيف تطلب الرقم الضريبي", ro: "Cum ceri codice fiscale", sq: "Si të kërkoni codice fiscale", uk: "Як отримати codice fiscale", bn: "কীভাবে codice fiscale পাবেন" },
   "articolo-31": { es: "El artículo 31: quedarte por el bien de tu hijo", it: "L'articolo 31: restare per il bene di tuo figlio", en: "Article 31: staying for your child's sake", fr: "L'article 31 : rester pour le bien de votre enfant", ar: "المادة 31: البقاء من أجل مصلحة طفلك", ro: "Articolul 31: să rămâi pentru binele copilului", sq: "Neni 31: të qëndroni për të mirën e fëmijës", uk: "Стаття 31: залишитися заради дитини", bn: "৩১ ধারা: সন্তানের কল্যাণে থেকে যাওয়া" },

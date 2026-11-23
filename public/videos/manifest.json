@@ -1,47 +1,56 @@
 {
   "es": {
-    "tessera-sanitaria": false,
-    "codice-fiscale": false,
-    "articolo-31": false
+    "tessera-sanitaria": true,
+    "codice-fiscale": true,
+    "articolo-31": true,
+    "integracion": true
   },
   "it": {
     "tessera-sanitaria": false,
     "codice-fiscale": false,
-    "articolo-31": false
+    "articolo-31": false,
+    "integracion": false
   },
   "en": {
     "tessera-sanitaria": false,
     "codice-fiscale": false,
-    "articolo-31": false
+    "articolo-31": false,
+    "integracion": false
   },
   "fr": {
     "tessera-sanitaria": false,
     "codice-fiscale": false,
-    "articolo-31": false
+    "articolo-31": false,
+    "integracion": false
   },
   "ar": {
     "tessera-sanitaria": false,
     "codice-fiscale": false,
-    "articolo-31": false
+    "articolo-31": false,
+    "integracion": false
   },
   "ro": {
     "tessera-sanitaria": false,
     "codice-fiscale": false,
-    "articolo-31": false
+    "articolo-31": false,
+    "integracion": false
   },
   "sq": {
     "tessera-sanitaria": false,
     "codice-fiscale": false,
-    "articolo-31": false
+    "articolo-31": false,
+    "integracion": false
   },
   "uk": {
     "tessera-sanitaria": false,
     "codice-fiscale": false,
-    "articolo-31": false
+    "articolo-31": false,
+    "integracion": false
   },
   "bn": {
     "tessera-sanitaria": false,
     "codice-fiscale": false,
-    "articolo-31": false
+    "articolo-31": false,
+    "integracion": false
   }
 }

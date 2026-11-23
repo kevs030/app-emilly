@@ -237,9 +237,10 @@ function loadManifest(): Promise<VideoManifest> {
  * Vídeo paso a paso de la sección en el idioma de la persona. Sin subtítulos: la narración ya está en su idioma.
  * Si ese vídeo aún no existe, un aviso amable y los pasos escritos de la página.
  */
-export function SectionVideo({ section }: { section: VideoSection }) {
+export function SectionVideo({ section, compact = false }: { section: VideoSection; compact?: boolean }) {
   const { lang, x } = useT9();
   const [ready, setReady] = useState<boolean | null>(null);
+  const [shown, setShown] = useState(false);
   useEffect(() => {
     let alive = true;
     // eslint-disable-next-line react-hooks/set-state-in-effect -- vuelve a comprobar al cambiar de idioma
@@ -250,6 +251,18 @@ export function SectionVideo({ section }: { section: VideoSection }) {
     };
   }, [lang, section]);
   const base = `${API_URL}/videos/${lang}/${section}`;
+  if (compact) {
+    // Dentro de otra tarjeta: solo un botón, y nada si el vídeo aún no existe en este idioma.
+    if (!ready) return null;
+    return (
+      <div className="space-y-2">
+        <button type="button" className="btn btn-secondary" aria-expanded={shown} onClick={() => setShown(!shown)} data-testid={`video-${section}`}>
+          <PlayCircle size={18} aria-hidden /> {x(shown ? V.hide : V.watch)}
+        </button>
+        {shown && <video key={base} src={`${base}.mp4`} poster={`${base}.jpg`} controls autoPlay playsInline preload="none" className="aspect-video w-full rounded-2xl bg-black" />}
+      </div>
+    );
+  }
   return (
     <section className="card space-y-3" aria-label={x(V.title)}>
       <h2 className="flex items-center gap-2 text-lg font-bold">
