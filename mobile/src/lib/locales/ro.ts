@@ -39,6 +39,7 @@ export const ro: Locale = {
   supportMail: "Ajutor și asistență: scrie-ne",
   emailCodeTitle: "Ai primit un cod?",
   codeHint: "Scrie aici codul de 6 cifre din e-mail. Poți apăsa și butonul din e-mail.",
+  codeNeverShare: "Nu da acest cod nimănui. A Posto nu ți-l va cere niciodată: nici la telefon, nici pe WhatsApp, nici prin e-mail.",
   codeLabel: "Codul din e-mail",
   codeVerify: "Confirmă codul",
   codeWrong: "Codul nu este corect sau a expirat. Cere alt e-mail și folosește-l pe cel mai recent.",

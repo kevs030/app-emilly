@@ -39,6 +39,7 @@ export const fr: Locale = {
   supportMail: "Aide et assistance : écrivez-nous",
   emailCodeTitle: "Vous avez reçu un code ?",
   codeHint: "Saisissez ici le code à 6 chiffres de l'e-mail. Vous pouvez aussi appuyer sur le bouton de l'e-mail.",
+  codeNeverShare: "Ne partagez ce code avec personne. A Posto ne vous le demandera jamais : ni par téléphone, ni par WhatsApp, ni par e-mail.",
   codeLabel: "Code de l'e-mail",
   codeVerify: "Confirmer le code",
   codeWrong: "Le code est incorrect ou a expiré. Demandez un autre e-mail et utilisez le plus récent.",

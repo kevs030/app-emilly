@@ -1,3 +1,4 @@
+import { ShieldAlert } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLang } from "~/lib/lang";
 import { supabase } from "~/lib/supabase";
@@ -57,6 +58,9 @@ export function PhoneCode({ phone, type, onDone, onBack, resend }: { phone: stri
       <h2 className="text-xl font-bold">{t("codeTitle")}</h2>
       <p className="text-ink-soft">
         {t("codeBody")} <strong className="text-ink">{phone}</strong>. {t("codeExpires")}
+      </p>
+      <p className="alert alert-info flex items-start gap-2 text-[14px] font-medium" data-testid="code-never-share">
+        <ShieldAlert size={18} className="mt-0.5 shrink-0" aria-hidden /> {t("codeNeverShare")}
       </p>
       <input
         className="input text-center text-2xl tracking-[0.5em]"

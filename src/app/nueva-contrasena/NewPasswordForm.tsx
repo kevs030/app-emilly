@@ -16,6 +16,7 @@ const L = {
     show: "Mostrar contraseña",
     hide: "Ocultar contraseña",
     checking: "Comprobando el enlace…",
+    never: "No compartas este código con nadie. A Posto nunca te lo pedirá: ni por teléfono, ni por WhatsApp, ni por correo.",
     codeTitle: "¿Tienes el código de 6 números del correo? Úsalo aquí:",
     email: "Tu correo",
     code: "Código de 6 números",
@@ -34,6 +35,7 @@ const L = {
     show: "Mostra password",
     hide: "Nascondi password",
     checking: "Controllo del link…",
+    never: "Non condividere questo codice con nessuno. A Posto non te lo chiederà mai: né per telefono, né su WhatsApp, né per email.",
     codeTitle: "Hai il codice di 6 cifre dell'email? Usalo qui:",
     email: "La tua email",
     code: "Codice di 6 cifre",
@@ -52,6 +54,7 @@ const L = {
     show: "Show password",
     hide: "Hide password",
     checking: "Checking the link…",
+    never: "Don't share this code with anyone. A Posto will never ask you for it: not by phone, WhatsApp or email.",
     codeTitle: "Do you have the 6-digit code from the email? Use it here:",
     email: "Your email",
     code: "6-digit code",
@@ -136,6 +139,9 @@ export function NewPasswordForm({ lang }: { lang: Lang }) {
           </p>
           <form onSubmit={verifyCode} className="card space-y-3" data-testid="np-code-form">
             <p className="font-semibold">{s.codeTitle}</p>
+            <p className="rounded-xl bg-brand-soft p-3 text-sm font-medium" data-testid="np-never-share">
+              🔒 {s.never}
+            </p>
             <label className="block">
               <span className="mb-1 block text-sm font-semibold">{s.email}</span>
               <input className="input w-full" type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />

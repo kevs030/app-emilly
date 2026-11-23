@@ -80,6 +80,7 @@ const S = {
   supportMail: { es: "Ayuda y soporte: escríbenos", it: "Aiuto e assistenza: scrivici", en: "Help and support: email us" },
   emailCodeTitle: { es: "¿Te llegó un código?", it: "Ti è arrivato un codice?", en: "Did you get a code?" },
   codeHint: { es: "Escribe aquí el código de 6 cifras del correo. También puedes pulsar el botón que viene en el correo.", it: "Scrivi qui il codice a 6 cifre dell'email. Puoi anche toccare il pulsante nell'email.", en: "Type the 6-digit code from the email here. You can also tap the button in the email." },
+  codeNeverShare: { es: "No compartas este código con nadie. A Posto nunca te lo pedirá: ni por teléfono, ni por WhatsApp, ni por correo.", it: "Non condividere questo codice con nessuno. A Posto non te lo chiederà mai: né per telefono, né su WhatsApp, né per email.", en: "Don't share this code with anyone. A Posto will never ask you for it: not by phone, WhatsApp or email." },
   codeLabel: { es: "Código del correo", it: "Codice dell'email", en: "Code from the email" },
   codeVerify: { es: "Confirmar el código", it: "Conferma il codice", en: "Confirm the code" },
   codeWrong: { es: "El código no es correcto o ya caducó. Pide otro correo y usa el más reciente.", it: "Il codice non è corretto o è scaduto. Chiedi un'altra email e usa la più recente.", en: "The code is wrong or has expired. Request another email and use the latest one." },

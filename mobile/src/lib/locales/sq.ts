@@ -39,6 +39,7 @@ export const sq: Locale = {
   supportMail: "Ndihmë dhe mbështetje: na shkruani",
   emailCodeTitle: "Ju erdhi një kod?",
   codeHint: "Shkruani këtu kodin 6-shifror nga email-i. Mund të shtypni edhe butonin në email.",
+  codeNeverShare: "Mos ia jepni këtë kod askujt. A Posto nuk do t'jua kërkojë kurrë: as me telefon, as në WhatsApp, as me email.",
   codeLabel: "Kodi i email-it",
   codeVerify: "Konfirmo kodin",
   codeWrong: "Kodi nuk është i saktë ose ka skaduar. Kërkoni një email tjetër dhe përdorni më të fundit.",

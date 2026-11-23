@@ -46,6 +46,9 @@ const cors = { "access-control-allow-origin": "*", "access-control-allow-headers
   await p.locator("button.btn", { hasText: "Crear cuenta" }).click();
   await p.locator("text=¿Te llegó un código?").waitFor({ timeout: 8000 });
   check("registro: tras crear la cuenta se puede escribir el código del correo", calls.signup === 1);
+  check("código: avisa «No compartas este código con nadie»", (await p.locator('[data-testid="code-never-share"]').innerText()).includes("No compartas este código con nadie"));
+  await p.locator('[data-testid="code-never-share"]').evaluate((e) => e.closest("form").scrollIntoView());
+  await p.screenshot({ path: process.env.SHOT || "/dev/null" }).catch(() => {});
   const code = p.locator('input[autocomplete="one-time-code"]');
   await code.fill("999999"); await p.locator("button", { hasText: "Confirmar el código" }).click();
   await p.locator("text=El código no es correcto").waitFor({ timeout: 8000 });

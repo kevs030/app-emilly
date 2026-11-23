@@ -1,4 +1,4 @@
-import { KeyRound } from "lucide-react";
+import { KeyRound, ShieldAlert } from "lucide-react";
 import { useState } from "react";
 import { useLang } from "~/lib/lang";
 import { supabase } from "~/lib/supabase";
@@ -66,6 +66,9 @@ export function EmailCode({ email, kind, onDone }: { email: string; kind: "signu
         <KeyRound size={20} className="text-sage" aria-hidden /> {t("emailCodeTitle")}
       </h2>
       <p className="text-[15px] text-ink-soft">{t("codeHint")}</p>
+      <p className="alert alert-info flex items-start gap-2 text-[14px] font-medium" data-testid="code-never-share">
+        <ShieldAlert size={18} className="mt-0.5 shrink-0" aria-hidden /> {t("codeNeverShare")}
+      </p>
       <Field label={t("codeLabel")} inputMode="numeric" autoComplete="one-time-code" maxLength={10} value={code} onChange={(e) => setCode(e.target.value)} className="input text-center text-2xl tracking-[0.3em]" />
       {error && <Alert kind="error">{error}</Alert>}
       <button className="btn" disabled={busy || clean.length < 6}>
