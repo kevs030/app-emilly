@@ -47,6 +47,8 @@ export const fr: Locale = {
   wrongEmail: "Faute de frappe ? Corriger l'adresse",
   alreadyConfirmed: "Adresse déjà confirmée ? Se connecter",
   apkUpdate: "Une nouvelle version d'A Posto est disponible.",
+  apkUpdateSoft: "Une nouvelle version d'A Posto est disponible (nouvelle icône et améliorations). Elle s'installe par-dessus : vous ne perdez rien.",
+  apkLater: "Plus tard",
   apkUpdateCta: "Télécharger",
   popularGuides: "Démarches les plus recherchées",
   back: "Retour",

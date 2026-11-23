@@ -12,7 +12,8 @@ import { API_URL } from "./supabase";
  */
 export type Manifest = { hash: string; url: string; checksum: string; minNative: number; apk?: { versionCode: number; versionName: string; url: string } };
 
-let needsApk: Manifest["apk"] | null = null;
+/** `optional`: APK recomendado (icono nuevo, mejoras nativas) que no hace falta para seguir usando la app. */
+let needsApk: (NonNullable<Manifest["apk"]> & { optional?: boolean }) | null = null;
 const listeners = new Set<() => void>();
 const emit = () => listeners.forEach((l) => l());
 
@@ -33,6 +34,33 @@ export function plan(m: Manifest, own: { hash: string; native: number }): "none"
   if (m.minNative > own.native) return "apk";
   if (m.hash === own.hash) return "none";
   return "download";
+}
+
+/**
+ * ¿Hay un APK más nuevo que el instalado aunque no sea obligatorio? Algunas cosas (el icono de la app,
+ * permisos, complementos nativos) solo cambian instalando el APK; las actualizaciones en vivo no llegan ahí.
+ */
+export function recommendApk(m: Manifest, native: number): boolean {
+  return Boolean(m?.apk && m.apk.versionCode > native && native > 0);
+}
+const DISMISS = (v: number) => `aposto:apk-later:${v}`;
+export function dismissApk() {
+  if (!needsApk?.optional) return;
+  try {
+    localStorage.setItem(DISMISS(needsApk.versionCode), String(Date.now()));
+  } catch {
+    /* sin almacenamiento */
+  }
+  needsApk = null;
+  emit();
+}
+function dismissedRecently(v: number): boolean {
+  try {
+    const at = Number(localStorage.getItem(DISMISS(v)) || 0);
+    return Date.now() - at < 3 * 86_400_000; // «Ahora no» dura 3 días; después se vuelve a recordar
+  } catch {
+    return false;
+  }
 }
 
 async function ownHash(): Promise<string> {
@@ -63,6 +91,10 @@ async function check() {
       needsApk = m.apk ?? { versionCode: m.minNative, versionName: "", url: "/descargar" };
       emit();
       return;
+    }
+    if (m.apk && recommendApk(m, native) && !dismissedRecently(m.apk.versionCode)) {
+      needsApk = { ...m.apk, optional: true };
+      emit();
     }
     if (what !== "download") return;
     // ¿Ya descargado en una apertura anterior? Entonces solo se programa.

@@ -47,6 +47,8 @@ export const sq: Locale = {
   wrongEmail: "E shkruar gabim? Korrigjo email-in",
   alreadyConfirmed: "E keni konfirmuar më parë email-in? Hyni",
   apkUpdate: "Ka një version të ri të A Posto.",
+  apkUpdateSoft: "Ka një version të ri të A Posto (ikonë e re dhe përmirësime). Instalohet sipër: nuk humbni asgjë.",
+  apkLater: "Jo tani",
   apkUpdateCta: "Shkarko",
   popularGuides: "Procedurat më të kërkuara",
   back: "Kthehu",

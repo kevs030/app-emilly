@@ -47,6 +47,8 @@ export const uk: Locale = {
   wrongEmail: "Помилка в адресі? Виправити",
   alreadyConfirmed: "Уже підтвердили пошту? Увійти",
   apkUpdate: "Доступна нова версія A Posto.",
+  apkUpdateSoft: "Є нова версія A Posto (нова іконка й покращення). Встановлюється поверх: нічого не втратите.",
+  apkLater: "Не зараз",
   apkUpdateCta: "Завантажити",
   popularGuides: "Найпопулярніші процедури",
   back: "Назад",

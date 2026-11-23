@@ -47,6 +47,8 @@ export const ar: Locale = {
   wrongEmail: "هل كُتب بشكل خاطئ؟ صحّح البريد",
   alreadyConfirmed: "هل أكدت بريدك من قبل؟ ادخل",
   apkUpdate: "يتوفر إصدار جديد من A Posto.",
+  apkUpdateSoft: "يتوفر إصدار جديد من A Posto (أيقونة جديدة وتحسينات). يُثبَّت فوق الحالي: لن تفقد شيئًا.",
+  apkLater: "ليس الآن",
   apkUpdateCta: "تنزيل",
   popularGuides: "الإجراءات الأكثر بحثًا",
   back: "رجوع",

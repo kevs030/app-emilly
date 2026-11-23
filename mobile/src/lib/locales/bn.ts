@@ -47,6 +47,8 @@ export const bn: Locale = {
   wrongEmail: "ভুল লেখা? ইমেইল ঠিক করুন",
   alreadyConfirmed: "আগেই ইমেইল নিশ্চিত করেছেন? প্রবেশ করুন",
   apkUpdate: "A Posto-র নতুন সংস্করণ এসেছে।",
+  apkUpdateSoft: "A Posto-র নতুন সংস্করণ এসেছে (নতুন আইকন ও উন্নতি)। আগেরটির উপর ইনস্টল হয়: কিছুই হারাবেন না।",
+  apkLater: "এখন না",
   apkUpdateCta: "ডাউনলোড",
   popularGuides: "সবচেয়ে বেশি খোঁজা প্রক্রিয়া",
   back: "ফিরে যান",

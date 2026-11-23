@@ -47,6 +47,8 @@ export const ro: Locale = {
   wrongEmail: "Greșit scris? Corectează e-mailul",
   alreadyConfirmed: "Ți-ai confirmat deja e-mailul? Intră",
   apkUpdate: "Există o versiune nouă A Posto.",
+  apkUpdateSoft: "Există o versiune nouă A Posto (pictogramă nouă și îmbunătățiri). Se instalează peste: nu pierzi nimic.",
+  apkLater: "Nu acum",
   apkUpdateCta: "Descarcă",
   popularGuides: "Cele mai căutate proceduri",
   back: "Înapoi",

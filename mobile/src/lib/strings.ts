@@ -88,6 +88,8 @@ const S = {
   wrongEmail: { es: "¿Está mal escrito? Corregir el correo", it: "È scritta male? Correggi l'email", en: "Typo? Fix the email" },
   alreadyConfirmed: { es: "¿Ya confirmaste tu correo antes? Entrar", it: "Hai già confermato l'email? Entra", en: "Already confirmed your email? Sign in" },
   apkUpdate: { es: "Hay una versión nueva de A Posto.", it: "C'è una nuova versione di A Posto.", en: "A new version of A Posto is available." },
+  apkUpdateSoft: { es: "Hay una versión nueva de A Posto (icono nuevo y mejoras). Se instala encima: no pierdes nada.", it: "C'è una nuova versione di A Posto (nuova icona e miglioramenti). Si installa sopra: non perdi nulla.", en: "A new version of A Posto is available (new icon and improvements). It installs on top: you lose nothing." },
+  apkLater: { es: "Ahora no", it: "Non ora", en: "Not now" },
   apkUpdateCta: { es: "Descargar", it: "Scarica", en: "Download" },
   popularGuides: { es: "Trámites más buscados", it: "Pratiche più cercate", en: "Most searched procedures" },
   back: { es: "Volver", it: "Indietro", en: "Back" },

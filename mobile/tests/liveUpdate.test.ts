@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 vi.mock("@capgo/capacitor-updater", () => ({ CapacitorUpdater: {} }));
 vi.mock("@capacitor/app", () => ({ App: {} }));
-import { plan, type Manifest } from "../src/lib/liveUpdate";
+import { plan, recommendApk, type Manifest } from "../src/lib/liveUpdate";
 
 const m = (o: Partial<Manifest> = {}): Manifest => ({ hash: "nuevo", url: "/app-update/bundle-x.zip", checksum: "abc", minNative: 2, ...o });
 
@@ -17,5 +17,12 @@ describe("actualizaciones en vivo", () => {
   });
   it("ignora un manifiesto vacío o roto", () => {
     expect(plan({} as Manifest, { hash: "x", native: 2 })).toBe("none");
+  });
+  it("recomienda el APK nuevo (icono, mejoras nativas) aunque no sea obligatorio", () => {
+    const apk = { versionCode: 5, versionName: "1.3.0", url: "/a-posto.apk" };
+    expect(recommendApk(m({ apk }), 4)).toBe(true);
+    expect(recommendApk(m({ apk }), 5)).toBe(false);
+    expect(recommendApk(m({}), 4)).toBe(false);
+    expect(recommendApk(m({ apk }), 0)).toBe(false); // en el navegador no hay APK que instalar
   });
 });

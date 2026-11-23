@@ -1,7 +1,7 @@
 import { FileText, HandCoins, House, LogIn, MapPin, MessageCircle, UserRound, UsersRound, WifiOff } from "lucide-react";
 import { forumBadge, useForumActivity } from "~/lib/forumActivity";
 import { useEffect, useState } from "react";
-import { useApkUpdate } from "~/lib/liveUpdate";
+import { dismissApk, useApkUpdate } from "~/lib/liveUpdate";
 import { API_URL } from "~/lib/supabase";
 import { BrowserRouter, Link, Navigate, NavLink, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import { AuthProvider, useAuth } from "~/auth/AuthProvider";
@@ -109,10 +109,15 @@ function Private({ guestOk = false }: { guestOk?: boolean }) {
         )}
         {apk && (
           <p className="safe-top flex flex-wrap items-center justify-center gap-x-3 bg-gold-soft px-4 pb-2 pt-2 text-center text-[14px] font-medium" role="status">
-            {t("apkUpdate")}
-            <a href={new URL(apk.url, API_URL).toString()} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center font-bold text-terracotta-hover underline">
+            {t(apk.optional ? "apkUpdateSoft" : "apkUpdate")}
+            <a href={new URL(apk.url, API_URL).toString()} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center font-bold text-terracotta-hover underline" data-testid="apk-update">
               {t("apkUpdateCta")}
             </a>
+            {apk.optional && (
+              <button type="button" onClick={dismissApk} className="inline-flex min-h-11 items-center font-medium text-ink-soft underline">
+                {t("apkLater")}
+              </button>
+            )}
           </p>
         )}
         <main className="flex-1 overflow-y-auto">
