@@ -4,6 +4,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import { useNavigate } from "react-router-dom";
 import { isEmptySituation, loadSituation, saveSituation, SITUATION_KEYS, splitPatch, type Situation } from "~/lib/situation";
 import { isNative, supabase, SUPABASE_KEY, SUPABASE_URL } from "~/lib/supabase";
+import { clearPendingSignup, rememberEmail } from "~/lib/rememberAccount";
 
 export type Profile = {
   display_name: string | null;
@@ -43,10 +44,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
+      if (data.session) rememberEmail(data.session.user.email);
       setReady(true);
     });
     const { data: sub } = supabase.auth.onAuthStateChange((event, s) => {
       setSession(s);
+      // Con la sesión abierta (por contraseña, código o enlace) se recuerda el correo y se da por terminado el registro.
+      if (s && event === "SIGNED_IN") {
+        rememberEmail(s.user.email);
+        clearPendingSignup();
+      }
       if (event === "PASSWORD_RECOVERY") navigate("/new-password");
       if (event === "SIGNED_OUT") setProfile(null);
     });

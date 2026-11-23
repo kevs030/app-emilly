@@ -8,6 +8,7 @@ import { Illustration, Landscape } from "~/ui/Illustration";
 import { Logo } from "~/ui/kit";
 import { AuthForm, type AuthMode } from "./Auth";
 import { IosInstallHint } from "~/ui/IosInstallHint";
+import { knownEmail, pendingSignup } from "~/lib/rememberAccount";
 
 /**
  * Portada: lo primero que ve quien abre la app sin haber entrado.
@@ -16,7 +17,8 @@ import { IosInstallHint } from "~/ui/IosInstallHint";
  */
 export function Welcome() {
   const { t, lang, setLang } = useLang();
-  const [mode, setMode] = useState<AuthMode>(openedFromEmailLink ? "signin" : "signup");
+  // Quien ya tuvo cuenta en este teléfono ve primero «Entrar» (con su correo escrito), no «Crear cuenta».
+  const [mode, setMode] = useState<AuthMode>(() => (pendingSignup() ? "signup" : openedFromEmailLink || knownEmail() ? "signin" : "signup"));
   return (
     <div className="safe-top safe-bottom mx-auto flex min-h-full max-w-md flex-col px-5">
       <div className="flex items-center justify-between gap-3 pt-1">

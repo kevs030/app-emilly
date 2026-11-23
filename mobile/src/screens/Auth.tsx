@@ -7,6 +7,7 @@ import { useLang } from "~/lib/lang";
 import { redirectUrl, supabase } from "~/lib/supabase";
 import { COUNTRIES, isEmail, passwordIssues, toE164 } from "~/lib/validation";
 import { EmailCode } from "~/ui/EmailCode";
+import { clearPendingSignup, knownEmail, pendingSignup, setPendingSignup } from "~/lib/rememberAccount";
 import { Alert, Field, PasswordField, Screen } from "~/ui/kit";
 import { useCaptcha } from "~/ui/Captcha";
 import { PhoneCode } from "./PhoneCode";
@@ -37,8 +38,9 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
   const { phoneLoginEnabled } = useAuth();
   const navigate = useNavigate();
   const [method, setMethod] = useState<"email" | "phone">("email");
-  const [step, setStep] = useState<Step>("form");
-  const [email, setEmail] = useState("");
+  // Si la app se cerró a mitad del registro, se vuelve a la pantalla del código; si ya hay cuenta en este teléfono, el correo va escrito.
+  const [step, setStep] = useState<Step>(() => (mode === "signup" && pendingSignup() ? "email-sent" : "form"));
+  const [email, setEmail] = useState(() => pendingSignup() ?? knownEmail() ?? "");
   const [password, setPassword] = useState("");
   const [dial, setDial] = useState("+39");
   const [national, setNational] = useState("");
@@ -84,6 +86,7 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
       // Misma respuesta exista o no la cuenta: así nadie puede averiguar qué correos están registrados.
       if (error && error.status !== 422) return fail(error.message, error.status);
       setWait(60);
+      setPendingSignup(email);
       setStep("email-sent");
     } else {
       const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password, options: { captchaToken: captcha.token } });
@@ -144,13 +147,21 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
         <button type="button" className="btn btn-secondary" onClick={resendEmail} disabled={wait > 0}>
           {wait > 0 ? `${t("resendIn")} ${wait} s` : t("resend")}
         </button>
-        <button type="button" className="btn btn-quiet" onClick={() => setStep("form")}>
+        <button
+          type="button"
+          className="btn btn-quiet"
+          onClick={() => {
+            clearPendingSignup();
+            setStep("form");
+          }}
+        >
           {t("wrongEmail")}
         </button>
         <button
           type="button"
           className="btn btn-quiet"
           onClick={() => {
+            clearPendingSignup();
             setMode("signin");
             setStep("form");
           }}
