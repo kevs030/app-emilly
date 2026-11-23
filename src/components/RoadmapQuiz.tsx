@@ -173,7 +173,7 @@ export function RoadmapQuiz({ lang, guides }: { lang: Lang; guides: Record<strin
                     <button type="button" onClick={copy} className="btn !border-white !bg-white !text-[var(--ap-sage-dark)]">
                       {copied ? <Check size={18} aria-hidden /> : <Copy size={18} aria-hidden />} {copied ? T.copied[lang] : T.copy[lang]}
                     </button>
-                    <Link href="/descargar" className="btn btn-hero-outline !border-white !text-white">
+                    <Link href="/descargar" className="btn btn-hero-outline !border-white !bg-transparent !text-white">
                       <Smartphone size={18} aria-hidden /> apostoapp.app/descargar
                     </Link>
                   </>

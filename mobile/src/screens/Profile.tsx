@@ -1,4 +1,5 @@
 import { Mail, Smartphone } from "lucide-react";
+import { APP } from "@/config/app";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { BiometricToggle } from "~/ui/AppLock";
@@ -177,6 +178,9 @@ export function Profile() {
         <Link to="/data" className="btn btn-secondary">
           {t("myData")}
         </Link>
+        <a href={`mailto:${APP.contactEmail}?subject=${encodeURIComponent("A Posto")}`} className="btn btn-secondary" data-testid="support-mail">
+          <Mail size={18} aria-hidden /> {t("supportMail")}
+        </a>
         <Link to="/privacy" className="btn btn-quiet">
           {t("privacyPolicy")}
         </Link>

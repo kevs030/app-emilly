@@ -16,7 +16,7 @@ Supabase → **Authentication** → **Emails** → pestaña **Templates** → **
 <p style="font-size:32px;font-weight:bold;letter-spacing:6px">{{ .Token }}</p>
 <p>Escríbelo en la app, en la pantalla «Revisa tu correo». Caduca en 1 hora.</p>
 <p>También puedes pulsar aquí: <a href="{{ .ConfirmationURL }}">Confirmar mi correo</a></p>
-<p style="color:#746A60;font-size:13px">Si no creaste una cuenta en A Posto, ignora este correo.</p>
+<p style="color:#746A60;font-size:13px">Si no creaste una cuenta en A Posto, ignora este correo. ¿Dudas? Escríbenos a support.aposto@gmail.com</p>
 ```
 Pulsa **Save changes**.
 
@@ -30,7 +30,7 @@ Misma pestaña → **Reset password**.
 <p style="font-size:32px;font-weight:bold;letter-spacing:6px">{{ .Token }}</p>
 <p>Escríbelo en la app. O pulsa este botón, que abre una página de la web (funciona en Safari y Chrome):</p>
 <p><a href="{{ .ConfirmationURL }}">Crear una contraseña nueva</a></p>
-<p style="color:#746A60;font-size:13px">Si no lo pediste tú, ignora este correo: tu contraseña no cambia.</p>
+<p style="color:#746A60;font-size:13px">Si no lo pediste tú, ignora este correo: tu contraseña no cambia. ¿Dudas? Escríbenos a support.aposto@gmail.com</p>
 ```
 Pulsa **Save changes**.
 

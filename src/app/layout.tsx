@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import Link from "next/link";
-import { Download, Search, ShieldCheck } from "lucide-react";
+import { Download, Mail, Search, ShieldCheck } from "lucide-react";
+import { APP } from "@/config/app";
 import "./globals.css";
 import { getLang } from "@/lib/lang";
 import { t, tr } from "@/lib/i18n";
@@ -197,6 +198,11 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
                   <Link href="/privacidad" className="hover:text-brand">
                     {f.privacy}
                   </Link>
+                </li>
+                <li>
+                  <a href={`mailto:${APP.contactEmail}`} className="inline-flex items-center gap-1.5 hover:text-brand" data-testid="footer-support">
+                    <Mail size={14} aria-hidden /> {APP.contactEmail}
+                  </a>
                 </li>
               </ul>
             </div>

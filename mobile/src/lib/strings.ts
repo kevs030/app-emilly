@@ -77,6 +77,7 @@ const S = {
   notArrived3: { es: "Si lo encuentras en Spam, márcalo como «No es spam»: los siguientes llegarán a tu bandeja.", it: "Se lo trovi nello spam, segnalo come «Non è spam»: i prossimi arriveranno in posta in arrivo.", en: "If it is in Spam, mark it “Not spam”: the next ones will reach your inbox." },
   notArrived4: { es: "Usa solo el último correo que te llegue: al pedir uno nuevo, los anteriores dejan de funcionar.", it: "Usa solo l'ultima email ricevuta: quando ne chiedi una nuova, le precedenti non funzionano più.", en: "Use only the latest email you receive: when you request a new one, the earlier ones stop working." },
   resendConfirm: { es: "Reenviar el correo de confirmación", it: "Invia di nuovo l'email di conferma", en: "Resend the confirmation email" },
+  supportMail: { es: "Ayuda y soporte: escríbenos", it: "Aiuto e assistenza: scrivici", en: "Help and support: email us" },
   emailCodeTitle: { es: "¿Te llegó un código?", it: "Ti è arrivato un codice?", en: "Did you get a code?" },
   codeHint: { es: "Escribe aquí el código de 6 cifras del correo. También puedes pulsar el botón que viene en el correo.", it: "Scrivi qui il codice a 6 cifre dell'email. Puoi anche toccare il pulsante nell'email.", en: "Type the 6-digit code from the email here. You can also tap the button in the email." },
   codeLabel: { es: "Código del correo", it: "Codice dell'email", en: "Code from the email" },

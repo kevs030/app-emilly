@@ -1,4 +1,5 @@
-import { ExternalLink, FileDown, PenLine } from "lucide-react";
+import Link from "next/link";
+import { ExternalLink, FileDown, PenLine, Smartphone } from "lucide-react";
 import type { Lang, OfficialDocument } from "@/content/types";
 import { tr } from "@/lib/i18n";
 
@@ -7,10 +8,11 @@ const L = {
   open: { es: "Abrir web oficial", en: "Open official site", it: "Apri sito ufficiale" },
   fill: { es: "Para rellenar", en: "To fill in", it: "Da compilare" },
   checked: { es: "Enlace comprobado el", en: "Link checked on", it: "Link verificato il" },
+  inApp: { es: "Descargar y rellenar en la app", en: "Download and fill in the app", it: "Scarica e compila nell'app" },
 };
 
 /** Lista de formularios y documentos oficiales. Los enlaces van siempre a la web del organismo. */
-export function DocumentList({ docs, lang }: { docs: OfficialDocument[]; lang: Lang }) {
+export function DocumentList({ docs, lang, locked = false }: { docs: OfficialDocument[]; lang: Lang; locked?: boolean }) {
   return (
     <ul className="space-y-3">
       {docs.map((d) => (
@@ -30,9 +32,16 @@ export function DocumentList({ docs, lang }: { docs: OfficialDocument[]; lang: L
               {d.issuer} · {tr(L.checked, lang)} {d.lastVerified}
             </p>
           </div>
-          <a href={d.url} target="_blank" rel="noopener noreferrer" className="btn-ghost shrink-0 text-sm">
-            {d.kind === "pdf" ? tr(L.download, lang) : tr(L.open, lang)}
-          </a>
+          {locked ? (
+            // En la web se ve qué formularios hacen falta; descargarlos y la ayuda casilla a casilla, en la app.
+            <Link href="/descargar" className="btn-ghost inline-flex shrink-0 items-center gap-1.5 text-sm">
+              <Smartphone size={16} aria-hidden /> {tr(L.inApp, lang)}
+            </Link>
+          ) : (
+            <a href={d.url} target="_blank" rel="noopener noreferrer" className="btn-ghost shrink-0 text-sm">
+              {d.kind === "pdf" ? tr(L.download, lang) : tr(L.open, lang)}
+            </a>
+          )}
         </li>
       ))}
     </ul>

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Bell, CheckSquare, Download, FileDown } from "lucide-react";
 import { stageOf } from "@/content/journey";
+import { AppGate } from "@/components/AppGate";
+import { Lock } from "lucide-react";
 import { GUIDE_ART, PageArt } from "@/components/PageArt";
 import Link from "next/link";
 import { getLang } from "@/lib/lang";
@@ -14,6 +16,10 @@ import { DocumentList } from "@/components/DocumentList";
 import { GuideIcon } from "@/components/Icons";
 
 /** Título y descripción propios de cada trámite: lo que lee Google y lo que se ve al compartir el enlace. */
+/** Pasos que se leen enteros en la web; el resto, en la app. */
+const FREE_STEPS = 2;
+const LOCKED = { es: "Ver este paso en la app →", en: "See this step in the app →", it: "Vedi questo passo nell'app →" };
+
 const APPCTA = {
   title: { es: "Haz este trámite con la app, gratis", en: "Do this procedure with the app, for free", it: "Fai questa pratica con l'app, gratis" },
   a: { es: "Marca cada paso y cada documento", en: "Tick off each step and document", it: "Segna ogni passo e documento" },
@@ -72,22 +78,31 @@ export default async function GuidePage(props: PageProps<"/guias/[slug]">) {
         </Link>
       </section>
 
+      {/* La web enseña cómo empieza el trámite y qué pasos tiene; el paso a paso completo está en la app. */}
       <section className="card">
         <h2 className="text-lg font-semibold">{t("steps", lang)}</h2>
         <ol className="mt-3 space-y-4">
           {guide.steps.map((s, i) => (
-            <li key={i} className="flex gap-3">
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-on-brand">
-                {i + 1}
+            <li key={i} className="flex gap-3" data-testid={i < FREE_STEPS ? "step-open" : "step-locked"}>
+              <span className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-sm font-bold ${i < FREE_STEPS ? "bg-brand text-on-brand" : "bg-[var(--ap-beige)] text-muted"}`}>
+                {i < FREE_STEPS ? i + 1 : <Lock size={14} aria-hidden />}
               </span>
-              <div>
-                <h3 className="font-medium">{tr(s.title, lang)}</h3>
-                <p className="text-sm text-muted">{tr(s.body, lang)}</p>
+              <div className="min-w-0 flex-1">
+                <h3 className={`font-medium ${i < FREE_STEPS ? "" : "text-muted"}`}>{tr(s.title, lang)}</h3>
+                {i < FREE_STEPS ? (
+                  <p className="text-sm text-muted">{tr(s.body, lang)}</p>
+                ) : (
+                  <a href="#continuar" className="mt-1 inline-flex min-h-8 items-center gap-1 text-sm font-medium text-brand">
+                    {tr(LOCKED, lang)}
+                  </a>
+                )}
               </div>
             </li>
           ))}
         </ol>
       </section>
+
+      {guide.steps.length > FREE_STEPS && <AppGate lang={lang} remaining={guide.steps.length - FREE_STEPS} id="continuar" />}
 
       <section className="card">
         <h2 className="text-lg font-semibold">📎 {t("documents", lang)}</h2>
@@ -118,7 +133,7 @@ export default async function GuidePage(props: PageProps<"/guias/[slug]">) {
       {docs.length > 0 && (
         <section className="card">
           <h2 className="mb-3 text-lg font-semibold">{docsTitle}</h2>
-          <DocumentList docs={docs} lang={lang} />
+          <DocumentList docs={docs} lang={lang} locked />
         </section>
       )}
 

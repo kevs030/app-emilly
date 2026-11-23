@@ -36,6 +36,7 @@ export const fr: Locale = {
   notArrived3: "S'il est dans les spams, marquez-le « Non spam » : les suivants arriveront dans la boîte de réception.",
   notArrived4: "Utilisez uniquement le dernier e-mail reçu : quand vous en demandez un nouveau, les précédents ne fonctionnent plus.",
   resendConfirm: "Renvoyer l'e-mail de confirmation",
+  supportMail: "Aide et assistance : écrivez-nous",
   emailCodeTitle: "Vous avez reçu un code ?",
   codeHint: "Saisissez ici le code à 6 chiffres de l'e-mail. Vous pouvez aussi appuyer sur le bouton de l'e-mail.",
   codeLabel: "Code de l'e-mail",

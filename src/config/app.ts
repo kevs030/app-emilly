@@ -25,7 +25,7 @@ export const APP = {
 
   // ── Responsable de los datos (obligatorio por el RGPD y por las tiendas) ──
   /** Nombre de la persona o empresa responsable. */
-  legalName: "",
+  legalName: "Kevin Luddwinn Carrillo Carita",
   /** Correo de contacto para privacidad y soporte. */
-  contactEmail: "",
+  contactEmail: "support.aposto@gmail.com",
 } as const;

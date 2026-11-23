@@ -36,6 +36,7 @@ export const ro: Locale = {
   notArrived3: "Dacă e în Spam, marchează-l „Nu este spam”: următoarele vor ajunge în inbox.",
   notArrived4: "Folosește doar ultimul e-mail primit: când ceri unul nou, cele vechi nu mai funcționează.",
   resendConfirm: "Retrimite e-mailul de confirmare",
+  supportMail: "Ajutor și asistență: scrie-ne",
   emailCodeTitle: "Ai primit un cod?",
   codeHint: "Scrie aici codul de 6 cifre din e-mail. Poți apăsa și butonul din e-mail.",
   codeLabel: "Codul din e-mail",

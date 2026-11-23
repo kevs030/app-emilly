@@ -7,15 +7,16 @@ import { guides } from "@/content/guides";
 import { documentsFor } from "@/content/documents";
 import { DocumentList } from "@/components/DocumentList";
 import { GuideIcon } from "@/components/Icons";
+import { AppGate } from "@/components/AppGate";
 
 export const metadata: Metadata = { title: "Formularios oficiales" };
 
 const L = {
   title: { es: "Formularios y documentos oficiales", en: "Official forms and documents", it: "Moduli e documenti ufficiali" },
   intro: {
-    es: "Todos los enlaces llevan a la web del organismo que publica el documento, para que descargues siempre la versión vigente. Son gratuitos: nadie debe cobrarte por un formulario.",
-    en: "Every link goes to the website of the body that publishes the document, so you always download the current version. They are free: nobody should charge you for a form.",
-    it: "Ogni link porta al sito dell'ente che pubblica il documento. Sono gratuiti: nessuno deve farti pagare un modulo.",
+    es: "Aquí ves qué formularios oficiales necesita cada trámite. En la app los descargas de la web del organismo (siempre la versión vigente) y te explicamos qué escribir en cada casilla. Son gratuitos: nadie debe cobrarte por un formulario.",
+    en: "Here you can see which official forms each procedure needs. In the app you download them from the issuing body's website (always the current version) and we explain what to write in each box. They are free: nobody should charge you for a form.",
+    it: "Qui vedi quali moduli ufficiali servono per ogni pratica. Nell'app li scarichi dal sito dell'ente (sempre la versione aggiornata) e ti spieghiamo cosa scrivere in ogni casella. Sono gratuiti: nessuno deve farti pagare un modulo.",
   },
   guide: { es: "Ver la guía paso a paso", en: "See the step-by-step guide", it: "Vedi la guida" },
 };
@@ -29,6 +30,7 @@ export default async function DocumentsPage() {
         <h1 className="text-3xl font-bold tracking-tight">{tr(L.title, lang)}</h1>
         <p className="mt-2 max-w-2xl text-muted">{tr(L.intro, lang)}</p>
       </header>
+      <AppGate lang={lang} />
       {guides.map((g) => {
         const docs = documentsFor(g.slug);
         if (docs.length === 0) return null;
@@ -43,7 +45,7 @@ export default async function DocumentsPage() {
                 </Link>
               </div>
             </div>
-            <DocumentList docs={docs} lang={lang} />
+            <DocumentList docs={docs} lang={lang} locked />
           </section>
         );
       })}
