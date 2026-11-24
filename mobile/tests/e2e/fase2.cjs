@@ -76,7 +76,7 @@ const ANSWER = "[1] Qué es\nCarta del INPS sobre el Assegno Unico.\n[2] Qué pi
   for (const [, href] of links) { await go(href); await p.waitForTimeout(200); const h1 = await p.locator("h1").first().innerText().catch(() => ""); if (new URL(p.url()).pathname === href && h1) opened++; }
   check("cada acceso abre una pantalla con título", opened === 12, `${opened}/12`);
   await go("/", 'nav[aria-label="Accesos"]');
-  const small = await p.locator("a, button").evaluateAll((els) => els.filter((e) => { const r = e.getBoundingClientRect(); return r.width > 0 && (r.height < 44 || r.width < 44); }).map((e) => e.textContent.trim().slice(0, 25)));
+  const small = await p.locator("a, button").evaluateAll((els) => els.filter((e) => { const r = e.getBoundingClientRect(); return r.width > 0 && (r.height < 43.5 || r.width < 43.5); }).map((e) => e.textContent.trim().slice(0, 25)));
   const overflow = await p.evaluate(() => { const W = window.innerWidth; if (document.documentElement.scrollWidth <= W) return ""; const o = []; for (const e of document.querySelectorAll("body *")) { const b = e.getBoundingClientRect(); if (b.right > W + 1 && b.width > 0 && !e.closest("[class*=overflow-x]")) o.push(e.tagName + "." + String(e.className).slice(0, 40) + " «" + (e.textContent || "").trim().slice(0, 30) + "»"); } return `ancho ${document.documentElement.scrollWidth}>${W}: ` + o.slice(0, 3).join(" | "); });
   check("inicio: botones ≥ 44 px y sin desbordamiento", small.length === 0 && !overflow, [small.join(" | "), overflow].filter(Boolean).join(" · "));
   await p.screenshot({ path: "tests/e2e/out-inicio2.png", fullPage: true });

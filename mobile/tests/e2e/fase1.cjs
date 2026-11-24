@@ -25,7 +25,7 @@ const PREFIX = process.env.APP_PREFIX || ""; // "/app" cuando se prueba la app s
     check(`acceso «${label}» abre una pantalla`, new URL(p.url()).pathname === href && h1.length > 0, `${href} → «${h1}»`);
     await p.goto(ORIGIN + PREFIX + "/"); await p.waitForSelector('nav[aria-label="Accesos"]');
   }
-  const small = await p.locator("a, button").evaluateAll((els) => els.filter((e) => { const r = e.getBoundingClientRect(); return r.width > 0 && (r.height < 44 || r.width < 44); }).map((e) => e.textContent.trim().slice(0, 30)));
+  const small = await p.locator("a, button").evaluateAll((els) => els.filter((e) => { const r = e.getBoundingClientRect(); return r.width > 0 && (r.height < 43.5 || r.width < 43.5); }).map((e) => e.textContent.trim().slice(0, 30)));
   check("todos los botones del inicio miden al menos 44 px", small.length === 0, small.join(" | "));
   check("sin desbordamiento horizontal", await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
 

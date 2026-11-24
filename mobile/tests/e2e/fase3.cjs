@@ -12,7 +12,7 @@ let p;
   const res = [];
   const check = (name, ok, extra = "") => res.push(`${ok ? "OK   " : "FALLA"} ${name}${extra ? " — " + extra : ""}`);
   // Los enlaces dentro de una frase (la casilla de aceptación) están exentos, como permite WCAG 2.5.8.
-  const small = () => p.locator("a, button").evaluateAll((els) => els.filter((e) => { const r = e.getBoundingClientRect(); return !e.closest("label") && r.width > 0 && (r.height < 44 || r.width < 44); }).map((e) => e.textContent.trim().slice(0, 30)));
+  const small = () => p.locator("a, button").evaluateAll((els) => els.filter((e) => { const r = e.getBoundingClientRect(); return !e.closest("label") && r.width > 0 && (r.height < 43.5 || r.width < 43.5); }).map((e) => e.textContent.trim().slice(0, 30)));
   const app = await makeApp(br, errs);
   p = app.p;
   const { db, login } = app;

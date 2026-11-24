@@ -1,3 +1,4 @@
+import { IosInstall } from "@/components/IosInstall";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BadgeCheck, Bell, Bot, CheckCircle2, Download, FileCheck2, Languages, ListChecks, Lock, ShieldCheck, Smartphone, Trash2, TriangleAlert } from "lucide-react";
@@ -36,10 +37,23 @@ const T = {
       ["Independiente", "A Posto no es una web del Gobierno ni de una agencia. Es información general, no asesoramiento legal."],
     ],
     iosTitle: "Instalar en iPhone o iPad",
-    iosProfileBtn: "Descargar el instalador para iPhone",
-    iosProfileIntro: "La forma más fácil: un instalador que pone el icono de A Posto en tu pantalla de inicio. Ábrelo en Safari.",
-    iosProfileSteps: ["Pulsa «Descargar el instalador» y luego «Permitir». Safari descarga el instalador.", "Abre Ajustes: arriba verás «Perfil descargado». Púlsalo.", "Pulsa «Instalar» (arriba a la derecha) y escribe el código de tu iPhone.", "Listo: el icono de A Posto aparece en tu pantalla de inicio."],
-    iosProfileNote: "Verás «No verificado»: es normal, porque no pagamos a Apple por firmarlo. El instalador solo añade el icono: no instala nada más, no pide permisos y no controla tu teléfono. Para quitarlo: Ajustes → General → VPN y gestión de dispositivos → A Posto → Eliminar perfil.",
+    iosInstall: {
+      button: "Instalar A POSTO en iPhone",
+      open: "Abrir A Posto en Safari",
+      steps: [
+        "Abre A Posto en Safari con este botón.",
+        "Pulsa Compartir: el cuadrado con una flecha hacia arriba (abajo en el iPhone, arriba en el iPad).",
+        "Elige «Añadir a pantalla de inicio».",
+        "Si aparece «Abrir como app web», déjalo activado.",
+        "Pulsa «Añadir». El icono de A Posto aparecerá con tus otras apps.",
+      ],
+      moreHint: "Si no la ves, desliza la lista hacia arriba o pulsa «Más».",
+      installed: "A Posto ya está instalada en este iPhone. Ábrela desde su icono en la pantalla de inicio.",
+      inApp: "Estás dentro de {app}. Para instalar A Posto hay que usar Safari: abre el menú (⋯ o ⋮) y elige «Abrir en Safari», o copia el enlace y pégalo en Safari.",
+      copy: "Copiar el enlace",
+      copied: "Enlace copiado",
+      other: "Estos pasos son para iPhone y iPad. Abre apostoapp.app/descargar en tu iPhone, con Safari.",
+    },
     apkTitle: "Descarga directa para Android (APK)",
     apkBody: "Mientras llega a Google Play, instala el archivo oficial firmado por A Posto. Es la app completa: funciona por sí sola, sin abrir la web.",
     apkCta: "Descargar APK",
@@ -85,10 +99,23 @@ const T = {
       ["Indipendente", "A Posto non è un sito del Governo né di un'agenzia. Sono informazioni generali, non consulenza legale."],
     ],
     iosTitle: "Installare su iPhone o iPad",
-    iosProfileBtn: "Scarica l'installer per iPhone",
-    iosProfileIntro: "Il modo più facile: un installer che mette l'icona di A Posto nella schermata Home. Aprilo in Safari.",
-    iosProfileSteps: ["Tocca «Scarica l'installer» e poi «Consenti». Safari scarica l'installer.", "Apri Impostazioni: in alto vedrai «Profilo scaricato». Toccalo.", "Tocca «Installa» (in alto a destra) e inserisci il codice del tuo iPhone.", "Fatto: l'icona di A Posto appare nella schermata Home."],
-    iosProfileNote: "Vedrai «Non verificato»: è normale, perché non paghiamo Apple per firmarlo. L'installer aggiunge solo l'icona: non installa altro, non chiede permessi e non controlla il telefono. Per toglierlo: Impostazioni → Generali → VPN e gestione dispositivo → A Posto → Rimuovi profilo.",
+    iosInstall: {
+      button: "Installa A POSTO su iPhone",
+      open: "Apri A Posto in Safari",
+      steps: [
+        "Apri A Posto in Safari con questo pulsante.",
+        "Tocca Condividi: il quadrato con la freccia verso l'alto (in basso su iPhone, in alto su iPad).",
+        "Scegli «Aggiungi alla schermata Home».",
+        "Se compare «Apri come app web», lascialo attivo.",
+        "Tocca «Aggiungi». L'icona di A Posto apparirà tra le tue app.",
+      ],
+      moreHint: "Se non la vedi, scorri l'elenco verso l'alto o tocca «Altro».",
+      installed: "A Posto è già installata su questo iPhone. Aprila dalla sua icona nella schermata Home.",
+      inApp: "Sei dentro {app}. Per installare A Posto serve Safari: apri il menu (⋯ o ⋮) e scegli «Apri in Safari», oppure copia il link e incollalo in Safari.",
+      copy: "Copia il link",
+      copied: "Link copiato",
+      other: "Questi passi sono per iPhone e iPad. Apri apostoapp.app/descargar sul tuo iPhone, con Safari.",
+    },
     apkTitle: "Download diretto per Android (APK)",
     apkBody: "In attesa di Google Play, installa il file ufficiale firmato da A Posto. È l'app completa: funziona da sola, senza aprire il sito.",
     apkCta: "Scarica APK",
@@ -134,10 +161,23 @@ const T = {
       ["Independent", "A Posto is not a government or agency website. It is general information, not legal advice."],
     ],
     iosTitle: "Install on iPhone or iPad",
-    iosProfileBtn: "Download the iPhone installer",
-    iosProfileIntro: "The easiest way: an installer that puts the A Posto icon on your Home Screen. Open it in Safari.",
-    iosProfileSteps: ["Tap “Download the installer”, then “Allow”. Safari downloads the installer.", "Open Settings: at the top you will see “Profile Downloaded”. Tap it.", "Tap “Install” (top right) and enter your iPhone passcode.", "Done: the A Posto icon appears on your Home Screen."],
-    iosProfileNote: "You will see “Not Verified”: that is normal, because we don't pay Apple to sign it. The installer only adds the icon: it installs nothing else, asks for no permissions and does not control your phone. To remove it: Settings → General → VPN & Device Management → A Posto → Remove Profile.",
+    iosInstall: {
+      button: "Install A POSTO on iPhone",
+      open: "Open A Posto in Safari",
+      steps: [
+        "Open A Posto in Safari with this button.",
+        "Tap Share: the square with an arrow pointing up (at the bottom on iPhone, at the top on iPad).",
+        "Choose “Add to Home Screen”.",
+        "If “Open as Web App” appears, leave it on.",
+        "Tap “Add”. The A Posto icon will appear with your other apps.",
+      ],
+      moreHint: "If you don't see it, scroll the list up or tap “More”.",
+      installed: "A Posto is already installed on this iPhone. Open it from its icon on your Home Screen.",
+      inApp: "You are inside {app}. To install A Posto you need Safari: open the menu (⋯ or ⋮) and choose “Open in Safari”, or copy the link and paste it into Safari.",
+      copy: "Copy the link",
+      copied: "Link copied",
+      other: "These steps are for iPhone and iPad. Open apostoapp.app/descargar on your iPhone, in Safari.",
+    },
     apkTitle: "Direct download for Android (APK)",
     apkBody: "Until it reaches Google Play, install the official file signed by A Posto. It is the full app: it works on its own, without opening the website.",
     apkCta: "Download APK",
@@ -313,18 +353,7 @@ export default async function DownloadPage({ searchParams }: { searchParams: Pro
         <h2 className="flex items-center gap-2 text-xl font-bold">
           <Smartphone size={22} className="text-brand" aria-hidden /> {s.iosTitle}
         </h2>
-        <p className="mt-2 text-sm">{s.iosProfileIntro}</p>
-        <a href="/a-posto.mobileconfig" className="btn mt-4" data-testid="ios-profile">
-          <Download size={18} aria-hidden /> {s.iosProfileBtn}
-        </a>
-        <ol className="mt-4 list-decimal space-y-1.5 ps-5 text-sm">
-          {s.iosProfileSteps.map((x) => (
-            <li key={x}>{x}</li>
-          ))}
-        </ol>
-        <p className="mt-3 rounded-xl bg-[var(--background-alt)] p-3 text-sm text-muted" data-testid="ios-profile-note">
-          {s.iosProfileNote}
-        </p>
+        <IosInstall t={s.iosInstall} />
       </section>
 
       <section id="apk" className="card">

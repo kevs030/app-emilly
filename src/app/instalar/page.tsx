@@ -7,7 +7,7 @@ const T = {
     android: "Android (Chrome)",
     androidSteps: ["Abre esta página en Chrome.", "Pulsa los tres puntitos ⋮ arriba a la derecha.", "Pulsa «Instalar app» o «Añadir a pantalla de inicio».", "Confirma con «Instalar»."],
     iphone: "iPhone",
-    iphoneSteps: ["En Safari, abre apostoapp.app/descargar y pulsa «Descargar el instalador para iPhone».", "Pulsa «Permitir».", "Abre Ajustes → «Perfil descargado» → «Instalar».", "Escribe el código de tu iPhone."],
+    iphoneSteps: ["Abre apostoapp.app/app en Safari.", "Pulsa Compartir (el cuadrado con la flecha hacia arriba).", "Elige «Añadir a pantalla de inicio». Si aparece «Abrir como app web», déjalo activado.", "Pulsa «Añadir»."],
     done: "Listo: verás el icono de A Posto junto a tus otras apps.",
   },
   en: {
@@ -16,7 +16,7 @@ const T = {
     android: "Android (Chrome)",
     androidSteps: ["Open this page in Chrome.", "Tap the three dots ⋮ at the top right.", "Tap “Install app” or “Add to Home screen”.", "Confirm with “Install”."],
     iphone: "iPhone",
-    iphoneSteps: ["In Safari, open apostoapp.app/descargar and tap “Download the iPhone installer”.", "Tap “Allow”.", "Open Settings → “Profile Downloaded” → “Install”.", "Enter your iPhone passcode."],
+    iphoneSteps: ["Open apostoapp.app/app in Safari.", "Tap Share (the square with an up arrow).", "Choose “Add to Home Screen”. If “Open as Web App” appears, leave it on.", "Tap “Add”."],
     done: "Done: you'll see the A Posto icon next to your other apps.",
   },
   it: {
@@ -25,7 +25,7 @@ const T = {
     android: "Android (Chrome)",
     androidSteps: ["Apri questa pagina in Chrome.", "Tocca i tre puntini ⋮ in alto a destra.", "Tocca «Installa app» o «Aggiungi a schermata Home».", "Conferma con «Installa»."],
     iphone: "iPhone",
-    iphoneSteps: ["In Safari apri apostoapp.app/descargar e tocca «Scarica l'installer per iPhone».", "Tocca «Consenti».", "Apri Impostazioni → «Profilo scaricato» → «Installa».", "Inserisci il codice del tuo iPhone."],
+    iphoneSteps: ["Apri apostoapp.app/app in Safari.", "Tocca Condividi (il quadrato con la freccia in su).", "Scegli «Aggiungi alla schermata Home». Se compare «Apri come app web», lascialo attivo.", "Tocca «Aggiungi»."],
     done: "Fatto: vedrai l'icona di A Posto tra le tue app.",
   },
 };

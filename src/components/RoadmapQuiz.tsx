@@ -53,9 +53,9 @@ const T = {
   },
   androidCta: { es: "Descargar gratis para Android", en: "Download free for Android", it: "Scarica gratis per Android" },
   iphoneText: {
-    es: "Lleva esta ruta en tu iPhone: instala A Posto gratis con nuestro instalador y tendrás su icono en la pantalla de inicio, como cualquier app.",
-    en: "Take this roadmap on your iPhone: install A Posto for free with our installer and you'll have its icon on your Home Screen, like any app.",
-    it: "Porta questa tabella di marcia sull'iPhone: installa A Posto gratis con il nostro installer e avrai l'icona nella schermata Home, come qualsiasi app.",
+    es: "Lleva esta ruta en tu iPhone: instala A Posto gratis desde Safari y tendrás su icono en la pantalla de inicio, como cualquier app.",
+    en: "Take this roadmap on your iPhone: install A Posto for free from Safari and you'll have its icon on your Home Screen, like any app.",
+    it: "Porta questa tabella di marcia sull'iPhone: installa A Posto gratis da Safari e avrai l'icona nella schermata Home, come qualsiasi app.",
   },
   iphoneCta: { es: "Instalar en iPhone", en: "Install on iPhone", it: "Installa su iPhone" },
   computerText: {
