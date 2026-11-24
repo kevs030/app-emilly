@@ -21,6 +21,7 @@ const T = {
     store: ["Consíguelo en el", "App Store"],
     soon: "Próximamente",
     freeNote: "Gratis. Sin tarjeta. Sin suscripción.",
+    storesSoon: "Próximamente disponible en el App Store (iPhone) y en Google Play (Android). Mientras tanto, ya puedes usar A Posto gratis: en Android con el APK oficial y en iPhone desde Safari.",
     whatTitle: "Qué hace A Posto",
     features: [
       ["Guías paso a paso", "Permiso de residencia, código fiscal, sanidad, residencia, art. 31 y más, con los formularios oficiales."],
@@ -55,7 +56,7 @@ const T = {
       other: "Estos pasos son para iPhone y iPad. Abre apostoapp.app/descargar en tu iPhone, con Safari.",
     },
     apkTitle: "Descarga directa para Android (APK)",
-    apkBody: "Mientras llega a Google Play, instala el archivo oficial firmado por A Posto. Es la app completa: funciona por sí sola, sin abrir la web.",
+    apkBody: "Próximamente en Google Play. Mientras tanto, instala el archivo oficial firmado por A Posto. Es la app completa: funciona por sí sola, sin abrir la web.",
     apkCta: "Descargar APK",
     apkVersion: "Versión",
     apkHash: "Huella SHA-256 del archivo (para comprobar que es auténtico):",
@@ -65,7 +66,7 @@ const T = {
     apkWarn: "Descarga el APK solo desde esta página. No instales copias que te envíen por WhatsApp, Telegram u otras webs.",
     apkSoon: "El archivo se está preparando. Vuelve en unos días.",
     apkHint: "Al descargar, toca «Abrir» y activa «Permitir desde esta fuente» si tu teléfono lo solicita.",
-    iosSoon: "La versión para iPhone llegará al App Store. Mientras tanto, en la web puedes consultar todas las guías, las ayudas y el mapa de oficinas.",
+    iosSoon: "Próximamente en el App Store. Mientras tanto, instala A Posto gratis desde Safari: es la misma app, con su icono en tu pantalla de inicio.",
     confirmed: "Tu correo está confirmado. Abre la app A Posto en tu teléfono y entra con tu correo y tu contraseña.",
     expired: "Este enlace ya no sirve: caducó o ya se había usado. Si ya confirmaste tu correo, abre la app y entra con tu correo y contraseña. Si no, en la app pulsa «Entrar», escribe tu correo y contraseña y toca «Reenviar el correo de confirmación». Abre solo el último correo que te llegue.",
     apkMain: "Descargar para Android",
@@ -83,6 +84,7 @@ const T = {
     store: ["Scarica su", "App Store"],
     soon: "Prossimamente",
     freeNote: "Gratis. Senza carta. Senza abbonamento.",
+    storesSoon: "Presto disponibile sull'App Store (iPhone) e su Google Play (Android). Nel frattempo puoi già usare A Posto gratis: su Android con l'APK ufficiale e su iPhone da Safari.",
     whatTitle: "Cosa fa A Posto",
     features: [
       ["Guide passo dopo passo", "Permesso di soggiorno, codice fiscale, sanità, residenza, art. 31 e altro, con i moduli ufficiali."],
@@ -117,7 +119,7 @@ const T = {
       other: "Questi passi sono per iPhone e iPad. Apri apostoapp.app/descargar sul tuo iPhone, con Safari.",
     },
     apkTitle: "Download diretto per Android (APK)",
-    apkBody: "In attesa di Google Play, installa il file ufficiale firmato da A Posto. È l'app completa: funziona da sola, senza aprire il sito.",
+    apkBody: "Presto su Google Play. Nel frattempo installa il file ufficiale firmato da A Posto. È l'app completa: funziona da sola, senza aprire il sito.",
     apkCta: "Scarica APK",
     apkVersion: "Versione",
     apkHash: "Impronta SHA-256 del file (per verificare che sia autentico):",
@@ -127,7 +129,7 @@ const T = {
     apkWarn: "Scarica l'APK solo da questa pagina. Non installare copie ricevute su WhatsApp, Telegram o altri siti.",
     apkSoon: "Il file è in preparazione. Torna tra qualche giorno.",
     apkHint: "Dopo il download, tocca «Apri» e attiva «Consenti da questa fonte» se il telefono lo chiede.",
-    iosSoon: "La versione per iPhone arriverà sull'App Store. Nel frattempo, sul sito trovi tutte le guide, i bonus e la mappa degli uffici.",
+    iosSoon: "Presto sull'App Store. Nel frattempo installa A Posto gratis da Safari: è la stessa app, con la sua icona nella schermata Home.",
     confirmed: "La tua email è confermata. Apri l'app A Posto sul telefono ed entra con email e password.",
     expired: "Questo link non è più valido: è scaduto o è già stato usato. Se hai già confermato l'email, apri l'app ed entra con email e password. Altrimenti, nell'app tocca «Accedi», scrivi email e password e tocca «Invia di nuovo l'email di conferma». Apri solo l'ultima email ricevuta.",
     apkMain: "Scarica per Android",
@@ -145,6 +147,7 @@ const T = {
     store: ["Download on the", "App Store"],
     soon: "Coming soon",
     freeNote: "Free. No card. No subscription.",
+    storesSoon: "Coming soon to the App Store (iPhone) and Google Play (Android). Meanwhile you can already use A Posto for free: on Android with the official APK and on iPhone from Safari.",
     whatTitle: "What A Posto does",
     features: [
       ["Step-by-step guides", "Residence permit, tax code, healthcare, residency, art. 31 and more, with the official forms."],
@@ -179,7 +182,7 @@ const T = {
       other: "These steps are for iPhone and iPad. Open apostoapp.app/descargar on your iPhone, in Safari.",
     },
     apkTitle: "Direct download for Android (APK)",
-    apkBody: "Until it reaches Google Play, install the official file signed by A Posto. It is the full app: it works on its own, without opening the website.",
+    apkBody: "Coming soon to Google Play. Meanwhile, install the official file signed by A Posto. It is the full app: it works on its own, without opening the website.",
     apkCta: "Download APK",
     apkVersion: "Version",
     apkHash: "SHA-256 fingerprint of the file (to check it is authentic):",
@@ -189,7 +192,7 @@ const T = {
     apkWarn: "Download the APK only from this page. Do not install copies sent over WhatsApp, Telegram or other websites.",
     apkSoon: "The file is being prepared. Please come back in a few days.",
     apkHint: "After downloading, tap “Open” and turn on “Allow from this source” if your phone asks.",
-    iosSoon: "The iPhone version is coming to the App Store. Meanwhile, the website has all the guides, benefits and the office map.",
+    iosSoon: "Coming soon to the App Store. Meanwhile, install A Posto for free from Safari: it is the same app, with its icon on your Home Screen.",
     confirmed: "Your email is confirmed. Open the A Posto app on your phone and sign in with your email and password.",
     expired: "This link no longer works: it expired or was already used. If you already confirmed your email, open the app and sign in with your email and password. If not, in the app tap “Sign in”, enter your email and password and tap “Resend the confirmation email”. Open only the latest email you receive.",
     apkMain: "Download for Android",
@@ -288,7 +291,10 @@ export default async function DownloadPage({ searchParams }: { searchParams: Pro
               <StoreButton href={APP.googlePlayUrl} lines={s.play} soon={s.soon} />
               <StoreButton href={APP.appStoreUrl} lines={s.store} soon={s.soon} />
             </div>
-            <p className="hero-sub mt-4 text-sm">{s.freeNote}</p>
+            <p className="hero-sub mt-4 text-sm font-semibold" data-testid="stores-soon">
+              {s.storesSoon}
+            </p>
+            <p className="hero-sub mt-2 text-sm">{s.freeNote}</p>
           </div>
           <div className="fade-up" style={{ animationDelay: "200ms" }}>
             <PhoneMockup />
@@ -353,6 +359,9 @@ export default async function DownloadPage({ searchParams }: { searchParams: Pro
         <h2 className="flex items-center gap-2 text-xl font-bold">
           <Smartphone size={22} className="text-brand" aria-hidden /> {s.iosTitle}
         </h2>
+        <p className="mt-3 rounded-xl bg-[var(--background-alt)] p-3 text-sm font-semibold" data-testid="ios-soon">
+          {s.iosSoon}
+        </p>
         <IosInstall t={s.iosInstall} />
       </section>
 
