@@ -76,8 +76,6 @@ const nextConfig: NextConfig = {
       { source: "/app-update/latest.json", headers: [{ key: "Cache-Control", value: "no-cache, no-store, must-revalidate" }] },
       { source: "/app-update/:file*.zip", headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }] },
       { source: "/video/:file*", headers: [{ key: "Cache-Control", value: "public, max-age=604800" }] },
-      // Instalador para iPhone (solo un acceso directo): el iPhone lo reconoce por este tipo de archivo.
-      { source: "/a-posto.mobileconfig", headers: [{ key: "Content-Type", value: "application/x-apple-aspen-config" }, { key: "Content-Disposition", value: 'attachment; filename="A-Posto.mobileconfig"' }, { key: "Cache-Control", value: "public, max-age=3600" }] },
       { source: "/a-posto.apk", headers: [{ key: "Content-Type", value: "application/vnd.android.package-archive" }, { key: "Content-Disposition", value: 'attachment; filename="A-Posto.apk"' }] },
     ];
   },
