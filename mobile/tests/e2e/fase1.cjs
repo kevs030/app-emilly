@@ -30,7 +30,7 @@ const PREFIX = process.env.APP_PREFIX || ""; // "/app" cuando se prueba la app s
   check("sin desbordamiento horizontal", await p.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
 
   // Buscador
-  await p.click('a[role="search"]'); await p.waitForSelector('input[type="search"]');
+  await p.click('main a[href="/search"]'); await p.waitForSelector('input[type="search"]');
   await p.fill('input[type="search"]', "codigo fiscal");
   check("buscar «codigo fiscal» (sin acento) encuentra la guía", (await p.locator("li a.card").first().innerText()).includes("código fiscal"));
   await p.fill('input[type="search"]', "zzzz");
