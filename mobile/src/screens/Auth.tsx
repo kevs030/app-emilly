@@ -7,6 +7,7 @@ import { useLang } from "~/lib/lang";
 import { redirectUrl, supabase } from "~/lib/supabase";
 import { COUNTRIES, isEmail, passwordIssues, toE164 } from "~/lib/validation";
 import { EmailCode } from "~/ui/EmailCode";
+import { PRIVACY_UPDATED } from "@/content/legal";
 import { clearPendingSignup, knownEmail, pendingSignup, setPendingSignup } from "~/lib/rememberAccount";
 import { Alert, Field, PasswordField, Screen } from "~/ui/kit";
 import { useCaptcha } from "~/ui/Captcha";
@@ -15,6 +16,12 @@ import { PhoneCode } from "./PhoneCode";
 type Step = "form" | "email-sent" | "phone-code";
 
 export type AuthMode = "signup" | "signin";
+
+/**
+ * Prueba del consentimiento (RGPD, art. 7.1): al crear la cuenta se guarda en la propia cuenta cuándo se
+ * aceptaron las condiciones y la política de privacidad, y qué versión. Sin datos de más.
+ */
+const consentProof = () => ({ terms_accepted_at: new Date().toISOString(), privacy_version: PRIVACY_UPDATED, age_14_confirmed: true });
 
 /** Pantalla propia de acceso (/auth): la misma tarjeta que la portada, con botón de volver. */
 export function Auth() {
@@ -80,7 +87,7 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
     setBusy(true);
     if (mode === "signup") {
       if (issues.length) return setBusy(false);
-      const { error } = await supabase.auth.signUp({ email: email.trim(), password, options: { emailRedirectTo: redirectUrl("/"), captchaToken: captcha.token } });
+      const { error } = await supabase.auth.signUp({ email: email.trim(), password, options: { emailRedirectTo: redirectUrl("/"), captchaToken: captcha.token, data: consentProof() } });
       captcha.reset();
       setBusy(false);
       // Misma respuesta exista o no la cuenta: así nadie puede averiguar qué correos están registrados.
@@ -99,7 +106,7 @@ export function AuthForm({ mode, setMode, hideSwitch = false }: { mode: AuthMode
 
   async function sendSms(): Promise<boolean> {
     if (!phone) return false;
-    const { error } = await supabase.auth.signInWithOtp({ phone, options: { shouldCreateUser: true, captchaToken: captcha.token } });
+    const { error } = await supabase.auth.signInWithOtp({ phone, options: { shouldCreateUser: true, captchaToken: captcha.token, data: consentProof() } });
     captcha.reset();
     if (error) fail(error.message, error.status);
     return !error;

@@ -141,7 +141,7 @@ export function Home() {
         )}
 
         {/* Buscador y accesos: cada uno lleva a una pantalla que existe y funciona. */}
-        <Link to="/search" className="input flex items-center gap-3 text-ink-soft" role="search">
+        <Link to="/search" className="input flex items-center gap-3 text-ink-soft" aria-label={t("searchPlaceholder")}>
           <Search size={20} className="shrink-0" aria-hidden /> <span className="min-w-0 flex-1 truncate">{t("searchPlaceholder")}</span>
         </Link>
 

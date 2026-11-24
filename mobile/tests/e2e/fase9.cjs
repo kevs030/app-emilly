@@ -24,7 +24,7 @@ const cors = { "access-control-allow-origin": "*", "access-control-allow-headers
       if (req.method() === "OPTIONS") return r.fulfill({ status: 204, headers: cors });
       const json = (status, body) => r.fulfill({ status, headers: { ...cors, "content-type": "application/json" }, body: JSON.stringify(body) });
       if (u.pathname === "/auth/v1/settings") return json(200, { external: { email: true, phone: false } });
-      if (u.pathname === "/auth/v1/signup") { calls.signup++; return json(200, { ...user, identities: [{}] }); }
+      if (u.pathname === "/auth/v1/signup") { calls.signup++; calls.signupBody = req.postDataJSON(); return json(200, { ...user, identities: [{}] }); }
       if (u.pathname === "/auth/v1/recover") { calls.recover.push({ redirect: u.searchParams.get("redirect_to"), body: req.postDataJSON() }); return json(200, {}); }
       if (u.pathname === "/auth/v1/verify") {
         const b = req.postDataJSON(); calls.verify.push(b);
@@ -46,6 +46,8 @@ const cors = { "access-control-allow-origin": "*", "access-control-allow-headers
   await p.locator("button.btn", { hasText: "Crear cuenta" }).click();
   await p.locator("text=¿Te llegó un código?").waitFor({ timeout: 8000 });
   check("registro: tras crear la cuenta se puede escribir el código del correo", calls.signup === 1);
+  const proof = calls.signupBody?.data || {};
+  check("consentimiento: se guarda cuándo se aceptó, la versión de la privacidad y la edad", /^\d{4}-\d\d-\d\dT/.test(proof.terms_accepted_at || "") && /^\d{4}-\d\d-\d\d$/.test(proof.privacy_version || "") && proof.age_14_confirmed === true, JSON.stringify(proof));
   check("código: avisa «No compartas este código con nadie»", (await p.locator('[data-testid="code-never-share"]').innerText()).includes("No compartas este código con nadie"));
   await p.locator('[data-testid="code-never-share"]').evaluate((e) => e.closest("form").scrollIntoView());
   await p.screenshot({ path: process.env.SHOT || "/dev/null" }).catch(() => {});
