@@ -18,6 +18,17 @@ import type { L10n, Lang } from "@/content/types";
  */
 
 const H = {
+  commEyebrow: { es: "Comunidad", en: "Community", it: "Comunità" },
+  commTitle: { es: "No estás solo en esto", en: "You're not alone in this", it: "Non sei solo in questo" },
+  commBody: {
+    es: "Pregunta lo que necesites. Personas que ya pasaron por el mismo trámite te responden en la app, en tu idioma.",
+    en: "Ask whatever you need. People who already went through the same procedure answer you in the app, in your language.",
+    it: "Chiedi quello che ti serve. Persone che hanno già fatto la stessa pratica ti rispondono nell'app, nella tua lingua.",
+  },
+  commAlt: { es: "Grupo de amigos de distintos orígenes sonriendo juntos", en: "Group of friends from different backgrounds smiling together", it: "Gruppo di amici di origini diverse che sorridono insieme" },
+  heroAlt: { es: "Calle de una ciudad italiana al atardecer, llena de gente", en: "Street in an Italian city at sunset, full of people", it: "Strada di una città italiana al tramonto, piena di gente" },
+  howAlt: { es: "Persona atendida en una oficina con sus documentos", en: "Person being helped at an office with their documents", it: "Persona allo sportello con i suoi documenti" },
+  photoCredit: { es: "Fotografías: Pexels (licencia libre).", en: "Photos: Pexels (free license).", it: "Fotografie: Pexels (licenza libera)." },
   eyebrow: { es: "La app gratuita para tus trámites en Italia", en: "The free app for your paperwork in Italy", it: "L'app gratuita per le tue pratiche in Italia" },
   title: { es: "Tu vida en Italia, paso a paso.", en: "Your life in Italy, step by step.", it: "La tua vita in Italia, passo dopo passo." },
   sub: {
@@ -74,6 +85,13 @@ const H = {
   quizAlt: { es: "Personas de distintos países en una plaza italiana", en: "People from different countries in an Italian square", it: "Persone di diversi Paesi in una piazza italiana" },
   appShot: { es: "Pantalla de inicio de la app A Posto", en: "A Posto app home screen", it: "Schermata iniziale dell'app A Posto" },
 } satisfies Record<string, L10n>;
+
+const COMM_POINTS: L10n[] = [
+  { es: "Preguntas y respuestas entre personas migrantes", en: "Questions and answers between migrants", it: "Domande e risposte tra persone migranti" },
+  { es: "Moderada: sin datos personales ni estafas", en: "Moderated: no personal data and no scams", it: "Moderata: niente dati personali né truffe" },
+  { es: "Te avisa cuando alguien te responde", en: "Lets you know when someone answers", it: "Ti avvisa quando qualcuno risponde" },
+];
+
 
 const HERO_TRUST = [
   { icon: Gift, es: "100% gratuito", en: "100% free", it: "100% gratuito" },
@@ -161,6 +179,9 @@ const STEPS = [
   { es: "Avanza paso a paso", en: "Move forward step by step", it: "Avanza passo dopo passo", d: { es: "Marca tus avances, guarda tus documentos y recibe recordatorios.", en: "Track your progress, keep your documents and get reminders.", it: "Segna i progressi, salva i documenti e ricevi promemoria." } },
 ] as const;
 
+/** Foto de cada momento del viaje (Pexels, licencia libre). */
+const STAGE_PHOTO: Record<string, string> = { llegada: "milan-duomo", quedarme: "papeles", anos: "movil" };
+
 function Phone({ src, alt, eager = false }: { src: string; alt: string; eager?: boolean }) {
   return (
     <div className="phone-frame mx-auto">
@@ -189,26 +210,29 @@ export default async function Home() {
   return (
     <div className="-mt-6 space-y-20 sm:space-y-24">
       {/* ── Portada: qué es A Posto + la app de verdad en un teléfono ── */}
-      <section className="landing-hero -mx-4 px-4 pb-14 pt-10 sm:pt-16" data-testid="landing-hero">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-[1.15fr_1fr]">
+      <section className="landing-photo full-bleed relative !mb-0 overflow-hidden px-4 pb-16 pt-14 sm:pb-24 sm:pt-24" data-testid="landing-hero">
+        {/* eslint-disable-next-line @next/next/no-img-element -- foto WebP ya optimizada en dos tamaños */}
+        <img src="/web/fotos/roma-atardecer-1600.webp" srcSet="/web/fotos/roma-atardecer-800.webp 800w, /web/fotos/roma-atardecer-1600.webp 1600w" sizes="100vw" width={1600} height={1067} alt={tr(H.heroAlt, lang)} fetchPriority="high" className="landing-photo-img absolute inset-0 h-full w-full object-cover" />
+        <div className="hero-shade absolute inset-0" aria-hidden />
+        <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-[1.15fr_1fr]">
           <div>
-            <p className="eyebrow fade-up">{tr(H.eyebrow, lang)}</p>
-            <h1 className="fade-up mt-3 text-[2.6rem] font-extrabold leading-[1.05] tracking-tight sm:text-6xl">{tr(H.title, lang)}</h1>
-            <p className="fade-up mt-5 max-w-xl text-lg text-muted" style={{ animationDelay: "80ms" }}>
+            <p className="eyebrow fade-up !text-[var(--ap-gold)]">{tr(H.eyebrow, lang)}</p>
+            <h1 className="fade-up mt-3 text-[2.8rem] font-extrabold leading-[1.02] tracking-tight text-white sm:text-7xl">{tr(H.title, lang)}</h1>
+            <p className="fade-up mt-5 max-w-xl text-lg text-white/85" style={{ animationDelay: "80ms" }}>
               {tr(H.sub, lang)}
             </p>
             <div className="fade-up mt-8 flex flex-col gap-3 sm:flex-row sm:items-center" style={{ animationDelay: "160ms" }}>
               <a href="#hoja-de-ruta" className="btn btn-hero sm:!w-auto" data-testid="hero-primary">
                 <Compass size={18} aria-hidden /> {tr(H.explore, lang)}
               </a>
-              <Link href="/descargar" className="btn btn-hero-outline sm:!w-auto" data-testid="hero-secondary">
+              <Link href="/descargar" className="btn btn-hero-outline !border-white !bg-white/10 !text-white backdrop-blur sm:!w-auto" data-testid="hero-secondary">
                 <Download size={18} aria-hidden /> {tr(H.download, lang)}
               </Link>
             </div>
-            <ul className="fade-up mt-5 flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-muted" style={{ animationDelay: "220ms" }} aria-label={tr(H.trustLabel, lang)} data-testid="hero-trust">
+            <ul className="fade-up mt-6 flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-white/85" style={{ animationDelay: "220ms" }} aria-label={tr(H.trustLabel, lang)} data-testid="hero-trust">
               {HERO_TRUST.map((x) => (
                 <li key={x.es} className="flex items-center gap-1.5">
-                  <x.icon size={15} className="shrink-0 text-brand" aria-hidden /> {x[lang]}
+                  <x.icon size={15} className="shrink-0 text-[var(--ap-gold)]" aria-hidden /> {x[lang]}
                 </li>
               ))}
             </ul>
@@ -220,30 +244,32 @@ export default async function Home() {
       </section>
 
       {/* ── Vídeos: cómo se hacen los trámites con la app ── */}
-      <section aria-labelledby="videos-title" data-testid="home-videos">
+      <section className="dark-band full-bleed !mt-0 px-4 py-20" aria-labelledby="videos-title" data-testid="home-videos">
+        <div className="mx-auto max-w-6xl">
         <div className="text-center">
-          <p className="eyebrow">{tr(H.videosEyebrow, lang)}</p>
-          <h2 id="videos-title" className="mt-2 text-3xl font-bold tracking-tight">
+          <p className="eyebrow !text-[var(--ap-gold)]">{tr(H.videosEyebrow, lang)}</p>
+          <h2 id="videos-title" className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-5xl">
             {tr(H.videosTitle, lang)}
           </h2>
-          <p className="mt-2 text-muted">{tr(H.videosSub, lang)}</p>
+          <p className="mt-3 text-white/75">{tr(H.videosSub, lang)}</p>
         </div>
-        <div className="mt-8 grid gap-6 md:grid-cols-2">
+        <div className="mt-10 grid gap-6 md:grid-cols-2">
           {VIDEOS.map((v) => (
-            <figure key={v.file} className="overflow-hidden rounded-2xl border border-border bg-white shadow-[var(--shadow)]">
+            <figure key={v.file} className="overflow-hidden rounded-2xl border border-white/10 bg-white/5">
               {/* Con voz en español y textos grandes (se entiende también sin sonido). No se descarga hasta que se pulsa «reproducir». */}
               <video src={`/video/${v.file}.mp4`} poster={`/video/${v.file}.jpg`} controls playsInline preload="none" width={1280} height={720} className="aspect-video w-full bg-[var(--background-alt)]" />
               <figcaption className="p-4">
-                <p className="font-semibold">{tr(v.title, lang)}</p>
-                <p className="text-sm text-muted">{tr(v.sub, lang)}</p>
+                <p className="font-semibold text-white">{tr(v.title, lang)}</p>
+                <p className="text-sm text-white/70">{tr(v.sub, lang)}</p>
               </figcaption>
             </figure>
           ))}
         </div>
+        </div>
       </section>
 
       {/* ── Fuentes oficiales ── */}
-      <section className="-mt-10 text-center" aria-label={tr(H.sources, lang)}>
+      <section className="text-center" aria-label={tr(H.sources, lang)}>
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted">{tr(H.sources, lang)}</p>
         <ul className="mt-3 flex flex-wrap justify-center gap-x-6 gap-y-2 text-[15px] font-semibold text-foreground/70">
           {SOURCES.map((s) => (
@@ -263,7 +289,7 @@ export default async function Home() {
         </div>
         <div className="mt-14 space-y-20">
           {FEATURES.map((f, i) => (
-            <Reveal key={f.img}>
+            <Reveal key={f.img} className="tilt">
               <div className={`grid items-center gap-10 md:grid-cols-2 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}>
                 <Phone src={f.img} alt={tr(f.title, lang)} />
                 <div>
@@ -286,6 +312,31 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* ── Comunidad: personas reales que se ayudan ── */}
+      <section className="grid items-center gap-10 md:grid-cols-2" aria-labelledby="comm-title" data-testid="home-community">
+        <Reveal className="tilt">
+          {/* eslint-disable-next-line @next/next/no-img-element -- foto WebP ya optimizada */}
+          <img src="/web/fotos/comunidad-1600.webp" srcSet="/web/fotos/comunidad-800.webp 800w, /web/fotos/comunidad-1600.webp 1600w" sizes="(min-width: 768px) 50vw, 100vw" width={1600} height={1068} alt={tr(H.commAlt, lang)} loading="lazy" decoding="async" className="photo-card aspect-[4/3] w-full object-cover" />
+        </Reveal>
+        <div>
+          <p className="eyebrow">{tr(H.commEyebrow, lang)}</p>
+          <h2 id="comm-title" className="mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl">
+            {tr(H.commTitle, lang)}
+          </h2>
+          <p className="mt-4 text-lg text-muted">{tr(H.commBody, lang)}</p>
+          <ul className="mt-5 space-y-2">
+            {COMM_POINTS.map((pt) => (
+              <li key={pt.es} className="flex items-center gap-2">
+                <BadgeCheck size={18} className="shrink-0 text-sage" aria-hidden /> {tr(pt, lang)}
+              </li>
+            ))}
+          </ul>
+          <Link href="/descargar" className="btn btn-hero mt-7 sm:!w-auto">
+            <Download size={18} aria-hidden /> {tr(H.download, lang)}
+          </Link>
+        </div>
+      </section>
+
       {/* ── Cuestionario: prueba gratis en la web ── */}
       <div className="grid items-start gap-8 lg:grid-cols-[1fr_1.6fr]">
         {/* eslint-disable-next-line @next/next/no-img-element -- ilustración WebP ya optimizada */}
@@ -305,7 +356,9 @@ export default async function Home() {
           </div>
           <div className="mt-8 grid gap-5 lg:grid-cols-3">
             {STAGES.map((st) => (
-              <section key={st.id} className="card h-full" aria-labelledby={`stage-${st.id}`} data-testid={`stage-${st.id}`}>
+              <section key={st.id} className="card h-full overflow-hidden !pt-0" aria-labelledby={`stage-${st.id}`} data-testid={`stage-${st.id}`}>
+                {/* eslint-disable-next-line @next/next/no-img-element -- foto WebP ya optimizada */}
+                <img src={`/web/fotos/${STAGE_PHOTO[st.id] ?? "papeles"}-800.webp`} width={800} height={533} alt="" loading="lazy" decoding="async" className="-mx-5 mb-4 aspect-[16/9] w-[calc(100%+2.5rem)] max-w-none object-cover" />
                 <h3 id={`stage-${st.id}`} className="text-lg font-bold">
                   {tr(st.title, lang)}
                 </h3>
@@ -342,7 +395,7 @@ export default async function Home() {
           </h2>
         </div>
         {/* eslint-disable-next-line @next/next/no-img-element -- ilustración WebP ya optimizada */}
-        <img src="/ill/tramites-960.webp" srcSet="/ill/tramites-640.webp 640w, /ill/tramites-960.webp 960w" sizes="(min-width: 768px) 720px, 100vw" width={960} height={549} alt="" loading="lazy" className="mx-auto mt-8 w-full max-w-3xl rounded-2xl border border-border" />
+        <img src="/web/fotos/oficina-800.webp" width={800} height={1200} alt={tr(H.howAlt, lang)} loading="lazy" decoding="async" className="photo-card mx-auto mt-8 aspect-[16/8] w-full max-w-4xl object-cover object-[50%_72%]" />
         <ol className="mt-10 grid gap-6 md:grid-cols-3">
           {STEPS.map((s, i) => (
             <li key={s.es} className="card text-center">
@@ -404,6 +457,7 @@ export default async function Home() {
       </section>
 
       <AdSlot placement="home" lang={lang} />
+      <p className="-mt-14 text-center text-xs text-muted">{tr(H.photoCredit, lang)}</p>
     </div>
   );
 }

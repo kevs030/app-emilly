@@ -49,6 +49,8 @@ html {
 }
 
 body {
+  /* Las secciones a todo el ancho no deben crear desplazamiento lateral */
+  overflow-x: clip;
   background: var(--background);
   color: var(--foreground);
   -webkit-font-smoothing: antialiased;
@@ -365,7 +367,8 @@ body {
     transition: none !important;
     scroll-behavior: auto !important;
   }
-  .reveal {
+  .reveal,
+  .reveal.tilt {
     opacity: 1;
     transform: none;
   }
@@ -404,6 +407,52 @@ body {
     radial-gradient(60% 70% at 85% 35%, color-mix(in srgb, var(--ap-terracotta) 9%, transparent), transparent 70%),
     radial-gradient(40% 50% at 70% 90%, color-mix(in srgb, var(--ap-gold) 12%, transparent), transparent 70%),
     #fff;
+}
+/* Sección a todo el ancho de la ventana, aunque esté dentro del contenedor centrado */
+.full-bleed {
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
+}
+/* Portada con foto: sombra para que el texto blanco se lea siempre (contraste AA) */
+.landing-photo {
+  background: #1f1b18;
+  color: #fff;
+}
+.landing-photo-img {
+  z-index: 0;
+  transform: scale(1.04);
+  animation: hero-zoom 14s var(--ap-ease) both;
+}
+@keyframes hero-zoom {
+  from { transform: scale(1.12); }
+  to { transform: scale(1.04); }
+}
+.hero-shade {
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgb(20 16 13 / 0.86) 0%, rgb(20 16 13 / 0.62) 45%, rgb(20 16 13 / 0.25) 100%),
+    linear-gradient(0deg, rgb(20 16 13 / 0.55), transparent 40%);
+}
+@media (max-width: 767px) {
+  .hero-shade { background: linear-gradient(180deg, rgb(20 16 13 / 0.72) 0%, rgb(20 16 13 / 0.5) 45%, rgb(20 16 13 / 0.82) 100%); }
+}
+/* Banda oscura (vídeos) */
+.dark-band {
+  background: radial-gradient(70% 60% at 80% 0%, color-mix(in srgb, var(--ap-terracotta) 22%, transparent), transparent 70%), #1f1b18;
+}
+/* Fotos con esquinas redondeadas y sombra suave */
+.photo-card {
+  border-radius: 28px;
+  box-shadow: 0 30px 60px -25px rgb(48 43 39 / 0.45);
+}
+/* Aparecer inclinado en 3D al bajar (como una tarjeta que se levanta) */
+.reveal.tilt {
+  transform: perspective(1100px) rotateX(16deg) translateY(48px) scale(0.97);
+  transform-origin: 50% 100%;
+  transition-duration: 0.8s;
+}
+.reveal.tilt.in {
+  transform: none;
 }
 /* Banda gris clara a todo lo ancho, para alternar secciones */
 .band {
