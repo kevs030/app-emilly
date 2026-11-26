@@ -46,3 +46,11 @@ export function searchUrl(query: string, at: [number, number], p: Platform = map
 export function mapLink(url: string) {
   return url.startsWith("http") ? { href: url, target: "_blank", rel: "noopener noreferrer" } : { href: url };
 }
+
+/** Una dirección escrita (sin coordenadas), en la app de mapas del teléfono. */
+export function addressUrl(address: string, p: Platform = mapsPlatform()): string {
+  const q = enc(clean(address));
+  if (p === "android") return `geo:0,0?q=${q}`;
+  if (p === "ios") return `https://maps.apple.com/?q=${q}`;
+  return `https://www.google.com/maps/search/?api=1&query=${q}`;
+}

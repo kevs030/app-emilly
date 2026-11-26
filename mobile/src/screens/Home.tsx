@@ -19,6 +19,10 @@ import { StatsConsent } from "~/ui/StatsConsent";
 import { IntegrationGuide } from "~/ui/home/IntegrationGuide";
 import { CommunityCard } from "~/ui/home/CommunityCard";
 import { ConsulateCard, DailyQuote, WorkCard } from "~/ui/home/HomeCards";
+import { HeartHandshake } from "lucide-react";
+import { PS } from "~/content/modules/permitStatus";
+import { SP } from "~/content/modules/support";
+import { useT9 } from "~/ui/modules/ModuleBlocks";
 
 function ProgressBar({ percent, label }: { percent: number; label: string }) {
   return (
@@ -69,6 +73,7 @@ const SHORTCUTS: Shortcut[] = [
 ];
 
 export function Home() {
+  const { x: x9 } = useT9();
   const { t, c, lang } = useLang();
   const { user, profile, saveProfile } = useAuth();
   const { available, loading, procedures, reminders, facts, activity, progressOf, setInterest } = usePersonal();
@@ -114,6 +119,30 @@ export function Home() {
         <IosInstallHint />
         <DailyQuote />
         <StatsConsent />
+
+        {/* Muy visibles: el estado del permiso (lo que más angustia) y el apoyo emocional. */}
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Link to="/permit-status" className="card flex items-center gap-3 border-terracotta/40" data-testid="home-permit">
+            <span className="icon-tile shrink-0">
+              <IdCard size={22} aria-hidden />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block font-semibold">{x9(PS.title)}</span>
+              <span className="block text-[14px] text-ink-soft">{x9(PS.cardBody)}</span>
+            </span>
+            <ArrowRight size={20} className="shrink-0 text-terracotta rtl:rotate-180" aria-hidden />
+          </Link>
+          <Link to="/support" className="card flex items-center gap-3 !bg-sage-soft" data-testid="home-support">
+            <span className="icon-tile shrink-0" style={{ background: "var(--white)" }}>
+              <HeartHandshake size={22} aria-hidden />
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block font-semibold">{x9(SP.cardTitle)}</span>
+              <span className="block text-[14px] text-ink-soft">{x9(SP.cardBody)}</span>
+            </span>
+            <ArrowRight size={20} className="shrink-0 text-terracotta rtl:rotate-180" aria-hidden />
+          </Link>
+        </div>
 
         {/* Perfil gradual: solo pedimos el nombre, y solo si falta. */}
         {profile && !profile.display_name && (

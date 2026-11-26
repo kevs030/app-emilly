@@ -36,6 +36,8 @@ import { Search } from "~/screens/Search";
 import { Start } from "~/screens/Start";
 import { Tour } from "~/screens/Tour";
 import { Welcome } from "~/screens/Welcome";
+import { Support } from "~/screens/Support";
+import { PermitStatus } from "~/screens/PermitStatus";
 
 function useOnline() {
   const [online, setOnline] = useState(navigator.onLine);
@@ -182,6 +184,8 @@ export function App() {
               <Route path="/map" element={<OfficesMap />} />
               <Route path="/consulates" element={<Consulates />} />
               <Route path="/work" element={<Work />} />
+              <Route path="/support" element={<Support />} />
+              <Route path="/permit-status" element={<PermitStatus />} />
             </Route>
             <Route element={<Private />}>
               <Route path="/" element={<Home />} />

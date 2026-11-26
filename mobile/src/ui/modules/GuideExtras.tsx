@@ -4,6 +4,9 @@ import { AA48_FIELDS, CF, CF_LINKS, LEAFLET } from "~/content/modules/codiceFisc
 import { CITIES, REQUIREMENTS, T, TUPASSI, ZEROCODA } from "~/content/modules/tessera";
 import { VIDEO_FOR_GUIDE } from "~/content/modules/videos";
 import { CityDirectory, LinkWithSummary, OfficialFormCard, SectionVideo, SummaryCard, useT9 } from "./ModuleBlocks";
+import { ArrowRight, IdCard } from "lucide-react";
+import { Link } from "react-router-dom";
+import { PS } from "~/content/modules/permitStatus";
 
 /**
  * Bloques extra de los trámites con más dudas (Tessera sanitaria, Codice fiscale, Art. 31).
@@ -14,6 +17,18 @@ export function GuideExtras({ slug }: { slug: string }) {
   const video = VIDEO_FOR_GUIDE[slug];
   return (
     <>
+      {(slug === "permesso-di-soggiorno" || slug === "articolo-31" || slug === "permesso-ue-lungo-periodo") && (
+        <Link to="/permit-status" className="card flex items-center gap-3 border-terracotta/40" data-testid="guide-permit-status">
+          <span className="icon-tile shrink-0">
+            <IdCard size={22} aria-hidden />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block font-semibold">{x(PS.title)}</span>
+            <span className="block text-[14px] text-ink-soft">{x(PS.cardBody)}</span>
+          </span>
+          <ArrowRight size={20} className="shrink-0 text-terracotta rtl:rotate-180" aria-hidden />
+        </Link>
+      )}
       {slug === "sanidad-tessera-sanitaria" && (
         <>
           <section className="card" aria-labelledby="tessera-req">
