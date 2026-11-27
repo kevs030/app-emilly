@@ -2,10 +2,13 @@ import { existsSync } from "node:fs";
 import type { NextConfig } from "next";
 import { SUPABASE_URL } from "./src/lib/supabase/config";
 import { MIRROR_ORIGINS } from "./src/lib/overpass";
+import { ADSENSE_CSP, adsenseEnabled } from "./src/lib/adsense";
 
 const supabase = SUPABASE_URL;
 const supabaseWs = supabase.replace(/^https:/, "wss:");
 const isDev = process.env.NODE_ENV !== "production";
+// Google AdSense solo amplía la lista de orígenes si está configurado en Vercel.
+const ads = adsenseEnabled ? ADSENSE_CSP : null;
 
 /**
  * Content Security Policy: el navegador solo carga recursos de los orígenes de esta lista.
@@ -13,12 +16,12 @@ const isDev = process.env.NODE_ENV !== "production";
  */
 const csp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com${isDev ? " 'unsafe-eval'" : ""}`,
+  `script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com${ads ? ` ${ads.script}` : ""}${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://tile.openstreetmap.org https://i.ytimg.com",
+  `img-src 'self' data: blob: https://tile.openstreetmap.org https://i.ytimg.com${ads ? ` ${ads.img}` : ""}`,
   "font-src 'self'",
-  `connect-src 'self' ${supabase} ${supabaseWs} https://nominatim.openstreetmap.org ${MIRROR_ORIGINS.join(" ")}`.trim(),
-  "frame-src https://www.youtube-nocookie.com https://challenges.cloudflare.com",
+  `connect-src 'self' ${supabase} ${supabaseWs} https://nominatim.openstreetmap.org ${MIRROR_ORIGINS.join(" ")}${ads ? ` ${ads.connect}` : ""}`.trim(),
+  `frame-src https://www.youtube-nocookie.com https://challenges.cloudflare.com${ads ? ` ${ads.frame}` : ""}`,
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",

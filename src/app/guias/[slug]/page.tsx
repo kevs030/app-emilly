@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Bell, CheckSquare, Download, FileDown } from "lucide-react";
 import { stageOf } from "@/content/journey";
 import { AppGate } from "@/components/AppGate";
+import { AdSense } from "@/components/AdSense";
 import { Lock } from "lucide-react";
 import { GUIDE_ART, PageArt } from "@/components/PageArt";
 import Link from "next/link";
@@ -170,6 +171,8 @@ export default async function GuidePage(props: PageProps<"/guias/[slug]">) {
         <Verified date={guide.lastVerified} lang={lang} />
       </section>
       <p className="text-xs text-muted">{t("disclaimer", lang)}</p>
+      {/* Anuncio solo al final, después del contenido útil y de las fuentes. */}
+      <AdSense lang={lang} />
     </article>
   );
 }

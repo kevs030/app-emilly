@@ -12,6 +12,7 @@ import { AddReminder, ReminderRow } from "~/ui/Reminders";
 import { GuidePhoto } from "~/ui/GuidePhoto";
 import { GuideExtras } from "~/ui/modules/GuideExtras";
 import { SponsorBanner } from "~/ui/SponsorBanner";
+import { AdSenseSlot } from "~/ui/AdSenseSlot";
 
 /** Casilla grande para marcar un paso o documento como hecho. */
 function Tick({ on, label, onClick }: { on: boolean; label: string; onClick: () => void }) {
@@ -53,6 +54,7 @@ export function Guides() {
       <div className="mt-5">
         <SponsorBanner placement="guias" />
       </div>
+      <AdSenseSlot />
     </Screen>
   );
 }
@@ -285,6 +287,7 @@ export function GuideDetail() {
           </section>
         )}
         <p className="hint">{t("disclaimer")}</p>
+        <AdSenseSlot />
       </article>
     </Screen>
   );

@@ -7,6 +7,7 @@ import { getGuide, guides } from "@/content/guides";
 import { STAGES } from "@/content/journey";
 import type { Guide, Lang } from "@/content/types";
 import { AdSlot } from "@/components/AdSlot";
+import { AdSense } from "@/components/AdSense";
 
 const L = {
   results: { es: "Resultados para", en: "Results for", it: "Risultati per" },
@@ -83,6 +84,7 @@ export default async function GuidesPage({ searchParams }: { searchParams: Promi
       )}
       <div className="mt-6">
         <AdSlot placement="guias" lang={lang} />
+        <AdSense lang={lang} />
       </div>
     </div>
   );

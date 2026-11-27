@@ -9,6 +9,7 @@ import { GuideThumb } from "@/components/PageArt";
 import { Reveal } from "@/components/Reveal";
 import { centers } from "@/content/centers";
 import { AdSlot } from "@/components/AdSlot";
+import { AdSense } from "@/components/AdSense";
 import type { L10n, Lang } from "@/content/types";
 
 /*
@@ -457,6 +458,7 @@ export default async function Home() {
       </section>
 
       <AdSlot placement="home" lang={lang} />
+      <AdSense lang={lang} />
       <p className="-mt-14 text-center text-xs text-muted">{tr(H.photoCredit, lang)}</p>
     </div>
   );
