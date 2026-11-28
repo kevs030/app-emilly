@@ -21,6 +21,8 @@ export const HELP = {
   file: "privacidad",
   simulator: "ayudas",
   profile: "privacidad",
+  jobs: "laptop",
+  consulates: "mapa",
 } as const satisfies Record<string, IllustrationName>;
 export type HelpId = keyof typeof HELP;
 

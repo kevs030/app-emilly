@@ -43,7 +43,7 @@ export function Consulates() {
   const results = sel.country && sel.country !== "other" ? findConsulates(sel.country, sel.city) : [];
 
   return (
-    <Screen title={x(CS.title)} back>
+    <Screen title={x(CS.title)} back help="consulates">
       <div className="rise space-y-5">
         <p className="text-[15px] text-ink-soft">{x(CS.sub)}</p>
         <section className="card grid gap-3">

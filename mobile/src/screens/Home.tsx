@@ -1,5 +1,5 @@
-import { ArrowRight, Bell, BellRing, Calculator, CalendarDays, FolderLock, IdCard, ScanText, CircleCheckBig, Clock, HandCoins, ListChecks, MapPin, Scale, Search, Sparkles, Sprout } from "lucide-react";
-import { useState } from "react";
+import { BriefcaseBusiness, Landmark, ArrowRight, Bell, BellRing, Calculator, CalendarDays, FolderLock, IdCard, ScanText, CircleCheckBig, Clock, HandCoins, MapPin, Scale, Search, Sparkles, Sprout } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { getGuide, guides } from "@/content/guides";
 import { useAuth } from "~/auth/AuthProvider";
@@ -23,6 +23,9 @@ import { HeartHandshake } from "lucide-react";
 import { PS } from "~/content/modules/permitStatus";
 import { SP } from "~/content/modules/support";
 import { useT9 } from "~/ui/modules/ModuleBlocks";
+import { JB } from "~/content/modules/jobs";
+import { chosenCity, matchCity } from "~/lib/jobs";
+import { countToday } from "~/lib/jobsApi";
 
 function ProgressBar({ percent, label }: { percent: number; label: string }) {
   return (
@@ -56,17 +59,45 @@ function ProcedureCard({ p }: { p: Procedure }) {
 
 type Shortcut = { icon: typeof Search; label: StringKey; to: string };
 
+/** «12 nuevas ofertas hoy en Milano»: solo si hay ciudad y ofertas de hoy. */
+function JobsTodayCard({ profileCity }: { profileCity?: string | null }) {
+  const { x: x9 } = useT9();
+  const city = chosenCity() ?? matchCity(profileCity);
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    if (!city) return;
+    let alive = true;
+    void countToday(city).then((c) => alive && setN(c));
+    return () => {
+      alive = false;
+    };
+  }, [city]);
+  if (!city || n <= 0) return null;
+  return (
+    <Link to="/jobs" className="card flex items-center gap-3" data-testid="home-jobs">
+      <span className="icon-tile shrink-0">
+        <BriefcaseBusiness size={22} aria-hidden />
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block font-semibold">{x9(JB.homeCard).replace("{n}", String(n)).replace("{city}", city)}</span>
+        <span className="block text-[14px] text-ink-soft">{x9(JB.homeCardSub)}</span>
+      </span>
+      <ArrowRight size={20} className="shrink-0 text-terracotta rtl:rotate-180" aria-hidden />
+    </Link>
+  );
+}
+
 /** Accesos del inicio. Cada uno abre una pantalla que existe y funciona. */
 const SHORTCUTS: Shortcut[] = [
-  { to: "/guides", icon: ListChecks, label: "tabGuides" },
   { to: "/benefits", icon: HandCoins, label: "benefits" },
   { to: "/map", icon: MapPin, label: "offices" },
   { to: "/appointments", icon: CalendarDays, label: "appointments" },
   { to: "/documents", icon: FolderLock, label: "myDocuments" },
   { to: "/scan", icon: ScanText, label: "translator" },
-  { to: "/notifications", icon: BellRing, label: "notifications" },
   { to: "/file", icon: IdCard, label: "myFile" },
   { to: "/simulator", icon: Calculator, label: "simulator" },
+  { to: "/jobs", icon: BriefcaseBusiness, label: "jobs" },
+  { to: "/consulates", icon: Landmark, label: "myConsulate" },
 ];
 
 export function Home() {
@@ -140,6 +171,8 @@ export function Home() {
             <ArrowRight size={20} className="shrink-0 text-terracotta rtl:rotate-180" aria-hidden />
           </Link>
         </div>
+
+        <JobsTodayCard profileCity={profile?.city} />
 
         {/* Perfil gradual: solo pedimos el nombre, y solo si falta. */}
         {profile && !profile.display_name && (

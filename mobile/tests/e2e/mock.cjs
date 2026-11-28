@@ -30,7 +30,7 @@ async function makeApp(br, errs, opts) {
         return json(200, null); }
       if (u.pathname === '/rest/v1/ai_wallets') return json(200, { credits: 3 });
       const table = u.pathname.replace('/rest/v1/', '');
-      if (['documents', 'forum_posts', 'ai_conversations', 'sponsors'].includes(table) && m === 'GET') return json(200, []);
+      if (['documents', 'forum_posts', 'ai_conversations', 'sponsors', 'job_offers'].includes(table) && (m === 'GET' || m === 'HEAD')) return json(200, []);
       if (!(table in db)) return json(404, {});
       if (missing) return json(404, { code: 'PGRST205', message: 'Could not find the table' });
       if (m === 'GET') return json(200, db[table].filter(x => match(x, u)));
