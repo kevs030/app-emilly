@@ -1,0 +1,25 @@
+{
+  "id": "",
+  "title": "",
+  "program": "",
+  "created": "",
+  "status": "candidato",
+  "vuln_class": "p. ej. IDOR / BOLA",
+  "asset": "p. ej. https://api.ejemplo.com/v1/orders/{id}",
+  "policy_reference": "URL de la política y sección que autoriza este activo",
+  "summary": "",
+  "steps_to_reproduce": [],
+  "evidence": [],
+  "impact_demonstrated": "",
+  "cvss_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:N",
+  "possible_false_positives": [],
+  "remediation": "",
+  "fix_verification": [],
+  "references": [],
+  "validation": {
+    "own_accounts_only": false,
+    "accounts_used": "describe SIN contraseñas: p. ej. 'cuenta A y cuenta B, ambas mías'",
+    "requests_sent_approx": 0,
+    "approved_by_human_on": null
+  }
+}

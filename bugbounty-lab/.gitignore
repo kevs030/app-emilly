@@ -1,0 +1,12 @@
+# Nunca subir evidencia cruda, tráfico capturado ni credenciales.
+findings/**/evidence/
+*.har
+*.burp
+*.session
+*.env
+.env*
+*cookies*
+*credentials*
+__pycache__/
+# La lista de programas se descarga con: python3 modules/program_finder.py update
+data/public-programs.json
