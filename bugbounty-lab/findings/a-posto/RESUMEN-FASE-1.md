@@ -1,4 +1,4 @@
-# A Posto — Fase 1: análisis estático (2026-11-28)
+# A Posto — Auditoría: Fase 1 (análisis estático) y Fase 2 A+B (2026-11-28)
 
 **Alcance:** solo el código del repositorio `kevs030/app-emilly` (web Next.js, rutas de API, migraciones de Supabase y app móvil).
 **Pruebas activas:** ninguna. No se envió ninguna petición a producción.
@@ -10,8 +10,8 @@
 
 | # | Hallazgo | Tipo | Severidad estimada | Estado |
 |---|---|---|---|---|
-| 1 | [Reembolso de créditos al cancelar la petición → preguntas gratis y agotamiento del tope diario global](20261128-01-reembolso-por-cancelacion/report.md) | Lógica de negocio / consumo de recursos | Media (4.3) | candidato |
-| 2 | [Condición de carrera en premios por anuncio → más de 3 al día](20261128-02-carrera-premios-anuncios/report.md) | Lógica de negocio / race condition | Baja (3.1) | candidato |
+| 1 | [Reembolso de créditos al cancelar la petición → preguntas gratis y agotamiento del tope diario global](20261128-01-reembolso-por-cancelacion/report.md) | Lógica de negocio / consumo de recursos | Media (4.3) | ✅ **confirmado en local** (falta comprobarlo en Vercel) |
+| 2 | [Condición de carrera en premios por anuncio → más de 3 al día](20261128-02-carrera-premios-anuncios/report.md) | Lógica de negocio / race condition | Baja (3.1) | ✅ **confirmado en local** |
 | 3 | [Cifrado local parcial de «Mis documentos» en el móvil](20261128-03-cifrado-local-parcial/report.md) | Móvil / almacenamiento inseguro | Media (4.1), riesgo real bajo | candidato |
 
 ## Observaciones menores (endurecimiento, sin informe propio)
@@ -33,7 +33,34 @@
 - Móvil: `allowBackup="false"`, sesión en SecureStorage (Keystore/Keychain) y CORS restringido a los orígenes de la app.
 - `/api/health` no da pistas de configuración salvo a un admin.
 
-## Propuesta para la Fase 2 (requiere tu aprobación, prueba por prueba)
+## Fase 2-A — Asesor de seguridad de Supabase (solo lectura, producción)
+
+Hecho con consultas de solo lectura (`begin read only … rollback`) sobre la estructura, sin leer datos de usuarios.
+
+- ✅ Las 20 tablas de producción tienen RLS. Las políticas y permisos clave coinciden con el repositorio: nadie puede ejecutar `grant_ai_credits` ni `rate_hit`, y nadie puede cambiar `profiles.role`.
+- ⚠️ **Permisos sobrantes TRUNCATE, TRIGGER y REFERENCES para `anon` y `authenticated`** en `profiles`, `forum_posts`, `forum_comments`, `forum_reports` y `job_offers`. TRUNCATE vacía la tabla y **se salta RLS**. No se puede usar a través de la API de Supabase (PostgREST no ofrece TRUNCATE), así que no es explotable hoy, pero es un permiso peligroso que sobra. Corrección:
+  ```sql
+  revoke truncate, trigger, references on public.profiles, public.forum_posts, public.forum_comments,
+    public.forum_reports, public.job_offers from anon, authenticated;
+  ```
+- ⚠️ **Protección contra contraseñas filtradas desactivada** (Auth). Actívala en Supabase → Authentication → Settings, si tu plan lo permite: https://supabase.com/docs/guides/auth/password-security
+- ℹ️ Los avisos sobre funciones `SECURITY DEFINER` ejecutables (`is_admin`, `spend_ai_credit`, `admin_stats`…) son **intencionados**: todas comprueban dentro quién llama. Y las 3 tablas «RLS sin políticas» (`rate_limits`, `screen_views`, `sponsor_clicks`) también: solo las usa el servidor.
+- ⚠️ **Producción y repositorio no coinciden:** en producción están la tabla `job_offers` y las migraciones `0010_ofertas_empleo` y `cerrar_rls_auto_enable`, que no están en ninguna rama de GitHub. Conviene guardarlas en `supabase/migrations/`.
+
+## Fase 2-B — Reproducción en local
+
+Con el **servidor real de la web** (`next dev`) conectado a simuladores locales de Supabase y Anthropic (`labs/a-posto-harness/`). Sin producción, sin claves reales y sin coste. Detalles y evidencia en cada informe.
+
+- **Hallazgo 1:** una cuenta con **1 crédito** lanzó 5 peticiones a la IA sin gastar nada y agotó el tope diario global → la siguiente pregunta de cualquier usuario recibe **HTTP 503**.
+- **Hallazgo 2:** en orden, el límite funciona (3 premios); con 6 cobros en paralelo se concedieron **6 de 6**, dos veces seguidas.
+- Se descartó un **falso negativo**: tras reiniciar el servidor, la primera petición se cortaba mientras se compilaba la ruta.
+
+## Siguiente paso propuesto (requiere tu aprobación)
+
+1. **Corregir** los hallazgos 1 y 2 y los permisos TRUNCATE, y volver a pasar el banco de pruebas para verificar las correcciones.
+2. Comprobar el hallazgo 1 en un despliegue **de vista previa** de Vercel (no producción), para saber si allí también ocurre.
+
+## Propuesta original de la Fase 2
 
 1. **Asesor de seguridad de Supabase (solo lectura):** consultar los avisos de seguridad del proyecto `emuyxcrtkfqizavslwfj` para confirmar que producción coincide con el repositorio. No modifica nada.
 2. **Reproducir los hallazgos 1 y 2 en LOCAL** (`npm run dev`), contra una **rama de Supabase** y con dos cuentas de prueba propias. Nada en producción.

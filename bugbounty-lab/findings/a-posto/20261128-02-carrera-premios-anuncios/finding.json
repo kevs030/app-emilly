@@ -3,22 +3,28 @@
   "title": "Condición de carrera en el cobro de premios por anuncio: se puede superar el límite de 3 al día",
   "program": "a-posto",
   "created": "2026-11-28",
-  "status": "candidato",
+  "status": "confirmado",
   "vuln_class": "Business Logic / Race condition (TOCTOU)",
   "asset": "POST /api/ads {action:'claim'} (src/app/api/ads/route.ts, src/lib/ads-server.ts)",
   "policy_reference": "App propia — programs/a-posto/scope.json (análisis estático del repositorio)",
   "summary": "La ruta comprueba `rewardsLeft()` (cuenta filas 'ad_reward' de 24 h) y DESPUÉS llama a grantReward(). Las dos operaciones no son atómicas. Cada justificante tiene un nonce distinto, así que el índice único (reason, ref) no impide cobrar varios justificantes distintos a la vez. Si se piden N justificantes con 'start' (permitido mientras left>0) y se cobran todos en paralelo pasados 15 s, todas las peticiones pueden ver left>0 antes de que se inserte ninguna, y se superaría el límite DAILY_LIMIT=3 (hasta ~20 por minuto según el límite de peticiones).",
   "steps_to_reproduce": [
-    "(Fase 2, SOLO en local con una cuenta de prueba propia.)",
-    "Con la cuenta A (0 premios hoy), llamar 6 veces a {action:'start'} y guardar los 6 justificantes.",
-    "Esperar 16 s y enviar los 6 {action:'claim'} a la vez (p. ej. 6 curl en paralelo con `&`).",
-    "Contar en ai_credit_ledger las filas 'ad_reward' de la cuenta A: si hay más de 3, el fallo está confirmado."
+    "Arrancar el banco de pruebas: bugbounty-lab/labs/a-posto-harness (Next.js real en local + simuladores de Supabase y Anthropic; sin producción, sin claves reales) → `labs/a-posto-harness/start.sh`.",
+    "Reiniciar la cuenta A a 0 premios: `curl -X POST 'http://127.0.0.1:54321/__reset?credits=0'`.",
+    "Pedir 6 justificantes: 6 × `POST /api/ads {\"action\":\"start\"}`.",
+    "Esperar 16 s (REWARD_SECONDS=15).",
+    "Cobrar los 6 a la vez: 6 × `POST /api/ads {\"action\":\"claim\",\"token\":…}` lanzados en paralelo.",
+    "Ver el estado: filas 'ad_reward' en /__state."
   ],
-  "evidence": [],
-  "impact_demonstrated": "",
+  "evidence": [
+    "Control secuencial: 3 cobros OK y 3 × daily_limit → 3 premios (el límite funciona en orden).",
+    "Paralelo, intento 1: 6 premios concedidos (límite 3), saldo 6.",
+    "Paralelo, intento 2: 6 premios concedidos (límite 3), saldo 6."
+  ],
+  "impact_demonstrated": "En local, la cuenta A obtuvo 6 créditos de IA por anuncio en un día con un límite de 3. El tope real lo marca el limitador (20 peticiones/minuto por cuenta en /api/ads): unos 10 premios por ráfaga en lugar de 3. Cada premio es una pregunta a la IA pagada por el propietario.",
   "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:L/A:N",
   "possible_false_positives": [
-    "Que la latencia real serialice las peticiones y no se produzca la carrera (probar varias veces antes de descartarlo)."
+    "El simulador de Supabase añade 80 ms por consulta; en producción la latencia es parecida (Vercel ↔ Supabase), pero la ventana de carrera puede variar. El defecto (comprobar y luego insertar sin transacción) existe igualmente en el código."
   ],
   "remediation": "Hacer la comprobación y la inserción en la misma transacción dentro de la base de datos: una función `claim_ad_reward(p_user, p_ref)` que bloquee la fila del monedero (`select … for update` en ai_wallets) o use `pg_advisory_xact_lock(hashtext(p_user::text))`, cuente los premios de 24 h y solo entonces inserte.",
   "fix_verification": [
@@ -30,8 +36,8 @@
   ],
   "validation": {
     "own_accounts_only": true,
-    "accounts_used": "Ninguna todavía (solo lectura de código)",
-    "requests_sent_approx": 0,
-    "approved_by_human_on": "2026-11-28 (Fase 1, análisis estático)"
+    "accounts_used": "Cuenta de prueba simulada (no existe en producción)",
+    "requests_sent_approx": 36,
+    "approved_by_human_on": "2026-11-28 (Fase 2-B)"
   }
 }

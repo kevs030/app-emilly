@@ -1,11 +1,9 @@
-> ⚠️ **Estado: CANDIDATO** — NO es una vulnerabilidad confirmada. No enviar hasta validarla.
-
 # Condición de carrera en el cobro de premios por anuncio: se puede superar el límite de 3 al día
 
 | Campo | Valor |
 |---|---|
 | ID interno | `20261128-02-carrera-premios-anuncios` |
-| Estado | candidato |
+| Estado | confirmado |
 | Programa | a-posto |
 | Política aplicable | App propia — programs/a-posto/scope.json (análisis estático del repositorio) |
 | Activo afectado | POST /api/ads {action:'claim'} (src/app/api/ads/route.ts, src/lib/ads-server.ts) |
@@ -18,22 +16,26 @@ La ruta comprueba `rewardsLeft()` (cuenta filas 'ad_reward' de 24 h) y DESPUÉS 
 
 ## Pasos de reproducción
 
-1. (Fase 2, SOLO en local con una cuenta de prueba propia.)
-2. Con la cuenta A (0 premios hoy), llamar 6 veces a {action:'start'} y guardar los 6 justificantes.
-3. Esperar 16 s y enviar los 6 {action:'claim'} a la vez (p. ej. 6 curl en paralelo con `&`).
-4. Contar en ai_credit_ledger las filas 'ad_reward' de la cuenta A: si hay más de 3, el fallo está confirmado.
+1. Arrancar el banco de pruebas: bugbounty-lab/labs/a-posto-harness (Next.js real en local + simuladores de Supabase y Anthropic; sin producción, sin claves reales) → `labs/a-posto-harness/start.sh`.
+2. Reiniciar la cuenta A a 0 premios: `curl -X POST 'http://127.0.0.1:54321/__reset?credits=0'`.
+3. Pedir 6 justificantes: 6 × `POST /api/ads {"action":"start"}`.
+4. Esperar 16 s (REWARD_SECONDS=15).
+5. Cobrar los 6 a la vez: 6 × `POST /api/ads {"action":"claim","token":…}` lanzados en paralelo.
+6. Ver el estado: filas 'ad_reward' en /__state.
 
 ## Evidencia
 
-_(pendiente)_
+- Control secuencial: 3 cobros OK y 3 × daily_limit → 3 premios (el límite funciona en orden).
+- Paralelo, intento 1: 6 premios concedidos (límite 3), saldo 6.
+- Paralelo, intento 2: 6 premios concedidos (límite 3), saldo 6.
 
 ## Impacto demostrado
 
-_(pendiente: describe solo lo demostrado)_
+En local, la cuenta A obtuvo 6 créditos de IA por anuncio en un día con un límite de 3. El tope real lo marca el limitador (20 peticiones/minuto por cuenta en /api/ads): unos 10 premios por ráfaga en lugar de 3. Cada premio es una pregunta a la IA pagada por el propietario.
 
 ## Posibles falsos positivos (revisados)
 
-- Que la latencia real serialice las peticiones y no se produzca la carrera (probar varias veces antes de descartarlo).
+- El simulador de Supabase añade 80 ms por consulta; en producción la latencia es parecida (Vercel ↔ Supabase), pero la ventana de carrera puede variar. El defecto (comprobar y luego insertar sin transacción) existe igualmente en el código.
 
 ## Solución recomendada
 
