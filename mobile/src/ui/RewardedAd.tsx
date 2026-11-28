@@ -2,6 +2,7 @@ import { CircleCheckBig, Clapperboard, ExternalLink, X } from "lucide-react";
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { adStatus, claimAd, openSponsor, startAd, type AdStart, type AdStatus } from "~/lib/ads";
 import { useLang } from "~/lib/lang";
+import { useHideAds } from "~/lib/adminNoAds";
 import { Alert } from "./kit";
 
 type Phase = { kind: "idle" } | { kind: "loading" } | { kind: "watching"; ad: AdStart; left: number } | { kind: "claiming" } | { kind: "done" } | { kind: "error"; message: string };
@@ -18,6 +19,7 @@ export function RewardedAd({ onCredits, variant = "button", fallback = null }: {
   // El saldo nuevo se entrega al cerrar el aviso de «gracias», para no desmontar la pantalla antes de tiempo.
   const [earned, setEarned] = useState<number | null | undefined>(undefined);
 
+  const hide = useHideAds();
   const refresh = useCallback(() => void adStatus().then(setStatus), []);
   useEffect(refresh, [refresh]);
 
@@ -52,7 +54,7 @@ export function RewardedAd({ onCredits, variant = "button", fallback = null }: {
     refresh();
   }
 
-  if (!status && phase.kind === "idle") return <>{fallback}</>;
+  if (hide || (!status && phase.kind === "idle")) return <>{fallback}</>;
 
   const trigger =
     variant === "row" ? (

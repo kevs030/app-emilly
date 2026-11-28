@@ -2,6 +2,7 @@ import { ExternalLink } from "lucide-react";
 import { useEffect, useState } from "react";
 import { loadSponsors, openSponsor, type Placement, type Sponsor } from "~/lib/ads";
 import { useLang } from "~/lib/lang";
+import { useHideAds } from "~/lib/adminNoAds";
 
 /**
  * Anuncio propio, siempre etiquetado como «Publicidad». Sin rastreadores.
@@ -10,6 +11,7 @@ import { useLang } from "~/lib/lang";
 export function SponsorBanner({ placement }: { placement: Placement }) {
   const { t } = useLang();
   const [ad, setAd] = useState<Sponsor | null>(null);
+  const hide = useHideAds();
 
   useEffect(() => {
     let alive = true;
@@ -21,7 +23,7 @@ export function SponsorBanner({ placement }: { placement: Placement }) {
     };
   }, [placement]);
 
-  if (!ad) return null;
+  if (!ad || hide) return null;
   return (
     <aside className="rounded-3xl border border-dashed border-beige bg-white p-4" aria-label={t("adLabel")}>
       <p className="text-[11px] font-semibold uppercase tracking-wider text-ink-soft">{t("adLabel")}</p>

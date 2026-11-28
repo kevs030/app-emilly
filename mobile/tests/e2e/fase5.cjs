@@ -71,6 +71,23 @@ const cors = { "access-control-allow-origin": "*", "access-control-allow-headers
   await p.goto(ORIGIN + PREFIX + "/"); await p.waitForSelector("text=Hola, Ana"); await p.waitForTimeout(300);
   check("sin anuncios activos no aparece ningún hueco", (await p.locator('aside[aria-label="Publicidad"]').count()) === 0);
 
+  // Cuenta de administrador: no ve anuncios (ni banner ni «ver un anuncio»), para no hacer clics propios
+  {
+    sponsors.push({ id: 3, title: "Clases de italiano B1", body: "Prepárate para el examen B1.", cta: "Ver cursos" });
+    server.left = 3; server.credits = 0;
+    const adm = await makeApp(br, errs);
+    await adm.p.route(`${SUPA}/rest/v1/sponsors*`, (r) => r.fulfill({ status: 200, headers: { ...cors, "content-type": "application/json" }, body: JSON.stringify(sponsors) }));
+    await adm.p.route(`${SUPA}/rest/v1/rpc/is_admin`, (r) => r.fulfill({ status: 200, headers: { ...cors, "content-type": "application/json" }, body: "true" }));
+    await adm.p.route(`${SUPA}/rest/v1/ai_wallets*`, (r) => r.fulfill({ status: 200, headers: { ...cors, "content-type": "application/json" }, body: JSON.stringify({ credits: 0 }) }));
+    await adm.p.route("**/api/ads", (r) => r.request().method() === "OPTIONS" ? r.fulfill({ status: 204, headers: cors }) : r.fulfill({ status: 200, headers: { ...cors, "content-type": "application/json" }, body: JSON.stringify({ available: true, left: 3, limit: 3, seconds: 15 }) }));
+    await adm.login(); await adm.p.waitForTimeout(800);
+    check("administrador: no ve el anuncio del inicio", (await adm.p.locator('aside[aria-label="Publicidad"]').count()) === 0);
+    await adm.p.goto(ORIGIN + PREFIX + "/assistant"); await adm.p.waitForSelector("text=Has usado tus preguntas"); await adm.p.waitForTimeout(500);
+    check("administrador: no aparece «Ver un anuncio y ganar 1 pregunta»", (await adm.p.locator('button:has-text("Ver un anuncio y ganar 1 pregunta")').count()) === 0);
+    await adm.p.goto(ORIGIN + PREFIX + "/guides"); await adm.p.waitForTimeout(800);
+    check("administrador: no ve anuncios en las guías", (await adm.p.locator('aside[aria-label="Publicidad"]').count()) === 0);
+  }
+
   check("sin errores de JavaScript", errs.length === 0, errs.join(" | "));
   console.log(res.join("\n"));
   await br.close();

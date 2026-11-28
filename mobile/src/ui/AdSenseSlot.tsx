@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useLang } from "~/lib/lang";
 import { isNative } from "~/lib/supabase";
+import { useHideAds } from "~/lib/adminNoAds";
 
 /**
  * Anuncio de Google AdSense dentro de la app, SOLO cuando se abre desde el navegador en apostoapp.app
@@ -35,7 +36,8 @@ export function adSenseAllowed(native = isNative, host = typeof location === "un
 export function AdSenseSlot() {
   const { t } = useLang();
   const pushed = useRef(false);
-  const allowed = adSenseAllowed();
+  const hide = useHideAds();
+  const allowed = adSenseAllowed() && !hide;
   useEffect(() => {
     if (!allowed || pushed.current) return;
     pushed.current = true;
