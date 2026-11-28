@@ -29,7 +29,7 @@ const PDF = Buffer.from("%PDF-1.4\n1 0 obj << /Type /Catalog /Pages 2 0 R >> end
   const quote = await p.locator('[data-testid="daily-quote"]').innerText();
   check("inicio: frase del día visible", quote.includes("Frase del día") && quote.length > 30);
   check("inicio: acceso a Trabajo y beneficios (Nuevo)", (await p.locator('[data-testid="work-card"]').innerText()).includes("Nuevo"));
-  check("inicio: siguen los 12 accesos", (await p.locator('nav[aria-label="Accesos"] li').count()) === 12);
+  check("inicio: siguen los 9 accesos", (await p.locator('nav[aria-label="Accesos"] li').count()) === 9);
   const ig = p.locator('[data-testid="integration-guide"]');
   check("guía: 5 puntos y progreso 0 de 5", (await ig.locator("li > button[aria-expanded]").count()) === 5 && (await p.locator('[data-testid="ig-count"]').innerText()).startsWith("0 de 5"));
   await ig.locator("button", { hasText: "Declaración de hospitalidad" }).click();

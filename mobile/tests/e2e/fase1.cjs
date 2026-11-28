@@ -16,7 +16,7 @@ const PREFIX = process.env.APP_PREFIX || ""; // "/app" cuando se prueba la app s
 
   // Accesos del inicio: todos llevan a un destino real
   const links = await p.locator('nav[aria-label="Accesos"] a').evaluateAll((a) => a.map((x) => [x.textContent.trim(), x.getAttribute("href"), x.target]));
-  check("el inicio muestra 12 accesos", links.length === 12, JSON.stringify(links.map((l) => l[0])));
+  check("el inicio muestra 9 accesos (sin repetir la barra de abajo)", links.length === 9, JSON.stringify(links.map((l) => l[0])));
   for (const [label, href, target] of links) {
     if (target === "_blank") { check(`acceso «${label}» abre la web`, /^https:\/\/app-emilly\.vercel\.app\/(mapa|foro)$/.test(href), href); continue; }
     await p.click(`nav[aria-label="Accesos"] a[href="${href}"]`);

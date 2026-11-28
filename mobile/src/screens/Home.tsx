@@ -1,4 +1,4 @@
-import { ArrowRight, Bell, BellRing, Calculator, CalendarDays, FolderLock, IdCard, ScanText, CircleCheckBig, Clock, HandCoins, ListChecks, MapPin, MessageCircle, Scale, Search, Sparkles, Sprout, UserRound, Users } from "lucide-react";
+import { ArrowRight, Bell, BellRing, Calculator, CalendarDays, FolderLock, IdCard, ScanText, CircleCheckBig, Clock, HandCoins, ListChecks, MapPin, Scale, Search, Sparkles, Sprout } from "lucide-react";
 import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { getGuide, guides } from "@/content/guides";
@@ -60,16 +60,13 @@ type Shortcut = { icon: typeof Search; label: StringKey; to: string };
 const SHORTCUTS: Shortcut[] = [
   { to: "/guides", icon: ListChecks, label: "tabGuides" },
   { to: "/benefits", icon: HandCoins, label: "benefits" },
-  { to: "/assistant", icon: MessageCircle, label: "tabAssistant" },
   { to: "/map", icon: MapPin, label: "offices" },
   { to: "/appointments", icon: CalendarDays, label: "appointments" },
   { to: "/documents", icon: FolderLock, label: "myDocuments" },
   { to: "/scan", icon: ScanText, label: "translator" },
-  { to: "/community", icon: Users, label: "community" },
   { to: "/notifications", icon: BellRing, label: "notifications" },
   { to: "/file", icon: IdCard, label: "myFile" },
   { to: "/simulator", icon: Calculator, label: "simulator" },
-  { to: "/profile", icon: UserRound, label: "tabProfile" },
 ];
 
 export function Home() {
