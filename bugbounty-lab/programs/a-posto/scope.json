@@ -1,0 +1,68 @@
+{
+  "program": "a-posto",
+  "platform": "propio",
+  "policy_url": "Propiedad del usuario (confirmado en el chat el 2026-11-28)",
+  "verified_by_human": true,
+  "verified_on": "2026-11-28",
+  "in_scope": [
+    {
+      "asset": "repo:kevs030/app-emilly",
+      "type": "código fuente",
+      "notes": "Análisis estático permitido."
+    },
+    {
+      "asset": "localhost",
+      "type": "web local",
+      "notes": "Pruebas dinámicas permitidas en local."
+    },
+    {
+      "asset": "app-emilly.vercel.app",
+      "type": "web producción",
+      "notes": "PRODUCCIÓN: solo pruebas no destructivas, con aprobación previa, y con cuentas propias."
+    },
+    {
+      "asset": "apostoapp.app",
+      "type": "web producción",
+      "notes": "PRODUCCIÓN: igual que arriba."
+    },
+    {
+      "asset": "www.apostoapp.app",
+      "type": "web producción",
+      "notes": "PRODUCCIÓN: igual que arriba."
+    },
+    {
+      "asset": "emuyxcrtkfqizavslwfj.supabase.co",
+      "type": "API/base de datos producción",
+      "notes": "PRODUCCIÓN: preferir una rama de Supabase para pruebas."
+    }
+  ],
+  "out_of_scope": [
+    {
+      "asset": "*.anthropic.com",
+      "notes": "Proveedor de IA (tercero)"
+    },
+    {
+      "asset": "*.openstreetmap.org",
+      "notes": "Tercero"
+    },
+    {
+      "asset": "overpass-api.de",
+      "notes": "Tercero"
+    }
+  ],
+  "rules": {
+    "max_requests_per_second": 1,
+    "automated_scanning_allowed": false,
+    "prohibited": [
+      "tocar datos de usuarios reales",
+      "pruebas de carga o DoS",
+      "modificar producción sin aprobación"
+    ],
+    "test_accounts_policy": "Dos cuentas de prueba propias (A y B).",
+    "notes": "Propietario: el usuario. Cada prueba activa se aprueba antes, una a una."
+  },
+  "rewards": {
+    "verificado": true,
+    "detalle": "Sin recompensa: es la app propia (práctica)."
+  }
+}

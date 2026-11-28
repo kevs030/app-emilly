@@ -1,0 +1,37 @@
+{
+  "id": "20261128-02-carrera-premios-anuncios",
+  "title": "Condición de carrera en el cobro de premios por anuncio: se puede superar el límite de 3 al día",
+  "program": "a-posto",
+  "created": "2026-11-28",
+  "status": "candidato",
+  "vuln_class": "Business Logic / Race condition (TOCTOU)",
+  "asset": "POST /api/ads {action:'claim'} (src/app/api/ads/route.ts, src/lib/ads-server.ts)",
+  "policy_reference": "App propia — programs/a-posto/scope.json (análisis estático del repositorio)",
+  "summary": "La ruta comprueba `rewardsLeft()` (cuenta filas 'ad_reward' de 24 h) y DESPUÉS llama a grantReward(). Las dos operaciones no son atómicas. Cada justificante tiene un nonce distinto, así que el índice único (reason, ref) no impide cobrar varios justificantes distintos a la vez. Si se piden N justificantes con 'start' (permitido mientras left>0) y se cobran todos en paralelo pasados 15 s, todas las peticiones pueden ver left>0 antes de que se inserte ninguna, y se superaría el límite DAILY_LIMIT=3 (hasta ~20 por minuto según el límite de peticiones).",
+  "steps_to_reproduce": [
+    "(Fase 2, SOLO en local con una cuenta de prueba propia.)",
+    "Con la cuenta A (0 premios hoy), llamar 6 veces a {action:'start'} y guardar los 6 justificantes.",
+    "Esperar 16 s y enviar los 6 {action:'claim'} a la vez (p. ej. 6 curl en paralelo con `&`).",
+    "Contar en ai_credit_ledger las filas 'ad_reward' de la cuenta A: si hay más de 3, el fallo está confirmado."
+  ],
+  "evidence": [],
+  "impact_demonstrated": "",
+  "cvss_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:N/I:L/A:N",
+  "possible_false_positives": [
+    "Que la latencia real serialice las peticiones y no se produzca la carrera (probar varias veces antes de descartarlo)."
+  ],
+  "remediation": "Hacer la comprobación y la inserción en la misma transacción dentro de la base de datos: una función `claim_ad_reward(p_user, p_ref)` que bloquee la fila del monedero (`select … for update` en ai_wallets) o use `pg_advisory_xact_lock(hashtext(p_user::text))`, cuente los premios de 24 h y solo entonces inserte.",
+  "fix_verification": [
+    "Repetir el paso 3: deben concederse exactamente 3 premios y el resto deben responder daily_limit."
+  ],
+  "references": [
+    "OWASP API6: Unrestricted Access to Sensitive Business Flows",
+    "PortSwigger: Race conditions"
+  ],
+  "validation": {
+    "own_accounts_only": true,
+    "accounts_used": "Ninguna todavía (solo lectura de código)",
+    "requests_sent_approx": 0,
+    "approved_by_human_on": "2026-11-28 (Fase 1, análisis estático)"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "id": "20261128-03-cifrado-local-parcial",
+  "title": "«Mis documentos» en el móvil: la ficha y el análisis de IA se guardan sin cifrar",
+  "program": "a-posto",
+  "created": "2026-11-28",
+  "status": "candidato",
+  "vuln_class": "Mobile — Insecure Data Storage (OWASP MASVS-STORAGE)",
+  "asset": "mobile/src/lib/documents.ts (IndexedDB 'aposto-docs' en la WebView)",
+  "policy_reference": "App propia — programs/a-posto/scope.json (análisis estático del repositorio)",
+  "summary": "La app dice a los usuarios que sus documentos se guardan «cifrados». Solo se cifra el archivo (`data`, AES-GCM 256). El resto de la fila se guarda en claro en IndexedDB: título, tipo, fecha de caducidad, nota y sobre todo `analysis`, que contiene la traducción completa del documento con importes, fechas y números de referencia (hasta 20.000 caracteres). Además, la clave AES 'no exportable' se guarda en la misma IndexedDB; 'no exportable' impide que el JavaScript la lea, pero el motor de la WebView la serializa en disco junto a los datos, así que no protege frente a alguien con acceso a los archivos de la app. Atenuantes: android:allowBackup=\"false\" (no sale en copias de seguridad) y el sistema aísla los datos de cada app. Solo es explotable con acceso privilegiado al dispositivo (root o análisis forense).",
+  "steps_to_reproduce": [
+    "(Fase 2, en un emulador Android propio con la app de depuración.)",
+    "Guardar un documento de prueba (no real) y leerlo con la IA.",
+    "Abrir chrome://inspect → la WebView de la app → Application → IndexedDB → aposto-docs → docs.",
+    "Comprobar que los campos title, note y analysis se ven en texto plano."
+  ],
+  "evidence": [],
+  "impact_demonstrated": "",
+  "cvss_vector": "CVSS:3.1/AV:L/AC:H/PR:H/UI:N/S:U/C:H/I:N/A:N",
+  "possible_false_positives": [
+    "Que se considere aceptable porque el sandbox de Android/iOS ya protege los datos; aun así, el texto mostrado al usuario promete más de lo que se hace."
+  ],
+  "remediation": "Cifrar también title, note y analysis con la misma clave (un único blob JSON cifrado por fila, dejando en claro solo id, user_id y created_at). Mejor aún: guardar la clave en el Keystore/Keychain (p. ej. con el SecureStorage que ya usa la app) en lugar de en IndexedDB. Y ajustar el texto de la app para que diga exactamente qué se cifra.",
+  "fix_verification": [
+    "Repetir los pasos 2–4: en IndexedDB solo deben verse datos cifrados (ArrayBuffer) y los identificadores.",
+    "Comprobar que los documentos antiguos se migran al nuevo formato sin perderse."
+  ],
+  "references": [
+    "OWASP MASVS-STORAGE-1",
+    "OWASP MASTG — Testing Local Data Storage"
+  ],
+  "validation": {
+    "own_accounts_only": true,
+    "accounts_used": "Ninguna todavía (solo lectura de código)",
+    "requests_sent_approx": 0,
+    "approved_by_human_on": "2026-11-28 (Fase 1, análisis estático)"
+  }
+}
