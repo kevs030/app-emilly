@@ -31,6 +31,8 @@
   ],
   "remediation": "1) No reembolsar cuando el error es APIUserAbortError (cancelación del cliente): `if (!sent && !(err instanceof Anthropic.APIUserAbortError)) await refund(userId)`. 2) Reembolsar con una referencia única por petición (p. ej. `refund:<uuid de la petición>`) para que el índice único impida dobles reembolsos. 3) Que aiBudgetOk() reste los reembolsos o cuente el coste real, y añadir un tope diario por cuenta.",
   "fix_verification": [
+    "Ejecutar `bugbounty-lab/labs/a-posto-harness/start.sh` y después `verify.sh`: deben pasar todas las pruebas.",
+    "Contraprueba: con el código antiguo, verify.sh debe fallar en las pruebas de este hallazgo (comprobado el 2026-11-28).",
     "Repetir los pasos 3–5: el saldo debe bajar 1 por petición cancelada y no debe aparecer ningún 'refund'.",
     "Simular un error real del proveedor (clave inválida en local): debe seguir reembolsando una sola vez."
   ],
@@ -43,5 +45,6 @@
     "accounts_used": "Cuenta de prueba simulada (no existe en producción)",
     "requests_sent_approx": 17,
     "approved_by_human_on": "2026-11-28 (Fase 2-B)"
-  }
+  },
+  "fix_status": "Corregido en la rama claude/serene-knuth-nmbaa0 (src/lib/ai-server.ts): sin reembolso cuando cancela el cliente y referencia única `refund:<uuid>` por pregunta. Verificado con labs/a-posto-harness/verify.sh (8/8 pruebas). PENDIENTE: desplegar."
 }

@@ -57,8 +57,34 @@ export function readToken(token: string): AdToken | null {
   return key ? verifyToken(token, key) : null;
 }
 
-/** Suma 1 pregunta. false si este justificante ya se cobró. Devuelve el saldo nuevo. */
-export async function grantReward(p: AdToken): Promise<{ granted: boolean; credits: number | null }> {
+let atomicAvailable = true;
+
+/**
+ * Suma 1 pregunta. Devuelve el saldo nuevo, o el motivo por el que no se dio.
+ * Usa `claim_ad_reward` (migración 0011): cuenta los premios del día y concede el nuevo en un solo paso
+ * bloqueado, así que varios cobros a la vez no pueden superar DAILY_LIMIT.
+ * Si la migración aún no está aplicada, usa el método anterior (que la ruta protege como puede).
+ */
+export async function claimReward(p: AdToken): Promise<{ granted: true; credits: number | null } | { granted: false; reason: "daily_limit" | "already_claimed" }> {
+  const ref = `sponsor:${p.s}:${p.n}`;
+  if (atomicAvailable) {
+    const { data, error } = await admin().rpc("claim_ad_reward", { p_user: p.u, p_ref: ref, p_daily_limit: DAILY_LIMIT });
+    if (!error) {
+      if (data === -1) return { granted: false, reason: "daily_limit" };
+      if (data === -2) return { granted: false, reason: "already_claimed" };
+      return { granted: true, credits: typeof data === "number" ? data : null };
+    }
+    // PGRST202 = la función no existe todavía: no se vuelve a intentar hasta reiniciar el servidor.
+    if (error.code !== "PGRST202") throw error;
+    atomicAvailable = false;
+    console.warn("claim_ad_reward_missing: aplica supabase/migrations/0011_premios_atomicos.sql");
+  }
+  const { granted, credits } = await grantRewardLegacy(p);
+  return granted ? { granted: true, credits } : { granted: false, reason: "already_claimed" };
+}
+
+/** Método anterior (sin bloqueo). Solo se usa mientras falte la migración 0011. */
+async function grantRewardLegacy(p: AdToken): Promise<{ granted: boolean; credits: number | null }> {
   const db = admin();
   const { data, error } = await db.rpc("grant_ai_credits", { p_user: p.u, p_amount: 1, p_reason: "ad_reward", p_ref: `sponsor:${p.s}:${p.n}` });
   if (error) throw error;

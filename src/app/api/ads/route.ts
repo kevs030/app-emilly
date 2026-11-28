@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { adsConfigured, claimable, DAILY_LIMIT, grantReward, newToken, pickSponsor, readToken, REWARD_SECONDS, rewardsLeft } from "@/lib/ads-server";
+import { adsConfigured, claimable, claimReward, DAILY_LIMIT, newToken, pickSponsor, readToken, REWARD_SECONDS, rewardsLeft } from "@/lib/ads-server";
 import { authenticate, cors } from "@/lib/ai-server";
 import { rateLimitShared } from "@/lib/rate-limit";
 
@@ -50,10 +50,10 @@ export async function POST(req: Request) {
     if (!token) return json({ error: "invalid_token" }, 400);
     const state = claimable(token, auth.userId);
     if (state !== "ok") return json({ error: state }, state === "too_soon" ? 425 : 400);
-    if (left <= 0) return json({ error: "daily_limit", left: 0 }, 429);
-    const { granted, credits } = await grantReward(token);
-    if (!granted) return json({ error: "already_claimed" }, 409);
-    return json({ ok: true, credits, left: left - 1 });
+    if (left <= 0) return json({ error: "daily_limit", left: 0 }, 429); // atajo rápido; el límite de verdad lo impone claimReward
+    const result = await claimReward(token);
+    if (!result.granted) return result.reason === "daily_limit" ? json({ error: "daily_limit", left: 0 }, 429) : json({ error: "already_claimed" }, 409);
+    return json({ ok: true, credits: result.credits, left: Math.max(0, left - 1) });
   } catch (e) {
     console.error("ads_failed", e);
     return json({ error: "not_ready" }, 503);

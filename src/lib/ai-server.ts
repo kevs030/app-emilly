@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import Anthropic from "@anthropic-ai/sdk";
 import { createClient as createSupabase, type SupabaseClient } from "@supabase/supabase-js";
 import { SUPABASE_PUBLIC_KEY, SUPABASE_URL } from "@/lib/supabase/config";
@@ -100,13 +101,16 @@ export async function authenticate(req: Request): Promise<{ supabase: SupabaseCl
   return data.user ? { supabase, userId: data.user.id } : null;
 }
 
-/** Devuelve 1 crédito si la IA falló sin responder nada (solo posible con la clave de servidor). */
-async function refund(userId: string) {
+/**
+ * Devuelve 1 crédito si la IA falló sin responder nada (solo posible con la clave de servidor).
+ * `requestId` es único por pregunta: la base de datos rechaza un segundo reembolso de la misma pregunta.
+ */
+async function refund(userId: string, requestId: string) {
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!serviceKey) return;
   try {
     const admin = createSupabase(SUPABASE_URL, serviceKey, { auth: { persistSession: false, autoRefreshToken: false } });
-    await admin.rpc("grant_ai_credits", { p_user: userId, p_amount: 1, p_reason: "refund", p_ref: null });
+    await admin.rpc("grant_ai_credits", { p_user: userId, p_amount: 1, p_reason: "refund", p_ref: `refund:${requestId}` });
   } catch (e) {
     console.error("refund_failed", e);
   }
@@ -133,6 +137,10 @@ export function streamAnswer({ userId, headers, remaining, system, messages, eff
   });
 
   const encoder = new TextEncoder();
+  const requestId = randomUUID();
+  // La persona cerró la conexión (canceló o salió). No es un fallo de la IA: el crédito no se devuelve.
+  // Si se devolviera, cancelar antes del primer texto daría preguntas gratis sin límite (auditoría del 28-11-2026).
+  let cancelledByClient = false;
   const readable = new ReadableStream<Uint8Array>({
     async start(controller) {
       let sent = false;
@@ -146,15 +154,20 @@ export function streamAnswer({ userId, headers, remaining, system, messages, eff
         const final = await stream.finalMessage();
         if (final.stop_reason === "refusal") controller.enqueue(encoder.encode("\n\n(No puedo ayudar con esta petición. / I can't help with this request.)"));
       } catch (err) {
+        if (cancelledByClient || err instanceof Anthropic.APIUserAbortError) {
+          console.info("ai_cancelled_by_client"); // sin reembolso y sin escribir: la conexión ya está cerrada
+          return;
+        }
         const code = aiErrorCode(err);
         console.error("ai_error", code, err instanceof Anthropic.APIError ? err.message : err);
-        if (!sent) await refund(userId);
+        if (!sent) await refund(userId, requestId);
         controller.enqueue(encoder.encode(`\n\n⚠️ Error. Inténtalo de nuevo en un momento. / Please try again shortly. [${code}]`));
       } finally {
-        controller.close();
+        if (!cancelledByClient) controller.close();
       }
     },
     cancel() {
+      cancelledByClient = true;
       stream.abort();
     },
   });

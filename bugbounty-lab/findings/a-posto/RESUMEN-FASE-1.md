@@ -55,6 +55,18 @@ Con el **servidor real de la web** (`next dev`) conectado a simuladores locales 
 - **Hallazgo 2:** en orden, el límite funciona (3 premios); con 6 cobros en paralelo se concedieron **6 de 6**, dos veces seguidas.
 - Se descartó un **falso negativo**: tras reiniciar el servidor, la primera petición se cortaba mientras se compilaba la ruta.
 
+## Correcciones (2026-11-28) — en la rama, SIN desplegar
+
+| Hallazgo | Cambio | Verificación |
+|---|---|---|
+| 1 | `src/lib/ai-server.ts`: si cancela el cliente no hay reembolso; cada reembolso lleva una referencia única `refund:<uuid>` | `verify.sh`: 8/8 ✅ (incluye que un fallo REAL de la IA sigue reembolsando 1 vez) |
+| 2 | Migración `0011_premios_atomicos.sql` (`claim_ad_reward`, bloqueo por cuenta) + `ads-server.ts` y `api/ads/route.ts` | `verify.sh`: 3/3 ✅ · Postgres 16 real: 6 cobros simultáneos → 3 · solo `service_role` puede ejecutarla |
+
+- **Contraprueba:** con el código antiguo, `verify.sh` falla justo en esas pruebas → las pruebas detectan de verdad el fallo.
+- **Compatibilidad:** si el código se despliega antes que la migración, los anuncios siguen funcionando (como antes) y el registro avisa `claim_ad_reward_missing`.
+- **Orden recomendado para producción:** 1) aplicar `0011_premios_atomicos.sql` en Supabase; 2) desplegar el código.
+- **Contrapartida asumida:** si a alguien se le corta la conexión antes de que llegue el primer texto, pierde ese crédito. Es el precio de cerrar el abuso.
+
 ## Siguiente paso propuesto (requiere tu aprobación)
 
 1. **Corregir** los hallazgos 1 y 2 y los permisos TRUNCATE, y volver a pasar el banco de pruebas para verificar las correcciones.

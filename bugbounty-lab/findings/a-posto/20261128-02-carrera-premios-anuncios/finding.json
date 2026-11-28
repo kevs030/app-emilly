@@ -28,6 +28,8 @@
   ],
   "remediation": "Hacer la comprobación y la inserción en la misma transacción dentro de la base de datos: una función `claim_ad_reward(p_user, p_ref)` que bloquee la fila del monedero (`select … for update` en ai_wallets) o use `pg_advisory_xact_lock(hashtext(p_user::text))`, cuente los premios de 24 h y solo entonces inserte.",
   "fix_verification": [
+    "Ejecutar `bugbounty-lab/labs/a-posto-harness/start.sh` y después `verify.sh`: deben pasar todas las pruebas.",
+    "Contraprueba: con el código antiguo, verify.sh debe fallar en las pruebas de este hallazgo (comprobado el 2026-11-28).",
     "Repetir el paso 3: deben concederse exactamente 3 premios y el resto deben responder daily_limit."
   ],
   "references": [
@@ -39,5 +41,6 @@
     "accounts_used": "Cuenta de prueba simulada (no existe en producción)",
     "requests_sent_approx": 36,
     "approved_by_human_on": "2026-11-28 (Fase 2-B)"
-  }
+  },
+  "fix_status": "Corregido en la rama claude/serene-knuth-nmbaa0: migración supabase/migrations/0011_premios_atomicos.sql (función claim_ad_reward con bloqueo por cuenta) + src/lib/ads-server.ts y src/app/api/ads/route.ts. Verificado con verify.sh (3/3) y en un Postgres 16 real (6 cobros simultáneos → 3 concedidos). PENDIENTE: aplicar la migración en Supabase y desplegar."
 }

@@ -10,12 +10,21 @@ const THINK_MS = Number(process.env.THINK_MS ?? 3000); // el modelo "piensa" ant
 const USER = { id: "00000000-0000-4000-8000-00000000000a", aud: "authenticated", role: "authenticated", email: "cuenta-a@prueba.local" };
 
 let state;
-function reset(credits = 3) {
-  state = { wallet: credits, ledger: [], anthropic: { requests: 0, completed: 0, abortedByClient: 0 } };
+function reset(credits = 3, aiMode = "ok") {
+  state = { aiMode, wallet: credits, ledger: [], anthropic: { requests: 0, completed: 0, abortedByClient: 0 } };
 }
 reset();
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const locks = new Map();
+/** Bloqueo por clave: cada llamada espera a que termine la anterior (como un advisory lock). */
+function lockFor(key) {
+  const prev = locks.get(key) ?? Promise.resolve();
+  let release;
+  const next = new Promise((r) => (release = r));
+  locks.set(key, prev.then(() => next));
+  return prev.then(() => release);
+}
 const body = (req) => new Promise((r) => { let b = ""; req.on("data", (c) => (b += c)); req.on("end", () => r(b ? JSON.parse(b) : {})); });
 const send = (res, status, data, headers = {}) => { res.writeHead(status, { "content-type": "application/json", ...headers }); res.end(data === undefined ? "" : JSON.stringify(data)); };
 
@@ -28,7 +37,7 @@ function countLedger(url) {
 http.createServer(async (req, res) => {
   const url = new URL(req.url, "http://x");
   if (url.pathname === "/__state") return send(res, 200, state);
-  if (url.pathname === "/__reset") { reset(Number(url.searchParams.get("credits") ?? 3)); return send(res, 200, state); }
+  if (url.pathname === "/__reset") { reset(Number(url.searchParams.get("credits") ?? 3), url.searchParams.get("ai") ?? "ok"); return send(res, 200, state); }
   await sleep(LATENCY_MS);
 
   if (url.pathname === "/auth/v1/user") return send(res, 200, USER);
@@ -43,6 +52,22 @@ http.createServer(async (req, res) => {
       state.wallet -= 1;
       state.ledger.push({ user_id: USER.id, delta: -1, reason: "question", ref: null });
       return send(res, 200, state.wallet);
+    }
+    if (fn === "claim_ad_reward") {
+      // Imita la migración 0011. MOCK_NO_ATOMIC=1 simula que todavía no está aplicada.
+      if (process.env.MOCK_NO_ATOMIC === "1") return send(res, 404, { code: "PGRST202", message: "Could not find the function public.claim_ad_reward" });
+      const release = await lockFor(args.p_user); // = pg_advisory_xact_lock por cuenta
+      try {
+        await sleep(LATENCY_MS); // la consulta de conteo tarda lo mismo que antes
+        const n = state.ledger.filter((l) => l.user_id === args.p_user && l.reason === "ad_reward").length;
+        if (n >= args.p_daily_limit) return send(res, 200, -1);
+        if (state.ledger.some((l) => l.reason === "ad_reward" && l.ref === args.p_ref)) return send(res, 200, -2);
+        state.ledger.push({ user_id: args.p_user, delta: 1, reason: "ad_reward", ref: args.p_ref });
+        state.wallet += 1;
+        return send(res, 200, state.wallet);
+      } finally {
+        release();
+      }
     }
     if (fn === "grant_ai_credits") {
       if (args.p_ref && state.ledger.some((l) => l.reason === args.p_reason && l.ref === args.p_ref)) return send(res, 200, false);
@@ -66,6 +91,8 @@ http.createServer(async (req, res) => {
   if (!req.url.startsWith("/v1/messages")) return send(res, 404, {});
   await body(req);
   state.anthropic.requests += 1;
+  // ?ai=fail en /__reset: el proveedor rechaza la petición (fallo real, no del usuario).
+  if (state.aiMode === "fail") return send(res, 400, { type: "error", error: { type: "invalid_request_error", message: "fallo simulado" } });
   let closed = false;
   res.on("close", () => { if (!res.writableFinished) { closed = true; state.anthropic.abortedByClient += 1; } });
   res.writeHead(200, { "content-type": "text/event-stream" });

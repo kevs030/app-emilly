@@ -6,7 +6,7 @@ HERE="$(cd "$(dirname "$0")" && pwd)"
 REPO="$(cd "$HERE/../../.." && pwd)"
 LOGS="${LOGS:-$HERE/logs}"; mkdir -p "$LOGS"
 
-node "$HERE/mocks.mjs" >"$LOGS/mocks.log" 2>&1 &
+env MOCK_NO_ATOMIC="${MOCK_NO_ATOMIC:-0}" node "$HERE/mocks.mjs" >"$LOGS/mocks.log" 2>&1 &
 echo $! >"$LOGS/mocks.pid"
 
 cd "$REPO"
